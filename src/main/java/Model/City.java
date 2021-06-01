@@ -24,4 +24,25 @@ public class City {
         return this.cubes.size();
     }
 
+    public String getVirusType() {
+        return virusType;
+    }
+
+   /* public boolean checkCityForAdjacency(City city) {
+
+    }*/
+
+    /*public boolean checkForResearchStation() {
+
+    }*/
+
+    public void initializeNeighbours() {
+
+    }
+
+    public void addCube(String type) {
+
+    }
+
+
 }
