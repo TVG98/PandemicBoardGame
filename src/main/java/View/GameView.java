@@ -18,17 +18,18 @@ import java.io.File;
 public class GameView
 {
     Stage primaryStage;
-    final String pathToImage = "src/main/media/LobbyBackground.jpg";
-    final double width = 1280;
-    final double height = 960;
+    final String pathToImage = "src/main/media/GameBoard.jpg";
+    final double width = 1600;
+    final double height = 900;
 
     public GameView(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
-        loadStageWithBorderPane(createLobbyServerBorderPane());
+        this.primaryStage.setResizable(true);
+        loadStageWithBorderPane(createGameViewBorderPane());
     }
 
-    private BorderPane createLobbyServerBorderPane()
+    private BorderPane createGameViewBorderPane()
     {
         BorderPane bp = new BorderPane();
 
@@ -40,9 +41,13 @@ public class GameView
         // Setup BorderPane Top //
         Text title = new Text("Pandemic");
         Button openMenuButton = new Button("Open Menu");
+
+        // Top Left
         VBox vboxTopLeft = new VBox();
         vboxTopLeft.getChildren().addAll(title, openMenuButton);
         vboxTopLeft.setAlignment(Pos.TOP_LEFT);
+
+        // Top Center
 
         Text virusText = new Text("Viruses");
         Rectangle virus1 = new Rectangle(200, 200);
@@ -50,15 +55,19 @@ public class GameView
         Rectangle virus3 = new Rectangle(200, 200);
         Rectangle virus4 = new Rectangle(200, 200);
 
-        HBox hboxTopCenterBottom = new HBox();
-        hboxTopCenterBottom.getChildren().addAll(virus1, virus2, virus3, virus4);
+        HBox hboxViruses = new HBox();
+        hboxViruses.getChildren().addAll(virus1, virus2, virus3, virus4);
 
         VBox vboxTopCenter = new VBox();
-        vboxTopCenter.getChildren().addAll(virusText, hboxTopCenterBottom);
+        vboxTopCenter.getChildren().addAll(virusText, hboxViruses);
+
+        // Top Right
 
         HBox hboxTop = new HBox();
         hboxTop.getChildren().addAll(vboxTopLeft, vboxTopCenter);
         hboxTop.setSpacing(200);
+
+        // Setup BorderPane Bottom //
 
         // BorderPane Layout //
         bp.setTop(hboxTop);

@@ -30,6 +30,7 @@ public class WinView {
 
     public WinView(Stage primaryStage){
         this.primaryStage = primaryStage;
+        this.primaryStage.setResizable(false);
         loadStageWithBorderPane(createWinBorderPane());
     }
 
