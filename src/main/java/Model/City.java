@@ -44,5 +44,8 @@ public class City {
 
     }
 
+    public void addResearchStation() {
+
+    }
 
 }
