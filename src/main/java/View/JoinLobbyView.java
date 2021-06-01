@@ -32,6 +32,7 @@ public class JoinLobbyView {
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
+    //FirebaseController firebaseController = new FirebaseController();
 
     public JoinLobbyView(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -69,6 +70,7 @@ public class JoinLobbyView {
         enterCodeInput.setPromptText("Your code");
         enterCodeInput.setMaxWidth(300);
 
+
         VBox vboxCenter = new VBox();
         vboxCenter.setAlignment(Pos.CENTER);
         vboxCenter.setSpacing(180);
@@ -91,9 +93,6 @@ public class JoinLobbyView {
         join.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // FireBase implementatie mist //
-                System.out.println(enterCodeInput.getText());
-
                 InLobbyView view = new InLobbyView(primaryStage);
             }
         });
