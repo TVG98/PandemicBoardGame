@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class Player {
-    //private ArrayList<PlayerCard> hand;
+    private ArrayList<PlayerCard> hand;
     //private Role role;
     //private City currentCity;
     private boolean readyToStart;
@@ -23,21 +23,17 @@ public class Player {
         resetActions();
     }
 
-    /*public void addCardToHand(PlayerCard card) {
+    public void addCardToHand(PlayerCard card) {
         hand.add(card);
-    }*/
+    }
 
-    /*public void removeCardFromHand(PlayerCard card) {
-        for (PlayerCard playerCard : hand) {
-            if (playerCard = card) {
-                hand.remove(playerCard);
-            }
-        }
-    }*/
+    public void removeCardFromHand(PlayerCard card) {
+        hand.removeIf(playerCard -> playerCard == card);
+    }
 
-    /*public ArrayList<PlayerCard> getHand() {
+    public ArrayList<PlayerCard> getHand() {
         return hand;
-    }*/
+    }
 
     /*public Role getRole() {
         return role;
