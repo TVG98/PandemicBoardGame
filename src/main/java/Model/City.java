@@ -41,7 +41,7 @@ public class City {
     }
 
     public void addCube(String type) {
-
+        this.cubes.add(new Cube(type));
     }
 
     public void addResearchStation() {
