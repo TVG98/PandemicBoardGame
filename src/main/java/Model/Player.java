@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
     private ArrayList<PlayerCard> hand;
-    //private Role role;
+    private Role role;
     //private City currentCity;
     private boolean readyToStart;
     private String name;
@@ -35,13 +35,13 @@ public class Player {
         return hand;
     }
 
-    /*public Role getRole() {
+    public Role getRole() {
         return role;
-    } */
+    }
 
-    /*public void setRole(Role role) {
+    public void setRole(Role role) {
         this.role = role;
-    } */
+    }
 
     /*public City getCurrentCity() {
         return currentCity;
