@@ -33,4 +33,8 @@ public class PlayerController {
     public boolean checkCardInHand(PlayerCard card, Player player) {
         return player.checkCardInHand(card);
     }
+
+    public String getName(Player player) {
+        return player.getName();
+    }
 }

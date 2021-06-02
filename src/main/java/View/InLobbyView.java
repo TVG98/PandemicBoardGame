@@ -1,5 +1,6 @@
 package View;
 
+import Controller.LobbyController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -30,6 +31,7 @@ public class InLobbyView {
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
+    LobbyController lobbyController = new LobbyController();
 
 
     public InLobbyView(Stage primaryStage){

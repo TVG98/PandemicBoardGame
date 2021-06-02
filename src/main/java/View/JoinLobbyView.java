@@ -1,5 +1,7 @@
 package View;
 
+import Controller.DatabaseController;
+import Controller.LobbyController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -32,7 +34,7 @@ public class JoinLobbyView {
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
-    //FirebaseController firebaseController = new FirebaseController();
+    LobbyController lobbyController = new LobbyController();
 
     public JoinLobbyView(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -93,6 +95,8 @@ public class JoinLobbyView {
         join.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                lobbyController.makeLobby();
                 InLobbyView view = new InLobbyView(primaryStage);
             }
         });

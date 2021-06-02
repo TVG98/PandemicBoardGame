@@ -1,5 +1,7 @@
 package View;
 
+import Controller.DatabaseController;
+import Controller.LobbyController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -31,6 +33,8 @@ public class StartLobbyView
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
+    LobbyController lobbyController = new LobbyController();
+
 
     public StartLobbyView(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -76,6 +80,7 @@ public class StartLobbyView
         createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                lobbyController.makeLobby();
                 InLobbyView view = new InLobbyView(primaryStage);
             }
         });
@@ -114,6 +119,7 @@ public class StartLobbyView
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                lobbyController.makeLobby();
                 MenuView view = new MenuView(primaryStage);
             }
         });

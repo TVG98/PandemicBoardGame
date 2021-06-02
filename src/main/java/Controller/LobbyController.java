@@ -3,12 +3,14 @@ package Controller;
 import Model.Lobby;
 import Model.Player;
 
+
 public class LobbyController {
-
     Lobby lobby;
+    DatabaseController databaseController = new DatabaseController();
 
-    public void createLobby() {
 
+    public void makeLobby() {
+        databaseController.makeLobby();
     }
 
     public void addPlayerToLobby() {
