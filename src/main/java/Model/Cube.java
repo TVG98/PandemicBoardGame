@@ -1,13 +1,13 @@
 package Model;
 
 public class Cube {
-    private String type;
+    private VirusType type;
 
-    public Cube(String type) {
+    public Cube(VirusType type) {
         this.type = type;
     }
 
-    public String getType() {
+    public VirusType getType() {
         return type;
     }
 }

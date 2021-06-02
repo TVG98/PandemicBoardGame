@@ -7,7 +7,7 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
-    /*
+
     public void drive(City city) {
 
     }
@@ -27,7 +27,7 @@ public class Role {
     public void buildResearchStation() {
 
     }
-    public void shareKnowledge(Card card) {
+    public void shareKnowledge(PlayerCard card) {
 
     }
 
@@ -38,7 +38,7 @@ public class Role {
     public void findCure(){
 
     }
-    */
+
     public String getName() {
         return name;
     }

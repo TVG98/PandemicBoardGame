@@ -6,8 +6,9 @@ import Model.Player;
 import Model.PlayerCard;
 
 public class GameController {
+
     Game game;
-    //private PlayerController playerController;
+    private PlayerController playerController;
     private GameBoardController gameBoardController;
 
     public void changeTurn(){
