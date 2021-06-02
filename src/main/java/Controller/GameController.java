@@ -10,8 +10,9 @@ public class GameController {
     private PlayerController playerController;
     private GameBoardController gameBoardController;
 
-    public void changeTurn(){
 
+    public void changeTurn(){
+        game.nextTurn();
     }
 
     public void handleDrive(City city) {
@@ -56,7 +57,7 @@ public class GameController {
     }
 
     public void decrementActions(Player player) {
-
+        player.decrementActions();
     }
 
 }
