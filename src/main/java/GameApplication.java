@@ -22,7 +22,7 @@ import java.io.File;
 
 public class GameApplication extends Application {
 
-    private DatabaseController databaseController = new DatabaseController();
+    //private DatabaseController databaseController = new DatabaseController();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -44,7 +44,4 @@ public class GameApplication extends Application {
         launch(args);
     }
 
-    public DatabaseController getDatabaseController() {
-        return databaseController;
-    }
 }

@@ -30,7 +30,11 @@ public class FirestoreDatabase {
 
     public FirestoreDatabase()
     {
-
+        try {
+            initialize();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void initialize() throws Exception {
@@ -54,7 +58,7 @@ public class FirestoreDatabase {
 
     public void makeLobby()
     {
-        System.out.println(getLobbyByDocumentId("91nF3fzz2cBgFLXj2dcO").get("lobby1"));
+        System.out.println(getLobbyByDocumentId("91nF3fzz2cBgFLXj2dcO"));
     }
 
     public DocumentSnapshot getLobbyByDocumentId(String documentId)
@@ -68,7 +72,7 @@ public class FirestoreDatabase {
 
             if (document.exists()) {
                 System.out.println("Document exists");;
-                //System.out.println(document.get("lobby1"));
+                System.out.println(document.get("lobby1"));
                 return document;
             } else {
                 System.out.println("No such document!");
