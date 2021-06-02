@@ -49,7 +49,9 @@ public class StartLobbyView
         Rectangle inputTextBackground = new Rectangle(750, 100);
         inputTextBackground.setX((width/2) - (750/2f));
         inputTextBackground.setY(175);
-        inputTextBackground.setFill(Color.GREY);
+        inputTextBackground.setFill(Color.color(0.3f, 0.3, 0.3, 0.95f));
+        inputTextBackground.setArcWidth(30d);
+        inputTextBackground.setArcHeight(30d);
 
         // Setup Borderpane Top (vboxTop) //
         Text lobbyText = new Text("Lobby");
@@ -90,13 +92,14 @@ public class StartLobbyView
 
         for (Button button : buttonsArrayList)
         {
-            button.setStyle("-fx-background-color: Grey");
+            button.setOpacity(0.95f);
+            button.setStyle("-fx-background-color: Grey; -fx-background-radius: 40px;");
             button.setTextFill(Color.RED);
             button.setFont(new Font("Arial", 50));
             button.setPrefHeight(200);
             button.setPrefWidth(300);
-            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: Dimgray"));
-            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: Grey"));
+            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: Dimgray; -fx-background-radius: 40px;"));
+            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: Grey; -fx-background-radius: 40px;"));
         }
 
         HBox hboxCenter = new HBox();
@@ -115,10 +118,10 @@ public class StartLobbyView
             }
         });
 
-        backToMainMenuButton.setStyle("-fx-background-color: Grey");
+        backToMainMenuButton.setStyle("-fx-background-color: Grey; -fx-background-radius: 30px;");
         backToMainMenuButton.setTextFill(Color.RED);
-        backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Dimgray"));
-        backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: Grey"));
+        backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Dimgray; -fx-background-radius: 30px;"));
+        backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: Grey; -fx-background-radius: 30px;"));
         backToMainMenuButton.setFont(new Font("Arial", 50));
         backToMainMenuButton.setPrefHeight(100);
         backToMainMenuButton.setPrefWidth(600);

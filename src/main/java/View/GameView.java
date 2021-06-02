@@ -15,6 +15,7 @@ import java.io.File;
  * @created May 27 2021 - 10:23 AM
  * @project testGame
  */
+
 public class GameView
 {
     Stage primaryStage;
@@ -42,12 +43,12 @@ public class GameView
         Text title = new Text("Pandemic");
         Button openMenuButton = new Button("Open Menu");
 
-        // Top Left
+        // Top Left //
         VBox vboxTopLeft = new VBox();
         vboxTopLeft.getChildren().addAll(title, openMenuButton);
         vboxTopLeft.setAlignment(Pos.TOP_LEFT);
 
-        // Top Center
+        // Top Center //
 
         Text virusText = new Text("Viruses");
         Rectangle virus1 = new Rectangle(200, 200);
@@ -61,7 +62,7 @@ public class GameView
         VBox vboxTopCenter = new VBox();
         vboxTopCenter.getChildren().addAll(virusText, hboxViruses);
 
-        // Top Right
+        // Top Right //
 
         HBox hboxTop = new HBox();
         hboxTop.getChildren().addAll(vboxTopLeft, vboxTopCenter);
