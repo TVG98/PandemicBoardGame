@@ -20,9 +20,6 @@ public class Game {
         //GameController.changeTurn(); ?
     }
 
-    public void setWon(boolean won) {
-        this.won = won;
-    }
 
     public void setLost() {
         lost = true;
