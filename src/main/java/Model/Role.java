@@ -7,7 +7,7 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
-    /*
+
     public void drive(City city) {
 
     }
@@ -28,11 +28,11 @@ public class Role {
 
     }
 
-    */
+
     public void shareKnowledge(PlayerCard card, Player otherPlayer) {
         //Todo popup openen
     }
-    /*
+
     public void treatDisease(){
 
     }
@@ -45,5 +45,5 @@ public class Role {
         return name;
     }
 
-*/
+
 }
