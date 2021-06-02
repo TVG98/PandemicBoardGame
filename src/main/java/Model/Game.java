@@ -8,19 +8,22 @@ public class Game {
     private int currentPlayerIndex;
     private boolean lost;
     private boolean won;
+    private Player currentPlayer;
 
     public Game(ArrayList<Player> players, int currentPlayerIndex, boolean lost, boolean won) {
         this.players = players;
         this.currentPlayerIndex = currentPlayerIndex;
         this.lost = lost;
         this.won = won;
+        currentPlayer = this.players.get(this.currentPlayerIndex);
     }
 
     public void nextTurn() {
+        currentPlayerIndex++;
+        currentPlayer = players.get(currentPlayerIndex);
         //GameController.changeTurn(); ?
     }
-
-
+    
     public void setLost() {
         lost = true;
         won = false;
@@ -31,7 +34,13 @@ public class Game {
         lost = false;
     }
 
-    /*public ArrayList<Player> getPlayersInCity(City city) {
-
-    }*/
+    public ArrayList<Player> getPlayersInCity(City city) {
+        ArrayList<Player> playersInCity = new ArrayList<>();
+        for (Player nextPlayer : players) {
+            if (nextPlayer.getCurrentCity() == city) {
+                playersInCity.add(nextPlayer);
+            }
+        }
+        return playersInCity;
+    }
 }
