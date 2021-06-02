@@ -27,6 +27,7 @@ public class Role {
     public void buildResearchStation() {
 
     }
+
     */
     public void shareKnowledge(PlayerCard card, Player otherPlayer) {
         //Todo popup openen
@@ -39,10 +40,10 @@ public class Role {
     public void findCure(){
 
     }
-    */
+
     public String getName() {
         return name;
     }
 
-
+*/
 }

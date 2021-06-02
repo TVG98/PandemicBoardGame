@@ -1,15 +1,15 @@
 package Model;
 
 public class Virus {
-    private String type;
+    private VirusType type;
     private int cubeAmount;
 
-    public Virus(String type, int cubeAmount) {
+    public Virus(VirusType type, int cubeAmount) {
         this.type = type;
         this.cubeAmount = cubeAmount;
     }
 
-    public String getType() {
+    public VirusType getType() {
         return type;
     }
 

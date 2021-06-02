@@ -5,6 +5,7 @@ import Model.*;
 import java.util.ArrayList;
 
 public class GameController {
+
     Game game;
     private PlayerController playerController;
     private GameBoardController gameBoardController;
@@ -54,15 +55,16 @@ public class GameController {
     }
 
     public void checkCardInHand(PlayerCard card, Player player) {
-
+        playerController.checkCardInHand(card, player);
     }
 
     public void handleGiveCard(PlayerCard card, Player player1, Player player2) {
-
+        playerController.removeCard(card, player1);
+        playerController.addCard(card, player2);
     }
 
     public void decrementActions(Player player) {
-        player.decrementActions();
+
     }
 
 }
