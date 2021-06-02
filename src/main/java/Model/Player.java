@@ -76,7 +76,7 @@ public class Player {
         actions = 4;
     }
 
-    private void decrementActions() {
+    public void decrementActions() {
         actions--;
     }
 }
