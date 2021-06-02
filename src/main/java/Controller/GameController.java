@@ -6,7 +6,7 @@ import Model.Player;
 import Model.PlayerCard;
 
 public class GameController {
-    private Game game;
+    Game game;
     //private PlayerController playerController;
     private GameBoardController gameBoardController;
 
