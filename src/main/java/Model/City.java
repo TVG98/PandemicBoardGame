@@ -28,11 +28,11 @@ public class City {
         return virusType;
     }
 
-   /* public boolean checkCityForAdjacency(City city) {
+    /*public boolean checkCityForAdjacency(City city) {
 
-    }*/
+    }
 
-    /*public boolean checkForResearchStation() {
+    public boolean checkForResearchStation() {
 
     }*/
 

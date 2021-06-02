@@ -23,7 +23,7 @@ public class Game {
         currentPlayer = players.get(currentPlayerIndex);
         //GameController.changeTurn(); ?
     }
-
+    
     public void setLost() {
         lost = true;
         won = false;
