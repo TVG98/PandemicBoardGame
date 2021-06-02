@@ -32,9 +32,10 @@ public class GameApplication extends Application {
         //StartLobbyView c = new StartLobbyView(primaryStage);
         //OptionsView d = new OptionsView(primaryStage);
         //InLobbyView e = new InLobbyView(primaryStage);
-        JoinLobbyView f = new JoinLobbyView(primaryStage);
+        //JoinLobbyView f = new JoinLobbyView(primaryStage);
         //GameView g = new GameView(primaryStage);
         //LobbyServersView h = new LobbyServersView(primaryStage);
+        LossView l = new LossView(primaryStage);
     }
 
     public static void main(String[] args) {

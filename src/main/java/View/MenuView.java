@@ -55,11 +55,12 @@ public class MenuView {
             button.setPrefHeight(80);
             button.setPrefWidth(550);
             button.setFont(new Font("Castellar", 50));
-            button.setStyle("-fx-background-color: #ff5c6c");
+            button.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
+            button.setOpacity(0.8f);
             button.setEffect(new DropShadow());
             button.setTextFill(Color.BLACK);
-            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: Firebrick"));
-            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #ff5c6c"));
+            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;"));
+            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
         }
 
         VBox vboxCenter = new VBox();

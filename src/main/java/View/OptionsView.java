@@ -1,5 +1,6 @@
 package View;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -59,8 +60,12 @@ public class OptionsView
         UIVolumeTextBox.setX(140);
         ArrayList<Rectangle> textBoxes = new ArrayList<Rectangle>();
         Collections.addAll(textBoxes, masterVolumeTextBox, SFXVolumeTextBox, musicVolumeTextBox, UIVolumeTextBox);
+
         for (Rectangle textBox : textBoxes)
         {
+            textBox.setArcHeight(30d);
+            textBox.setArcWidth(30d);
+            textBox.setOpacity(0.7f);
             textBox.setFill(Color.valueOf("#ff5c6c"));
             textBox.setEffect(new DropShadow());
         }
@@ -123,11 +128,12 @@ public class OptionsView
             }
         });
 
-        backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c");
+        backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
         backToMainMenuButton.setTextFill(Color.BLACK);
-        backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Firebrick"));
-        backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c"));
+        backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;"));
+        backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
         backToMainMenuButton.setFont(new Font("Arial", 50));
+        backToMainMenuButton.setOpacity(0.95f);
         backToMainMenuButton.setPrefHeight(100);
         backToMainMenuButton.setPrefWidth(600);
 
