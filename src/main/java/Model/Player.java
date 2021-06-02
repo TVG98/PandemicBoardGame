@@ -35,6 +35,15 @@ public class Player {
         return hand;
     }
 
+    public boolean checkCardInHand(PlayerCard card) {
+        for (PlayerCard nextCard : hand) {
+            if (nextCard == card) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Role getRole() {
         return role;
     }
