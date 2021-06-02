@@ -57,7 +57,7 @@ public class GameController {
     }
 
     public void decrementActions(Player player) {
-        player.decrementActions();
+
     }
 
 }
