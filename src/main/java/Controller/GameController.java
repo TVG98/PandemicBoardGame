@@ -1,9 +1,8 @@
 package Controller;
 
-import Model.City;
-import Model.Game;
-import Model.Player;
-import Model.PlayerCard;
+import Model.*;
+
+import java.util.ArrayList;
 
 public class GameController {
     Game game;
@@ -36,7 +35,14 @@ public class GameController {
     }
 
     public void handleShareKnowledge(PlayerCard card) {
+        City city = playerController.getPlayerCurrentCity(game.getCurrentPlayer());
+        ArrayList<Player> playersInCity = game.getPlayersInCity(city);
 
+        if (playersInCity.size() > 1) {
+
+            Player chosenPlayer = game.getCurrentPlayer();//Todo choose player to share with/change this
+            game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
+        }
     }
 
     public void handleTreatDisease() {

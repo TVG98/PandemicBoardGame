@@ -1,6 +1,5 @@
 package Model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Game {
@@ -21,9 +20,8 @@ public class Game {
     public void nextTurn() {
         currentPlayerIndex++;
         currentPlayer = players.get(currentPlayerIndex);
-        //GameController.changeTurn(); ?
     }
-    
+
     public void setLost() {
         lost = true;
         won = false;
@@ -42,5 +40,9 @@ public class Game {
             }
         }
         return playersInCity;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }

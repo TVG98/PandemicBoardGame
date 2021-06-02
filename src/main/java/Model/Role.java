@@ -27,10 +27,11 @@ public class Role {
     public void buildResearchStation() {
 
     }
-    public void shareKnowledge(Card card) {
-
+    */
+    public void shareKnowledge(PlayerCard card, Player otherPlayer) {
+        //Todo popup openen
     }
-
+    /*
     public void treatDisease(){
 
     }
@@ -42,4 +43,6 @@ public class Role {
     public String getName() {
         return name;
     }
+
+
 }
