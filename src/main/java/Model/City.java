@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class City {
     private String name;
     private ArrayList<Cube> cubes;
-    private String virusType;
+    private VirusType virusType;
     private ArrayList<City> nearCities;
     private boolean hasStation;
 
-    public City(String name, String virusType, ArrayList<City> nearCities, boolean hasStation) {
+    public City(String name, VirusType virusType, ArrayList<City> nearCities, boolean hasStation) {
         this.name = name;
         this.virusType = virusType;
         this.nearCities = nearCities;
@@ -24,7 +24,7 @@ public class City {
         return this.cubes.size();
     }
 
-    public String getVirusType() {
+    public VirusType getVirusType() {
         return virusType;
     }
 
@@ -40,7 +40,7 @@ public class City {
 
     }
 
-    public void addCube(String type) {
+    public void addCube(VirusType type) {
         this.cubes.add(new Cube(type));
     }
 
