@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 public class Player {
     private ArrayList<PlayerCard> hand;
-    //private Role role;
-    //private City currentCity;
+    private Role role;
+    private City currentCity;
     private boolean readyToStart;
     private String name;
     private int actions;
 
-    /*public Player(String name, City city, Role role) {
+    public Player(String name, City city, Role role) {
         this.name = name;
         actions = 4;
         readyToStart = false;
         currentCity = city;
         this.role = role;
         hand = new ArrayList<PlayerCard>();
-    }*/
+    }
 
     public void endTurn() {
         resetActions();
@@ -35,21 +35,21 @@ public class Player {
         return hand;
     }
 
-    /*public Role getRole() {
+    public Role getRole() {
         return role;
-    } */
+    }
 
-    /*public void setRole(Role role) {
+    public void setRole(Role role) {
         this.role = role;
-    } */
+    }
 
-    /*public City getCurrentCity() {
+    public City getCurrentCity() {
         return currentCity;
-    } */
+    }
 
-    /*public setCurrentCity(City city) {
-        this.city = city;
-    } */
+    public void setCurrentCity(City city) {
+        currentCity = city;
+    }
 
     public boolean getReadyToStart() {
         return readyToStart;
