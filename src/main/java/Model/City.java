@@ -40,6 +40,10 @@ public class City {
         this.nearCities = nearCities;
     }
 
+    public ArrayList<City> getNearCities() {
+        return nearCities;
+    }
+
     public void addCube(VirusType type) {
         cubes.add(new Cube(type));
     }

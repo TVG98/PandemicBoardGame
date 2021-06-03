@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
 
 public class GameController {
@@ -15,11 +16,22 @@ public class GameController {
         game.nextTurn();
     }
 
-    public void handleDrive(City city) {
+    public void handleDrive() {
+        ArrayList<City> nearCities = playerController.getPlayerCurrentCity(getCurrentPlayer()).getNearCities();
+        //Todo: Vraag aan de speler om een stad te kiezen
 
+        City chosenCity = new City("Tokyo", VirusType.RED, null, false);  // Hier komt het resultaat
+        getCurrentPlayer().setCurrentCity(chosenCity);
+
+
+        getCurrentPlayer().decrementActions();
     }
 
     public void handleDirectFlight(City city) {
+        Player currentPlayer = getCurrentPlayer();
+        //Todo: Laat de speler een kaart uit zijn hand kiezen
+        PlayerCard chosenCard = new CityCard("Tokyo", "blue");  // Hier komt het resultaat
+        //currentPlayer.setCurrentCity(chosenCard.getCity());  // Ik stel voor om aan elke CityCard een stad en virusType te koppelen
 
     }
 

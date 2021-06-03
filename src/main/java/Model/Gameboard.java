@@ -26,13 +26,13 @@ public class Gameboard {
         this.citiesToAddCubesTo = citiesToAddCubesTo;
     }
 
-    /*public void flipCurePawn(Cure cure) {
+    public void flipCurePawn(Cure cure) {
         if(cure.getCureState().equals("active")) {
             cure.setCureState("cured");
         } else if(cure.getCureState().equals("cured")) {
             cure.setCureState("eradicated");
         }
-    }*/
+    }
 
     public PlayerCard drawPlayerCard() {
         PlayerCard playerCard = playerStack.get(0);
