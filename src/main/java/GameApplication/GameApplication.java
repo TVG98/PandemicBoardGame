@@ -5,6 +5,7 @@ package GameApplication; /**
  */
 
 import Model.FirestoreDatabase;
+import View.GameView;
 import View.MenuView;
 import javafx.application.Application;
 import javafx.scene.image.Image;
