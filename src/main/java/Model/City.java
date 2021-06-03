@@ -28,16 +28,16 @@ public class City {
         return virusType;
     }
 
-   /* public boolean checkCityForAdjacency(City city) {
+    public boolean checkCityForAdjacency(City city) {
+        return nearCities.contains(city);
+    }
 
-    }*/
+    public boolean checkForResearchStation() {
+        return this.hasStation;
+    }
 
-    /*public boolean checkForResearchStation() {
-
-    }*/
-
-    public void initializeNeighbours() {
-
+    public void initializeNeighbours(ArrayList<City> nearCities) {
+        this.nearCities = nearCities;
     }
 
     public void addCube(VirusType type) {
@@ -45,7 +45,6 @@ public class City {
     }
 
     public void addResearchStation() {
-
+        this.hasStation = true;
     }
-
 }

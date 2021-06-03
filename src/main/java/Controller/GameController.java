@@ -32,7 +32,10 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-
+        City currentCity = playerController.getPlayerCurrentCity(getCurrentPlayer());
+        if (gameBoardController.canAddResearchStation()) {
+            gameBoardController.handleBuildResearchStation(currentCity);
+        }
     }
 
     public void handleShareKnowledge(PlayerCard card) {
@@ -64,7 +67,10 @@ public class GameController {
     }
 
     public void decrementActions(Player player) {
-
+        player.decrementActions();
     }
 
+    public Player getCurrentPlayer() {
+        return game.getCurrentPlayer();
+    }
 }
