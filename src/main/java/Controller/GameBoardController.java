@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.City;
-import Model.Cure;
-import Model.Gameboard;
-import Model.Player;
+import Model.*;
 
 public class GameBoardController {
     private Gameboard gameBoard;
@@ -47,5 +44,15 @@ public class GameBoardController {
 
     public void removeCube(City currentCity) {
         currentCity.removeCube();
+    }
+
+    public boolean cureIsFound(VirusType virus) {
+        for (Cure cure : gameBoard.getCuredDiseases()) {
+            if (cure.getType().equals(virus)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

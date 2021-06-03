@@ -1,10 +1,10 @@
 package Model;
 
 public class Cure {
-    private String virusType;
+    private final VirusType virusType;
     private String cureState;
 
-    public Cure(String virusType, String cureState) {
+    public Cure(VirusType virusType, String cureState) {
         this.virusType = virusType;
         this.cureState = cureState;
     }
@@ -17,7 +17,7 @@ public class Cure {
         this.cureState = cureState;
     }
 
-    public String getType() {
+    public VirusType getType() {
         return virusType;
     }
 }
