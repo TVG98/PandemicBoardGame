@@ -13,6 +13,10 @@ public class Cure {
         return cureState;
     }
 
+    public void setCureState(String cureState) {
+        this.cureState = cureState;
+    }
+
     public String getType() {
         return virusType;
     }

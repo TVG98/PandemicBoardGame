@@ -29,7 +29,11 @@ public class Gameboard {
     }
 
     public void flipCurePawn(Cure cure) {
-
+        if(cure.getCureState().equals("active")) {
+            cure.setCureState("cured");
+        } else if(cure.getCureState().equals("cured")) {
+            cure.setCureState("eradicated");
+        }
     }
 
     public PlayerCard drawPlayerCard() {
@@ -90,9 +94,16 @@ public class Gameboard {
         }
     }
 
-    /*public ArrayList<Cure> getCuredDiseases() {
+    public ArrayList<Cure> getCuredDiseases() {
+        ArrayList<Cure> curedDiseases = new ArrayList<Cure>();
+        for(Cure cure : cures) {
+            if(cure.getCureState().equals("cured")){
+                curedDiseases.add(cure);
+            }
+        }
 
-    }*/
+        return curedDiseases;
+    }
 
     public ArrayList<City> getCitiesToAddCubesTo() { //model: getCityToAddCubeTo()
         return citiesToAddCubesTo;
