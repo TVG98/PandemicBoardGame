@@ -32,10 +32,13 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        City currentCity = playerController.getPlayerCurrentCity(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
         if (gameBoardController.canAddResearchStation()) {
             gameBoardController.handleBuildResearchStation(currentCity);
         }
+
+        currentPlayer.decrementActions();
     }
 
     public void handleShareKnowledge(PlayerCard card) {
@@ -47,6 +50,8 @@ public class GameController {
             Player chosenPlayer = game.getCurrentPlayer();//Todo choose player to share with/change this
             game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
         }
+
+        getCurrentPlayer().decrementActions();
     }
 
     public void handleTreatDisease() {
@@ -59,6 +64,8 @@ public class GameController {
                 gameBoardController.removeCube(currentCity);
             }
         }
+
+        playerController.decrementActions(currentPlayer);
     }
 
     public void handleFindCure() {
