@@ -1,16 +1,17 @@
 package Controller;
 
+import GameApplication.GameApplication;
+import Model.FirestoreDatabase;
 import Model.Lobby;
 import Model.Player;
 
 
 public class LobbyController {
     Lobby lobby;
-    DatabaseController databaseController = new DatabaseController();
-
+    FirestoreDatabase fsController = GameApplication.getFsDatabase();
 
     public void makeLobby() {
-        databaseController.makeLobby();
+        fsController.makeLobby();
     }
 
     public void addPlayerToLobby() {

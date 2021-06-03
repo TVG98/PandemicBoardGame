@@ -53,28 +53,37 @@ public class Gameboard {
     }
 
     public void increaseOutbreakCounter() {
-
+        outbreakCounter++;
     }
 
     public void increaseInfectionRate() {
-
+        infectionRate++;
     }
 
     public void addCubes(String type) {
 
     }
 
-
-    /*public City getCity(String cityName) {
-
-    }*/
+    public City getCity(String cityName) {
+        for (City city : cities) {
+            if (city.getName().equals(cityName)) {
+                return city;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<City> getCitiesWithResearchStations() {
         return citiesWithResearchStations;
     }
 
     public void addResearchStationToCity(City city) {
-
+        for (City c : cities) {
+            if (c.equals(city)) {
+                c.addResearchStation();
+                break;
+            }
+        }
     }
 
     /*public ArrayList<Cure> getCuredDiseases() {
