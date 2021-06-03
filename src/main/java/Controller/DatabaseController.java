@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.FirestoreDatabase;
+import Model.Player;
 //import com.google.cloud.firestore.Firestore;
 
 /**
@@ -20,9 +21,9 @@ public class DatabaseController
 
     }
 
-    public void makeLobby()
+    public void makeLobby(Player player)
     {
-        db.makeLobby();
+        db.makeLobby(player);
     }
 
     public void initializeDatabase()

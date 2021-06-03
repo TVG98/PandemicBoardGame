@@ -10,12 +10,10 @@ public class Player {
     private String name;
     private int actions;
 
-    public Player(String name, City city, Role role) {
+    public Player(String name) {
         this.name = name;
         actions = 4;
         readyToStart = false;
-        currentCity = city;
-        this.role = role;
         hand = new ArrayList<PlayerCard>();
     }
 
