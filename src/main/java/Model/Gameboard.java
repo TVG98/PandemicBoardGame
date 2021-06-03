@@ -125,4 +125,8 @@ public class Gameboard {
     public void addCityToAddCubeTo(City city) {
         citiesToAddCubesTo.add(city);
     }
+
+    public boolean gameboardHasResearchStationsLeft() {
+        return citiesWithResearchStations.size() < 6;
+    }
 }

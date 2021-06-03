@@ -29,11 +29,7 @@ public class City {
     }
 
     public boolean checkCityForAdjacency(City city) {
-        if(nearCities.contains(city)){
-            return true;
-        } else {
-            return false;
-        }
+        return nearCities.contains(city);
     }
 
     public boolean checkForResearchStation() {

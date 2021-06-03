@@ -1,11 +1,13 @@
 package Controller;
 
+import Model.City;
 import Model.Cure;
 import Model.Gameboard;
 import Model.Player;
 
 public class GameBoardController {
     private Gameboard gameBoard;
+    private GameController gameController;
 
     public void handleCurePawn(Cure cure) {
 
@@ -27,8 +29,11 @@ public class GameBoardController {
 
     }
 
-    public void handleBuildResearchStation() {
-
+    public void handleBuildResearchStation(City currentCity) {
+        gameBoard.addResearchStationToCity(currentCity);
     }
 
+    public boolean canAddResearchStation() {
+        return gameBoard.gameboardHasResearchStationsLeft();
+    }
 }
