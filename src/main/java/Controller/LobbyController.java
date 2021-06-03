@@ -10,8 +10,8 @@ public class LobbyController {
     Lobby lobby;
     FirestoreDatabase fsController = GameApplication.getFsDatabase();
 
-    public void makeLobby() {
-        fsController.makeLobby();
+    public void makeLobby(Player player) {
+        fsController.makeLobby(player);
     }
 
     public void addPlayerToLobby() {
