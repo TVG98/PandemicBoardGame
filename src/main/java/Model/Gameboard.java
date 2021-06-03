@@ -56,8 +56,20 @@ public class Gameboard {
         infectionDiscardStack.add(0, infectionStack.get(0));
     }
 
-    public void shuffleCards(ArrayList cards) { // blote arraylist?
+    public void shuffleInfectionCards() {
+        for (int i = 0; i < 100; i++) {
+            InfectionCard card = infectionDiscardStack.get((int) (Math.random()) * infectionDiscardStack.size());
+            infectionDiscardStack.remove(card);
+            infectionDiscardStack.add(card);
+        }
+    }
 
+    public void shufflePlayerCards() {
+        for (int i = 0; i < 100; i++) {
+            PlayerCard card = playerDiscardStack.get((int) (Math.random()) * playerDiscardStack.size());
+            playerDiscardStack.remove(card);
+            playerDiscardStack.add(card);
+        }
     }
 
     public void increaseOutbreakCounter() {
