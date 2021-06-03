@@ -28,24 +28,31 @@ public class City {
         return virusType;
     }
 
-   /* public boolean checkCityForAdjacency(City city) {
+    public boolean checkCityForAdjacency(City city) {
+        return nearCities.contains(city);
+    }
 
-    }*/
+    public boolean checkForResearchStation() {
+        return hasStation;
+    }
 
-    /*public boolean checkForResearchStation() {
-
-    }*/
-
-    public void initializeNeighbours() {
-
+    public void initializeNeighbours(ArrayList<City> nearCities) {
+        this.nearCities = nearCities;
     }
 
     public void addCube(VirusType type) {
-        this.cubes.add(new Cube(type));
+        cubes.add(new Cube(type));
     }
 
     public void addResearchStation() {
-
+        hasStation = true;
     }
 
+    public void removeAllCubes() {
+        cubes.clear();
+    }
+
+    public void removeCube() {
+        cubes.remove(1);
+    }
 }

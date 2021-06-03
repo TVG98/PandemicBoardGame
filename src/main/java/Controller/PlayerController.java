@@ -37,4 +37,8 @@ public class PlayerController {
     public String getName(Player player) {
         return player.getName();
     }
+
+    public void decrementActions(Player player) {
+        player.decrementActions();
+    }
 }

@@ -2,6 +2,7 @@ package View;
 
 import Controller.DatabaseController;
 import Controller.LobbyController;
+import Model.Player;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -80,7 +81,7 @@ public class StartLobbyView
         createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby();
+                lobbyController.makeLobby(new Player(inputName.getText()));
                 InLobbyView view = new InLobbyView(primaryStage);
             }
         });
@@ -119,7 +120,7 @@ public class StartLobbyView
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby();
+                lobbyController.makeLobby(new Player(inputName.getText()));
                 MenuView view = new MenuView(primaryStage);
             }
         });
