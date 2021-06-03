@@ -101,6 +101,7 @@ public class Gameboard {
         for (City c : cities) {
             if (c.equals(city)) {
                 c.addResearchStation();
+                citiesWithResearchStations.add(c);
                 break;
             }
         }
@@ -122,6 +123,6 @@ public class Gameboard {
     }
 
     public void addCityToAddCubeTo(City city) {
-
+        citiesToAddCubesTo.add(city);
     }
 }
