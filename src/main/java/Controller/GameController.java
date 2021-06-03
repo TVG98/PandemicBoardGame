@@ -58,7 +58,8 @@ public class GameController {
         Player currentPlayer = getCurrentPlayer();
         City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
         if (gameBoardController.cityHasCube(currentCity)) {
-            if (canRemoveAllCubes(currentPlayer, currentCity)) {
+            if (playerController.getRole(currentPlayer).getName().equals("medic") ||
+                    gameBoardController.cureIsFound(currentCity.getVirusType())) {
                 gameBoardController.removeAllCubes(currentCity);
             } else {
                 gameBoardController.removeCube(currentCity);
@@ -66,11 +67,6 @@ public class GameController {
         }
 
         playerController.decrementActions(currentPlayer);
-    }
-
-    public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return playerController.getRole(currentPlayer).getName().equals("medic") ||
-               gameBoardController.cureIsFound(currentCity.getVirusType());
     }
 
     public void handleFindCure() {
