@@ -39,7 +39,7 @@ public class GameController {
     }
 
     public void handleShareKnowledge(PlayerCard card) {
-        City city = playerController.getPlayerCurrentCity(game.getCurrentPlayer());
+        City city = playerController.getPlayerCurrentCity(getCurrentPlayer());
         ArrayList<Player> playersInCity = game.getPlayersInCity(city);
 
         if (playersInCity.size() > 1) {
@@ -50,7 +50,15 @@ public class GameController {
     }
 
     public void handleTreatDisease() {
-
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        if (gameBoardController.cityHasCube(currentCity)) {
+            if (playerController.getRole(currentPlayer).getName().equals("medic")) {
+                gameBoardController.removeAllCubes(currentCity);
+            } else {
+                gameBoardController.removeCube(currentCity);
+            }
+        }
     }
 
     public void handleFindCure() {

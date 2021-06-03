@@ -33,7 +33,7 @@ public class City {
     }
 
     public boolean checkForResearchStation() {
-        return this.hasStation;
+        return hasStation;
     }
 
     public void initializeNeighbours(ArrayList<City> nearCities) {
@@ -41,10 +41,18 @@ public class City {
     }
 
     public void addCube(VirusType type) {
-        this.cubes.add(new Cube(type));
+        cubes.add(new Cube(type));
     }
 
     public void addResearchStation() {
-        this.hasStation = true;
+        hasStation = true;
+    }
+
+    public void removeAllCubes() {
+        cubes.clear();
+    }
+
+    public void removeCube() {
+        cubes.remove(1);
     }
 }
