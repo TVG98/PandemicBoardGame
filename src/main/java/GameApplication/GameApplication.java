@@ -1,28 +1,21 @@
-/**
+package GameApplication; /**
  * @author Romano Biertantie
  * @created May 20 2021 - 6:47 PM
  * @project testGame
  */
 
-import Controller.DatabaseController;
-import View.*;
+import Model.FirestoreDatabase;
+import View.MenuView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
-import javafx.stage.Stage;
 
 import java.io.File;
 
 public class GameApplication extends Application {
 
-    //private DatabaseController databaseController = new DatabaseController();
+    public static FirestoreDatabase fsDatabase = new FirestoreDatabase();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -44,4 +37,7 @@ public class GameApplication extends Application {
         launch(args);
     }
 
+    public static FirestoreDatabase getFsDatabase() {
+        return fsDatabase;
+    }
 }

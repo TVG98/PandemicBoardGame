@@ -23,6 +23,7 @@ public class GameView
     final double width = 1600;
     final double height = 900;
 
+
     public GameView(Stage primaryStage)
     {
         this.primaryStage = primaryStage;

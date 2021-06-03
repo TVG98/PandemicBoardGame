@@ -34,7 +34,7 @@ public class JoinLobbyView {
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
-    //LobbyController lobbyController = new LobbyController();
+    LobbyController lobbyController = new LobbyController();
 
     public JoinLobbyView(Stage primaryStage){
         this.primaryStage = primaryStage;
