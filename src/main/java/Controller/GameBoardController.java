@@ -36,4 +36,16 @@ public class GameBoardController {
     public boolean canAddResearchStation() {
         return gameBoard.gameboardHasResearchStationsLeft();
     }
+
+    public boolean cityHasCube(City currentCity) {
+        return currentCity.getCubeAmount() > 0;
+    }
+
+    public void removeAllCubes(City currentCity) {
+        currentCity.removeAllCubes();
+    }
+
+    public void removeCube(City currentCity) {
+        currentCity.removeCube();
+    }
 }
