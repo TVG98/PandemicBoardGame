@@ -32,20 +32,24 @@ public class Gameboard {
 
     }
 
-   /* public PlayerCard drawPlayerCard() {
-
-    }*/
-
-    public void discardPlayerCard(PlayerCard card) {
-
+    public PlayerCard drawPlayerCard() {
+        PlayerCard playerCard = playerStack.get(0);
+        playerStack.remove(0);
+        return playerCard;
     }
 
-    /*public InfectionCard drawInfectionCard() {
+    public void discardPlayerCard(PlayerCard card) {
+        playerDiscardStack.add(0, playerStack.get(0));
+    }
 
-    }*/
+    public InfectionCard drawInfectionCard() {
+        InfectionCard infectionCard = infectionStack.get(0);
+        infectionStack.remove(0);
+        return infectionCard;
+    }
 
     public void discardInfectionCard(InfectionCard card) {
-
+        infectionDiscardStack.add(0, infectionStack.get(0));
     }
 
     public void shuffleCards(ArrayList cards) { // blote arraylist?
@@ -60,8 +64,8 @@ public class Gameboard {
         infectionRate++;
     }
 
-    public void addCubes(String type) {
-
+    public void addCubes(City currentCity, VirusType type) {
+        currentCity.addCube(type);
     }
 
     public City getCity(String cityName) {
