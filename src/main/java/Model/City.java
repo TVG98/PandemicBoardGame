@@ -45,7 +45,7 @@ public class City {
     }
 
     public void addResearchStation() {
-
+        hasStation = true;
     }
 
 }
