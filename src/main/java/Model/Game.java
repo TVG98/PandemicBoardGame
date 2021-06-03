@@ -4,16 +4,13 @@ import java.util.ArrayList;
 
 public class Game {
     private ArrayList<Player> players = new ArrayList<Player>();
-    private int currentPlayerIndex;
-    private boolean lost;
-    private boolean won;
+    private int currentPlayerIndex = 0;
+    private boolean lost = false;
+    private boolean won = false;
     private Player currentPlayer;
 
-    public Game(ArrayList<Player> players, int currentPlayerIndex, boolean lost, boolean won) {
+    public Game(ArrayList<Player> players) {
         this.players = players;
-        this.currentPlayerIndex = currentPlayerIndex;
-        this.lost = lost;
-        this.won = won;
         currentPlayer = this.players.get(this.currentPlayerIndex);
     }
 
