@@ -41,55 +41,38 @@ public class GameBoardController {
     public void handleTreatDisease() {
         Player currentPlayer = gameController.getCurrentPlayer();
         City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        removeCorrectCubeAmount(currentPlayer, currentCity);
+        treatDisease(currentPlayer, currentCity);
+
         if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
             playerController.decrementActions(currentPlayer);
         }
     }
 
-    public void removeCorrectCubeAmount(Player currentPlayer, City currentCity) {
-        if (cityHasCube(currentCity)) {
+    public void treatDisease(Player currentPlayer, City currentCity) {
+        if (gameBoard.cityHasCube(currentCity)) {
             if (canRemoveAllCubes(currentPlayer, currentCity)) {
-                removeAllCubes(currentCity);
+                currentCity.removeAllCubes();
             } else {
-                removeCube(currentCity);
+                currentCity.removeCube();
             }
         }
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
         return playerController.getRole(currentPlayer).getName().equals("medic") ||
-               cureIsFound(currentCity.getVirusType());
+                cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
         return playerController.getRole(currentPlayer).getName().equals("medic") &&
-                cureIsFound(currentCity.getVirusType());
+                cureIsFound(currentCity);
     }
 
     public boolean canAddResearchStation() {
         return gameBoard.gameboardHasResearchStationsLeft();
     }
 
-    public boolean cityHasCube(City currentCity) {
-        return currentCity.getCubeAmount() > 0;
-    }
-
-    public void removeAllCubes(City currentCity) {
-        currentCity.removeAllCubes();
-    }
-
-    public void removeCube(City currentCity) {
-        currentCity.removeCube();
-    }
-
-    public boolean cureIsFound(VirusType virus) {
-        for (Cure cure : gameBoard.getCuredDiseases()) {
-            if (cure.getType().equals(virus)) {
-                return true;
-            }
-        }
-
-        return false;
+    public boolean cureIsFound(City currentCity) {
+        return gameBoard.cureIsFound(currentCity.getVirusType());
     }
 }

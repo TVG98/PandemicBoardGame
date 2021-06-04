@@ -105,6 +105,20 @@ public class Gameboard {
         }
     }
 
+    public boolean cityHasCube(City currentCity) {
+        return currentCity.getCubeAmount() > 0;
+    }
+
+    public boolean cureIsFound(VirusType virus) {
+        for (Cure cure : getCuredDiseases()) {
+            if (cure.getType().equals(virus)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public ArrayList<Cure> getCuredDiseases() {
         ArrayList<Cure> curedDiseases = new ArrayList<Cure>();
         for(Cure cure : cures) {
