@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -56,7 +55,7 @@ public class GameView
         for (Button menuButton: menuButtons)
         {
             menuButton.setOpacity(0.95f);
-            menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");;
+            menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             menuButton.setTextFill(Color.BLACK);
             menuButton.setFont(new Font("Arial", 20));
             menuButton.setPrefHeight(60);
@@ -154,7 +153,7 @@ public class GameView
         for (Button movementButton : movementButtons)
         {
             movementButton.setOpacity(0.95f);
-            movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");;
+            movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             movementButton.setTextFill(Color.BLACK);
             movementButton.setFont(new Font("Arial", 15));
             movementButton.setPrefHeight(30);
@@ -185,7 +184,7 @@ public class GameView
         for (Button actionButton : actionButtons)
         {
             actionButton.setOpacity(0.95f);
-            actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");;
+            actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             actionButton.setTextFill(Color.BLACK);
             actionButton.setFont(new Font("Arial", 15));
             actionButton.setPrefHeight(30);
@@ -207,7 +206,7 @@ public class GameView
         actionsLeft.setFont(new Font("Castellar", 20));
         Button endTurnButton = new Button("End turn");
         endTurnButton.setOpacity(0.95f);
-        endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white");;
+        endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white");
         endTurnButton.setTextFill(Color.BLACK);
         endTurnButton.setFont(new Font("Arial", 20));
         endTurnButton.setPrefHeight(100);
