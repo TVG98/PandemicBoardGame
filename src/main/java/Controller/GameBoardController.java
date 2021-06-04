@@ -5,6 +5,7 @@ import Model.*;
 public class GameBoardController {
     private Gameboard gameBoard;
     private GameController gameController;
+    private PlayerController playerController;
 
     public void handleCurePawn(Cure cure) {
 
@@ -26,8 +27,15 @@ public class GameBoardController {
 
     }
 
-    public void handleBuildResearchStation(City currentCity) {
-        gameBoard.addResearchStationToCity(currentCity);
+    public void handleBuildResearchStation() {
+        Player currentPlayer = gameController.getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+
+        if (canAddResearchStation()) {
+            gameBoard.addResearchStationToCity(currentCity);
+        }
+        //TODO: check if player needs to hand over card of city
+        gameController.decrementActions(currentPlayer);
     }
 
     public boolean canAddResearchStation() {

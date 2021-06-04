@@ -44,13 +44,7 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        if (gameBoardController.canAddResearchStation()) {
-            gameBoardController.handleBuildResearchStation(currentCity);
-        }
-
-        currentPlayer.decrementActions();
+        gameBoardController.handleBuildResearchStation();
     }
 
     public void handleShareKnowledge(PlayerCard card) {
