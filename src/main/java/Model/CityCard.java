@@ -1,16 +1,22 @@
 package Model;
 
 public class CityCard implements PlayerCard {
-    private final String name;
-    private final String color;
 
-    public CityCard(String name, String color) {
-        this.name = name;
-        this.color = color;
+    private final String name;
+    private final City city;
+    private final VirusType virusType;
+
+    public CityCard(City city, VirusType virusType) {
+        this.city = city;
+        this.name = city.getName();
+        this.virusType = virusType;
     }
 
-    public String getColor() {
-        return color;
+    public City getCity() {
+        return city;
+    }
+    public VirusType getVirusType() {
+        return virusType;
     }
 
     @Override
