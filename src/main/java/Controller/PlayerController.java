@@ -3,7 +3,6 @@ package Controller;
 import Model.City;
 import Model.Player;
 import Model.PlayerCard;
-import Model.Role;
 
 import java.util.ArrayList;
 
@@ -24,10 +23,6 @@ public class PlayerController {
 
     public City getPlayerCurrentCity(Player player) {
         return player.getCurrentCity();
-    }
-
-    public Role getRole(Player player) {
-        return player.getRole();
     }
 
     public boolean checkCardInHand(PlayerCard card, Player player) {

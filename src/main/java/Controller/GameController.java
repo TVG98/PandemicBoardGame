@@ -43,7 +43,7 @@ public class GameController {
         if (playersInCity.size() > 1) {
 
             Player chosenPlayer = game.getCurrentPlayer();//Todo choose player to share with/change this
-            game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
+            //game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
         }
 
         getCurrentPlayer().decrementActions();

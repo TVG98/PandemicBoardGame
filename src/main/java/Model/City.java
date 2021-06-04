@@ -45,7 +45,7 @@ public class City {
     }
 
     public void addCube(VirusType type) {
-        cubes.add(new Cube(type));
+        cubes.add(new Cube(type));  // We moeten wel nog ergens de algemene cubeAmount bijhouden wat 24 is.
     }
 
     public void addResearchStation() {
@@ -57,6 +57,6 @@ public class City {
     }
 
     public void removeCube() {
-        cubes.remove(1);
+        cubes.remove(0);
     }
 }

@@ -96,12 +96,12 @@ public class GameBoardController {
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return playerController.getRole(currentPlayer).getName().equals("medic") ||
+        return currentPlayer.getRole() == Role.MEDIC ||
                 cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
-        return playerController.getRole(currentPlayer).getName().equals("medic") &&
+        return currentPlayer.getRole() == Role.MEDIC &&
                 cureIsFound(currentCity);
     }
 

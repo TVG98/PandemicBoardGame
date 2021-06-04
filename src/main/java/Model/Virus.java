@@ -17,7 +17,10 @@ public class Virus {
         return cubeAmount;
     }
 
-    public void changeCubeAmount(int amount) {
-        cubeAmount = amount;
+    public void increaseCubeAmount(int amount) {
+        cubeAmount += amount;
+    }
+    public void decreaseCubeAmount(int amount) {
+        cubeAmount -= amount;
     }
 }
