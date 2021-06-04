@@ -35,7 +35,33 @@ public class GameBoardController {
             gameBoard.addResearchStationToCity(currentCity);
         }
         //TODO: check if player needs to hand over card of city
-        gameController.decrementActions(currentPlayer);
+        playerController.decrementActions(currentPlayer);
+    }
+
+    public void handleTreatDisease() {
+        Player currentPlayer = gameController.getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        if (cityHasCube(currentCity)) {
+            if (canRemoveAllCubes(currentPlayer, currentCity)) {
+                removeAllCubes(currentCity);
+            } else {
+                removeCube(currentCity);
+            }
+        }
+
+        if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+            playerController.decrementActions(currentPlayer);
+        }
+    }
+
+    public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
+        return playerController.getRole(currentPlayer).getName().equals("medic") ||
+               cureIsFound(currentCity.getVirusType());
+    }
+
+    public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
+        return playerController.getRole(currentPlayer).getName().equals("medic") &&
+                cureIsFound(currentCity.getVirusType());
     }
 
     public boolean canAddResearchStation() {

@@ -61,18 +61,7 @@ public class GameController {
     }
 
     public void handleTreatDisease() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        if (gameBoardController.cityHasCube(currentCity)) {
-            if (playerController.getRole(currentPlayer).getName().equals("medic") ||
-                    gameBoardController.cureIsFound(currentCity.getVirusType())) {
-                gameBoardController.removeAllCubes(currentCity);
-            } else {
-                gameBoardController.removeCube(currentCity);
-            }
-        }
-
-        playerController.decrementActions(currentPlayer);
+        gameBoardController.handleTreatDisease();
     }
 
     public void handleFindCure() {
@@ -86,10 +75,6 @@ public class GameController {
     public void handleGiveCard(PlayerCard card, Player player1, Player player2) {
         playerController.removeCard(card, player1);
         playerController.addCard(card, player2);
-    }
-
-    public void decrementActions(Player player) {
-        player.decrementActions();
     }
 
     public Player getCurrentPlayer() {
