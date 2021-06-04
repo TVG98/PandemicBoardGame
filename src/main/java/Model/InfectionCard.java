@@ -6,8 +6,8 @@ public class InfectionCard {
     public InfectionCard(City city) {
         this.city = city;
     }
-    public City getCity
-() {
+
+    public City getCity() {
         return city;
     }
 }
