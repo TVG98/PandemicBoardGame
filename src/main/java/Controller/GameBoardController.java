@@ -41,16 +41,19 @@ public class GameBoardController {
     public void handleTreatDisease() {
         Player currentPlayer = gameController.getCurrentPlayer();
         City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        removeCorrectCubeAmount(currentPlayer, currentCity);
+        if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+            playerController.decrementActions(currentPlayer);
+        }
+    }
+
+    public void removeCorrectCubeAmount(Player currentPlayer, City currentCity) {
         if (cityHasCube(currentCity)) {
             if (canRemoveAllCubes(currentPlayer, currentCity)) {
                 removeAllCubes(currentCity);
             } else {
                 removeCube(currentCity);
             }
-        }
-
-        if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
-            playerController.decrementActions(currentPlayer);
         }
     }
 
