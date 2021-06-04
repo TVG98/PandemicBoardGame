@@ -16,6 +16,14 @@ public class GameController {
         game.nextTurn();
     }
 
+    public void checkLoss() {
+        if(gameBoardController.lossByCubeAmount()) {
+            game.setLost();
+        }
+
+        // Todo: loss by empty playerCardStack, loss by outbreakCounter
+    }
+
     public void handleDrive() {
 
     }

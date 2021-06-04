@@ -7,13 +7,10 @@ public class City {
     private ArrayList<Cube> cubes;
     private VirusType virusType;
     private ArrayList<City> nearCities;
-    private boolean hasStation;
 
-    public City(String name, VirusType virusType, ArrayList<City> nearCities, boolean hasStation) {
+    public City(String name, VirusType virusType) {
         this.name = name;
         this.virusType = virusType;
-        this.nearCities = nearCities;
-        this.hasStation = hasStation;
     }
 
     public String getName() {
@@ -32,10 +29,6 @@ public class City {
         return nearCities.contains(city);
     }
 
-    public boolean checkForResearchStation() {
-        return hasStation;
-    }
-
     public void initializeNeighbours(ArrayList<City> nearCities) {
         this.nearCities = nearCities;
     }
@@ -45,11 +38,7 @@ public class City {
     }
 
     public void addCube(VirusType type) {
-        cubes.add(new Cube(type));  // We moeten wel nog ergens de algemene cubeAmount bijhouden wat 24 is.
-    }
-
-    public void addResearchStation() {
-        hasStation = true;
+        cubes.add(new Cube(type));  // We moeten wel nog ergens de algemene cubeAmount bijhouden, wat 24 is.
     }
 
     public void removeAllCubes() {

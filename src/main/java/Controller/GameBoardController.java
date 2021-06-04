@@ -14,7 +14,7 @@ public class GameBoardController {
         ArrayList<City> nearCities = playerController.getPlayerCurrentCity(currentPlayer).getNearCities();
         //Todo: Vraag aan de speler om een stad te kiezen
 
-        City chosenCity = new City("Tokyo", VirusType.RED, null, false);  // Hier komt het resultaat
+        City chosenCity = new City("Tokyo", VirusType.RED);  // Hier komt het resultaat
         currentPlayer.setCurrentCity(chosenCity);
 
 
@@ -111,5 +111,15 @@ public class GameBoardController {
 
     public boolean cureIsFound(City currentCity) {
         return gameBoard.cureIsFound(currentCity.getVirusType());
+    }
+
+    public boolean lossByCubeAmount() {
+        for(Virus virus : gameBoard.getViruses()) {
+            if(virus.getCubeAmount() < 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
