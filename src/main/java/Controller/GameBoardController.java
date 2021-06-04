@@ -24,16 +24,16 @@ public class GameBoardController {
     public void handleDirectFlight() {
         Player currentPlayer = gameController.getCurrentPlayer();
         //Todo: Laat de speler een kaart uit zijn hand kiezen
-        CityCard chosenCard = new CityCard(null, VirusType.RED);  // Hier komt het resultaat
+        CityCard chosenCard = new CityCard(gameBoard.getCity("Tokyo"), VirusType.RED);  // Hier komt het resultaat
         currentPlayer.setCurrentCity(chosenCard.getCity());  // Ik stel voor om aan elke CityCard een stad en virusType te koppelen
     }
 
     public void handleCurePawn(Cure cure) {
-
+        gameBoard.flipCurePawn(cure);
     }
 
     public void handlePlayerCardDraw() {
-
+        gameController.getCurrentPlayer().addCardToHand(gameBoard.drawPlayerCard());
     }
 
     public void handleEpidemicCard() {
@@ -41,7 +41,23 @@ public class GameBoardController {
     }
 
     public void handleInfection() {
+        City infectedCity = gameBoard.drawInfectionCard().getCity();
+        if(infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
+                handleOutbreak(infectedCity);
+        } else {
+            gameBoard.addCubes(infectedCity, infectedCity.getVirusType());
+        }
+    }
 
+    public void handleOutbreak(City infectedCity) {
+        gameBoard.increaseOutbreakCounter();
+        for(City city : infectedCity.getNearCities()) {
+            if(infectedCity.getCubeAmount() >= 3) {
+                handleOutbreak(city);
+            } else {
+                gameBoard.addCubes(city, infectedCity.getVirusType());
+            }
+        }
     }
 
     public void handlePlayerPawnMovement(Player player) {
