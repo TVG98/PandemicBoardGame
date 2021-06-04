@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class City {
-    private String name;
+    private final String name;
     private ArrayList<Cube> cubes;
     private VirusType virusType;
     private ArrayList<City> nearCities;

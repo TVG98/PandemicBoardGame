@@ -130,7 +130,7 @@ public class Gameboard {
         return curedDiseases;
     }
 
-    public ArrayList<City> getCitiesToAddCubesTo() { //model: getCityToAddCubeTo()
+    public ArrayList<City> getCitiesToAddCubesTo() {
         return citiesToAddCubesTo;
     }
 
