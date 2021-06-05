@@ -1,6 +1,7 @@
 package View;
 
 import Controller.DatabaseController;
+import Controller.SoundController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -60,8 +62,18 @@ public class MenuView {
             button.setOpacity(0.8f);
             button.setEffect(new DropShadow());
             button.setTextFill(Color.BLACK);
-            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;"));
-            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
+            button.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    button.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;");
+                }
+            });
+            button.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    button.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
+                }
+            });
         }
 
         VBox vboxCenter = new VBox();
