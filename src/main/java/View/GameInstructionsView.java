@@ -29,7 +29,6 @@ public class GameInstructionsView
     final String pathToBackground = "src/main/media/InstructionsBackgroundResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text text = new Text("a");
 
     public GameInstructionsView(Stage primaryStage)
     {
@@ -50,6 +49,25 @@ public class GameInstructionsView
         lobbyWindowBackground.setFill(Color.color(0f, 0f, 0f, 0.9f));
         lobbyWindowBackground.setX((width / 2) - (1000 / 2f));
         lobbyWindowBackground.setY((height / 2) - (700 / 2f));
+
+        // Setup BorderPane Top Button //
+
+        Button backToGameButton = new Button("Back to the game");
+        backToGameButton.setOpacity(0.95f);
+        backToGameButton.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        backToGameButton.setTextFill(Color.BLACK);
+        backToGameButton.setFont(new Font("Arial", 20));
+        backToGameButton.setPrefHeight(100);
+        backToGameButton.setPrefWidth(200);
+
+        backToGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                GameView view = new GameView(primaryStage);
+            }
+        });
+
+        // Setup BorderPane Bottom Buttons including functionality //
 
         Button objectOfTheGameButton = new Button("Object of the game");
         objectOfTheGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -118,6 +136,7 @@ public class GameInstructionsView
         hboxButtons.setSpacing(50);
 
         bp.getChildren().addAll(lobbyWindowBackground);
+        bp.setTop(backToGameButton);
         bp.setBottom(hboxButtons);
 
 

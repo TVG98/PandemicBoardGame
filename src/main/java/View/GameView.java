@@ -1,9 +1,11 @@
 package View;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -49,6 +51,12 @@ public class GameView
         title.setFont(new Font("Castellar", 50));
         Button openMenuButton = new Button("Open Menu");
         Button howToPlayButton = new Button("How to play");
+        howToPlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                GameInstructionsView view = new GameInstructionsView(primaryStage);
+            }
+        });
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, openMenuButton, howToPlayButton);
 
