@@ -1,6 +1,7 @@
 package View;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,18 +50,27 @@ public class GameView
         // Setup BorderPane Top //
         Text title = new Text("Pandemic");
         title.setFont(new Font("Castellar", 50));
+
         Button openMenuButton = new Button("Open Menu");
+        openMenuButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                openMenuButtonHandler();
+            }
+        });
+
         Button howToPlayButton = new Button("How to play");
         howToPlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                GameInstructionsView view = new GameInstructionsView(primaryStage);
+                howToPlayButtonHandler();
             }
         });
+
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, openMenuButton, howToPlayButton);
 
-        for (Button menuButton: menuButtons)
+        for (Button menuButton : menuButtons)
         {
             menuButton.setOpacity(0.95f);
             menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
@@ -68,6 +78,18 @@ public class GameView
             menuButton.setFont(new Font("Arial", 20));
             menuButton.setPrefHeight(60);
             menuButton.setPrefWidth(150);
+            menuButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;");
+                }
+            });
+            menuButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
+                }
+            });
         }
 
         HBox hboxMenuButtons = new HBox();
@@ -151,9 +173,36 @@ public class GameView
         movement.setFont(new Font("Castellar", 20));
 
         Button driveButton = new Button("Drive/Ferry");
+        driveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                driveButtonHandler();
+            }
+        });
+
         Button directFlightButton = new Button("Direct Flight");
+        directFlightButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                directFlightButtonHandler();
+            }
+        });
+
         Button charterFlightButton = new Button("Charter Flight");
+        charterFlightButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                charterFlightButtonHandler();
+            }
+        });
+
         Button shuttleFlightButton = new Button("Shuttle Flight");
+        shuttleFlightButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shuttleFlightButtonHandler();
+            }
+        });
 
         ArrayList<Button> movementButtons = new ArrayList<Button>();
         Collections.addAll(movementButtons, driveButton, directFlightButton, charterFlightButton, shuttleFlightButton);
@@ -161,11 +210,23 @@ public class GameView
         for (Button movementButton : movementButtons)
         {
             movementButton.setOpacity(0.95f);
-            movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
+            movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
             movementButton.setTextFill(Color.BLACK);
             movementButton.setFont(new Font("Arial", 15));
             movementButton.setPrefHeight(30);
             movementButton.setPrefWidth(120);
+            movementButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;");
+                }
+            });
+            movementButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
+                }
+            });
         }
 
         HBox hboxMovementButtons = new HBox();
@@ -174,7 +235,7 @@ public class GameView
 
         VBox vboxMovement = new VBox();
         vboxMovement.setAlignment(Pos.CENTER);
-        vboxMovement.setSpacing(5);
+        vboxMovement.setSpacing(20);
         vboxMovement.getChildren().addAll(movement, hboxMovementButtons);
 
         // Actions Menu //
@@ -182,9 +243,36 @@ public class GameView
         actions.setFont(new Font("Castellar", 20));
 
         Button treatButton = new Button("Treat");
+        treatButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                treatButtonHandler();
+            }
+        });
+
         Button cureButton = new Button("Cure");
+        cureButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                cureButtonHandler();
+            }
+        });
+
         Button buildButton = new Button("Build");
+        buildButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buildButtonHandler();
+            }
+        });
+
         Button shareButton = new Button("Share");
+        shareButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shareButtonHandler();
+            }
+        });
 
         ArrayList<Button> actionButtons = new ArrayList<Button>();
         Collections.addAll(actionButtons,treatButton, cureButton, buildButton, shareButton);
@@ -197,8 +285,19 @@ public class GameView
             actionButton.setFont(new Font("Arial", 15));
             actionButton.setPrefHeight(30);
             actionButton.setPrefWidth(120);
+            actionButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;");
+                }
+            });
+            actionButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
+                }
+            });
         }
-
 
         HBox hboxActionsButtons = new HBox();
         hboxActionsButtons.getChildren().addAll(actionButtons);
@@ -207,7 +306,7 @@ public class GameView
         VBox vboxActions = new VBox();
         vboxActions.getChildren().addAll(actions, hboxActionsButtons);
         vboxActions.setAlignment(Pos.CENTER);
-        vboxActions.setSpacing(5);
+        vboxActions.setSpacing(20);
 
         // Bottom Right Elements //
         Text actionsLeft = new Text("Actions left\n\t" + "2" + "/4");
@@ -219,6 +318,24 @@ public class GameView
         endTurnButton.setFont(new Font("Arial", 20));
         endTurnButton.setPrefHeight(100);
         endTurnButton.setPrefWidth(120);
+        endTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                endTurnButtonHandler();
+            }
+        });
+        endTurnButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: red;");
+            }
+        });
+        endTurnButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white;");
+            }
+        });
 
         HBox hboxBottomBottom = new HBox();
         hboxBottomBottom.getChildren().addAll(vboxPlayers, vboxMovement, vboxActions, actionsLeft, endTurnButton);
@@ -230,7 +347,7 @@ public class GameView
         vboxBottom.setSpacing(10);
 
         vboxBottom.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
-
+        vboxBottom.setPadding(new Insets(10, 0, 0, 0));
 
         // BorderPane Layout //
         bp.setTop(hboxTop);
@@ -249,5 +366,61 @@ public class GameView
             e.printStackTrace();
         }
     }
+
+    private void howToPlayButtonHandler()
+    {
+        GameInstructionsView view = new GameInstructionsView(primaryStage);
+    }
+
+    private void openMenuButtonHandler()
+    {
+
+    }
+
+    private void driveButtonHandler()
+    {
+
+    }
+
+    private void directFlightButtonHandler()
+    {
+
+    }
+
+    private void charterFlightButtonHandler()
+    {
+
+    }
+
+    private void shuttleFlightButtonHandler()
+    {
+
+    }
+
+    private void treatButtonHandler()
+    {
+
+    }
+
+    private void cureButtonHandler()
+    {
+
+    }
+
+    private void buildButtonHandler()
+    {
+
+    }
+
+    private void shareButtonHandler()
+    {
+
+    }
+
+    private void endTurnButtonHandler()
+    {
+
+    }
+
 }
 

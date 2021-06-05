@@ -171,7 +171,7 @@ public class GameInstructionsView
         VBox vboxObjectOfTheGame = new VBox();
         vboxObjectOfTheGame.getChildren().addAll(title, summary);
         vboxObjectOfTheGame.setAlignment(Pos.CENTER);
-        vboxObjectOfTheGame.setSpacing(60);
+        vboxObjectOfTheGame.setSpacing(40);
         return vboxObjectOfTheGame;
     }
 
