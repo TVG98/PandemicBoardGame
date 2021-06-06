@@ -9,14 +9,15 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * @created May 27 2021 - 10:23 AM
@@ -352,6 +353,8 @@ public class GameView
         // BorderPane Layout //
         bp.setTop(hboxTop);
         bp.setBottom(vboxBottom);
+        makeGameBoard(bp);
+
 
         return bp;
     }
@@ -422,5 +425,237 @@ public class GameView
 
     }
 
+    private void makeGameBoard(BorderPane bp)
+    {
+        HashMap<String, int[]> blueCityCoords = new HashMap<>();
+
+        blueCityCoords.put("Chicago", new int[]{350, 320});
+        blueCityCoords.put("Montréal", new int[]{435, 320});
+        blueCityCoords.put("San Francisco", new int[]{250, 340});
+        blueCityCoords.put("New York", new int[]{495, 335});
+        blueCityCoords.put("Atlanta", new int[]{380, 380});
+        blueCityCoords.put("Washington", new int[]{455, 380});
+        blueCityCoords.put("London", new int[]{720, 280});
+        blueCityCoords.put("Madrid", new int[]{710, 340});
+        blueCityCoords.put("Essen", new int[]{800, 255});
+        blueCityCoords.put("Paris", new int[]{790, 310});
+        blueCityCoords.put("St. Petersburg", new int[]{875, 260});
+        blueCityCoords.put("Milan", new int[]{840, 300});
+
+        HashMap<String, Circle> blueCities = new HashMap<>();
+
+        for (Map.Entry<String, int[]> entry : blueCityCoords.entrySet())
+        {
+            int[] coordinates = entry.getValue();
+            int xCoord = coordinates[0];
+            int yCoord = coordinates[1];
+
+            Circle c1 = new Circle(10);
+            c1.setFill(Color.DEEPSKYBLUE);
+            c1.setCenterX(xCoord);
+            c1.setCenterY(yCoord);
+            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.BLUE);
+                }
+            });
+            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.DEEPSKYBLUE);
+                }
+            });
+
+            blueCities.put(entry.getKey(), c1);
+        }
+
+        for (Map.Entry<String, Circle> entry : blueCities.entrySet())
+        {
+            Text cityName = new Text(entry.getKey());
+            cityName.setFill(Color.DEEPSKYBLUE);
+            cityName.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+            cityName.setStroke(Color.BLACK);
+            cityName.setStrokeWidth(0.3f);
+            cityName.setX(entry.getValue().getCenterX() - 10);
+            cityName.setY(entry.getValue().getCenterY() - 15);
+
+
+            bp.getChildren().addAll(cityName, entry.getValue());
+        }
+
+        HashMap<String, int[]> greenCityCoords = new HashMap<>();
+
+        greenCityCoords.put("Moscow", new int[]{935, 295});
+        greenCityCoords.put("Tehran", new int[]{1020, 340});
+        greenCityCoords.put("Delhi", new int[]{1115, 380});
+        greenCityCoords.put("Kolkata", new int[]{1175, 405});
+        greenCityCoords.put("Istanbul", new int[]{900, 340});
+        greenCityCoords.put("Baghdad", new int[]{950, 380});
+        greenCityCoords.put("Karachi", new int[]{1040, 400});
+        greenCityCoords.put("Mumbai", new int[]{1070, 440});
+        greenCityCoords.put("Chennai", new int[]{1130, 500});
+        greenCityCoords.put("Algiers", new int[]{790, 390});
+        greenCityCoords.put("Cairo", new int[]{870, 400});
+        greenCityCoords.put("Riyadh", new int[]{920, 450});
+
+
+        HashMap<String, Circle> greenCities = new HashMap<>();
+
+        for (Map.Entry<String, int[]> entry : greenCityCoords.entrySet())
+        {
+            int[] coordinates = entry.getValue();
+            int xCoord = coordinates[0];
+            int yCoord = coordinates[1];
+
+            Circle c1 = new Circle(10);
+            c1.setFill(Color.GREEN);
+            c1.setCenterX(xCoord);
+            c1.setCenterY(yCoord);
+            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.DARKGREEN);
+                }
+            });
+            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.GREEN);
+                }
+            });
+
+            greenCities.put(entry.getKey(), c1);
+        }
+
+        for (Map.Entry<String, Circle> entry : greenCities.entrySet())
+        {
+            Text cityName = new Text(entry.getKey());
+            cityName.setFill(Color.GREEN);
+            cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
+            cityName.setStroke(Color.BLACK);
+            cityName.setStrokeWidth(0.3f);
+            cityName.setX(entry.getValue().getCenterX() - 10);
+            cityName.setY(entry.getValue().getCenterY() - 15);
+
+            bp.getChildren().addAll(cityName, entry.getValue());
+        }
+
+        HashMap<String, int[]> redCityCoords = new HashMap<>();
+
+        redCityCoords.put("Beijing", new int[]{1235, 325});
+        redCityCoords.put("Seoul", new int[]{1300, 320});
+        redCityCoords.put("Tokyo", new int[]{1365, 325});
+        redCityCoords.put("Shanghai", new int[]{1260, 385});
+        redCityCoords.put("Osaka", new int[]{1395, 385});
+        redCityCoords.put("Taipei", new int[]{1337, 420});
+        redCityCoords.put("Hong Kong", new int[]{1260, 430});
+        redCityCoords.put("Bangkok", new int[]{1200, 430});
+        redCityCoords.put("Ho Chi Minh City", new int[]{1275, 515});
+        redCityCoords.put("Manila", new int[]{1375, 525});
+        redCityCoords.put("Jakarta", new int[]{1230, 560});
+        redCityCoords.put("Sydney", new int[]{1400, 675});
+
+
+        HashMap<String, Circle> redCities = new HashMap<>();
+
+        for (Map.Entry<String, int[]> entry : redCityCoords.entrySet())
+        {
+            int[] coordinates = entry.getValue();
+            int xCoord = coordinates[0];
+            int yCoord = coordinates[1];
+
+            Circle c1 = new Circle(10);
+            c1.setFill(Color.RED);
+            c1.setCenterX(xCoord);
+            c1.setCenterY(yCoord);
+            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.DARKRED);
+                }
+            });
+            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.RED);
+                }
+            });
+
+            redCities.put(entry.getKey(), c1);
+        }
+
+        for (Map.Entry<String, Circle> entry : redCities.entrySet())
+        {
+            Text cityName = new Text(entry.getKey());
+            cityName.setFill(Color.RED);
+            cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
+            cityName.setStroke(Color.BLACK);
+            cityName.setStrokeWidth(0.3f);
+            cityName.setX(entry.getValue().getCenterX() - 10);
+            cityName.setY(entry.getValue().getCenterY() - 15);
+
+            bp.getChildren().addAll(cityName, entry.getValue());
+        }
+
+        HashMap<String, int[]> yellowCityCoords = new HashMap<>();
+
+        yellowCityCoords.put("Los Angeles", new int[]{255, 410});
+        yellowCityCoords.put("Mexico City", new int[]{325, 450});
+        yellowCityCoords.put("Miami", new int[]{440, 440});
+        yellowCityCoords.put("Bogota", new int[]{430, 510});
+        yellowCityCoords.put("Lima", new int[]{425, 600});
+        yellowCityCoords.put("Santiago", new int[]{460, 700});
+        yellowCityCoords.put("São Paulo", new int[]{590, 620});
+        yellowCityCoords.put("Buenos Aires", new int[]{550, 700});
+        yellowCityCoords.put("Lagos", new int[]{760, 500});
+        yellowCityCoords.put("Khartoum", new int[]{900, 500});
+        yellowCityCoords.put("Kinshasa", new int[]{830, 570});
+        yellowCityCoords.put("Johannesburg", new int[]{900, 650});
+
+
+        HashMap<String, Circle> yellowCities = new HashMap<>();
+
+        for (Map.Entry<String, int[]> entry : yellowCityCoords.entrySet())
+        {
+            int[] coordinates = entry.getValue();
+            int xCoord = coordinates[0];
+            int yCoord = coordinates[1];
+
+            Circle c1 = new Circle(10);
+            c1.setFill(Color.YELLOW);
+            c1.setCenterX(xCoord);
+            c1.setCenterY(yCoord);
+            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.ORANGE);
+                }
+            });
+            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    c1.setFill(Color.YELLOW);
+                }
+            });
+
+            yellowCities.put(entry.getKey(), c1);
+        }
+
+        for (Map.Entry<String, Circle> entry : yellowCities.entrySet())
+        {
+            Text cityName = new Text(entry.getKey());
+            cityName.setFill(Color.DARKORANGE);
+            cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
+            cityName.setStroke(Color.BLACK);
+            cityName.setStrokeWidth(0.3f);
+            cityName.setX(entry.getValue().getCenterX() - 10);
+            cityName.setY(entry.getValue().getCenterY() - 15);
+
+            bp.getChildren().addAll(cityName, entry.getValue());
+        }
+
+
+    }
 }
 

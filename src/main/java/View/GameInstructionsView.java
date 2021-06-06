@@ -137,6 +137,7 @@ public class GameInstructionsView
 
         bp.getChildren().addAll(lobbyWindowBackground);
         bp.setTop(backToGameButton);
+        bp.setCenter(makeIntroScreen());
         bp.setBottom(hboxButtons);
 
 
@@ -154,6 +155,25 @@ public class GameInstructionsView
         }
     }
 
+    private VBox makeIntroScreen()
+    {
+        Text title = new Text("How to play");
+        title.setFont(new Font("Castellar", 50));
+        title.setFill(Color.WHITE);
+        Text summary = new Text("Please click one of the buttons on the bottom of the screen to get more information.");
+
+        summary.setFont(new Font("Arial", 40));
+        summary.setFill(Color.WHITE);
+        summary.setWrappingWidth(600);
+
+
+        VBox vboxIntro = new VBox();
+        vboxIntro.getChildren().addAll(title, summary);
+        vboxIntro.setAlignment(Pos.CENTER);
+        vboxIntro.setSpacing(40);
+        return vboxIntro;
+    }
+
     private VBox makeObjectOfTheGameWindow()
     {
         Text title = new Text("Object of the game");
@@ -161,7 +181,7 @@ public class GameInstructionsView
         title.setFill(Color.WHITE);
 
         Text summary = new Text("Pandemic is a cooperative game. You and your fellow players are members of a disease control team, working together to research cures and prevent additional outbreaks.\n\n" +
-                "Each of you will assume a unique role within the team, with special abilities that will improve your team's chances if applied wisely. The object is to save humanity by discovering cures to four deadly diseases (Blue, Yellow, Black, and Red) that threaten to overtake the planet.\n\n" +
+                "Each of you will assume a unique role within the team, with special abilities that will improve your team's chances if applied wisely. The object is to save humanity by discovering cures to four deadly diseases (Blue, Yellow, Green, and Red) that threaten to overtake the planet.\n\n" +
                 "If you and your team aren't able to keep the diseases contained before finding the necessary cures, the planet will be overrun and the game will end in defeat for everyone... Do you have what it takes to save humanity?\n\n");
 
         summary.setFont(new Font("Arial", 25));
@@ -291,8 +311,8 @@ public class GameInstructionsView
         Text researcherTitle = new Text("Researcher");
 
         Text researcherSummary = new Text(
-                "- As an action, you may give (or a player can take) any City card from your hand.\n" +
-                "You must both be in the same city.\n" +
+                "- As an action, you may give (or a player can take) any City card from your hand.\n\n" +
+                "You must both be in the same city.\n\n" +
                 "The card does not have to match the city you are in."
         );
 
@@ -326,7 +346,7 @@ public class GameInstructionsView
         Text medicTitle = new Text("Medic");
 
         Text medicSummary = new Text(
-                "- Remove all cubes of one color when doing Treat disease" +
+                "- Remove all cubes of one color when doing Treat disease\n\n" +
                 "- Automatically remove cubes of cured diseases from the city you are in (and prevent them from being placed there)."
         );
 
