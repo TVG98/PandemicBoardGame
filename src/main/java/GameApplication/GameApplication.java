@@ -5,6 +5,8 @@ package GameApplication; /**
  */
 
 import Model.FirestoreDatabase;
+import View.GameInstructionsView;
+import View.GameView;
 import View.MenuView;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -31,6 +33,7 @@ public class GameApplication extends Application {
         //GameView g = new GameView(primaryStage);
         //LobbyServersView h = new LobbyServersView(primaryStage);
         //LossView l = new LossView(primaryStage);
+        //GameInstructionsView i = new GameInstructionsView(primaryStage);
     }
 
     public static void main(String[] args) {

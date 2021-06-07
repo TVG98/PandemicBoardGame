@@ -1,13 +1,13 @@
 package Model;
 
 public class InfectionCard {
-    private String cityName;
+    private final City city;
 
-    public InfectionCard(String cityName) {
-        this.cityName = cityName;
+    public InfectionCard(City city) {
+        this.city = city;
     }
 
-    public String getCityName() {
-        return cityName;
+    public City getCity() {
+        return city;
     }
 }

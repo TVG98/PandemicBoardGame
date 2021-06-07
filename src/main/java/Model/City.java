@@ -3,17 +3,14 @@ package Model;
 import java.util.ArrayList;
 
 public class City {
-    private String name;
+    private final String name;
     private ArrayList<Cube> cubes;
     private VirusType virusType;
     private ArrayList<City> nearCities;
-    private boolean hasStation;
 
-    public City(String name, VirusType virusType, ArrayList<City> nearCities, boolean hasStation) {
+    public City(String name, VirusType virusType) {
         this.name = name;
         this.virusType = virusType;
-        this.nearCities = nearCities;
-        this.hasStation = hasStation;
     }
 
     public String getName() {
@@ -32,20 +29,16 @@ public class City {
         return nearCities.contains(city);
     }
 
-    public boolean checkForResearchStation() {
-        return hasStation;
-    }
-
     public void initializeNeighbours(ArrayList<City> nearCities) {
         this.nearCities = nearCities;
     }
 
-    public void addCube(VirusType type) {
-        cubes.add(new Cube(type));
+    public ArrayList<City> getNearCities() {
+        return nearCities;
     }
 
-    public void addResearchStation() {
-        hasStation = true;
+    public void addCube(VirusType type) {
+        cubes.add(new Cube(type));  // We moeten wel nog ergens de algemene cubeAmount bijhouden, wat 24 is.
     }
 
     public void removeAllCubes() {
@@ -53,6 +46,6 @@ public class City {
     }
 
     public void removeCube() {
-        cubes.remove(1);
+        cubes.remove(0);
     }
 }

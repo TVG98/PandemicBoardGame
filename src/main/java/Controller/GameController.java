@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
 
 public class GameController {
@@ -15,7 +16,15 @@ public class GameController {
         game.nextTurn();
     }
 
-    public void handleDrive(City city) {
+    public void checkLoss() {
+        if(gameBoardController.lossByCubeAmount()) {
+            game.setLost();
+        }
+
+        // Todo: loss by empty playerCardStack, loss by outbreakCounter
+    }
+
+    public void handleDrive() {
 
     }
 
@@ -32,13 +41,7 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        if (gameBoardController.canAddResearchStation()) {
-            gameBoardController.handleBuildResearchStation(currentCity);
-        }
-
-        currentPlayer.decrementActions();
+        gameBoardController.handleBuildResearchStation();
     }
 
     public void handleShareKnowledge(PlayerCard card) {
@@ -48,24 +51,14 @@ public class GameController {
         if (playersInCity.size() > 1) {
 
             Player chosenPlayer = game.getCurrentPlayer();//Todo choose player to share with/change this
-            game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
+            //game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
         }
 
         getCurrentPlayer().decrementActions();
     }
 
     public void handleTreatDisease() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        if (gameBoardController.cityHasCube(currentCity)) {
-            if (playerController.getRole(currentPlayer).getName().equals("medic")) {
-                gameBoardController.removeAllCubes(currentCity);
-            } else {
-                gameBoardController.removeCube(currentCity);
-            }
-        }
-
-        playerController.decrementActions(currentPlayer);
+        gameBoardController.handleTreatDisease();
     }
 
     public void handleFindCure() {
@@ -79,10 +72,6 @@ public class GameController {
     public void handleGiveCard(PlayerCard card, Player player1, Player player2) {
         playerController.removeCard(card, player1);
         playerController.addCard(card, player2);
-    }
-
-    public void decrementActions(Player player) {
-        player.decrementActions();
     }
 
     public Player getCurrentPlayer() {

@@ -1,6 +1,7 @@
 package View;
 
 import Controller.DatabaseController;
+import Controller.SoundController;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -131,8 +133,18 @@ public class OptionsView
 
         backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
         backToMainMenuButton.setTextFill(Color.BLACK);
-        backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;"));
-        backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
+        backToMainMenuButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                backToMainMenuButton.setStyle("-fx-background-color: firebrick; -fx-background-radius: 30px;");
+            }
+        });
+        backToMainMenuButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
+            }
+        });
         backToMainMenuButton.setFont(new Font("Arial", 50));
         backToMainMenuButton.setOpacity(0.95f);
         backToMainMenuButton.setPrefHeight(100);

@@ -3,18 +3,15 @@ package Model;
 import java.util.ArrayList;
 
 public class Player {
-    private ArrayList<PlayerCard> hand;
+    private ArrayList<PlayerCard> hand = new ArrayList<>();
     private Role role;
     private City currentCity;
-    private boolean readyToStart;
+    private boolean readyToStart = false;
     private String name;
-    private int actions;
+    private int actions = 4;
 
     public Player(String name) {
         this.name = name;
-        actions = 4;
-        readyToStart = false;
-        hand = new ArrayList<PlayerCard>();
     }
 
     public void endTurn() {
