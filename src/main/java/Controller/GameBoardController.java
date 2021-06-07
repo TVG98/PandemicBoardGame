@@ -5,9 +5,19 @@ import Model.*;
 import java.util.ArrayList;
 
 public class GameBoardController {
+    static GameBoardController gameBoardController;
+
     private Gameboard gameBoard;
-    private GameController gameController;
-    private PlayerController playerController;
+    private final GameController gameController = GameController.getInstance();
+    private final PlayerController playerController = PlayerController.getInstance();
+
+    public static GameBoardController getInstance() {
+        if (gameBoardController == null) {
+            gameBoardController = new GameBoardController();
+        }
+
+        return gameBoardController;
+    }
 
     public void handleDrive() {
         Player currentPlayer = gameController.getCurrentPlayer();

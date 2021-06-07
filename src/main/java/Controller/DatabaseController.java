@@ -22,6 +22,7 @@ public class DatabaseController {
         if (databaseController == null) {
             databaseController = new DatabaseController();
         }
+
         return databaseController;
     }
 

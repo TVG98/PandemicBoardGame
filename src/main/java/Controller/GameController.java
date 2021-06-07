@@ -6,11 +6,19 @@ import javax.smartcardio.Card;
 import java.util.ArrayList;
 
 public class GameController {
+    static GameController gameController;
 
     Game game;
-    private PlayerController playerController;
-    private GameBoardController gameBoardController;
+    private final PlayerController playerController = PlayerController.getInstance();
+    private final GameBoardController gameBoardController = GameBoardController.getInstance();
 
+    public static GameController getInstance() {
+        if (gameController == null) {
+            gameController = new GameController();
+        }
+
+        return gameController;
+    }
 
     public void changeTurn(){
         game.nextTurn();

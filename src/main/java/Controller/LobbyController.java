@@ -8,11 +8,21 @@ import java.util.*;
 
 
 public class LobbyController {
+    static LobbyController lobbyController;
+
     Lobby lobby;
     DatabaseController databaseController = DatabaseController.getInstance();
 
     public LobbyController() {
 
+    }
+
+    public static LobbyController getInstance() {
+        if (lobbyController == null) {
+            lobbyController = new LobbyController();
+        }
+
+        return lobbyController;
     }
 
     public void makeLobby(String playerName) {

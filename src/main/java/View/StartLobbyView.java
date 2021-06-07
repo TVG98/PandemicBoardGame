@@ -34,7 +34,7 @@ public class StartLobbyView
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
-    LobbyController lobbyController = new LobbyController();
+    LobbyController lobbyController = LobbyController.getInstance();
 
 
     public StartLobbyView(Stage primaryStage){
@@ -98,7 +98,7 @@ public class StartLobbyView
             @Override
             public void handle(ActionEvent event) {
                 lobbyController.makeLobby(inputName.getText());
-                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
+                InLobbyView view = new InLobbyView(primaryStage);
             }
         });
         Button joinButton = new Button("Join");
@@ -106,7 +106,7 @@ public class StartLobbyView
             @Override
             public void handle(ActionEvent event) {
                 lobbyController.addPlayerToLobby(inputCode.getText(), inputName.getText());
-                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
+                InLobbyView view = new InLobbyView(primaryStage);
             }
         });
 

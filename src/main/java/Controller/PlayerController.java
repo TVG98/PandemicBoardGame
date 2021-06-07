@@ -7,10 +7,19 @@ import Model.PlayerCard;
 import java.util.ArrayList;
 
 public class PlayerController {
+    static PlayerController playerController;
     ArrayList<Player> players;
 
     public PlayerController() {
         players = new ArrayList<>();
+    }
+
+    public static PlayerController getInstance() {
+        if (playerController == null) {
+            playerController = new PlayerController();
+        }
+
+        return playerController;
     }
 
     public void addCard(PlayerCard card, Player player) {

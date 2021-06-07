@@ -35,11 +35,10 @@ public class InLobbyView implements LobbyObserver {
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
-    LobbyController lobbyController;
+    LobbyController lobbyController = LobbyController.getInstance();
 
 
-    public InLobbyView(Stage primaryStage, LobbyController controller){
-        lobbyController = controller;
+    public InLobbyView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createInLobbyBorderPane());
         lobbyController.registerObserver(this);
