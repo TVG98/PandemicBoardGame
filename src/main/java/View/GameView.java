@@ -1,5 +1,7 @@
 package View;
 
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,8 +26,7 @@ import java.util.*;
  * @project testGame
  */
 
-public class GameView
-{
+public class GameView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
@@ -654,7 +655,10 @@ public class GameView
 
             bp.getChildren().addAll(cityName, entry.getValue());
         }
+    }
 
+    @Override
+    public void update(GameObservable gameObservable) {
 
     }
 }

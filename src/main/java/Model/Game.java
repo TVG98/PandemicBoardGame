@@ -1,8 +1,13 @@
 package Model;
 
-import java.util.ArrayList;
+import Observers.GameObservable;
+import Observers.GameObserver;
 
-public class Game {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Game implements GameObservable {
+    private final List<GameObserver> observers = new ArrayList<>();
     private ArrayList<Player> players = new ArrayList<Player>();
     private int currentPlayerIndex = 0;
     private boolean lost = false;
@@ -41,5 +46,17 @@ public class Game {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    @Override
+    public void register(GameObserver gameObserver) {
+        observers.add(gameObserver);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (GameObserver gameObserver : observers) {
+            gameObserver.update(this);
+        }
     }
 }
