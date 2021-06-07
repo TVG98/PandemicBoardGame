@@ -11,8 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -470,10 +469,10 @@ public class GameView implements GameObserver {
         redCityCoords.put("Shanghai", new int[]{1260, 385});
         redCityCoords.put("Osaka", new int[]{1395, 385});
         redCityCoords.put("Taipei", new int[]{1337, 420});
-        redCityCoords.put("Hong Kong", new int[]{1260, 430});
-        redCityCoords.put("Bangkok", new int[]{1200, 430});
+        redCityCoords.put("H.K.", new int[]{1260, 430});
+        redCityCoords.put("Bangkok", new int[]{1200, 470});
         redCityCoords.put("Ho Chi Minh City", new int[]{1275, 515});
-        redCityCoords.put("Manila", new int[]{1375, 525});
+        redCityCoords.put("Manila", new int[]{1375, 535});
         redCityCoords.put("Jakarta", new int[]{1230, 560});
         redCityCoords.put("Sydney", new int[]{1400, 675});
 
@@ -504,9 +503,9 @@ public class GameView implements GameObserver {
     {
         HashMap<String, int[]> blueCityCoords = new HashMap<String, int[]>();
 
-        blueCityCoords.put("Chicago", new int[]{350, 320});
+        blueCityCoords.put("Chicago", new int[]{360, 320});
         blueCityCoords.put("Montréal", new int[]{435, 320});
-        blueCityCoords.put("San Francisco", new int[]{250, 340});
+        blueCityCoords.put("San Francisco", new int[]{225, 340});
         blueCityCoords.put("New York", new int[]{495, 335});
         blueCityCoords.put("Atlanta", new int[]{380, 380});
         blueCityCoords.put("Washington", new int[]{455, 380});

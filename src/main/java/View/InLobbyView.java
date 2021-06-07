@@ -14,9 +14,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -41,7 +44,7 @@ public class InLobbyView implements LobbyObserver {
     public InLobbyView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createInLobbyBorderPane());
-        lobbyController.registerObserver(this);
+        //lobbyController.registerObserver(this);
     }
 
     // Observer als argument meegeven zorgt voor goede initial BorderPane
@@ -68,41 +71,56 @@ public class InLobbyView implements LobbyObserver {
         vboxTop.getChildren().add(lobbyText);
 
         // BorderPane Center Setup (hboxCenter) //
-        HBox headers = new HBox();
-        Text header1 = new Text("Players");
-        Text header2 = new Text("Character");
-        Text header3 = new Text("Status");
-
-        headers.getChildren().addAll(header1, header2, header3);
-        headers.setAlignment(Pos.CENTER);
 
         Text playerOneName = new Text("Aad");
-        Text playerOneCharacter = new Text("Medic");
+        //Text playerOneCharacter = new Text("Medic");
         Text playerOneStatus = new Text("Ready");
-        HBox playerOneData = new HBox();
-        playerOneData.getChildren().addAll(playerOneName, playerOneCharacter, playerOneStatus);
-        playerOneData.setAlignment(Pos.CENTER);
-        playerOneData.setSpacing(200);
 
-        Text playerTwoName = new Text("Bert");
-        Text playerTwoCharacter = new Text("Scientist");
+        Text playerTwoName = new Text("Bartolomeüs");
+        //Text playerTwoCharacter = new Text("Scientist");
         Text playerTwoStatus = new Text("Not Ready");
-        HBox playerTwoData = new HBox();
-        playerTwoData.getChildren().addAll(playerTwoName, playerTwoCharacter, playerTwoStatus);
-        playerTwoData.setAlignment(Pos.CENTER);
-        playerTwoData.setSpacing(200);
 
-        Text playerThreeName = new Text("Carl");
-        Text playerThreeCharacter = new Text("Dispatcher");
+        Text playerThreeName = new Text("Carlos");
+        //Text playerThreeCharacter = new Text("Dispatcher");
         Text playerThreeStatus = new Text("Ready");
-        HBox playerThreeData = new HBox();
-        playerThreeData.getChildren().addAll(playerThreeName, playerThreeCharacter, playerThreeStatus);
-        playerThreeData.setAlignment(Pos.CENTER);
-        playerThreeData.setSpacing(200);
 
-        VBox vboxCenter = new VBox();
-        vboxCenter.getChildren().addAll(headers, playerOneData, playerTwoData, playerThreeData);
-        vboxCenter.setAlignment(Pos.CENTER);
+        Text playerFourName = new Text("-");
+        //Text playerFourCharacter = new Text("-");
+        Text playerFourStatus = new Text("-");
+
+        ArrayList<Text> playerNames = new ArrayList<Text>();
+        Collections.addAll(playerNames, playerOneName, playerTwoName, playerThreeName, playerFourName);
+
+        for (Text playerName : playerNames) {
+            playerName.setTextAlignment(TextAlignment.LEFT);
+            playerName.setFont(Font.font("Arial", 40));
+            playerName.setFill(Color.WHITE);
+        }
+
+        VBox vboxPlayerNames = new VBox();
+        vboxPlayerNames.getChildren().addAll(playerNames);
+        vboxPlayerNames.setAlignment(Pos.CENTER);
+        vboxPlayerNames.setSpacing(100);
+
+        ArrayList<Text> playerStatuses = new ArrayList<Text>();
+        Collections.addAll(playerStatuses, playerOneStatus, playerTwoStatus, playerThreeStatus, playerFourStatus);
+
+        for (Text playerStatus : playerStatuses) {
+            playerStatus.setTextAlignment(TextAlignment.LEFT);
+            playerStatus.setFont(Font.font("Arial", 40));
+            playerStatus.setFill(Color.WHITE);
+        }
+
+        VBox vboxPlayerStatuses = new VBox();
+        vboxPlayerStatuses.getChildren().addAll(playerStatuses);
+        vboxPlayerStatuses.setAlignment(Pos.CENTER);
+        vboxPlayerStatuses.setSpacing(100);
+
+        HBox hboxCenter = new HBox();
+        hboxCenter.getChildren().addAll(vboxPlayerNames, vboxPlayerStatuses);
+        hboxCenter.setAlignment(Pos.CENTER);
+        hboxCenter.setSpacing(200);
+
 
         // BorderPane Bottom Setup (hboxBottom) //
 
@@ -147,7 +165,7 @@ public class InLobbyView implements LobbyObserver {
         // BorderPane layout //
         bp.getChildren().add(lobbyWindowBackground);
         bp.setTop(vboxTop);
-        bp.setCenter(vboxCenter);
+        bp.setCenter(hboxCenter);
         bp.setBottom(hboxBottom);
 
         return bp;
