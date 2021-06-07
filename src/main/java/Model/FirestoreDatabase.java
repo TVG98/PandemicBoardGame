@@ -45,8 +45,12 @@ public class FirestoreDatabase {
         this.lobbyRef = this.db.collection(LOBBY_PATH);
     }
 
-    public void addPlayer() {
+    public void updatePlayersInLobby(String documentId, Lobby lobby) {
+        HashMap<String, Object> quote = new HashMap<>();
+        quote.put("Players", lobby.getPlayers());
 
+        DocumentReference documentReference = this.lobbyRef.document(documentId);
+        documentReference.update("Players", lobby.getPlayers());
     }
 
     public Lobby makeLobby(Player player) {

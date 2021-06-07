@@ -26,14 +26,15 @@ public class LobbyController {
     }
 
 
-    public void addPlayerToLobby(String passwd) {
+    public void addPlayerToLobby(String passwd, String playerName) {
         lobby = new Lobby(passwd);
-        getPlayerFromLobbyDoc(dbController.getLobbyDocument(passwd));
-        //Todo add this player
-        dbController.addPlayer();
+        getPlayersFromLobbyDoc(dbController.getLobbyDocument(passwd));
+        lobby.addPlayer(new Player(playerName));
+        System.out.println(lobby.getPlayers().size());
+        dbController.updatePlayers(passwd, lobby);
     }
 
-    public void getPlayerFromLobbyDoc(DocumentSnapshot docSnap) {
+    public void getPlayersFromLobbyDoc(DocumentSnapshot docSnap) {
         Map<String, Object> map = docSnap.getData();
         if (map != null) {
             Object playersObject = map.get("Players");

@@ -105,6 +105,7 @@ public class StartLobbyView
         joinButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                lobbyController.addPlayerToLobby(inputCode.getText(), inputName.getText());
                 InLobbyView view = new InLobbyView(primaryStage, lobbyController);
             }
         });
