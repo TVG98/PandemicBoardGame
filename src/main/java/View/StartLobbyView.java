@@ -81,8 +81,8 @@ public class StartLobbyView
         createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby(new Player(inputName.getText()));
-                InLobbyView view = new InLobbyView(primaryStage);
+                lobbyController.makeLobby(inputName.getText());
+                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
             }
         });
         Button joinButton = new Button("Join");
@@ -120,7 +120,7 @@ public class StartLobbyView
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby(new Player(inputName.getText()));
+                lobbyController.makeLobby(inputName.getText());
                 MenuView view = new MenuView(primaryStage);
             }
         });

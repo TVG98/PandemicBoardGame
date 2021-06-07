@@ -8,6 +8,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -22,8 +23,7 @@ public class FirestoreDatabase {
     private static final String LOBBY_PATH = "lobbies";
     private CollectionReference lobbyRef;
 
-    public FirestoreDatabase()
-    {
+    public FirestoreDatabase() {
         try {
             initialize();
         } catch (Exception e) {
@@ -45,45 +45,26 @@ public class FirestoreDatabase {
         this.lobbyRef = this.db.collection(LOBBY_PATH);
     }
 
-    public void addPlayer()
-    {
+    public void addPlayer() {
 
     }
 
-    public void makeLobby(Player player)
-    {
-        HashMap<String, Object> quote = createLobbyData(player);
-        lobbyRef.document("Test").set(quote);
-
+    public Lobby makeLobby(Player player) {
+        Lobby lobby = new Lobby(player);
+        HashMap<String, Object> quote = createLobbyData(lobby);
+        lobbyRef.document(lobby.getPassword()).set(quote);
+        return lobby;
     }
 
-    public HashMap<String, Object> createLobbyData(Player player) {
+    public HashMap<String, Object> createLobbyData(Lobby lobby) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        HashMap<String, String> password = new HashMap<>();
-        HashMap<String, Player> playerMap = new HashMap<>();
 
-        playerMap.put("Player1", player);
-        password.put("password", generateLobbyPassword());
-        hashMap.put("Lobby", password);
-        hashMap.put("Players", playerMap);
+        hashMap.put("Joinable", lobby.getJoinable());
+        hashMap.put("Players", lobby.getPlayers());
         return hashMap;
     }
 
-    private String generateLobbyPassword() {
-        final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        final int passwordLength = 8;
-        StringBuilder password = new StringBuilder();
-
-        for (int i = 0; i < passwordLength; i++) {
-            int index = (int)(CHARSET.length() * Math.random());
-            password.append(CHARSET.charAt(index));
-        }
-        System.out.println(password);
-        return password.toString();
-    }
-
-    public DocumentSnapshot getLobbyByDocumentId(String documentId)
-    {
+    public DocumentSnapshot getLobbyByDocumentId(String documentId) {
         DocumentReference docRef = this.lobbyRef.document(documentId);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document;
@@ -93,7 +74,6 @@ public class FirestoreDatabase {
 
             if (document.exists()) {
                 System.out.println("Document exists");
-                System.out.println(document.get("lobby1"));
                 return document;
             } else {
                 System.out.println("No such document!");

@@ -1,39 +1,39 @@
 package Controller;
 
+import GameApplication.GameApplication;
 import Model.FirestoreDatabase;
+import Model.Lobby;
 import Model.Player;
-//import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.DocumentSnapshot;
 
 /**
  * @created May 26 2021 - 8:58 PM
  * @project testGame
  */
-public class DatabaseController
-{
-    private final FirestoreDatabase db;
+public class DatabaseController {
+    FirestoreDatabase db = GameApplication.getFsDatabase();
 
     public DatabaseController() {
-        db = new FirestoreDatabase();
-    }
-
-    public void addPlayer()
-    {
 
     }
 
-    public void makeLobby(Player player)
-    {
-        db.makeLobby(player);
+    public void addPlayer() {
+
     }
 
-    public void initializeDatabase()
-    {
+    public Lobby makeLobby(Player player) {
+        return db.makeLobby(player);
+    }
+
+    public DocumentSnapshot getLobbyDocument(String lobbyCode) {
+        return db.getLobbyByDocumentId(lobbyCode);
+    }
+
+    public void initializeDatabase() {
         try {
             db.initialize();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 }

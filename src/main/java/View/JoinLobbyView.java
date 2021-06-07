@@ -96,8 +96,8 @@ public class JoinLobbyView {
             @Override
             public void handle(ActionEvent event) {
 
-                //lobbyController.makeLobby();
-                InLobbyView view = new InLobbyView(primaryStage);
+                lobbyController.addPlayerToLobby(enterCodeInput.getText());
+                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
             }
         });
 
