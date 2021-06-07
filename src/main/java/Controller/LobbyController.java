@@ -9,15 +9,14 @@ import java.util.*;
 
 public class LobbyController {
     Lobby lobby;
-    DatabaseController dbController;
-
+    DatabaseController databaseController = DatabaseController.getInstance();
 
     public LobbyController() {
-        dbController = new DatabaseController();
+
     }
 
     public void makeLobby(String playerName) {
-        lobby = dbController.makeLobby(new Player(playerName));//Todo: create player via playerController
+        lobby = databaseController.makeLobby(new Player(playerName));//Todo: create player via playerController
         System.out.println("lobby aangemaakt " + lobby.getPassword());
     }
 
@@ -28,10 +27,10 @@ public class LobbyController {
 
     public void addPlayerToLobby(String passwd, String playerName) {
         lobby = new Lobby(passwd);
-        getPlayersFromLobbyDoc(dbController.getLobbyDocument(passwd));
+        getPlayersFromLobbyDoc(databaseController.getLobbyDocument(passwd));
         lobby.addPlayer(new Player(playerName));
         System.out.println(lobby.getPlayers().size());
-        dbController.updatePlayers(passwd, lobby);
+        databaseController.updatePlayers(passwd, lobby);
     }
 
     public void getPlayersFromLobbyDoc(DocumentSnapshot docSnap) {
