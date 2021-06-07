@@ -17,8 +17,8 @@ public class DatabaseController {
 
     }
 
-    public void addPlayer() {
-
+    public void updatePlayers(String lobbyCode, Lobby lobby) {
+        db.updatePlayersInLobby(lobbyCode, lobby);
     }
 
     public Lobby makeLobby(Player player) {

@@ -1,12 +1,11 @@
-package GameApplication; /**
+package GameApplication;
+/**
  * @author Romano Biertantie
  * @created May 20 2021 - 6:47 PM
  * @project testGame
  */
 
 import Model.FirestoreDatabase;
-import View.GameInstructionsView;
-import View.GameView;
 import View.MenuView;
 import javafx.application.Application;
 import javafx.scene.image.Image;
