@@ -1,6 +1,8 @@
 package View;
 
 import Controller.LobbyController;
+import Observers.LobbyObservable;
+import Observers.LobbyObserver;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,6 +17,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * @created May 25 2021 - 1:27 PM
@@ -26,17 +30,19 @@ import java.io.File;
  *
  */
 
-public class InLobbyView {
+public class InLobbyView implements LobbyObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
     final double height = 960;
-    LobbyController lobbyController = new LobbyController();
+    LobbyController lobbyController;
 
 
-    public InLobbyView(Stage primaryStage){
+    public InLobbyView(Stage primaryStage, LobbyController controller){
+        lobbyController = controller;
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createInLobbyBorderPane());
+        lobbyController.registerObserver(this);
     }
 
     // Observer als argument meegeven zorgt voor goede initial BorderPane
@@ -113,7 +119,7 @@ public class InLobbyView {
         readyUpButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                lobbyController.setPlayerReady();
             }
         });
 
@@ -161,4 +167,8 @@ public class InLobbyView {
 
     }
 
+    @Override
+    public void update(LobbyObservable sb) {
+        System.out.println("hoi");
+    }
 }

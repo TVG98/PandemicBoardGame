@@ -51,28 +51,44 @@ public class StartLobbyView
         bp.setBackground(new Background(bgImage));
 
         // Setup Background Shapes (inputTextBackground) //
-        Rectangle inputTextBackground = new Rectangle(750, 100);
+        Rectangle inputTextBackground = new Rectangle(750, 150);
         inputTextBackground.setX((width/2) - (750/2f));
         inputTextBackground.setY(175);
         inputTextBackground.setFill(Color.color(0.3f, 0.3, 0.3, 0.95f));
-        inputTextBackground.setArcWidth(30d);
-        inputTextBackground.setArcHeight(30d);
+        inputTextBackground.setArcWidth(30);
+        inputTextBackground.setArcHeight(30);
 
         // Setup Borderpane Top (vboxTop) //
-        Text lobbyText = new Text("Lobby");
-        lobbyText.setFont(new Font("Castellar", 80));
         Text name = new Text("Enter your name: ");
         name.setFont(new Font("Arial", 50));
+        name.setFill(Color.WHITE);
         TextField inputName  = new TextField();
         inputName.setPromptText("Your name");
 
-        HBox hboxInput = new HBox();
-        hboxInput.getChildren().addAll(name, inputName);
-        hboxInput.setAlignment(Pos.CENTER);
+        HBox hboxInputName = new HBox();
+        hboxInputName.getChildren().addAll(name, inputName);
+        hboxInputName.setAlignment(Pos.CENTER);
+
+        Text code = new Text("Enter your code: ");
+        code.setFont(new Font("Arial", 50));
+        code.setFill(Color.WHITE);
+        TextField inputCode = new TextField();
+        inputCode.setPromptText("Your code");
+
+        HBox hboxInputCode = new HBox();
+        hboxInputCode.getChildren().addAll(code, inputCode);
+        hboxInputCode.setAlignment(Pos.CENTER);
+
+        VBox vboxInputs = new VBox();
+        vboxInputs.getChildren().addAll(hboxInputName, hboxInputCode);
 
         VBox vboxTop = new VBox();
-        vboxTop.getChildren().addAll(lobbyText, hboxInput);
+
+        Text lobbyText = new Text("Lobby");
+        lobbyText.setFont(new Font("Castellar", 80));
+        vboxTop.getChildren().addAll(lobbyText, vboxInputs);
         vboxTop.setAlignment(Pos.CENTER);
+        vboxTop.setSpacing(20);
         vboxTop.setSpacing(100);
 
         // Setup BorderPane Center (hboxCenter) //
@@ -81,15 +97,15 @@ public class StartLobbyView
         createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby(new Player(inputName.getText()));
-                InLobbyView view = new InLobbyView(primaryStage);
+                lobbyController.makeLobby(inputName.getText());
+                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
             }
         });
         Button joinButton = new Button("Join");
         joinButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                JoinLobbyView view = new JoinLobbyView(primaryStage);
+                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
             }
         });
 
@@ -120,7 +136,7 @@ public class StartLobbyView
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby(new Player(inputName.getText()));
+                lobbyController.makeLobby(inputName.getText());
                 MenuView view = new MenuView(primaryStage);
             }
         });

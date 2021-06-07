@@ -1,7 +1,9 @@
-package View;
+package View.Unused;
 
 import Controller.DatabaseController;
 import Controller.LobbyController;
+import View.InLobbyView;
+import View.MenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -96,8 +98,8 @@ public class JoinLobbyView {
             @Override
             public void handle(ActionEvent event) {
 
-                //lobbyController.makeLobby();
-                InLobbyView view = new InLobbyView(primaryStage);
+                lobbyController.addPlayerToLobby(enterCodeInput.getText());
+                InLobbyView view = new InLobbyView(primaryStage, lobbyController);
             }
         });
 
