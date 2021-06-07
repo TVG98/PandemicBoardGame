@@ -426,66 +426,23 @@ public class GameView implements GameObserver {
 
     }
 
+    @Override
+    public void update(GameObservable gameObservable) {
+
+    }
+
+
     private void makeGameBoard(BorderPane bp)
     {
-        HashMap<String, int[]> blueCityCoords = new HashMap<>();
+        placeCitiesWithColorOnBp(makeBlueCityCoordinates(), Color.DEEPSKYBLUE, bp);
+        placeCitiesWithColorOnBp(makeGreenCityCoordinates(), Color.GREEN, bp);
+        placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, bp);
+        placeCitiesWithColorOnBp(makeYellowCityCoordinates(), Color.YELLOW, bp);
+    }
 
-        blueCityCoords.put("Chicago", new int[]{350, 320});
-        blueCityCoords.put("Montréal", new int[]{435, 320});
-        blueCityCoords.put("San Francisco", new int[]{250, 340});
-        blueCityCoords.put("New York", new int[]{495, 335});
-        blueCityCoords.put("Atlanta", new int[]{380, 380});
-        blueCityCoords.put("Washington", new int[]{455, 380});
-        blueCityCoords.put("London", new int[]{720, 280});
-        blueCityCoords.put("Madrid", new int[]{710, 340});
-        blueCityCoords.put("Essen", new int[]{800, 255});
-        blueCityCoords.put("Paris", new int[]{790, 310});
-        blueCityCoords.put("St. Petersburg", new int[]{875, 260});
-        blueCityCoords.put("Milan", new int[]{840, 300});
-
-        HashMap<String, Circle> blueCities = new HashMap<>();
-
-        for (Map.Entry<String, int[]> entry : blueCityCoords.entrySet())
-        {
-            int[] coordinates = entry.getValue();
-            int xCoord = coordinates[0];
-            int yCoord = coordinates[1];
-
-            Circle c1 = new Circle(10);
-            c1.setFill(Color.DEEPSKYBLUE);
-            c1.setCenterX(xCoord);
-            c1.setCenterY(yCoord);
-            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(Color.BLUE);
-                }
-            });
-            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(Color.DEEPSKYBLUE);
-                }
-            });
-
-            blueCities.put(entry.getKey(), c1);
-        }
-
-        for (Map.Entry<String, Circle> entry : blueCities.entrySet())
-        {
-            Text cityName = new Text(entry.getKey());
-            cityName.setFill(Color.DEEPSKYBLUE);
-            cityName.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-            cityName.setStroke(Color.BLACK);
-            cityName.setStrokeWidth(0.3f);
-            cityName.setX(entry.getValue().getCenterX() - 10);
-            cityName.setY(entry.getValue().getCenterY() - 15);
-
-
-            bp.getChildren().addAll(cityName, entry.getValue());
-        }
-
-        HashMap<String, int[]> greenCityCoords = new HashMap<>();
+    private HashMap<String, int[]> makeGreenCityCoordinates()
+    {
+        HashMap<String, int[]> greenCityCoords = new HashMap<String, int[]>();
 
         greenCityCoords.put("Moscow", new int[]{935, 295});
         greenCityCoords.put("Tehran", new int[]{1020, 340});
@@ -500,49 +457,12 @@ public class GameView implements GameObserver {
         greenCityCoords.put("Cairo", new int[]{870, 400});
         greenCityCoords.put("Riyadh", new int[]{920, 450});
 
+        return greenCityCoords;
+    }
 
-        HashMap<String, Circle> greenCities = new HashMap<>();
-
-        for (Map.Entry<String, int[]> entry : greenCityCoords.entrySet())
-        {
-            int[] coordinates = entry.getValue();
-            int xCoord = coordinates[0];
-            int yCoord = coordinates[1];
-
-            Circle c1 = new Circle(10);
-            c1.setFill(Color.GREEN);
-            c1.setCenterX(xCoord);
-            c1.setCenterY(yCoord);
-            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(Color.DARKGREEN);
-                }
-            });
-            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(Color.GREEN);
-                }
-            });
-
-            greenCities.put(entry.getKey(), c1);
-        }
-
-        for (Map.Entry<String, Circle> entry : greenCities.entrySet())
-        {
-            Text cityName = new Text(entry.getKey());
-            cityName.setFill(Color.GREEN);
-            cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
-            cityName.setStroke(Color.BLACK);
-            cityName.setStrokeWidth(0.3f);
-            cityName.setX(entry.getValue().getCenterX() - 10);
-            cityName.setY(entry.getValue().getCenterY() - 15);
-
-            bp.getChildren().addAll(cityName, entry.getValue());
-        }
-
-        HashMap<String, int[]> redCityCoords = new HashMap<>();
+    private HashMap<String, int[]> makeRedCityCoordinates()
+    {
+        HashMap<String, int[]> redCityCoords = new HashMap<String, int[]>();
 
         redCityCoords.put("Beijing", new int[]{1235, 325});
         redCityCoords.put("Seoul", new int[]{1300, 320});
@@ -557,49 +477,12 @@ public class GameView implements GameObserver {
         redCityCoords.put("Jakarta", new int[]{1230, 560});
         redCityCoords.put("Sydney", new int[]{1400, 675});
 
+        return redCityCoords;
+    }
 
-        HashMap<String, Circle> redCities = new HashMap<>();
-
-        for (Map.Entry<String, int[]> entry : redCityCoords.entrySet())
-        {
-            int[] coordinates = entry.getValue();
-            int xCoord = coordinates[0];
-            int yCoord = coordinates[1];
-
-            Circle c1 = new Circle(10);
-            c1.setFill(Color.RED);
-            c1.setCenterX(xCoord);
-            c1.setCenterY(yCoord);
-            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(Color.DARKRED);
-                }
-            });
-            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(Color.RED);
-                }
-            });
-
-            redCities.put(entry.getKey(), c1);
-        }
-
-        for (Map.Entry<String, Circle> entry : redCities.entrySet())
-        {
-            Text cityName = new Text(entry.getKey());
-            cityName.setFill(Color.RED);
-            cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
-            cityName.setStroke(Color.BLACK);
-            cityName.setStrokeWidth(0.3f);
-            cityName.setX(entry.getValue().getCenterX() - 10);
-            cityName.setY(entry.getValue().getCenterY() - 15);
-
-            bp.getChildren().addAll(cityName, entry.getValue());
-        }
-
-        HashMap<String, int[]> yellowCityCoords = new HashMap<>();
+    private HashMap<String, int[]> makeYellowCityCoordinates()
+    {
+        HashMap<String, int[]> yellowCityCoords = new HashMap<String, int[]>();
 
         yellowCityCoords.put("Los Angeles", new int[]{255, 410});
         yellowCityCoords.put("Mexico City", new int[]{325, 450});
@@ -614,39 +497,64 @@ public class GameView implements GameObserver {
         yellowCityCoords.put("Kinshasa", new int[]{830, 570});
         yellowCityCoords.put("Johannesburg", new int[]{900, 650});
 
+        return yellowCityCoords;
+    }
 
-        HashMap<String, Circle> yellowCities = new HashMap<>();
+    private HashMap<String, int[]> makeBlueCityCoordinates()
+    {
+        HashMap<String, int[]> blueCityCoords = new HashMap<String, int[]>();
 
-        for (Map.Entry<String, int[]> entry : yellowCityCoords.entrySet())
+        blueCityCoords.put("Chicago", new int[]{350, 320});
+        blueCityCoords.put("Montréal", new int[]{435, 320});
+        blueCityCoords.put("San Francisco", new int[]{250, 340});
+        blueCityCoords.put("New York", new int[]{495, 335});
+        blueCityCoords.put("Atlanta", new int[]{380, 380});
+        blueCityCoords.put("Washington", new int[]{455, 380});
+        blueCityCoords.put("London", new int[]{720, 280});
+        blueCityCoords.put("Madrid", new int[]{710, 340});
+        blueCityCoords.put("Essen", new int[]{800, 255});
+        blueCityCoords.put("Paris", new int[]{790, 310});
+        blueCityCoords.put("St. Petersburg", new int[]{875, 260});
+        blueCityCoords.put("Milan", new int[]{840, 300});
+
+        return blueCityCoords;
+    }
+
+    private void placeCitiesWithColorOnBp(HashMap<String, int[]> cityCoords, Color color, BorderPane bp)
+    {
+        HashMap<String, Circle> cities = new HashMap<String, Circle>();
+
+        for (Map.Entry<String, int[]> entry : cityCoords.entrySet())
         {
             int[] coordinates = entry.getValue();
             int xCoord = coordinates[0];
             int yCoord = coordinates[1];
 
             Circle c1 = new Circle(10);
-            c1.setFill(Color.YELLOW);
+            c1.setFill(color);
             c1.setCenterX(xCoord);
             c1.setCenterY(yCoord);
             c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    c1.setFill(Color.ORANGE);
+                    c1.setFill(color.darker());
                 }
             });
             c1.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    c1.setFill(Color.YELLOW);
+                    c1.setFill(color);
                 }
             });
 
-            yellowCities.put(entry.getKey(), c1);
+            cities.put(entry.getKey(), c1);
+
         }
 
-        for (Map.Entry<String, Circle> entry : yellowCities.entrySet())
+        for (Map.Entry<String, Circle> entry : cities.entrySet())
         {
             Text cityName = new Text(entry.getKey());
-            cityName.setFill(Color.DARKORANGE);
+            cityName.setFill(color);
             cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
             cityName.setStroke(Color.BLACK);
             cityName.setStrokeWidth(0.3f);
@@ -655,11 +563,6 @@ public class GameView implements GameObserver {
 
             bp.getChildren().addAll(cityName, entry.getValue());
         }
-    }
-
-    @Override
-    public void update(GameObservable gameObservable) {
-
     }
 }
 
