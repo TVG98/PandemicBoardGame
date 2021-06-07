@@ -1,9 +1,15 @@
 package Model;
 
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
+import Observers.GameObserver;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class Gameboard {
+public class Gameboard implements GameBoardObservable {
+    private final List<GameBoardObserver> observers = new ArrayList<>();
     private final City[] cities = this.initializeCities();
     private final Cure[] cures = new Cure[]{new Cure(VirusType.RED),
                                             new Cure(VirusType.BLUE),
@@ -192,5 +198,15 @@ public class Gameboard {
 
     public boolean gameboardHasResearchStationsLeft() {
         return citiesWithResearchStations.size() < 6;
+    }
+
+    @Override
+    public void register(GameBoardObserver gameBoardObserver) {
+        observers.add(gameBoardObserver);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+
     }
 }
