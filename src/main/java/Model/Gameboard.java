@@ -116,6 +116,7 @@ public class Gameboard {
 
         return null;
     }
+
     public Virus[] getViruses() {
         return viruses;
     }
@@ -127,6 +128,18 @@ public class Gameboard {
             }
         }
         return null;
+    }
+
+    public int getOutbreakCounter() {
+        return outbreakCounter;
+    }
+
+    public int getInfectionRate() {
+        return infectionRate;
+    }
+
+    public ArrayList<PlayerCard> getPlayerStack() {
+        return playerStack;
     }
 
     public ArrayList<City> getCitiesWithResearchStations() {

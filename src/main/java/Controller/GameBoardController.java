@@ -122,4 +122,16 @@ public class GameBoardController {
 
         return false;
     }
+
+    public boolean lossByEmptyPlayerCardStack() {
+        return gameBoard.getPlayerStack().size() <= 0;
+    }
+
+    public boolean lossByOutbreakCounter() {
+        return gameBoard.getOutbreakCounter() >= 8;
+    }
+
+    public boolean winByCures() {
+        return gameBoard.getCuredDiseases().size() == 4;
+    }
 }

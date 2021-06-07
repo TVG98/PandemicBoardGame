@@ -19,9 +19,17 @@ public class GameController {
     public void checkLoss() {
         if(gameBoardController.lossByCubeAmount()) {
             game.setLost();
+        } else if(gameBoardController.lossByEmptyPlayerCardStack()) {
+            game.setLost();
+        } else if(gameBoardController.lossByOutbreakCounter()) {
+            game.setLost();
         }
-
-        // Todo: loss by empty playerCardStack, loss by outbreakCounter
+    }
+    // Misschien dat we de checkLoss en de checkWin method kunnen samenvoegen
+    public void checkWin() {
+        if(gameBoardController.winByCures()) {
+            game.setWon();
+        }
     }
 
     public void handleDrive() {
