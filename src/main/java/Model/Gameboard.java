@@ -1,11 +1,13 @@
 package Model;
 
+import Controller.PlayerController;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Gameboard implements GameBoardObservable {
@@ -19,26 +21,26 @@ public class Gameboard implements GameBoardObservable {
                                                  new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
                                                  new Virus(VirusType.BLACK)};
-    private ArrayList<InfectionCard> infectionStack;
+    private ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
     private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<InfectionCard>();
-    private ArrayList<PlayerCard> playerStack;
+    private ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
     private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<PlayerCard>();
     private int outbreakCounter = 0;
     private int infectionRate = 0;
     private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesToAddCubesTo;
 
-    public Gameboard(ArrayList<InfectionCard> infectionStack, ArrayList<PlayerCard> playerStack) {
-        this.infectionStack = infectionStack;
-        this.playerStack = playerStack;
+    public Gameboard() {  // Mischien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
+        shuffleInfectionCards();
+        shufflePlayerCards();
     }
 
-    public City[] initializeCities(){
+    private City[] initializeCities() {
         City[] cities = new City[48];
         String[] cityNames = new String[]{"San Fransisco", "Chicago", "Atlanta", "Montreal", "Washington", "New York", "Madrid", "London", "Paris", "Essen", "Milan", "St. Petersburg",  // Blue
             "Los Angeles", "Mexico City", "Miami", "Bogota", "Lima", "Santiago", "Buenos Aires", "Sao Paulo", "Lagos", "Kinshasa", "Khartoum", "Johannesburg",  // Yellow
-            "Algiers", "Istanbul", "Moscow", "Cairo", "Baghdad", "Riyadh", "Karachi", "Tehran", " Dehli", "Mumbai", "Kolkata", "Chennai",  // Black
-            "Bankok", "Jakata", "Ho Chi Minh City", "Hong Kong", "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei", "Manila", "Sydney"};  // Red
+            "Algiers", "Istanbul", "Moscow", "Cairo", "Baghdad", "Riyadh", "Karachi", "Tehran", " Delhi", "Mumbai", "Kolkata", "Chennai",  // Black
+            "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong", "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei", "Manila", "Sydney"};  // Red
 
         int x = 0;
         for(int i = 0; i < cityNames.length; i++){
@@ -49,6 +51,50 @@ public class Gameboard implements GameBoardObservable {
         }
 
         return cities;
+    }
+
+    private ArrayList<InfectionCard> initializeInfectionCardStack() {
+        ArrayList<InfectionCard> infectionCardStack = new ArrayList<InfectionCard>();
+
+        for(City city : this.cities) {
+            infectionCardStack.add(new InfectionCard(city));
+        }
+
+        return infectionCardStack;
+    }
+
+    private ArrayList<PlayerCard> initializePlayerCardStack() {
+        ArrayList<PlayerCard> playerCardStack = new ArrayList<PlayerCard>();
+
+        for(City city : this.cities) {
+            playerCardStack.add(new CityCard(city, city.getVirusType()));
+        }
+
+        playerCardStack.addAll(Arrays.asList(initializeEventCards()));
+        playerCardStack.addAll(Arrays.asList(initializeEpidemicCards(6)));
+
+        return playerCardStack;
+    }
+
+    private EventCard[] initializeEventCards() {  // De Eventcards kunnen we misschien ook zonder parameters doen
+        EventCard[] eventCards = new EventCard[5];
+        eventCards[0] = new OneQuietNight("One quiet night", "Skip the next Infect Cities step.");
+        eventCards[1] = new GovernmentGrant("Government grant", "Add 1 research station to any city.");
+        eventCards[2] = new OneQuietNight("Airlift", "Move any 1 pawn to any city.");
+        eventCards[3] = new OneQuietNight("Forecast", "Draw, look at and rearrange the top 6 cards of the Infection Deck, put them back on top.");
+        eventCards[4] = new OneQuietNight("Resilient population", "Remove any 1 card in the Infection Discard Pile from the game.");
+
+        return eventCards;
+    }
+
+    private EpidemicCard[] initializeEpidemicCards(int epidemicCardAmount) {
+        EpidemicCard[] epidemicCards = new EpidemicCard[epidemicCardAmount];
+
+        for(int i = 0; i < epidemicCardAmount; i++) {
+            epidemicCards[i] = new EpidemicCard();
+        }
+
+        return epidemicCards;
     }
 
     public void flipCurePawn(Cure cure) {
