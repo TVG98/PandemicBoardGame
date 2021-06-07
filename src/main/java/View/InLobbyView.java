@@ -169,6 +169,6 @@ public class InLobbyView implements LobbyObserver {
 
     @Override
     public void update(LobbyObservable sb) {
-        System.out.println("hoi");
+
     }
 }

@@ -5,10 +5,9 @@ import Observers.LobbyObserver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 public class Lobby implements LobbyObservable {
-    private List<LobbyObserver> observers = new ArrayList<LobbyObserver>();
+    private final List<LobbyObserver> observers = new ArrayList<>();
 
     private boolean joinable;
     private ArrayList<Player> players;
@@ -87,15 +86,13 @@ public class Lobby implements LobbyObservable {
 
     @Override
     public void register(LobbyObserver observer) {
-        System.out.println("registreer");
         observers.add(observer);
     }
 
     @Override
     public void notifyAllObservers() {
-        System.out.println(observers.size());
-        for (LobbyObserver s : observers) {
-            s.update(this);
+        for (LobbyObserver lobbyObserver : observers) {
+            lobbyObserver.update(this);
         }
     }
 }
