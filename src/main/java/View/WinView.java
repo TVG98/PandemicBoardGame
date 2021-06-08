@@ -2,13 +2,11 @@ package View;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,12 +15,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.File;
 
-
-/**
- * @created May 25 2021 - 1:45 PM
- * @project testGame
- */
 public class WinView {
+
     Stage primaryStage;
     final String pathToImage = "src/main/media/SituationBackground.jpg";
     final double width = 1280;
@@ -34,8 +28,7 @@ public class WinView {
         loadStageWithBorderPane(createWinBorderPane());
     }
 
-    private BorderPane createWinBorderPane()
-    {
+    private BorderPane createWinBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -90,9 +83,5 @@ public class WinView {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
-
-
 }

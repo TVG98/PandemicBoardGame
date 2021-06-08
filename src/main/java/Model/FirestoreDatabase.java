@@ -12,11 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-/**
- * @created May 26 2021 - 7:35 PM
- * @project testGame
- */
-
 public class FirestoreDatabase {
 
     private Firestore db;

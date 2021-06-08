@@ -2,7 +2,6 @@ package View;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -19,10 +18,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created June 08 2021 - 10:35 AM
- * @project testGame
- */
 public class InGameMenuView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -34,8 +29,7 @@ public class InGameMenuView {
         loadStageWithBorderPane(createInGameMenuViewBorderPane());
     }
 
-    private void loadStageWithBorderPane(BorderPane bp)
-    {
+    private void loadStageWithBorderPane(BorderPane bp) {
         try {
             Scene scene = new Scene(bp, width, height);
             this.primaryStage.setScene(scene);
@@ -46,8 +40,7 @@ public class InGameMenuView {
         }
     }
 
-    private BorderPane createInGameMenuViewBorderPane()
-    {
+    private BorderPane createInGameMenuViewBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -92,8 +85,7 @@ public class InGameMenuView {
         Collections.addAll(menuButtons, closeMenuButton, backToMainButton, quitGameButton);
 
         //  //
-        for (Button menuButton : menuButtons)
-        {
+        for (Button menuButton : menuButtons) {
             menuButton.setAlignment(Pos.CENTER);
             menuButton.setOpacity(0.70);
             menuButton.setStyle("-fx-background-color: firebrick; -fx-background-radius: 30px;");
@@ -129,6 +121,4 @@ public class InGameMenuView {
 
         return bp;
     }
-
-
 }

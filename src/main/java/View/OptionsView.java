@@ -1,8 +1,5 @@
 package View;
 
-import Controller.DatabaseController;
-import Controller.SoundController;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -23,13 +20,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created May 25 2021 - 11:10 AM
- * @project testGame
- */
+public class OptionsView {
 
-public class OptionsView
-{
     Stage primaryStage;
     final String pathToImage = "src/main/media/PandemicMenuBackground.jpg";
     final double width = 1280;
@@ -64,8 +56,7 @@ public class OptionsView
         ArrayList<Rectangle> textBoxes = new ArrayList<Rectangle>();
         Collections.addAll(textBoxes, masterVolumeTextBox, SFXVolumeTextBox, musicVolumeTextBox, UIVolumeTextBox);
 
-        for (Rectangle textBox : textBoxes)
-        {
+        for (Rectangle textBox : textBoxes) {
             textBox.setArcHeight(30d);
             textBox.setArcWidth(30d);
             textBox.setOpacity(0.7f);
@@ -81,8 +72,7 @@ public class OptionsView
         ArrayList<Slider> volumeSliders = new ArrayList<Slider>();
         Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider, UIVolumeSlider);
 
-        for (Slider slider : volumeSliders)
-        {
+        for (Slider slider : volumeSliders) {
             slider.setMin(0);
             slider.setMax(100);
             slider.setValue(50);
@@ -105,8 +95,7 @@ public class OptionsView
         ArrayList<Text> volumeText = new ArrayList<Text>();
         Collections.addAll(volumeText, masterVolumeText, SFXVolumeText, musicVolumeText, UIVolumeText);
 
-        for (Text text : volumeText)
-        {
+        for (Text text : volumeText) {
             text.setFont(new Font("Arial", 50));
         }
 

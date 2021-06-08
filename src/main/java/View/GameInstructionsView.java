@@ -19,19 +19,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created June 03 2021 - 2:54 PM
- * @project testGame
- */
-public class GameInstructionsView
-{
+public class GameInstructionsView {
     Stage primaryStage;
     final String pathToBackground = "src/main/media/InstructionsBackgroundResized.jpg";
     final double width = 1600;
     final double height = 900;
 
-    public GameInstructionsView(Stage primaryStage)
-    {
+    public GameInstructionsView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createGameInstructionsBorderPane());
     }
@@ -120,8 +114,7 @@ public class GameInstructionsView
         ArrayList<Button> infoButtons = new ArrayList<Button>();
         Collections.addAll(infoButtons, objectOfTheGameButton, gameplayButton, actionsButton, winButton, defeatButton, rolesButton);
 
-        for (Button infoButton : infoButtons)
-        {
+        for (Button infoButton : infoButtons) {
             infoButton.setOpacity(0.95f);
             infoButton.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
             infoButton.setTextFill(Color.BLACK);
@@ -144,7 +137,7 @@ public class GameInstructionsView
         return bp;
     }
 
-    private void loadStageWithBorderPane(BorderPane bp){
+    private void loadStageWithBorderPane(BorderPane bp) {
         try {
             Scene scene = new Scene(bp, width, height);
             this.primaryStage.setScene(scene);
@@ -155,8 +148,7 @@ public class GameInstructionsView
         }
     }
 
-    private VBox makeIntroScreen()
-    {
+    private VBox makeIntroScreen() {
         Text title = new Text("How to play");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -174,8 +166,7 @@ public class GameInstructionsView
         return vboxIntro;
     }
 
-    private VBox makeObjectOfTheGameWindow()
-    {
+    private VBox makeObjectOfTheGameWindow() {
         Text title = new Text("Object of the game");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -195,8 +186,7 @@ public class GameInstructionsView
         return vboxObjectOfTheGame;
     }
 
-    private VBox makeGameplayWindow()
-    {
+    private VBox makeGameplayWindow() {
         Text title = new Text("Gameplay");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -220,8 +210,7 @@ public class GameInstructionsView
         return vboxGameplay;
     }
 
-    private VBox makeActionsWindow()
-    {
+    private VBox makeActionsWindow() {
         Text title = new Text("Actions");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -244,8 +233,7 @@ public class GameInstructionsView
         return vboxActions;
     };
 
-    private VBox makeWinWindow()
-    {
+    private VBox makeWinWindow() {
         Text title = new Text("How to win!");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -268,8 +256,7 @@ public class GameInstructionsView
         return vboxWin;
     }
 
-    private VBox makeDefeatWindow()
-    {
+    private VBox makeDefeatWindow() {
         Text title = new Text("Defeat");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -294,8 +281,7 @@ public class GameInstructionsView
         return vboxDefeat;
     }
 
-    private VBox makeRolesWindow()
-    {
+    private VBox makeRolesWindow() {
         Text title = new Text("Roles");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -352,8 +338,7 @@ public class GameInstructionsView
 
         ArrayList<Text> characterTitles = new ArrayList<Text>();
         Collections.addAll(characterTitles, dispatcherTitle, researcherTitle, quarantineSpecialistTitle, contingencyPlannerTitle, operationsExpertTitle, scientistTitle, medicTitle);
-        for (Text characterTitle : characterTitles)
-        {
+        for (Text characterTitle : characterTitles) {
             characterTitle.setFont(new Font("Castellar", 20));
             characterTitle.setWrappingWidth(200);
             characterTitle.setFill(Color.WHITE);
@@ -361,8 +346,7 @@ public class GameInstructionsView
 
         ArrayList<Text> characterSummaries = new ArrayList<Text>();
         Collections.addAll(characterSummaries, dispatcherSummary, researcherSummary, quarantineSpecialistSummary, contingencyPlannerSummary, operationsExpertSummary, scientistSummary, medicSummary);
-        for (Text characterSummary : characterSummaries)
-        {
+        for (Text characterSummary : characterSummaries) {
             characterSummary.setWrappingWidth(200);
             characterSummary.setFont(new Font("Arial", 15));
             characterSummary.setFill(Color.WHITE);
@@ -391,8 +375,7 @@ public class GameInstructionsView
 
         ArrayList<VBox> characterCardsTop = new ArrayList<VBox>();
         Collections.addAll(characterCardsTop, vboxDispatcherCard, vboxResearcherCard, vboxQuarantineSpecialistCard, vboxContingencyPlannerCard);
-        for (VBox characterCard : characterCardsTop)
-        {
+        for (VBox characterCard : characterCardsTop) {
             characterCard.setSpacing(20);
             characterCard.setPadding(new Insets(10, 10, 10 , 10));
             characterCard.setStyle(("-fx-border-color: red; -fx-border-width: 2px;"));
@@ -406,8 +389,7 @@ public class GameInstructionsView
         ArrayList<VBox> characterCardsBottom = new ArrayList<VBox>();
         Collections.addAll(characterCardsBottom, vboxOperationsExpertCard, vboxScientistCard, vboxMedicCard);
 
-        for (VBox characterCard : characterCardsBottom)
-        {
+        for (VBox characterCard : characterCardsBottom) {
             characterCard.setPadding(new Insets(10, 10, 10 , 10));
             characterCard.setStyle(("-fx-border-color: red; -fx-border-width: 2px;"));
             characterCard.setSpacing(15);
@@ -424,7 +406,5 @@ public class GameInstructionsView
         vboxRoles.setSpacing(30);
 
         return vboxRoles;
-
     }
-
 }

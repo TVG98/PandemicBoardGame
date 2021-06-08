@@ -1,8 +1,5 @@
 package View;
 
-import Controller.DatabaseController;
-import Controller.GameController;
-import Controller.SoundController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -19,11 +16,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-
-/**
- * @created May 20 2021 - 6:47 PM
- * @project testGame
- */
 
 public class MenuView {
     Stage primaryStage;
@@ -52,8 +44,7 @@ public class MenuView {
         ArrayList<Button> buttonsArrayList = new ArrayList<Button>();
         Collections.addAll(buttonsArrayList, startButton, optionsButton, quitButton);
 
-        for (Button button : buttonsArrayList)
-        {
+        for (Button button : buttonsArrayList) {
             button.setPrefHeight(80);
             button.setPrefWidth(550);
             button.setFont(new Font("Castellar", 50));
@@ -107,14 +98,12 @@ public class MenuView {
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
-        try
-        {
+        try {
             Scene mainMenu = new Scene(bp, width, height);
             this.primaryStage.setScene(mainMenu);
             this.primaryStage.show();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -6,7 +6,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.*;
 
-
 public class LobbyController {
     static LobbyController lobbyController;
 

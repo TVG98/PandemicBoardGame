@@ -6,10 +6,6 @@ import Model.Lobby;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
-/**
- * @created May 26 2021 - 8:58 PM
- * @project testGame
- */
 public class DatabaseController {
     FirestoreDatabase database = GameApplication.getFsDatabase();
     static DatabaseController databaseController;

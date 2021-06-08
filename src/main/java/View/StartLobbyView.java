@@ -1,8 +1,6 @@
 package View;
 
-import Controller.DatabaseController;
 import Controller.LobbyController;
-import Model.Player;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -16,20 +14,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created May 25 2021 - 12:20 PM
- * @project testGame
- */
+public class StartLobbyView {
 
-public class StartLobbyView
-{
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
@@ -113,8 +105,7 @@ public class StartLobbyView
         ArrayList<Button> buttonsArrayList = new ArrayList<Button>();
         Collections.addAll(buttonsArrayList, createButton, joinButton);
 
-        for (Button button : buttonsArrayList)
-        {
+        for (Button button : buttonsArrayList) {
             button.setOpacity(0.95f);
             button.setStyle("-fx-background-color: Grey; -fx-background-radius: 40px;");
             button.setTextFill(Color.RED);

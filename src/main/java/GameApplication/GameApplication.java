@@ -1,19 +1,13 @@
 package GameApplication;
-/**
- * @author Romano Biertantie
- * @created May 20 2021 - 6:47 PM
- * @project testGame
- */
 
 import Controller.GameController;
 import Model.FirestoreDatabase;
 import View.InGameMenuView;
 import View.MenuView;
+
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-
 import java.io.File;
 
 public class GameApplication extends Application {

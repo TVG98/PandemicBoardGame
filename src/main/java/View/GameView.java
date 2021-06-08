@@ -20,11 +20,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.*;
 
-/**
- * @created May 27 2021 - 10:23 AM
- * @project testGame
- */
-
 public class GameView implements Observer {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -32,15 +27,13 @@ public class GameView implements Observer {
     final double height = 900;
 
 
-    public GameView(Stage primaryStage)
-    {
+    public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createGameViewBorderPane());
     }
 
-    private BorderPane createGameViewBorderPane()
-    {
+    private BorderPane createGameViewBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -71,8 +64,7 @@ public class GameView implements Observer {
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, openMenuButton, howToPlayButton);
 
-        for (Button menuButton : menuButtons)
-        {
+        for (Button menuButton : menuButtons) {
             menuButton.setOpacity(0.95f);
             menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             menuButton.setTextFill(Color.BLACK);
@@ -155,8 +147,7 @@ public class GameView implements Observer {
         ArrayList<Text> playerOverviews = new ArrayList<Text>();
         Collections.addAll(playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
 
-        for (Text playerOverview : playerOverviews)
-        {
+        for (Text playerOverview : playerOverviews) {
             playerOverview.setFont(new Font("Arial", 15));
         }
 
@@ -208,8 +199,7 @@ public class GameView implements Observer {
         ArrayList<Button> movementButtons = new ArrayList<Button>();
         Collections.addAll(movementButtons, driveButton, directFlightButton, charterFlightButton, shuttleFlightButton);
 
-        for (Button movementButton : movementButtons)
-        {
+        for (Button movementButton : movementButtons) {
             movementButton.setOpacity(0.95f);
             movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
             movementButton.setTextFill(Color.BLACK);
@@ -278,8 +268,7 @@ public class GameView implements Observer {
         ArrayList<Button> actionButtons = new ArrayList<Button>();
         Collections.addAll(actionButtons,treatButton, cureButton, buildButton, shareButton);
 
-        for (Button actionButton : actionButtons)
-        {
+        for (Button actionButton : actionButtons) {
             actionButton.setOpacity(0.95f);
             actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             actionButton.setTextFill(Color.BLACK);
@@ -359,7 +348,7 @@ public class GameView implements Observer {
         return bp;
     }
 
-    private void loadStageWithBorderPane(BorderPane bp){
+    private void loadStageWithBorderPane(BorderPane bp) {
         try {
             Scene mainMenu = new Scene(bp, width, height);
             this.primaryStage.setScene(mainMenu);
@@ -370,58 +359,47 @@ public class GameView implements Observer {
         }
     }
 
-    private void howToPlayButtonHandler()
-    {
+    private void howToPlayButtonHandler() {
         GameInstructionsView view = new GameInstructionsView(primaryStage);
     }
 
-    private void openMenuButtonHandler()
-    {
+    private void openMenuButtonHandler() {
         InGameMenuView view = new InGameMenuView(primaryStage);
     }
 
-    private void driveButtonHandler()
-    {
+    private void driveButtonHandler() {
 
     }
 
-    private void directFlightButtonHandler()
-    {
+    private void directFlightButtonHandler() {
 
     }
 
-    private void charterFlightButtonHandler()
-    {
+    private void charterFlightButtonHandler() {
 
     }
 
-    private void shuttleFlightButtonHandler()
-    {
+    private void shuttleFlightButtonHandler() {
 
     }
 
-    private void treatButtonHandler()
-    {
+    private void treatButtonHandler() {
 
     }
 
-    private void cureButtonHandler()
-    {
+    private void cureButtonHandler() {
 
     }
 
-    private void buildButtonHandler()
-    {
+    private void buildButtonHandler() {
 
     }
 
-    private void shareButtonHandler()
-    {
+    private void shareButtonHandler() {
 
     }
 
-    private void endTurnButtonHandler()
-    {
+    private void endTurnButtonHandler() {
 
     }
 
@@ -431,16 +409,14 @@ public class GameView implements Observer {
     }
 
 
-    private void makeGameBoard(BorderPane bp)
-    {
+    private void makeGameBoard(BorderPane bp) {
         placeCitiesWithColorOnBp(makeBlueCityCoordinates(), Color.DEEPSKYBLUE, bp);
         placeCitiesWithColorOnBp(makeGreenCityCoordinates(), Color.GREEN, bp);
         placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, bp);
         placeCitiesWithColorOnBp(makeYellowCityCoordinates(), Color.YELLOW, bp);
     }
 
-    private HashMap<String, int[]> makeGreenCityCoordinates()
-    {
+    private HashMap<String, int[]> makeGreenCityCoordinates() {
         HashMap<String, int[]> greenCityCoords = new HashMap<String, int[]>();
 
         greenCityCoords.put("Moscow", new int[]{935, 295});
@@ -459,8 +435,7 @@ public class GameView implements Observer {
         return greenCityCoords;
     }
 
-    private HashMap<String, int[]> makeRedCityCoordinates()
-    {
+    private HashMap<String, int[]> makeRedCityCoordinates() {
         HashMap<String, int[]> redCityCoords = new HashMap<String, int[]>();
 
         redCityCoords.put("Beijing", new int[]{1235, 325});
@@ -479,8 +454,7 @@ public class GameView implements Observer {
         return redCityCoords;
     }
 
-    private HashMap<String, int[]> makeYellowCityCoordinates()
-    {
+    private HashMap<String, int[]> makeYellowCityCoordinates() {
         HashMap<String, int[]> yellowCityCoords = new HashMap<String, int[]>();
 
         yellowCityCoords.put("Los Angeles", new int[]{255, 410});
@@ -499,8 +473,7 @@ public class GameView implements Observer {
         return yellowCityCoords;
     }
 
-    private HashMap<String, int[]> makeBlueCityCoordinates()
-    {
+    private HashMap<String, int[]> makeBlueCityCoordinates() {
         HashMap<String, int[]> blueCityCoords = new HashMap<String, int[]>();
 
         blueCityCoords.put("Chicago", new int[]{360, 320});
@@ -519,12 +492,10 @@ public class GameView implements Observer {
         return blueCityCoords;
     }
 
-    private void placeCitiesWithColorOnBp(HashMap<String, int[]> cityCoords, Color color, BorderPane bp)
-    {
+    private void placeCitiesWithColorOnBp(HashMap<String, int[]> cityCoords, Color color, BorderPane bp) {
         HashMap<String, Circle> cities = new HashMap<String, Circle>();
 
-        for (Map.Entry<String, int[]> entry : cityCoords.entrySet())
-        {
+        for (Map.Entry<String, int[]> entry : cityCoords.entrySet()) {
             int[] coordinates = entry.getValue();
             int xCoord = coordinates[0];
             int yCoord = coordinates[1];
@@ -550,8 +521,7 @@ public class GameView implements Observer {
 
         }
 
-        for (Map.Entry<String, Circle> entry : cities.entrySet())
-        {
+        for (Map.Entry<String, Circle> entry : cities.entrySet()) {
             Text cityName = new Text(entry.getKey());
             cityName.setFill(color);
             cityName.setFont(Font.font("Arial", FontWeight.BOLD,18));
