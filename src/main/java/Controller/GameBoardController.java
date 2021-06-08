@@ -87,35 +87,17 @@ public class GameBoardController {
         this.treatDiseaseBehavior = treatDiseaseBehavior;
     }
 
-    public void handleTreatDisease() {
-//        Player currentPlayer = gameController.getCurrentPlayer();
-//        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-//        treatDisease(currentPlayer, currentCity);
-//
-//        if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
-//            playerController.decrementActions(currentPlayer);
-//        }
-
-        treatDiseaseBehavior.treatDisease();
-    }
-
-    public void treatDisease(Player currentPlayer, City currentCity) {
-        if (gameBoard.cityHasCube(currentCity)) {
-            if (canRemoveAllCubes(currentPlayer, currentCity)) {
-                currentCity.removeAllCubes();
-            } else {
-                currentCity.removeCube();
-            }
-        }
+    public void handleTreatDisease(Player currentPlayer, City currentCity) {
+        treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return currentPlayer.getRole() == Role.MEDIC ||
+        return currentPlayer.getRole().equals(Role.MEDIC) ||
                 cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
-        return currentPlayer.getRole() == Role.MEDIC &&
+        return currentPlayer.getRole().equals(Role.MEDIC) &&
                 cureIsFound(currentCity);
     }
 

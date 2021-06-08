@@ -377,7 +377,7 @@ public class GameView implements Observer {
 
     private void openMenuButtonHandler()
     {
-
+        InGameMenuView view = new InGameMenuView(primaryStage);
     }
 
     private void driveButtonHandler()

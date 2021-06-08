@@ -96,10 +96,10 @@ public class Gameboard implements Observable {
     }
 
     public void flipCurePawn(Cure cure) {
-        if(cure.getCureState().equals("active")) {
-            cure.setCureState("cured");
-        } else if(cure.getCureState().equals("cured")) {
-            cure.setCureState("eradicated");
+        if(cure.getCureState().equals(CureState.ACTIVE)) {
+            cure.setCureState(CureState.CURED);
+        } else if(cure.getCureState().equals(CureState.CURED)) {
+            cure.setCureState(CureState.ERADICATED);
         }
     }
 
@@ -220,9 +220,9 @@ public class Gameboard implements Observable {
     }
 
     public ArrayList<Cure> getCuredDiseases() {
-        ArrayList<Cure> curedDiseases = new ArrayList<Cure>();
+        ArrayList<Cure> curedDiseases = new ArrayList<>();
         for(Cure cure : cures) {
-            if(cure.getCureState().equals("cured")){
+            if(cure.getCureState().equals(CureState.CURED)){
                 curedDiseases.add(cure);
             }
         }

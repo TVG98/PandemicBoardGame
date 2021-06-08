@@ -34,13 +34,9 @@ public class MenuView {
     public MenuView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createMainMenuBorderPane());
-        GameController gc = new GameController();
-        gc.handleTreatDisease();
     }
 
-
-    private BorderPane createMainMenuBorderPane()
-    {
+    private BorderPane createMainMenuBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -110,8 +106,7 @@ public class MenuView {
         return bp;
     }
 
-    private void loadStageWithBorderPane(BorderPane bp)
-    {
+    private void loadStageWithBorderPane(BorderPane bp) {
         try
         {
             Scene mainMenu = new Scene(bp, width, height);

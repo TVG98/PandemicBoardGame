@@ -1,5 +1,8 @@
 package Controller;
 
+import Model.City;
+import Model.Player;
+
 public interface TreatDiseaseBehavior {
-    void treatDisease();
+    void treatDisease(Player currentPlayer, City currentCity);
 }
