@@ -75,13 +75,19 @@ public class GameController {
 
     public void handleTreatDisease() {
         Player currentPlayer = getCurrentPlayer();
-        if (currentPlayer.getRole().equals(Role.MEDIC)) {
+        City currentCity = currentPlayer.getCurrentCity();
+        setTreatDiseaseBehavior(currentPlayer, currentCity);
+        gameBoardController.handleTreatDisease(currentPlayer, currentCity);
+    }
+
+    public void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
+        if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
+        } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubes());
         } else {
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseOneCube());
         }
-        
-        gameBoardController.handleTreatDisease();
     }
 
     public void handleFindCure() {

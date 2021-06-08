@@ -2,17 +2,17 @@ package Model;
 
 public class Cure {
     private final VirusType virusType;
-    private String cureState = "active";
+    private CureState cureState = CureState.ACTIVE;
 
     public Cure(VirusType virusType) {
         this.virusType = virusType;
     }
 
-    public String getCureState() {
+    public CureState getCureState() {
         return cureState;
     }
 
-    public void setCureState(String cureState) {
+    public void setCureState(CureState cureState) {
         this.cureState = cureState;
     }
 
