@@ -1,17 +1,15 @@
 package Model;
 
 import Controller.PlayerController;
-import Observers.GameBoardObservable;
-import Observers.GameBoardObserver;
-import Observers.GameObserver;
+import Observers.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Gameboard implements GameBoardObservable {
-    private final List<GameBoardObserver> observers = new ArrayList<>();
+public class Gameboard implements Observable {
+    private final List<Observer> observers = new ArrayList<>();
     private final City[] cities = this.initializeCities();
     private final Cure[] cures = new Cure[]{new Cure(VirusType.RED),
                                             new Cure(VirusType.BLUE),
@@ -247,12 +245,19 @@ public class Gameboard implements GameBoardObservable {
     }
 
     @Override
-    public void register(GameBoardObserver gameBoardObserver) {
-        observers.add(gameBoardObserver);
+    public void register(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregister(Observer observer) {
+        observers.remove(observer);
     }
 
     @Override
     public void notifyAllObservers() {
-
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
     }
 }

@@ -1,13 +1,13 @@
 package Model;
 
-import Observers.LobbyObservable;
-import Observers.LobbyObserver;
+import Observers.Observable;
+import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lobby implements LobbyObservable {
-    private final List<LobbyObserver> observers = new ArrayList<>();
+public class Lobby implements Observable {
+    private final List<Observer> observers = new ArrayList<>();
 
     private boolean joinable;
     private ArrayList<Player> players;
@@ -85,14 +85,19 @@ public class Lobby implements LobbyObservable {
     }
 
     @Override
-    public void register(LobbyObserver observer) {
+    public void register(Observer observer) {
         observers.add(observer);
     }
 
     @Override
+    public void unregister(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
     public void notifyAllObservers() {
-        for (LobbyObserver lobbyObserver : observers) {
-            lobbyObserver.update(this);
+        for (Observer observer : observers) {
+            observer.update(this);
         }
     }
 }
