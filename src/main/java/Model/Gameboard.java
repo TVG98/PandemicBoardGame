@@ -1,7 +1,8 @@
 package Model;
 
-import Controller.PlayerController;
-import Observers.*;
+
+import Observers.Observable;
+import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,16 +20,20 @@ public class Gameboard implements Observable {
                                                  new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
                                                  new Virus(VirusType.BLACK)};
-    private ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
-    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<InfectionCard>();
-    private ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
-    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<PlayerCard>();
+    private final ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
+    private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
+    private final ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
+    private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
     private int outbreakCounter = 0;
     private int infectionRate = 0;
-    private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
+    private final ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesThatHadOutbreak;
 
-    public Gameboard() {  // Misschien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
+    public Gameboard() {
+        initializeGameBoard();
+    }
+
+    public void initializeGameBoard() {
         shuffleInfectionCards();
         shufflePlayerCards();
     }
@@ -52,7 +57,7 @@ public class Gameboard implements Observable {
     }
 
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
-        ArrayList<InfectionCard> infectionCardStack = new ArrayList<InfectionCard>();
+        ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
 
         for(City city : this.cities) {
             infectionCardStack.add(new InfectionCard(city));
@@ -62,7 +67,7 @@ public class Gameboard implements Observable {
     }
 
     private ArrayList<PlayerCard> initializePlayerCardStack() {
-        ArrayList<PlayerCard> playerCardStack = new ArrayList<PlayerCard>();
+        ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
         for(City city : this.cities) {
             playerCardStack.add(new CityCard(city, city.getVirusType()));
