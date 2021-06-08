@@ -48,8 +48,8 @@ public class GameBoardController {
 
     }
 
-    public void handleInfection() {
-        gameBoard.handleInfection();
+    public void handleInfectionCardDraw(int cubeAmount) {
+        gameBoard.handleInfection(gameBoard.drawInfectionCard(), cubeAmount);
     }
 
     public void handleOutbreak(City infectedCity) {

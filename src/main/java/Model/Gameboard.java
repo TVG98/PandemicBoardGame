@@ -151,14 +151,14 @@ public class Gameboard implements Observable {
         infectionRate++;
     }
 
-    public void addCubes(City currentCity, VirusType type) {
+    public void addCubes(City currentCity, VirusType type, int cubeAmount) {
         currentCity.addCube(type);
-        this.getVirusByType(type).decreaseCubeAmount(1);  // Waarschijnlijk zal dit altijd 1 zijn
+        this.getVirusByType(type).decreaseCubeAmount(cubeAmount);
     }
 
-    public void removeCubes(City currentCity, VirusType type) {
+    public void removeCubes(City currentCity, VirusType type, int cubeAmount) {
         currentCity.removeCube();
-        this.getVirusByType(type).increaseCubeAmount(1);  // Waarschijnlijk zal dit altijd 1 zijn
+        this.getVirusByType(type).increaseCubeAmount(cubeAmount);
     }
 
     public Virus getVirusByType(VirusType type) {
@@ -224,15 +224,24 @@ public class Gameboard implements Observable {
         return false;
     }
 
+    public void handleInfection(InfectionCard infectionCard, int cubeAmount) {
+        City infectedCity = infectionCard.getCity();
+
+        if (infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
+            handleOutbreak(infectedCity);
+        } else {
+            addCubes(infectedCity, infectedCity.getVirusType(), cubeAmount);
+        }
+    }
     public void handleOutbreak(City infectedCity) {
         increaseOutbreakCounter();
         addCityThatHadOutbreak(infectedCity);
 
         for (City city : infectedCity.getNearCities()) {
-            if (infectedCity.getCubeAmount() >= 3 && !cityHadOutbreak(city)) {
+            if (infectedCity.getCubeAmount() >= 3 && !cityHadOutbreak(city)) {  // Hier moet de quarantine specialist nog toegevoegd worden
                 handleOutbreak(city);
             } else {
-                addCubes(city, infectedCity.getVirusType());
+                addCubes(city, infectedCity.getVirusType(), 1);
             }
         }
     }
@@ -269,16 +278,6 @@ public class Gameboard implements Observable {
         }
 
         return false;
-    }
-
-    public void handleInfection() {
-        City infectedCity = drawInfectionCard().getCity();
-
-        if (infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
-            handleOutbreak(infectedCity);
-        } else {
-            addCubes(infectedCity, infectedCity.getVirusType());
-        }
     }
 
     @Override
