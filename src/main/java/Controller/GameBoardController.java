@@ -8,6 +8,7 @@ public class GameBoardController {
     static GameBoardController gameBoardController;
 
     private TreatDiseaseBehavior treatDiseaseBehavior;
+    private BuildResearchStationBehavior buildResearchStationBehavior;
 
     private Gameboard gameBoard;
     private final PlayerController playerController = PlayerController.getInstance();
@@ -74,14 +75,20 @@ public class GameBoardController {
 
     }
 
-    public void handleBuildResearchStation(Player currentPlayer) {
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+    public void setBuildResearchStationBehavior(BuildResearchStationBehavior buildResearchStationBehavior) {
+        this.buildResearchStationBehavior = buildResearchStationBehavior;
+    }
 
-        if (canAddResearchStation()) {
-            gameBoard.addResearchStationToCity(currentCity);
-        }
-        //TODO: check if player needs to hand over card of city
-        playerController.decrementActions(currentPlayer);
+    public void handleBuildResearchStation(Player currentPlayer, City currentCity) {
+        buildResearchStationBehavior.buildResearchStation(currentPlayer, currentCity);
+    }
+
+    public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
+        return currentPlayer.getRole().equals(Role.OPERATIONSEXPERT);
+    }
+
+    public void addResearchStationToCity(City city) {
+        gameBoard.addResearchStationToCity(city);
     }
 
     public void setTreatDiseaseBehavior(TreatDiseaseBehavior treatDiseaseBehavior) {
