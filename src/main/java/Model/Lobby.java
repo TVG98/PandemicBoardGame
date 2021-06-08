@@ -10,7 +10,7 @@ public class Lobby implements Observable {
     private final List<Observer> observers = new ArrayList<>();
 
     private boolean joinable;
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
     private final String passwd;
 
     public Lobby(Player player) {

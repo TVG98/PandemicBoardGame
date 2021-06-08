@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class PlayerController {
     static PlayerController playerController;
     ArrayList<Player> players;
+    private Player player;
 
     public PlayerController() {
         players = new ArrayList<>();
@@ -40,6 +41,14 @@ public class PlayerController {
 
     public String getName(Player player) {
         return player.getName();
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public void decrementActions(Player player) {
