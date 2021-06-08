@@ -12,6 +12,7 @@ public class LobbyController {
     Lobby lobby;
     DatabaseController databaseController = DatabaseController.getInstance();
     PlayerController playerController = PlayerController.getInstance();
+
     private String lobbyCode;
 
     public LobbyController() {

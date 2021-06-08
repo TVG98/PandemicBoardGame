@@ -26,16 +26,14 @@ public class GameBoardController {
         //Todo: Vraag aan de speler om een stad te kiezen
 
         City chosenCity = new City("Tokyo", VirusType.RED);  // Hier komt het resultaat
-        currentPlayer.setCurrentCity(chosenCity);
-
-
-        currentPlayer.decrementActions();
+        playerController.setCurrentCity(currentPlayer, chosenCity);
+        playerController.decrementActions(currentPlayer);
     }
 
     public void handleDirectFlight(Player currentPlayer) {
         //Todo: Laat de speler een kaart uit zijn hand kiezen
         CityCard chosenCard = new CityCard(gameBoard.getCity("Tokyo"), VirusType.RED);  // Hier komt het resultaat
-        currentPlayer.setCurrentCity(chosenCard.getCity());  // Ik stel voor om aan elke CityCard een stad en virusType te koppelen
+        playerController.setCurrentCity(currentPlayer, chosenCard.getCity());// Ik stel voor om aan elke CityCard een stad en virusType te koppelen
     }
 
     public void handleCurePawn(Cure cure) {
@@ -43,7 +41,7 @@ public class GameBoardController {
     }
 
     public void handlePlayerCardDraw(Player currentPlayer) {
-        currentPlayer.addCardToHand(gameBoard.drawPlayerCard());
+        playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
     }
 
     public void handleEpidemicCard() {
@@ -84,7 +82,7 @@ public class GameBoardController {
     }
 
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
-        return currentPlayer.getRole().equals(Role.OPERATIONSEXPERT);
+        return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
     public void addResearchStationToCity(City city) {
@@ -100,12 +98,12 @@ public class GameBoardController {
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return currentPlayer.getRole().equals(Role.MEDIC) ||
+        return playerController.hasRole(currentPlayer, Role.MEDIC) ||
                 cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
-        return currentPlayer.getRole().equals(Role.MEDIC) &&
+        return playerController.hasRole(currentPlayer, Role.MEDIC) &&
                 cureIsFound(currentCity);
     }
 

@@ -1,6 +1,9 @@
 package Controller;
 
-import Model.*;
+import Model.City;
+import Model.Game;
+import Model.Player;
+import Model.PlayerCard;
 
 import java.util.ArrayList;
 
@@ -57,14 +60,14 @@ public class GameController {
 
     public void handleBuildResearchStation() {
         Player currentPlayer = getCurrentPlayer();
-        City currentCity = currentPlayer.getCurrentCity();
-        setBuildResearchBehavior(currentPlayer, currentCity);
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setBuildResearchBehavior(currentPlayer);
         if (gameBoardController.canAddResearchStation()) {
             gameBoardController.handleBuildResearchStation(currentPlayer, currentCity);
         }
     }
 
-    public void setBuildResearchBehavior(Player currentPlayer, City currentCity) {
+    public void setBuildResearchBehavior(Player currentPlayer) {
         if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
             gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
         } else {
@@ -78,7 +81,7 @@ public class GameController {
 
         if (playersInCity.size() > 1) {
 
-            Player chosenPlayer = game.getCurrentPlayer();//Todo choose player to share with/change this
+            Player chosenPlayer = getCurrentPlayer();//Todo choose player to share with/change this
             //game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
         }
 
@@ -87,7 +90,7 @@ public class GameController {
 
     public void handleTreatDisease() {
         Player currentPlayer = getCurrentPlayer();
-        City currentCity = currentPlayer.getCurrentCity();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
         setTreatDiseaseBehavior(currentPlayer, currentCity);
         gameBoardController.handleTreatDisease(currentPlayer, currentCity);
     }

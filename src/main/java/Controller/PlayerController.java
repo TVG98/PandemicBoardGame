@@ -3,6 +3,7 @@ package Controller;
 import Model.City;
 import Model.Player;
 import Model.PlayerCard;
+import Model.Role;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,14 @@ public class PlayerController {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean hasRole(Player player, Role role) {
+        return player.getRole().equals(role);
+    }
+
+    public void setCurrentCity(Player player, City city) {
+        player.setCurrentCity(city);
     }
 
     public void decrementActions(Player player) {

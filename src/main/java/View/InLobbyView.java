@@ -175,7 +175,6 @@ public class InLobbyView implements Observer {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
