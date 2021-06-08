@@ -1,12 +1,10 @@
 package Model;
 
-
 import Observers.Observable;
 import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class Gameboard implements Observable {
