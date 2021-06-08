@@ -26,7 +26,7 @@ public class Gameboard implements Observable {
     private int outbreakCounter = 0;
     private int infectionRate = 0;
     private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
-    private ArrayList<City> citiesToAddCubesTo;
+    private ArrayList<City> citiesThatHadOutbreak;
 
     public Gameboard() {  // Misschien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
         shuffleInfectionCards();
@@ -230,14 +230,12 @@ public class Gameboard implements Observable {
         return curedDiseases;
     }
 
-    @Deprecated  // Hebben we waarschijnlijk niet nodig
-    public ArrayList<City> getCitiesToAddCubesTo() {
-        return citiesToAddCubesTo;
+    public boolean CityHadOutbreak(City city) {
+        return citiesThatHadOutbreak.contains(city);
     }
 
-    @Deprecated
-    public void addCityToAddCubeTo(City city) {
-        citiesToAddCubesTo.add(city);
+    public void addCityThatHadOutbreak(City city) {
+        citiesThatHadOutbreak.add(city);
     }
 
     public boolean gameboardHasResearchStationsLeft() {

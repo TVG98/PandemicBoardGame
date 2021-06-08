@@ -60,8 +60,9 @@ public class GameBoardController {
 
     public void handleOutbreak(City infectedCity) {
         gameBoard.increaseOutbreakCounter();
+        gameBoard.addCityThatHadOutbreak(infectedCity);
         for(City city : infectedCity.getNearCities()) {
-            if(infectedCity.getCubeAmount() >= 3) {
+            if(infectedCity.getCubeAmount() >= 3 && !gameBoard.CityHadOutbreak(city)) {
                 handleOutbreak(city);
             } else {
                 gameBoard.addCubes(city, infectedCity.getVirusType());
