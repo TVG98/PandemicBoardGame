@@ -10,7 +10,7 @@ public class GameBoardController {
     private TreatDiseaseBehavior treatDiseaseBehavior;
     private BuildResearchStationBehavior buildResearchStationBehavior;
 
-    private Gameboard gameBoard;
+    private final Gameboard gameBoard = new Gameboard();
     private final PlayerController playerController = PlayerController.getInstance();
 
     public static GameBoardController getInstance() {
@@ -48,33 +48,12 @@ public class GameBoardController {
 
     }
 
-    // overloading
-    public void handleInfectionCardDraw() {
-        handleInfection(1, gameBoard.drawInfectionCard());
-    }
-    public void handleInfectionCardDraw(int cubeAmount) {
-        handleInfection(cubeAmount, gameBoard.drawInfectionCard());
+    public void handleInfection() {
+        gameBoard.handleInfection();
     }
 
-    private void handleInfection(int cubeAmount, InfectionCard infectionCard) {
-        City infectedCity = infectionCard.getCity();
-        if(infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
-                handleOutbreak(infectedCity, cubeAmount);
-        } else {
-            gameBoard.addCubes(infectedCity, infectedCity.getVirusType(), cubeAmount);
-        }
-    }
-
-    private void handleOutbreak(City infectedCity, int cubeAmount) {
-        gameBoard.increaseOutbreakCounter();
-        gameBoard.addCityThatHadOutbreak(infectedCity);
-        for(City city : infectedCity.getNearCities()) {
-            if(infectedCity.getCubeAmount() >= 3 && !gameBoard.CityHadOutbreak(city)) {  // Hier moet de quarantine specialist nog toegevoegd worden
-                handleOutbreak(city, 1);
-            } else {
-                gameBoard.addCubes(city, infectedCity.getVirusType(), cubeAmount);
-            }
-        }
+    public void handleOutbreak(City infectedCity) {
+        gameBoard.handleOutbreak(infectedCity);
     }
 
     public void handlePlayerPawnMovement(Player player) {
@@ -106,13 +85,11 @@ public class GameBoardController {
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return playerController.hasRole(currentPlayer, Role.MEDIC) ||
-                cureIsFound(currentCity);
+        return playerController.hasRole(currentPlayer, Role.MEDIC) || cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
-        return playerController.hasRole(currentPlayer, Role.MEDIC) &&
-                cureIsFound(currentCity);
+        return playerController.hasRole(currentPlayer, Role.MEDIC) && cureIsFound(currentCity);
     }
 
     public boolean canAddResearchStation() {
@@ -124,13 +101,7 @@ public class GameBoardController {
     }
 
     public boolean lossByCubeAmount() {
-        for(Virus virus : gameBoard.getViruses()) {
-            if(virus.getCubeAmount() < 0) {
-                return true;
-            }
-        }
-
-        return false;
+        return gameBoard.lossByCubeAmount();
     }
 
     public boolean lossByEmptyPlayerCardStack() {

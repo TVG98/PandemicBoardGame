@@ -1,8 +1,6 @@
 package GameApplication;
 
-import Controller.GameController;
 import Model.FirestoreDatabase;
-import View.InGameMenuView;
 import View.MenuView;
 
 import javafx.application.Application;
@@ -15,7 +13,7 @@ public class GameApplication extends Application {
     public static FirestoreDatabase fsDatabase = new FirestoreDatabase();
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(new File("src/main/media/PandemicIcon.png").toURI().toString()));
