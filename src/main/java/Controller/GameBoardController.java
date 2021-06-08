@@ -10,7 +10,7 @@ public class GameBoardController {
     private TreatDiseaseBehavior treatDiseaseBehavior;
     private BuildResearchStationBehavior buildResearchStationBehavior;
 
-    private Gameboard gameBoard;
+    private final Gameboard gameBoard = new Gameboard();
     private final PlayerController playerController = PlayerController.getInstance();
 
     public static GameBoardController getInstance() {
@@ -49,24 +49,11 @@ public class GameBoardController {
     }
 
     public void handleInfection() {
-        City infectedCity = gameBoard.drawInfectionCard().getCity();
-        if(infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
-                handleOutbreak(infectedCity);
-        } else {
-            gameBoard.addCubes(infectedCity, infectedCity.getVirusType());
-        }
+        gameBoard.handleInfection();
     }
 
     public void handleOutbreak(City infectedCity) {
-        gameBoard.increaseOutbreakCounter();
-        gameBoard.addCityThatHadOutbreak(infectedCity);
-        for(City city : infectedCity.getNearCities()) {
-            if(infectedCity.getCubeAmount() >= 3 && !gameBoard.CityHadOutbreak(city)) {
-                handleOutbreak(city);
-            } else {
-                gameBoard.addCubes(city, infectedCity.getVirusType());
-            }
-        }
+        gameBoard.handleOutbreak(infectedCity);
     }
 
     public void handlePlayerPawnMovement(Player player) {
@@ -98,13 +85,11 @@ public class GameBoardController {
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return playerController.hasRole(currentPlayer, Role.MEDIC) ||
-                cureIsFound(currentCity);
+        return playerController.hasRole(currentPlayer, Role.MEDIC) || cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
-        return playerController.hasRole(currentPlayer, Role.MEDIC) &&
-                cureIsFound(currentCity);
+        return playerController.hasRole(currentPlayer, Role.MEDIC) && cureIsFound(currentCity);
     }
 
     public boolean canAddResearchStation() {
@@ -116,13 +101,7 @@ public class GameBoardController {
     }
 
     public boolean lossByCubeAmount() {
-        for(Virus virus : gameBoard.getViruses()) {
-            if(virus.getCubeAmount() < 0) {
-                return true;
-            }
-        }
-
-        return false;
+        return gameBoard.lossByCubeAmount();
     }
 
     public boolean lossByEmptyPlayerCardStack() {

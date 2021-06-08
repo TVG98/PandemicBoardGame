@@ -44,8 +44,9 @@ public class Gameboard implements Observable {
             "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong", "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei", "Manila", "Sydney"};  // Red
 
         int x = 0;
-        for(int i = 0; i < cityNames.length; i++){
-            if(i % (cityNames.length/viruses.length) == 0) {
+
+        for (int i = 0; i < cityNames.length; i++){
+            if (i % (cityNames.length/viruses.length) == 0) {
                 x++;
             }
             cities[i] = new City(cities[i].getName(), viruses[x-1].getType());
@@ -57,7 +58,7 @@ public class Gameboard implements Observable {
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
         ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
 
-        for(City city : this.cities) {
+        for (City city : this.cities) {
             infectionCardStack.add(new InfectionCard(city));
         }
 
@@ -67,7 +68,7 @@ public class Gameboard implements Observable {
     private ArrayList<PlayerCard> initializePlayerCardStack() {
         ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
-        for(City city : this.cities) {
+        for (City city : this.cities) {
             playerCardStack.add(new CityCard(city, city.getVirusType()));
         }
 
@@ -91,7 +92,7 @@ public class Gameboard implements Observable {
     private EpidemicCard[] initializeEpidemicCards(int epidemicCardAmount) {
         EpidemicCard[] epidemicCards = new EpidemicCard[epidemicCardAmount];
 
-        for(int i = 0; i < epidemicCardAmount; i++) {
+        for (int i = 0; i < epidemicCardAmount; i++) {
             epidemicCards[i] = new EpidemicCard();
         }
 
@@ -99,9 +100,9 @@ public class Gameboard implements Observable {
     }
 
     public void flipCurePawn(Cure cure) {
-        if(cure.getCureState().equals(CureState.ACTIVE)) {
+        if (cure.getCureState().equals(CureState.ACTIVE)) {
             cure.setCureState(CureState.CURED);
-        } else if(cure.getCureState().equals(CureState.CURED)) {
+        } else if (cure.getCureState().equals(CureState.CURED)) {
             cure.setCureState(CureState.ERADICATED);
         }
     }
@@ -161,7 +162,7 @@ public class Gameboard implements Observable {
     }
 
     public Virus getVirusByType(VirusType type) {
-        for(Virus virus : viruses) {
+        for (Virus virus : viruses) {
             if(virus.getType() == type) {
                 return virus;
             }
@@ -180,6 +181,7 @@ public class Gameboard implements Observable {
                 return city;
             }
         }
+
         return null;
     }
 
@@ -222,9 +224,31 @@ public class Gameboard implements Observable {
         return false;
     }
 
+    public void handleOutbreak(City infectedCity) {
+        increaseOutbreakCounter();
+        addCityThatHadOutbreak(infectedCity);
+
+        for (City city : infectedCity.getNearCities()) {
+            if (infectedCity.getCubeAmount() >= 3 && !cityHadOutbreak(city)) {
+                handleOutbreak(city);
+            } else {
+                addCubes(city, infectedCity.getVirusType());
+            }
+        }
+    }
+
+    public void addCityThatHadOutbreak(City city) {
+        citiesThatHadOutbreak.add(city);
+    }
+
+    public boolean cityHadOutbreak(City city) {
+        return citiesThatHadOutbreak.contains(city);
+    }
+
     public ArrayList<Cure> getCuredDiseases() {
         ArrayList<Cure> curedDiseases = new ArrayList<>();
-        for(Cure cure : cures) {
+
+        for (Cure cure : cures) {
             if(cure.getCureState().equals(CureState.CURED)){
                 curedDiseases.add(cure);
             }
@@ -233,16 +257,28 @@ public class Gameboard implements Observable {
         return curedDiseases;
     }
 
-    public boolean CityHadOutbreak(City city) {
-        return citiesThatHadOutbreak.contains(city);
-    }
-
-    public void addCityThatHadOutbreak(City city) {
-        citiesThatHadOutbreak.add(city);
-    }
-
     public boolean gameboardHasResearchStationsLeft() {
         return citiesWithResearchStations.size() < 6;
+    }
+
+    public boolean lossByCubeAmount() {
+        for (Virus virus : getViruses()) {
+            if(virus.getCubeAmount() < 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void handleInfection() {
+        City infectedCity = drawInfectionCard().getCity();
+
+        if (infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
+            handleOutbreak(infectedCity);
+        } else {
+            addCubes(infectedCity, infectedCity.getVirusType());
+        }
     }
 
     @Override
