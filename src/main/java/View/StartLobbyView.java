@@ -137,7 +137,7 @@ public class StartLobbyView
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.makeLobby(inputName.getText());
+                //lobbyController.makeLobby(inputName.getText());
                 MenuView view = new MenuView(primaryStage);
             }
         });
