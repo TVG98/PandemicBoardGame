@@ -41,7 +41,7 @@ public class GameController {
     }
 
     public void handleDrive() {
-
+        gameBoardController.handleDrive(getCurrentPlayer());
     }
 
     public void handleDirectFlight(City city) {
@@ -57,7 +57,7 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        gameBoardController.handleBuildResearchStation();
+        gameBoardController.handleBuildResearchStation(getCurrentPlayer());
     }
 
     public void handleShareKnowledge(PlayerCard card) {
@@ -74,7 +74,20 @@ public class GameController {
     }
 
     public void handleTreatDisease() {
-        gameBoardController.handleTreatDisease();
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = currentPlayer.getCurrentCity();
+        setTreatDiseaseBehavior(currentPlayer, currentCity);
+        gameBoardController.handleTreatDisease(currentPlayer, currentCity);
+    }
+
+    public void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
+        if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
+        } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
+            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubes());
+        } else {
+            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseOneCube());
+        }
     }
 
     public void handleFindCure() {

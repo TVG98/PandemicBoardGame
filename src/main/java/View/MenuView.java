@@ -1,6 +1,7 @@
 package View;
 
 import Controller.DatabaseController;
+import Controller.GameController;
 import Controller.SoundController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,9 +36,7 @@ public class MenuView {
         loadStageWithBorderPane(createMainMenuBorderPane());
     }
 
-
-    private BorderPane createMainMenuBorderPane()
-    {
+    private BorderPane createMainMenuBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -107,8 +106,7 @@ public class MenuView {
         return bp;
     }
 
-    private void loadStageWithBorderPane(BorderPane bp)
-    {
+    private void loadStageWithBorderPane(BorderPane bp) {
         try
         {
             Scene mainMenu = new Scene(bp, width, height);

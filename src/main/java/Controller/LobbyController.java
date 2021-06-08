@@ -12,6 +12,8 @@ public class LobbyController {
 
     Lobby lobby;
     DatabaseController databaseController = DatabaseController.getInstance();
+    PlayerController playerController = PlayerController.getInstance();
+    private String lobbyCode;
 
     public LobbyController() {
 
@@ -26,21 +28,28 @@ public class LobbyController {
     }
 
     public void makeLobby(String playerName) {
-        lobby = databaseController.makeLobby(new Player(playerName));//Todo: create player via playerController
+
+        Player player = new Player(playerName);
+        lobby = databaseController.makeLobby(player);//Todo: create player via playerController
+        playerController.setPlayer(player);
         System.out.println("lobby aangemaakt " + lobby.getPassword());
     }
 
     public void setPlayerReady() {
-        //Todo: implement
+        playerController.getPlayer().setReadyToStart();
+        databaseController.updatePlayers(lobbyCode, lobby);
     }
 
 
     public void addPlayerToLobby(String passwd, String playerName) {
-        lobby = new Lobby(passwd);
-        getPlayersFromLobbyDoc(databaseController.getLobbyDocument(passwd));
-        lobby.addPlayer(new Player(playerName));
+        lobbyCode = passwd;
+        lobby = new Lobby(lobbyCode);
+        getPlayersFromLobbyDoc(databaseController.getLobbyDocument(lobbyCode));
+        Player player = new Player(playerName);
+        lobby.addPlayer(player);
+        playerController.setPlayer(player);
         System.out.println(lobby.getPlayers().size());
-        databaseController.updatePlayers(passwd, lobby);
+        databaseController.updatePlayers(lobbyCode, lobby);
     }
 
     public void getPlayersFromLobbyDoc(DocumentSnapshot docSnap) {
@@ -57,8 +66,13 @@ public class LobbyController {
         }
     }
 
-    public void removePlayerFromLobby(Player player) {
+    public Player getCurrentPLayer() {
+        return playerController.getPlayer();
+    }
 
+    public void removePlayerFromLobby(Player player) {
+        lobby.removePlayer(player);
+        databaseController.updatePlayers(lobbyCode, lobby);
     }
 
     public void startGame() {

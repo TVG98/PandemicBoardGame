@@ -42,7 +42,7 @@ public class InLobbyView implements Observer {
     public InLobbyView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createInLobbyBorderPane());
-        //lobbyController.registerObserver(this);
+        lobbyController.registerObserver(this);
     }
 
     // Observer als argument meegeven zorgt voor goede initial BorderPane
@@ -126,6 +126,7 @@ public class InLobbyView implements Observer {
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                lobbyController.removePlayerFromLobby(lobbyController.getCurrentPLayer());
                 MenuView view = new MenuView(primaryStage);
             }
         });
@@ -184,6 +185,6 @@ public class InLobbyView implements Observer {
 
     @Override
     public void update(Observable observable) {
-
+        System.out.println("hoi");
     }
 }
