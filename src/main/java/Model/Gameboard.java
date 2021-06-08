@@ -11,10 +11,10 @@ import java.util.List;
 public class Gameboard implements Observable {
     private final List<Observer> observers = new ArrayList<>();
     private final City[] cities = this.initializeCities();
-    private final Cure[] cures = new Cure[]{new Cure(VirusType.RED),
-                                            new Cure(VirusType.BLUE),
+    private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
-                                            new Cure(VirusType.BLACK)};
+                                            new Cure(VirusType.BLACK),
+                                            new Cure(VirusType.RED)};
     private final Virus[] viruses = new Virus[]{new Virus(VirusType.RED),
                                                  new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
@@ -28,7 +28,7 @@ public class Gameboard implements Observable {
     private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesToAddCubesTo;
 
-    public Gameboard() {  // Mischien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
+    public Gameboard() {  // Misschien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
         shuffleInfectionCards();
         shufflePlayerCards();
     }
@@ -42,10 +42,10 @@ public class Gameboard implements Observable {
 
         int x = 0;
         for(int i = 0; i < cityNames.length; i++){
-            if(i % cityNames.length/viruses.length == 0) {
+            if(i % (cityNames.length/viruses.length) == 0) {
                 x++;
             }
-            cities[i] = new City(cities[i].getName(), viruses[x].getType());
+            cities[i] = new City(cities[i].getName(), viruses[x-1].getType());
         }
 
         return cities;
@@ -74,7 +74,7 @@ public class Gameboard implements Observable {
         return playerCardStack;
     }
 
-    private EventCard[] initializeEventCards() {  // De Eventcards kunnen we misschien ook zonder parameters doen
+    private EventCard[] initializeEventCards() {
         EventCard[] eventCards = new EventCard[5];
         eventCards[0] = new OneQuietNight("One quiet night", "Skip the next Infect Cities step.");
         eventCards[1] = new GovernmentGrant("Government grant", "Add 1 research station to any city.");
