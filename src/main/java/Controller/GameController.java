@@ -27,17 +27,17 @@ public class GameController {
     }
 
     public void checkLoss() {
-        if(gameBoardController.lossByCubeAmount()) {
+        if (gameBoardController.lossByCubeAmount()) {
             game.setLost();
-        } else if(gameBoardController.lossByEmptyPlayerCardStack()) {
+        } else if (gameBoardController.lossByEmptyPlayerCardStack()) {
             game.setLost();
-        } else if(gameBoardController.lossByOutbreakCounter()) {
+        } else if (gameBoardController.lossByOutbreakCounter()) {
             game.setLost();
         }
     }
     // Misschien dat we de checkLoss en de checkWin method kunnen samenvoegen
     public void checkWin() {
-        if(gameBoardController.winByCures()) {
+        if (gameBoardController.winByCures()) {
             game.setWon();
         }
     }
@@ -80,7 +80,6 @@ public class GameController {
         ArrayList<Player> playersInCity = game.getPlayersInCity(city);
 
         if (playersInCity.size() > 1) {
-
             Player chosenPlayer = getCurrentPlayer();//Todo choose player to share with/change this
             //game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
         }
