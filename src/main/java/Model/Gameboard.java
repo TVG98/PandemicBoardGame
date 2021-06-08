@@ -26,7 +26,7 @@ public class Gameboard implements Observable {
     private int outbreakCounter = 0;
     private int infectionRate = 0;
     private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
-    private ArrayList<City> citiesThatHadOutbreak;
+    private ArrayList<City> citiesThatHadOutbreak = new ArrayList<City>();
 
     public Gameboard() {  // Misschien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
         shuffleInfectionCards();
@@ -147,14 +147,14 @@ public class Gameboard implements Observable {
         infectionRate++;
     }
 
-    public void addCubes(City currentCity, VirusType type) {
+    public void addCubes(City currentCity, VirusType type, int cubeAmount) {
         currentCity.addCube(type);
-        this.getVirusByType(type).decreaseCubeAmount(1);  // Waarschijnlijk zal dit altijd 1 zijn
+        this.getVirusByType(type).decreaseCubeAmount(cubeAmount);
     }
 
-    public void removeCubes(City currentCity, VirusType type) {
+    public void removeCubes(City currentCity, VirusType type, int cubeAmount) {
         currentCity.removeCube();
-        this.getVirusByType(type).increaseCubeAmount(1);  // Waarschijnlijk zal dit altijd 1 zijn
+        this.getVirusByType(type).increaseCubeAmount(cubeAmount);
     }
 
     public Virus getVirusByType(VirusType type) {

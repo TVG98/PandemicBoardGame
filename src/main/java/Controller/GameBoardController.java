@@ -48,23 +48,31 @@ public class GameBoardController {
 
     }
 
-    public void handleInfection() {
-        City infectedCity = gameBoard.drawInfectionCard().getCity();
+    // overloading
+    public void handleInfectionCardDraw() {
+        handleInfection(1, gameBoard.drawInfectionCard());
+    }
+    public void handleInfectionCardDraw(int cubeAmount) {
+        handleInfection(cubeAmount, gameBoard.drawInfectionCard());
+    }
+
+    private void handleInfection(int cubeAmount, InfectionCard infectionCard) {
+        City infectedCity = infectionCard.getCity();
         if(infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
-                handleOutbreak(infectedCity);
+                handleOutbreak(infectedCity, cubeAmount);
         } else {
-            gameBoard.addCubes(infectedCity, infectedCity.getVirusType());
+            gameBoard.addCubes(infectedCity, infectedCity.getVirusType(), cubeAmount);
         }
     }
 
-    public void handleOutbreak(City infectedCity) {
+    private void handleOutbreak(City infectedCity, int cubeAmount) {
         gameBoard.increaseOutbreakCounter();
         gameBoard.addCityThatHadOutbreak(infectedCity);
         for(City city : infectedCity.getNearCities()) {
-            if(infectedCity.getCubeAmount() >= 3 && !gameBoard.CityHadOutbreak(city)) {
-                handleOutbreak(city);
+            if(infectedCity.getCubeAmount() >= 3 && !gameBoard.CityHadOutbreak(city)) {  // Hier moet de quarantine specialist nog toegevoegd worden
+                handleOutbreak(city, 1);
             } else {
-                gameBoard.addCubes(city, infectedCity.getVirusType());
+                gameBoard.addCubes(city, infectedCity.getVirusType(), cubeAmount);
             }
         }
     }

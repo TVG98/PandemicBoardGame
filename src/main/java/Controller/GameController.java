@@ -22,6 +22,21 @@ public class GameController {
         return gameController;
     }
 
+    // Misschien dat dit ook wel in de constructor kan
+    public void startGame() {
+
+        int drawAmount = 3;
+        while(drawAmount > 0) {
+            for(int x = 0; x < 3; x++) {
+                gameBoardController.handleInfectionCardDraw(drawAmount);
+            }
+            drawAmount--;
+        }
+
+        // Todo: zet de players in Atlanta + een researchstation mits we die uit de initialisatie willen halen
+
+    }
+
     public void changeTurn(){
         game.nextTurn();
     }
