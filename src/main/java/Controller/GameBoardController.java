@@ -7,8 +7,9 @@ import java.util.ArrayList;
 public class GameBoardController {
     static GameBoardController gameBoardController;
 
+    private TreatDiseaseBehavior treatDiseaseBehavior;
+
     private Gameboard gameBoard;
-    private final GameController gameController = GameController.getInstance();
     private final PlayerController playerController = PlayerController.getInstance();
 
     public static GameBoardController getInstance() {
@@ -19,8 +20,7 @@ public class GameBoardController {
         return gameBoardController;
     }
 
-    public void handleDrive() {
-        Player currentPlayer = gameController.getCurrentPlayer();
+    public void handleDrive(Player currentPlayer) {
         ArrayList<City> nearCities = playerController.getPlayerCurrentCity(currentPlayer).getNearCities();
         //Todo: Vraag aan de speler om een stad te kiezen
 
@@ -31,8 +31,7 @@ public class GameBoardController {
         currentPlayer.decrementActions();
     }
 
-    public void handleDirectFlight() {
-        Player currentPlayer = gameController.getCurrentPlayer();
+    public void handleDirectFlight(Player currentPlayer) {
         //Todo: Laat de speler een kaart uit zijn hand kiezen
         CityCard chosenCard = new CityCard(gameBoard.getCity("Tokyo"), VirusType.RED);  // Hier komt het resultaat
         currentPlayer.setCurrentCity(chosenCard.getCity());  // Ik stel voor om aan elke CityCard een stad en virusType te koppelen
@@ -42,8 +41,8 @@ public class GameBoardController {
         gameBoard.flipCurePawn(cure);
     }
 
-    public void handlePlayerCardDraw() {
-        gameController.getCurrentPlayer().addCardToHand(gameBoard.drawPlayerCard());
+    public void handlePlayerCardDraw(Player currentPlayer) {
+        currentPlayer.addCardToHand(gameBoard.drawPlayerCard());
     }
 
     public void handleEpidemicCard() {
@@ -74,8 +73,7 @@ public class GameBoardController {
 
     }
 
-    public void handleBuildResearchStation() {
-        Player currentPlayer = gameController.getCurrentPlayer();
+    public void handleBuildResearchStation(Player currentPlayer) {
         City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
 
         if (canAddResearchStation()) {
@@ -85,14 +83,20 @@ public class GameBoardController {
         playerController.decrementActions(currentPlayer);
     }
 
-    public void handleTreatDisease() {
-        Player currentPlayer = gameController.getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        treatDisease(currentPlayer, currentCity);
+    public void setTreatDiseaseBehavior(TreatDiseaseBehavior treatDiseaseBehavior) {
+        this.treatDiseaseBehavior = treatDiseaseBehavior;
+    }
 
-        if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
-            playerController.decrementActions(currentPlayer);
-        }
+    public void handleTreatDisease() {
+//        Player currentPlayer = gameController.getCurrentPlayer();
+//        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+//        treatDisease(currentPlayer, currentCity);
+//
+//        if (!canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+//            playerController.decrementActions(currentPlayer);
+//        }
+
+        treatDiseaseBehavior.treatDisease();
     }
 
     public void treatDisease(Player currentPlayer, City currentCity) {

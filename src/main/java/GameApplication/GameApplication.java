@@ -5,6 +5,7 @@ package GameApplication;
  * @project testGame
  */
 
+import Controller.GameController;
 import Model.FirestoreDatabase;
 import View.MenuView;
 import javafx.application.Application;
@@ -20,6 +21,7 @@ public class GameApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(new File("src/main/media/PandemicIcon.png").toURI().toString()));
         primaryStage.setTitle("Pandemic: The Board Game");

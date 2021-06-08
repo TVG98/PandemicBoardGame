@@ -1,6 +1,7 @@
 package View;
 
 import Controller.DatabaseController;
+import Controller.GameController;
 import Controller.SoundController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,6 +34,8 @@ public class MenuView {
     public MenuView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createMainMenuBorderPane());
+        GameController gc = new GameController();
+        gc.handleTreatDisease();
     }
 
 
