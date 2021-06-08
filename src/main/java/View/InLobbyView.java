@@ -185,6 +185,6 @@ public class InLobbyView implements Observer {
 
     @Override
     public void update(Observable observable) {
-
+        System.out.println("hoi");
     }
 }

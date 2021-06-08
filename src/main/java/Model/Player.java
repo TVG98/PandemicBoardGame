@@ -1,8 +1,14 @@
 package Model;
 
-import java.util.ArrayList;
+import Observers.Observable;
+import Observers.Observer;
 
-public class Player {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player implements Observable {
+    private final List<Observer> observers = new ArrayList<>();
+
     private ArrayList<PlayerCard> hand = new ArrayList<>();
     private Role role;
     private City currentCity;
@@ -61,6 +67,8 @@ public class Player {
 
     public void setReadyToStart() {
         readyToStart = true;
+        System.out.println("player is ready");
+        notifyAllObservers();
     }
 
     public String getName() {
@@ -73,5 +81,22 @@ public class Player {
 
     public void decrementActions() {
         actions--;
+    }
+
+    @Override
+    public void register(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregister(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
     }
 }
