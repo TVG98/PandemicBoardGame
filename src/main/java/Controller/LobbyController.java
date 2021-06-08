@@ -28,6 +28,7 @@ public class LobbyController {
     }
 
     public void makeLobby(String playerName) {
+
         Player player = new Player(playerName);
         lobby = databaseController.makeLobby(player);//Todo: create player via playerController
         playerController.setPlayer(player);
@@ -35,7 +36,8 @@ public class LobbyController {
     }
 
     public void setPlayerReady() {
-        //Todo: implement
+        playerController.getPlayer().setReadyToStart();
+        databaseController.updatePlayers(lobbyCode, lobby);
     }
 
 
