@@ -2,7 +2,6 @@ package Controller;
 
 import Model.*;
 
-import javax.smartcardio.Card;
 import java.util.ArrayList;
 
 public class GameController {
@@ -57,7 +56,20 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        gameBoardController.handleBuildResearchStation(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = currentPlayer.getCurrentCity();
+        setBuildResearchBehavior(currentPlayer, currentCity);
+        if (gameBoardController.canAddResearchStation()) {
+            gameBoardController.handleBuildResearchStation(currentPlayer, currentCity);
+        }
+    }
+
+    public void setBuildResearchBehavior(Player currentPlayer, City currentCity) {
+        if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
+            gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
+        } else {
+            gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationNormal());
+        }
     }
 
     public void handleShareKnowledge(PlayerCard card) {

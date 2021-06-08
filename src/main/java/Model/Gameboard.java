@@ -20,12 +20,12 @@ public class Gameboard implements Observable {
                                                  new Virus(VirusType.YELLOW),
                                                  new Virus(VirusType.BLACK)};
     private ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
-    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<InfectionCard>();
+    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
     private ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
-    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<PlayerCard>();
+    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
     private int outbreakCounter = 0;
     private int infectionRate = 0;
-    private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
+    private ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesToAddCubesTo;
 
     public Gameboard() {  // Mischien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
@@ -62,7 +62,7 @@ public class Gameboard implements Observable {
     }
 
     private ArrayList<PlayerCard> initializePlayerCardStack() {
-        ArrayList<PlayerCard> playerCardStack = new ArrayList<PlayerCard>();
+        ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
         for(City city : this.cities) {
             playerCardStack.add(new CityCard(city, city.getVirusType()));
@@ -198,7 +198,7 @@ public class Gameboard implements Observable {
 
     public void addResearchStationToCity(City city) {
         for (City c : cities) {
-            if (c.equals(city)) { ;
+            if (c.equals(city)) {
                 citiesWithResearchStations.add(c);
                 break;
             }
