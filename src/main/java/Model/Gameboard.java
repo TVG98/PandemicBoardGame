@@ -5,6 +5,7 @@ import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Gameboard implements Observable {
@@ -23,7 +24,8 @@ public class Gameboard implements Observable {
     private final ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
     private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
     private int outbreakCounter = 0;
-    private int infectionRate = 0;
+    private int infectionRate = 1;
+    private int drawnEpidemicCards = 0;
     private final ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesThatHadOutbreak;
 
@@ -32,8 +34,7 @@ public class Gameboard implements Observable {
     }
 
     public void initializeGameBoard() {
-        shuffleInfectionCards();
-        shufflePlayerCards();
+        shuffleAllStacks();
     }
 
     private City[] initializeCities() {
@@ -120,26 +121,32 @@ public class Gameboard implements Observable {
     public InfectionCard drawInfectionCard() {
         InfectionCard infectionCard = infectionStack.get(0);
         infectionStack.remove(0);
+        infectionDiscardStack.add(infectionCard);
         return infectionCard;
     }
 
-    public void discardInfectionCard(InfectionCard card) {
-        infectionDiscardStack.add(0, infectionStack.get(0));
-    }
-
-    public void shuffleInfectionCards() {
+    public void handleInfectionCardsInEpidemic() {
         for (int i = 0; i < 100; i++) {
             InfectionCard card = infectionDiscardStack.get((int) (Math.random()) * infectionDiscardStack.size());
             infectionDiscardStack.remove(card);
             infectionDiscardStack.add(card);
         }
+
+        // Add cards to top of InfectionCardStack
+        Collections.reverse(infectionStack);
+        infectionStack.addAll(infectionDiscardStack);
+        Collections.reverse(infectionStack);
     }
 
-    public void shufflePlayerCards() {
+    public void shuffleAllStacks() {
         for (int i = 0; i < 100; i++) {
-            PlayerCard card = playerDiscardStack.get((int) (Math.random()) * playerDiscardStack.size());
-            playerDiscardStack.remove(card);
-            playerDiscardStack.add(card);
+            PlayerCard playerCard = playerStack.get((int) (Math.random()) * playerStack.size());
+            playerStack.remove(playerCard);
+            playerStack.add(playerCard);
+
+            InfectionCard infectionCard = infectionStack.get((int) (Math.random()) * infectionStack.size());
+            infectionStack.remove(infectionCard);
+            infectionStack.add(infectionCard);
         }
     }
 
@@ -147,8 +154,8 @@ public class Gameboard implements Observable {
         outbreakCounter++;
     }
 
-    public void increaseInfectionRate() {
-        infectionRate++;
+    public void increaseInfectionRate(int infectionRate) {
+        this.infectionRate = infectionRate;
     }
 
     public void addCubes(City currentCity, VirusType type, int cubeAmount) {
@@ -264,6 +271,18 @@ public class Gameboard implements Observable {
         }
 
         return curedDiseases;
+    }
+
+    public ArrayList<InfectionCard> getInfectionDiscardStack() {
+        return infectionDiscardStack;
+    }
+
+    public int getDrawnEpidemicCards() {
+        return drawnEpidemicCards;
+    }
+
+    public void addDrawnEpidemicCard() {
+        drawnEpidemicCards++;
     }
 
     public boolean gameboardHasResearchStationsLeft() {

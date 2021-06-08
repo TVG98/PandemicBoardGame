@@ -1,8 +1,11 @@
 package GameApplication;
 
 import Model.FirestoreDatabase;
+import View.GameView;
+import View.LossView;
 import View.MenuView;
 
+import View.WinView;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;

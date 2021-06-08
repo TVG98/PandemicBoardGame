@@ -33,7 +33,7 @@ public class GameBoardController {
     public void handleDirectFlight(Player currentPlayer) {
         //Todo: Laat de speler een kaart uit zijn hand kiezen
         CityCard chosenCard = new CityCard(gameBoard.getCity("Tokyo"), VirusType.RED);  // Hier komt het resultaat
-        playerController.setCurrentCity(currentPlayer, chosenCard.getCity());// Ik stel voor om aan elke CityCard een stad en virusType te koppelen
+        playerController.setCurrentCity(currentPlayer, chosenCard.getCity());
     }
 
     public void handleCurePawn(Cure cure) {
@@ -45,11 +45,19 @@ public class GameBoardController {
     }
 
     public void handleEpidemicCard() {
+        int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};  // Dit moet nog een betere plek krijgen, misschien als attribuut in gameBoard
 
+        gameBoard.addDrawnEpidemicCard();
+        gameBoard.increaseInfectionRate(infectionRates[gameBoard.getDrawnEpidemicCards()]);
+
+        gameBoard.handleInfectionCardsInEpidemic();
     }
 
     public void handleInfectionCardDraw(int cubeAmount) {
-        gameBoard.handleInfection(gameBoard.drawInfectionCard(), cubeAmount);
+        int drawAmount = gameBoard.getInfectionRate();
+        for(int i = 0; i < drawAmount; i++) {
+            gameBoard.handleInfection(gameBoard.drawInfectionCard(), cubeAmount);
+        }
     }
 
     public void handleOutbreak(City infectedCity) {
