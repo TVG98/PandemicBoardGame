@@ -68,7 +68,20 @@ public class LobbyController {
             int index = 0;
 
             for (String player : s) {
-                if (lobby.getPlayers().size() != index) {
+                if (lobby.getPlayers().size() == index) {
+                    String playerName = player.split("playerName=")[1];
+                    if (addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")))) {
+                        index++;
+                    }
+
+                } else if(lobby.getPlayers().size() > databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
+                    System.out.println("Verwijder speler");
+                    for (Player p : lobby.getPlayers()) {
+                        if (!databaseController.getLobbyDocument(lobbyCode).get("Players").toString().contains(p.getPlayerName() + ",")) {
+                            lobby.removePlayer(p);
+                        }
+                    }
+                } else {
                     System.out.println("updating player " + index);
                     String role = player.split("role=")[1];
                     role = role.substring(0, role.indexOf(","));
@@ -87,12 +100,10 @@ public class LobbyController {
                     //Todo updateCity();
                     //Todo updateHand();
                     index++;
-                } else {
-                    String playerName = player.split("playerName=")[1];
-                    if (addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")))) {
-                        index++;
-                    }
                 }
+            }
+            for (Player p : lobby.getPlayers()) {
+                System.out.println(p.getPlayerName());
             }
         }
     }
