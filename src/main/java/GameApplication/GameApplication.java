@@ -1,18 +1,14 @@
 package GameApplication;
-/**
- * @author Romano Biertantie
- * @created May 20 2021 - 6:47 PM
- * @project testGame
- */
 
-import Controller.GameController;
 import Model.FirestoreDatabase;
+import View.GameView;
+import View.LossView;
 import View.MenuView;
+
+import View.WinView;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-
 import java.io.File;
 
 public class GameApplication extends Application {
@@ -20,7 +16,7 @@ public class GameApplication extends Application {
     public static FirestoreDatabase fsDatabase = new FirestoreDatabase();
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(new File("src/main/media/PandemicIcon.png").toURI().toString()));
@@ -35,8 +31,7 @@ public class GameApplication extends Application {
         //LobbyServersView h = new LobbyServersView(primaryStage);
         //LossView l = new LossView(primaryStage);
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
-
-
+        //InGameMenuView j = new InGameMenuView(primaryStage);
     }
 
     public static void main(String[] args) {

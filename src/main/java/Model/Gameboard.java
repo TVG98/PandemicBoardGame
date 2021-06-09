@@ -1,36 +1,41 @@
 package Model;
 
-import Controller.PlayerController;
-import Observers.*;
+import Observers.Observable;
+import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 
 public class Gameboard implements Observable {
     private final List<Observer> observers = new ArrayList<>();
     private final City[] cities = this.initializeCities();
-    private final Cure[] cures = new Cure[]{new Cure(VirusType.RED),
-                                            new Cure(VirusType.BLUE),
+    private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
-                                            new Cure(VirusType.BLACK)};
+                                            new Cure(VirusType.BLACK),
+                                            new Cure(VirusType.RED)};
     private final Virus[] viruses = new Virus[]{new Virus(VirusType.RED),
                                                  new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
                                                  new Virus(VirusType.BLACK)};
-    private ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
-    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<InfectionCard>();
-    private ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
-    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<PlayerCard>();
+    private final ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
+    private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
+    private final ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
+    private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
     private int outbreakCounter = 0;
-    private int infectionRate = 0;
-    private ArrayList<City> citiesWithResearchStations = new ArrayList<City>(Arrays.asList(this.getCity("Atlanta")));
-    private ArrayList<City> citiesToAddCubesTo;
+    private int infectionRate = 1;
+    private int drawnEpidemicCards = 0;
+    private final ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
+    private ArrayList<City> citiesThatHadOutbreak;
+    private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
-    public Gameboard() {  // Mischien is het mooier om een initializeGameBoard() method te maken die je in de constructor aanroept
-        shuffleInfectionCards();
-        shufflePlayerCards();
+    public Gameboard() {
+        initializeGameBoard();
+    }
+
+    public void initializeGameBoard() {
+        shuffleAllStacks();
     }
 
     private City[] initializeCities() {
@@ -41,20 +46,21 @@ public class Gameboard implements Observable {
             "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong", "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei", "Manila", "Sydney"};  // Red
 
         int x = 0;
-        for(int i = 0; i < cityNames.length; i++){
-            if(i % cityNames.length/viruses.length == 0) {
+
+        for (int i = 0; i < cityNames.length; i++){
+            if (i % (cityNames.length/viruses.length) == 0) {
                 x++;
             }
-            cities[i] = new City(cities[i].getName(), viruses[x].getType());
+            cities[i] = new City(cities[i].getName(), viruses[x-1].getType());
         }
 
         return cities;
     }
 
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
-        ArrayList<InfectionCard> infectionCardStack = new ArrayList<InfectionCard>();
+        ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
 
-        for(City city : this.cities) {
+        for (City city : this.cities) {
             infectionCardStack.add(new InfectionCard(city));
         }
 
@@ -62,9 +68,9 @@ public class Gameboard implements Observable {
     }
 
     private ArrayList<PlayerCard> initializePlayerCardStack() {
-        ArrayList<PlayerCard> playerCardStack = new ArrayList<PlayerCard>();
+        ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
-        for(City city : this.cities) {
+        for (City city : this.cities) {
             playerCardStack.add(new CityCard(city, city.getVirusType()));
         }
 
@@ -74,7 +80,7 @@ public class Gameboard implements Observable {
         return playerCardStack;
     }
 
-    private EventCard[] initializeEventCards() {  // De Eventcards kunnen we misschien ook zonder parameters doen
+    private EventCard[] initializeEventCards() {
         EventCard[] eventCards = new EventCard[5];
         eventCards[0] = new OneQuietNight("One quiet night", "Skip the next Infect Cities step.");
         eventCards[1] = new GovernmentGrant("Government grant", "Add 1 research station to any city.");
@@ -88,7 +94,7 @@ public class Gameboard implements Observable {
     private EpidemicCard[] initializeEpidemicCards(int epidemicCardAmount) {
         EpidemicCard[] epidemicCards = new EpidemicCard[epidemicCardAmount];
 
-        for(int i = 0; i < epidemicCardAmount; i++) {
+        for (int i = 0; i < epidemicCardAmount; i++) {
             epidemicCards[i] = new EpidemicCard();
         }
 
@@ -96,10 +102,10 @@ public class Gameboard implements Observable {
     }
 
     public void flipCurePawn(Cure cure) {
-        if(cure.getCureState().equals("active")) {
-            cure.setCureState("cured");
-        } else if(cure.getCureState().equals("cured")) {
-            cure.setCureState("eradicated");
+        if (cure.getCureState().equals(CureState.ACTIVE)) {
+            cure.setCureState(CureState.CURED);
+        } else if (cure.getCureState().equals(CureState.CURED)) {
+            cure.setCureState(CureState.ERADICATED);
         }
     }
 
@@ -116,26 +122,32 @@ public class Gameboard implements Observable {
     public InfectionCard drawInfectionCard() {
         InfectionCard infectionCard = infectionStack.get(0);
         infectionStack.remove(0);
+        infectionDiscardStack.add(infectionCard);
         return infectionCard;
     }
 
-    public void discardInfectionCard(InfectionCard card) {
-        infectionDiscardStack.add(0, infectionStack.get(0));
-    }
-
-    public void shuffleInfectionCards() {
+    public void handleInfectionCardsInEpidemic() {
         for (int i = 0; i < 100; i++) {
             InfectionCard card = infectionDiscardStack.get((int) (Math.random()) * infectionDiscardStack.size());
             infectionDiscardStack.remove(card);
             infectionDiscardStack.add(card);
         }
+
+        // Add cards to top of InfectionCardStack
+        Collections.reverse(infectionStack);
+        infectionStack.addAll(infectionDiscardStack);
+        Collections.reverse(infectionStack);
     }
 
-    public void shufflePlayerCards() {
+    public void shuffleAllStacks() {
         for (int i = 0; i < 100; i++) {
-            PlayerCard card = playerDiscardStack.get((int) (Math.random()) * playerDiscardStack.size());
-            playerDiscardStack.remove(card);
-            playerDiscardStack.add(card);
+            PlayerCard playerCard = playerStack.get((int) (Math.random()) * playerStack.size());
+            playerStack.remove(playerCard);
+            playerStack.add(playerCard);
+
+            InfectionCard infectionCard = infectionStack.get((int) (Math.random()) * infectionStack.size());
+            infectionStack.remove(infectionCard);
+            infectionStack.add(infectionCard);
         }
     }
 
@@ -143,22 +155,22 @@ public class Gameboard implements Observable {
         outbreakCounter++;
     }
 
-    public void increaseInfectionRate() {
-        infectionRate++;
+    public void increaseInfectionRate(int infectionRate) {
+        this.infectionRate = infectionRate;
     }
 
-    public void addCubes(City currentCity, VirusType type) {
+    public void addCubes(City currentCity, VirusType type, int cubeAmount) {
         currentCity.addCube(type);
-        this.getVirusByType(type).decreaseCubeAmount(1);  // Waarschijnlijk zal dit altijd 1 zijn
+        this.getVirusByType(type).decreaseCubeAmount(cubeAmount);
     }
 
-    public void removeCubes(City currentCity, VirusType type) {
+    public void removeCubes(City currentCity, VirusType type, int cubeAmount) {
         currentCity.removeCube();
-        this.getVirusByType(type).increaseCubeAmount(1);  // Waarschijnlijk zal dit altijd 1 zijn
+        this.getVirusByType(type).increaseCubeAmount(cubeAmount);
     }
 
     public Virus getVirusByType(VirusType type) {
-        for(Virus virus : viruses) {
+        for (Virus virus : viruses) {
             if(virus.getType() == type) {
                 return virus;
             }
@@ -177,6 +189,7 @@ public class Gameboard implements Observable {
                 return city;
             }
         }
+
         return null;
     }
 
@@ -205,8 +218,9 @@ public class Gameboard implements Observable {
         }
     }
 
-    public boolean cityHasCube(City currentCity) {
-        return currentCity.getCubeAmount() > 0;
+    public void handleEpidemicCard() {addDrawnEpidemicCard();
+        increaseInfectionRate(infectionRates[getDrawnEpidemicCards()]);
+        handleInfectionCardsInEpidemic();
     }
 
     public boolean cureIsFound(VirusType virus) {
@@ -219,10 +233,42 @@ public class Gameboard implements Observable {
         return false;
     }
 
+    public void handleInfection(InfectionCard infectionCard, int cubeAmount) {
+        City infectedCity = infectionCard.getCity();
+
+        if (infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
+            handleOutbreak(infectedCity);
+        } else {
+            addCubes(infectedCity, infectedCity.getVirusType(), cubeAmount);
+        }
+    }
+
+    public void handleOutbreak(City infectedCity) {
+        increaseOutbreakCounter();
+        addCityThatHadOutbreak(infectedCity);
+
+        for (City city : infectedCity.getNearCities()) {
+            if (infectedCity.getCubeAmount() >= 3 && !cityHadOutbreak(city)) {  // Hier moet de quarantine specialist nog toegevoegd worden
+                handleOutbreak(city);
+            } else {
+                addCubes(city, infectedCity.getVirusType(), 1);
+            }
+        }
+    }
+
+    public void addCityThatHadOutbreak(City city) {
+        citiesThatHadOutbreak.add(city);
+    }
+
+    public boolean cityHadOutbreak(City city) {
+        return citiesThatHadOutbreak.contains(city);
+    }
+
     public ArrayList<Cure> getCuredDiseases() {
-        ArrayList<Cure> curedDiseases = new ArrayList<Cure>();
-        for(Cure cure : cures) {
-            if(cure.getCureState().equals("cured")){
+        ArrayList<Cure> curedDiseases = new ArrayList<>();
+
+        for (Cure cure : cures) {
+            if(cure.getCureState().equals(CureState.CURED)){
                 curedDiseases.add(cure);
             }
         }
@@ -230,18 +276,30 @@ public class Gameboard implements Observable {
         return curedDiseases;
     }
 
-    @Deprecated  // Hebben we waarschijnlijk niet nodig
-    public ArrayList<City> getCitiesToAddCubesTo() {
-        return citiesToAddCubesTo;
+    public ArrayList<InfectionCard> getInfectionDiscardStack() {
+        return infectionDiscardStack;
     }
 
-    @Deprecated
-    public void addCityToAddCubeTo(City city) {
-        citiesToAddCubesTo.add(city);
+    public int getDrawnEpidemicCards() {
+        return drawnEpidemicCards;
+    }
+
+    public void addDrawnEpidemicCard() {
+        drawnEpidemicCards++;
     }
 
     public boolean gameboardHasResearchStationsLeft() {
         return citiesWithResearchStations.size() < 6;
+    }
+
+    public boolean lossByCubeAmount() {
+        for (Virus virus : getViruses()) {
+            if(virus.getCubeAmount() < 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

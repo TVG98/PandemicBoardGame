@@ -4,10 +4,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-/**
- * @created June 05 2021 - 6:50 PM
- * @project testGame
- */
 public class SoundEffects
 {
     final String pathToSoundOne = "src/main/media/menusound.wav";

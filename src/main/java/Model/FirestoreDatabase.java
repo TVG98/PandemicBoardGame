@@ -60,7 +60,7 @@ public class FirestoreDatabase {
         docRef.update("Players", FieldValue.arrayRemove(player));
     }
 
-    public void updatePlayerInLobby(ArrayList<Player> players) {
+    public void updatePlayersInLobby(ArrayList<Player> players) {
 
         //docRef.update("Players.", players);
     }

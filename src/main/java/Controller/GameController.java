@@ -1,8 +1,10 @@
 package Controller;
 
-import Model.*;
+import Model.City;
+import Model.Game;
+import Model.Player;
+import Model.PlayerCard;
 
-import javax.smartcardio.Card;
 import java.util.ArrayList;
 
 public class GameController {
@@ -20,22 +22,37 @@ public class GameController {
         return gameController;
     }
 
+    // Misschien dat dit ook wel in de constructor kan
+    public void startGame() {
+
+        int drawAmount = 3;
+        while(drawAmount > 0) {
+            for(int x = 0; x < 3; x++) {
+                gameBoardController.handleInfectionCardDraw(drawAmount);
+            }
+            drawAmount--;
+        }
+
+        // Todo: zet de players in Atlanta + een researchstation mits we die uit de initialisatie willen halen
+
+    }
+
     public void changeTurn(){
         game.nextTurn();
     }
 
     public void checkLoss() {
-        if(gameBoardController.lossByCubeAmount()) {
+        if (gameBoardController.lossByCubeAmount()) {
             game.setLost();
-        } else if(gameBoardController.lossByEmptyPlayerCardStack()) {
+        } else if (gameBoardController.lossByEmptyPlayerCardStack()) {
             game.setLost();
-        } else if(gameBoardController.lossByOutbreakCounter()) {
+        } else if (gameBoardController.lossByOutbreakCounter()) {
             game.setLost();
         }
     }
     // Misschien dat we de checkLoss en de checkWin method kunnen samenvoegen
     public void checkWin() {
-        if(gameBoardController.winByCures()) {
+        if (gameBoardController.winByCures()) {
             game.setWon();
         }
     }
@@ -57,7 +74,20 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        gameBoardController.handleBuildResearchStation(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setBuildResearchBehavior(currentPlayer);
+        if (gameBoardController.canAddResearchStation()) {
+            gameBoardController.handleBuildResearchStation(currentPlayer, currentCity);
+        }
+    }
+
+    public void setBuildResearchBehavior(Player currentPlayer) {
+        if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
+            gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
+        } else {
+            gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationNormal());
+        }
     }
 
     public void handleShareKnowledge(PlayerCard card) {
@@ -65,24 +95,28 @@ public class GameController {
         ArrayList<Player> playersInCity = game.getPlayersInCity(city);
 
         if (playersInCity.size() > 1) {
-
-            Player chosenPlayer = game.getCurrentPlayer();//Todo choose player to share with/change this
+            Player chosenPlayer = getCurrentPlayer();//Todo choose player to share with/change this
             //game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
         }
 
         getCurrentPlayer().decrementActions();
     }
 
-    //Todo fix nullPointerException
     public void handleTreatDisease() {
-        /*Player currentPlayer = getCurrentPlayer();
-        if (currentPlayer.getRole().equals(Role.MEDIC)) {
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setTreatDiseaseBehavior(currentPlayer, currentCity);
+        gameBoardController.handleTreatDisease(currentPlayer, currentCity);
+    }
+
+    public void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
+        if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
+        } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubes());
         } else {
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseOneCube());
         }
-        
-        gameBoardController.handleTreatDisease();*/
     }
 
     public void handleFindCure() {

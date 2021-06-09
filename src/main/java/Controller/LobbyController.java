@@ -7,13 +7,13 @@ import Model.Role;
 import java.sql.SQLOutput;
 import java.util.*;
 
-
 public class LobbyController {
     static LobbyController lobbyController;
 
     Lobby lobby;
     DatabaseController databaseController = DatabaseController.getInstance();
     PlayerController playerController = PlayerController.getInstance();
+
     private String lobbyCode;
 
     public LobbyController() {
@@ -29,7 +29,6 @@ public class LobbyController {
     }
 
     public void makeLobby(String playerName) {
-
         Player player = new Player(playerName);
         lobby = databaseController.makeLobby(player);//Todo: create player via playerController
         playerController.setPlayer(player);

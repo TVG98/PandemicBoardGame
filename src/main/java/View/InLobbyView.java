@@ -20,11 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created May 25 2021 - 1:27 PM
- * @project testGame
- */
-
 /** BELANGRIJK
  * Er mist een manier om naar GameView te gaan wanneer alle spelers ready zijn
  *
@@ -179,7 +174,6 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
