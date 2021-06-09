@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Forecast;
 import Model.Lobby;
 import Model.Player;
 import Model.Role;
@@ -36,18 +37,21 @@ public class LobbyController {
     }
 
     public void setPlayerReady() {
-        playerController.getPlayer().setReadyToStart(true);
-        System.out.println(playerController.getPlayer().getReadyToStart());
+        System.out.println(playerController.getPlayer().getPlayerName());
+        for (Player p : lobby.getPlayers()) {
+            if (playerController.getPlayer().getPlayerName().equals(p.getPlayerName())) {
+                p.setReadyToStart(true);
+            }
+        }
         databaseController.updatePlayersInLobby(lobby.getPlayers());
     }
 
 
-    public void addPlayerToLobby(String passwd, String playerName) {
+    public void addPlayerToServer(String passwd, String playerName) {
         lobbyCode = passwd;
         lobby = new Lobby(lobbyCode);
         Player player = new Player(playerName);
         playerController.setPlayer(player);
-        System.out.println(lobby.getPlayers().size());
         databaseController.addPlayer(lobbyCode, player);
     }
 
@@ -62,9 +66,8 @@ public class LobbyController {
             int index = 0;
 
             for (String player : s) {
-                System.out.println(lobby.getPlayers());
                 if (lobby.getPlayers().size() != index) {
-                    System.out.println("adding player");
+                    System.out.println("updating player " + index);
                     String role = player.split("role=")[1];
                     role = role.substring(0, role.indexOf(","));
                     if (!role.equals("null")) {
@@ -81,18 +84,28 @@ public class LobbyController {
                     currentCity = currentCity.substring(0, currentCity.indexOf(","));
                     //Todo updateCity();
                     //Todo updateHand();
+                    index++;
                 } else {
-                    System.out.println("voeg nieuwe player toe");
                     String playerName = player.split("playerName=")[1];
-                    System.out.println(playerName);
-                    lobby.addPlayer(new Player(playerName.substring(0, playerName.indexOf(","))));
-                    for (Player p : lobby.getPlayers()) {
-                        System.out.println(p.getPlayerName() + " " + index);
+                    if (addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")))) {
+                        index++;
                     }
                 }
-                index++;
             }
         }
+        for (Player p : lobby.getPlayers()) {
+            System.out.println("Player: " + p.getPlayerName());
+        }
+    }
+
+    public boolean addPlayerToLobby(String playerName) {
+        for (Player p : lobby.getPlayers()) {
+            if (p.getPlayerName().equals(playerName)) {
+                return false;
+            }
+        }
+        lobby.addPlayer(new Player(playerName));
+        return true;
     }
 
     public Player getCurrentPLayer() {

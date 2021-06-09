@@ -61,8 +61,10 @@ public class FirestoreDatabase {
     }
 
     public void updatePlayersInLobby(ArrayList<Player> players) {
-
-        //docRef.update("Players.", players);
+        for (Player p: players) {
+            System.out.println(p.getReadyToStart());
+        }
+        docRef.update("Players", players);
     }
 
     public Lobby makeLobby(Player player) {
@@ -104,7 +106,7 @@ public class FirestoreDatabase {
         return null;
     }
 
-    public void listen(DatabaseController controller) {
+    public void listen(DatabaseController controller, String lobbyCode) {
         if (listenerRegistration == null) {
             EventListener<DocumentSnapshot> eventListener = new EventListener<DocumentSnapshot>() {
                 @Override
@@ -116,6 +118,9 @@ public class FirestoreDatabase {
                 }
             };
 
+            if (docRef == null) {
+                docRef = lobbyRef.document(lobbyCode);
+            }
             listenerRegistration = docRef.addSnapshotListener(eventListener);
         }
     }

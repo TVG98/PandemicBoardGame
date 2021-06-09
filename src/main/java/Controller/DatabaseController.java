@@ -32,13 +32,13 @@ public class DatabaseController {
 
     public Lobby makeLobby(Player player) {
         Lobby lobby = database.makeLobby(player);
-        database.listen(this);
+        database.listen(this, lobby.getPassword());
         return lobby;
     }
 
     public void addPlayer(String lobbyCode,Player player) {
+        database.listen(this, lobbyCode);
         database.addPlayerToLobby(lobbyCode, player);
-        database.listen(this);
     }
 
     public void removePlayer(String lobbyCode, Player player) {
