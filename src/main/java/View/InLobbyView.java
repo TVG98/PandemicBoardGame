@@ -1,8 +1,7 @@
 package View;
 
 import Controller.LobbyController;
-import Observers.Observable;
-import Observers.Observer;
+import Observers.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -31,7 +30,7 @@ import java.util.Collections;
  *
  */
 
-public class InLobbyView implements Observer {
+public class InLobbyView implements PlayerObserver, LobbyObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
@@ -184,7 +183,12 @@ public class InLobbyView implements Observer {
     }
 
     @Override
-    public void update(Observable observable) {
+    public void update(PlayerObservable observable) {
         System.out.println("hoi");
+    }
+
+    @Override
+    public void update(LobbyObservable observable) {
+        //createUpdatedLobbyPane(observable);
     }
 }

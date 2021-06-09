@@ -1,23 +1,23 @@
 package Model;
 
-import Observers.Observable;
-import Observers.Observer;
+import Observers.PlayerObservable;
+import Observers.PlayerObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Observable {
-    private final List<Observer> observers = new ArrayList<>();
+public class Player implements PlayerObservable {
+    private final List<PlayerObserver> observers = new ArrayList<>();
 
     private ArrayList<PlayerCard> hand = new ArrayList<>();
     private Role role;
     private City currentCity;
     private boolean readyToStart = false;
-    private String name;
+    private String playerName;
     private int actions = 4;
 
-    public Player(String name) {
-        this.name = name;
+    public Player(String playerName) {
+        this.playerName = playerName;
     }
 
     public void endTurn() {
@@ -65,14 +65,13 @@ public class Player implements Observable {
         return readyToStart;
     }
 
-    public void setReadyToStart() {
-        readyToStart = true;
-        System.out.println("player is ready");
+    public void setReadyToStart(boolean readyToStart) {
+        this.readyToStart = readyToStart;
         notifyAllObservers();
     }
 
-    public String getName() {
-        return name;
+    public String getPlayerName() {
+        return playerName;
     }
 
     public void resetActions() {
@@ -84,18 +83,18 @@ public class Player implements Observable {
     }
 
     @Override
-    public void register(Observer observer) {
+    public void register(PlayerObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void unregister(Observer observer) {
+    public void unregister(PlayerObserver observer) {
         observers.remove(observer);
     }
 
     @Override
     public void notifyAllObservers() {
-        for (Observer observer : observers) {
+        for (PlayerObserver observer : observers) {
             observer.update(this);
         }
     }

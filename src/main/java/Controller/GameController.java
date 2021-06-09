@@ -73,15 +73,16 @@ public class GameController {
         getCurrentPlayer().decrementActions();
     }
 
+    //Todo fix nullPointerException
     public void handleTreatDisease() {
-        Player currentPlayer = getCurrentPlayer();
+        /*Player currentPlayer = getCurrentPlayer();
         if (currentPlayer.getRole().equals(Role.MEDIC)) {
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubes());
         } else {
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseOneCube());
         }
         
-        gameBoardController.handleTreatDisease();
+        gameBoardController.handleTreatDisease();*/
     }
 
     public void handleFindCure() {

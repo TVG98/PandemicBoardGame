@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.DatabaseController;
+import Controller.LobbyController;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
@@ -7,21 +9,23 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
+import javax.annotation.Nullable;
 import java.io.FileInputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
-/**
- * @created May 26 2021 - 7:35 PM
- * @project testGame
- */
+import java.util.stream.Collectors;
 
 public class FirestoreDatabase {
+    ListenerRegistration listenerRegistration;
 
     private Firestore db;
     private static final String LOBBY_PATH = "lobbies";
     private CollectionReference lobbyRef;
+    private DocumentReference docRef;
 
     public FirestoreDatabase() {
         try {
@@ -45,18 +49,27 @@ public class FirestoreDatabase {
         this.lobbyRef = this.db.collection(LOBBY_PATH);
     }
 
-    public void updatePlayersInLobby(String documentId, Lobby lobby) {
-        HashMap<String, Object> quote = new HashMap<>();
-        quote.put("Players", lobby.getPlayers());
+    public void addPlayerToLobby(String lobbyCode, Player player) {
+        if (docRef == null) {
+            docRef = lobbyRef.document(lobbyCode);
+        }
+        docRef.update("Players", FieldValue.arrayUnion(player));
+    }
 
-        DocumentReference documentReference = this.lobbyRef.document(documentId);
-        documentReference.update("Players", lobby.getPlayers());
+    public void removePlayerFromLobby(String LobbyCode, Player player) {
+        docRef.update("Players", FieldValue.arrayRemove(player));
+    }
+
+    public void updatePlayerInLobby(ArrayList<Player> players) {
+
+        //docRef.update("Players.", players);
     }
 
     public Lobby makeLobby(Player player) {
         Lobby lobby = new Lobby(player);
         HashMap<String, Object> quote = createLobbyData(lobby);
-        lobbyRef.document(lobby.getPassword()).set(quote);
+        docRef = lobbyRef.document(lobby.getPassword());
+        docRef.set(quote);
         return lobby;
     }
 
@@ -68,8 +81,7 @@ public class FirestoreDatabase {
         return hashMap;
     }
 
-    public DocumentSnapshot getLobbyByDocumentId(String documentId) {
-        DocumentReference docRef = this.lobbyRef.document(documentId);
+    public DocumentSnapshot getLobbyByDocumentId() {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document;
 
@@ -92,4 +104,19 @@ public class FirestoreDatabase {
         return null;
     }
 
+    public void listen(DatabaseController controller) {
+        if (listenerRegistration == null) {
+            EventListener<DocumentSnapshot> eventListener = new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(DocumentSnapshot snapshot, @Nullable FirestoreException e) {
+                    if (snapshot != null && snapshot.exists()) {
+                        System.out.println(snapshot.getData());
+                        controller.update(snapshot.getData());
+                    }
+                }
+            };
+
+            listenerRegistration = docRef.addSnapshotListener(eventListener);
+        }
+    }
 }

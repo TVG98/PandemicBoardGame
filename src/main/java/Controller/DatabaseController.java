@@ -4,12 +4,10 @@ import GameApplication.GameApplication;
 import Model.FirestoreDatabase;
 import Model.Lobby;
 import Model.Player;
-import com.google.cloud.firestore.DocumentSnapshot;
 
-/**
- * @created May 26 2021 - 8:58 PM
- * @project testGame
- */
+import java.util.ArrayList;
+import java.util.Map;
+
 public class DatabaseController {
     FirestoreDatabase database = GameApplication.getFsDatabase();
     static DatabaseController databaseController;
@@ -26,23 +24,26 @@ public class DatabaseController {
         return databaseController;
     }
 
-    public void updatePlayers(String lobbyCode, Lobby lobby) {
-        database.updatePlayersInLobby(lobbyCode, lobby);
+    public void addPlayer(String lobbyCode, Player player) {
+        database.addPlayerToLobby(lobbyCode, player);
+        database.listen(this);
+    }
+
+    public void removePlayer(String lobbyCode, Player player) {
+        database.removePlayerFromLobby(lobbyCode, player);
+    }
+
+    public void updatePlayersInLobby(ArrayList<Player> players) {
+        database.updatePlayerInLobby(players);
     }
 
     public Lobby makeLobby(Player player) {
-        return database.makeLobby(player);
+        Lobby lobby = database.makeLobby(player);
+        database.listen(this);
+        return lobby;
     }
 
-    public DocumentSnapshot getLobbyDocument(String lobbyCode) {
-        return database.getLobbyByDocumentId(lobbyCode);
-    }
-
-    public void initializeDatabase() {
-        try {
-            database.initialize();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void update(Map<String, Object> map) {
+        LobbyController.getInstance().update(map);
     }
 }

@@ -35,6 +35,8 @@ public class GameApplication extends Application {
         //LobbyServersView h = new LobbyServersView(primaryStage);
         //LossView l = new LossView(primaryStage);
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
+
+
     }
 
     public static void main(String[] args) {

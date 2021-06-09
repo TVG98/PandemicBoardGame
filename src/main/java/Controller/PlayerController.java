@@ -40,7 +40,7 @@ public class PlayerController {
     }
 
     public String getName(Player player) {
-        return player.getName();
+        return player.getPlayerName();
     }
 
     public Player getPlayer() {

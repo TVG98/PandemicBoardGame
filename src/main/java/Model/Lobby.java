@@ -1,13 +1,15 @@
 package Model;
 
+import Observers.LobbyObservable;
+import Observers.LobbyObserver;
 import Observers.Observable;
 import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lobby implements Observable {
-    private final List<Observer> observers = new ArrayList<>();
+public class Lobby implements LobbyObservable {
+    private final List<LobbyObserver> observers = new ArrayList<>();
 
     private boolean joinable;
     private final ArrayList<Player> players;
@@ -30,8 +32,27 @@ public class Lobby implements Observable {
         return players;
     }
 
+    @Override
     public boolean getJoinable() {
         return joinable;
+    }
+
+    @Override
+    public ArrayList<String> getPlayerNames() {
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (Player player : players) {
+            playerNames.add(player.getPlayerName());
+        }
+        return playerNames;
+    }
+
+    @Override
+    public ArrayList<Boolean> getPlayerReadyToStart() {
+        ArrayList<Boolean> playerReadyToStart = new ArrayList<>();
+        for (Player player : players) {
+            playerReadyToStart.add(player.getReadyToStart());
+        }
+        return playerReadyToStart;
     }
 
     public void setJoinable(boolean joinable) {
@@ -46,11 +67,12 @@ public class Lobby implements Observable {
                 setJoinable(false);
             }
         }
-        //notifyAllObservers();
+        notifyAllObservers();
     }
 
     public void removePlayer(Player player) {
         this.players.remove(player);
+        notifyAllObservers();
     }
 
     public void startGame() {
@@ -85,18 +107,18 @@ public class Lobby implements Observable {
     }
 
     @Override
-    public void register(Observer observer) {
+    public void register(LobbyObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void unregister(Observer observer) {
+    public void unregister(LobbyObserver observer) {
         observers.remove(observer);
     }
 
     @Override
     public void notifyAllObservers() {
-        for (Observer observer : observers) {
+        for (LobbyObserver observer : observers) {
             observer.update(this);
         }
     }

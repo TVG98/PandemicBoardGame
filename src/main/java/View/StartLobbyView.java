@@ -28,8 +28,7 @@ import java.util.Collections;
  * @project testGame
  */
 
-public class StartLobbyView
-{
+public class StartLobbyView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
@@ -37,12 +36,12 @@ public class StartLobbyView
     LobbyController lobbyController = LobbyController.getInstance();
 
 
-    public StartLobbyView(Stage primaryStage){
+    public StartLobbyView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createStartLobbyGridPane());
     }
 
-    public BorderPane createStartLobbyGridPane(){
+    public BorderPane createStartLobbyGridPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
