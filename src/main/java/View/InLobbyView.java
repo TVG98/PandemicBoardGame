@@ -177,6 +177,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
 
     @Override
     public void update(LobbyObservable observable) {
+        System.out.println("View wordt geUpdate");
         //createUpdatedLobbyPane(observable);
     }
 }

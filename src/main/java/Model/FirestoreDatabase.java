@@ -50,9 +50,8 @@ public class FirestoreDatabase {
     }
 
     public void addPlayerToLobby(String lobbyCode, Player player) {
-        if (docRef == null) {
-            docRef = lobbyRef.document(lobbyCode);
-        }
+        docRef = lobbyRef.document(lobbyCode);
+
         docRef.update("Players", FieldValue.arrayUnion(player));
     }
 

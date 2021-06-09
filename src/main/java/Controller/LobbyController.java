@@ -46,10 +46,10 @@ public class LobbyController {
         databaseController.updatePlayersInLobby(lobby.getPlayers());
     }
 
-
     public void addPlayerToServer(String passwd, String playerName) {
         lobbyCode = passwd;
         lobby = new Lobby(lobbyCode);
+        //Todo check names of other players
         Player player = new Player(playerName);
         playerController.setPlayer(player);
         databaseController.addPlayer(lobbyCode, player);
