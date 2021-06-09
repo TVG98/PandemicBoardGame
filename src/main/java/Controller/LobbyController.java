@@ -46,13 +46,18 @@ public class LobbyController {
         databaseController.updatePlayersInLobby(lobby.getPlayers());
     }
 
-    public void addPlayerToServer(String passwd, String playerName) {
+    public boolean addPlayerToServer(String passwd, String playerName) {
         lobbyCode = passwd;
-        lobby = new Lobby(lobbyCode);
-        //Todo check names of other players
-        Player player = new Player(playerName);
-        playerController.setPlayer(player);
-        databaseController.addPlayer(lobbyCode, player);
+        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4) {
+            lobby = new Lobby(lobbyCode);
+            playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
+            System.out.println(playerName);
+            Player player = new Player(playerName);
+            playerController.setPlayer(player);
+            databaseController.addPlayer(lobbyCode, player);
+            return true;
+        }
+        return false;
     }
 
     public void updatePlayersFromLobbyDoc(Map<String, Object> map) {
@@ -60,13 +65,23 @@ public class LobbyController {
             Object playersObject = map.get("Players");
             String playersString = playersObject.toString();
             String[] s = playersString.split("}, \\{");
-            for (int i = 0; i < s.length; i++) {
-                System.out.println(s[i]);
-            }
             int index = 0;
 
             for (String player : s) {
-                if (lobby.getPlayers().size() != index) {
+                if (lobby.getPlayers().size() == index) {
+                    String playerName = player.split("playerName=")[1];
+                    if (addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")))) {
+                        index++;
+                    }
+
+                } else if(lobby.getPlayers().size() > databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
+                    System.out.println("Verwijder speler");
+                    for (Player p : lobby.getPlayers()) {
+                        if (!databaseController.getLobbyDocument(lobbyCode).get("Players").toString().contains(p.getPlayerName() + ",")) {
+                            lobby.removePlayer(p);
+                        }
+                    }
+                } else {
                     System.out.println("updating player " + index);
                     String role = player.split("role=")[1];
                     role = role.substring(0, role.indexOf(","));
@@ -85,16 +100,11 @@ public class LobbyController {
                     //Todo updateCity();
                     //Todo updateHand();
                     index++;
-                } else {
-                    String playerName = player.split("playerName=")[1];
-                    if (addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")))) {
-                        index++;
-                    }
                 }
             }
-        }
-        for (Player p : lobby.getPlayers()) {
-            System.out.println("Player: " + p.getPlayerName());
+            for (Player p : lobby.getPlayers()) {
+                System.out.println(p.getPlayerName());
+            }
         }
     }
 
@@ -112,7 +122,20 @@ public class LobbyController {
         return playerController.getPlayer();
     }
 
-    public void removePlayerFromLobby(Player player) {
+    public String checkPlayerName(String playersString, String playerName) {
+        int MAX_LOBBY_SIZE = 4;
+        System.out.println(playersString);
+        String newName = playerName;
+        for (int i = 0; i < MAX_LOBBY_SIZE; i++) {
+            if (playersString.contains(newName)) {
+                newName = playerName += Integer.toString(i + 1);
+            }
+        }
+
+        return newName;
+    }
+
+    public void removePlayerFromServer(Player player) {
         databaseController.removePlayer(lobbyCode, player);
     }
 

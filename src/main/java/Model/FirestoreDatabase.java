@@ -51,12 +51,14 @@ public class FirestoreDatabase {
 
     public void addPlayerToLobby(String lobbyCode, Player player) {
         docRef = lobbyRef.document(lobbyCode);
-
+        System.out.println(getLobbyByDocumentId(lobbyCode).getDouble("PlayerAmount"));
         docRef.update("Players", FieldValue.arrayUnion(player));
+        docRef.update("PlayerAmount", FieldValue.increment(1));
     }
 
     public void removePlayerFromLobby(String LobbyCode, Player player) {
         docRef.update("Players", FieldValue.arrayRemove(player));
+        docRef.update("PlayerAmount", FieldValue.increment(-1));
     }
 
     public void updatePlayersInLobby(ArrayList<Player> players) {
@@ -77,13 +79,14 @@ public class FirestoreDatabase {
     public HashMap<String, Object> createLobbyData(Lobby lobby) {
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        hashMap.put("Joinable", lobby.getJoinable());
+        hashMap.put("PlayerAmount", 1);
         hashMap.put("Players", lobby.getPlayers());
         return hashMap;
     }
 
-    public DocumentSnapshot getLobbyByDocumentId() {
-        ApiFuture<DocumentSnapshot> future = docRef.get();
+    public DocumentSnapshot getLobbyByDocumentId(String lobbyCode) {
+
+        ApiFuture<DocumentSnapshot> future = lobbyRef.document(lobbyCode).get();
         DocumentSnapshot document;
 
         try {
