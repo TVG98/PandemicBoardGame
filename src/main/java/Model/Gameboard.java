@@ -19,14 +19,14 @@ public class Gameboard implements Observable {
                                                  new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
                                                  new Virus(VirusType.BLACK)};
-    private final ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
-    private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
-    private final ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
-    private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
+    private ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
+    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
+    private ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
+    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
     private int outbreakCounter = 0;
     private int infectionRate = 1;
     private int drawnEpidemicCards = 0;
-    private final ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
+    private ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesThatHadOutbreak;
     private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
@@ -176,7 +176,7 @@ public class Gameboard implements Observable {
             }
         }
 
-        return null;
+        return null;  // Dit moet een exception worden
     }
 
     public Virus[] getViruses() {
@@ -190,7 +190,7 @@ public class Gameboard implements Observable {
             }
         }
 
-        return null;
+        return null;  // Dit moet een exception worden
     }
 
     public int getOutbreakCounter() {
@@ -274,10 +274,6 @@ public class Gameboard implements Observable {
         }
 
         return curedDiseases;
-    }
-
-    public ArrayList<InfectionCard> getInfectionDiscardStack() {
-        return infectionDiscardStack;
     }
 
     public int getDrawnEpidemicCards() {

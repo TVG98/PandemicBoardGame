@@ -1,12 +1,12 @@
 package GameApplication;
 
 import Model.FirestoreDatabase;
-import View.GameView;
-import View.LossView;
+import View.InGameMenuView;
+import View.JoinFailedView;
 import View.MenuView;
 
-import View.WinView;
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.File;
@@ -32,6 +32,7 @@ public class GameApplication extends Application {
         //LossView l = new LossView(primaryStage);
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
         //InGameMenuView j = new InGameMenuView(primaryStage);
+        //JoinFailedView k = new JoinFailedView(primaryStage, "No name entered, please enter a name!");
     }
 
     public static void main(String[] args) {

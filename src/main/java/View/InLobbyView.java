@@ -54,7 +54,6 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         lobbyWindowBackground.setX((width / 2) - (800 / 2f));
         lobbyWindowBackground.setY((height / 2) - (700 / 2f));
 
-
         // BorderPane Top Setup (vboxTop) //
         Text lobbyText = new Text("Lobby");
         lobbyText.setFont(new Font("Castellar", 80));
@@ -63,7 +62,6 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         vboxTop.getChildren().add(lobbyText);
 
         // BorderPane Center Setup (hboxCenter) //
-
         Text playerOneName = new Text("Aad");
         //Text playerOneCharacter = new Text("Medic");
         Text playerOneStatus = new Text("Ready");
@@ -113,9 +111,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         hboxCenter.setAlignment(Pos.CENTER);
         hboxCenter.setSpacing(200);
 
-
         // BorderPane Bottom Setup (hboxBottom) //
-
         Button backToMainMenuButton = new Button("Back to main menu");
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -148,12 +144,10 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         readyUpButton.setPrefHeight(100);
         readyUpButton.setPrefWidth(400);
 
-
         HBox hboxBottom = new HBox();
         hboxBottom.getChildren().addAll(backToMainMenuButton, readyUpButton);
         hboxBottom.setAlignment(Pos.BOTTOM_CENTER);
         hboxBottom.setSpacing(200);
-
 
         // BorderPane layout //
         bp.getChildren().add(lobbyWindowBackground);
