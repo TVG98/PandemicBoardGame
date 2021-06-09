@@ -1,11 +1,9 @@
 package Controller;
 
-import Model.Forecast;
 import Model.Lobby;
 import Model.Player;
 import Model.Role;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class LobbyController {
@@ -33,7 +31,6 @@ public class LobbyController {
         Player player = new Player(playerName);
         lobby = databaseController.makeLobby(player);//Todo: create player via playerController
         playerController.setPlayer(0);
-        System.out.println("lobby aangemaakt " + lobby.getPassword());
     }
 
     public void setPlayerReady() {
@@ -75,14 +72,12 @@ public class LobbyController {
                     }
 
                 } else if(lobby.getPlayers().size() > databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
-                    System.out.println("Verwijder speler");
                     for (Player p : lobby.getPlayers()) {
                         if (!databaseController.getLobbyDocument(lobbyCode).get("Players").toString().contains(p.getPlayerName() + ",")) {
                             lobby.removePlayer(p);
                         }
                     }
                 } else {
-                    System.out.println("updating player " + index);
                     String role = player.split("role=")[1];
                     role = role.substring(0, role.indexOf(","));
                     if (!role.equals("null")) {
@@ -149,5 +144,8 @@ public class LobbyController {
 
     public void registerObserver(View.InLobbyView view) {
         lobby.register(view);
+        for (Player p : lobby.getPlayers()) {
+            p.register(view);
+        }
     }
 }

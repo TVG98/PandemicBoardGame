@@ -26,10 +26,12 @@ public class Player implements PlayerObservable {
 
     public void addCardToHand(PlayerCard card) {
         hand.add(card);
+        notifyAllObservers();
     }
 
     public void removeCardFromHand(PlayerCard card) {
         hand.removeIf(playerCard -> playerCard == card);
+        notifyAllObservers();
     }
 
     public ArrayList<PlayerCard> getHand() {
@@ -51,6 +53,7 @@ public class Player implements PlayerObservable {
 
     public void setRole(Role role) {
         this.role = role;
+        notifyAllObservers();
     }
 
     public City getCurrentCity() {
@@ -59,6 +62,7 @@ public class Player implements PlayerObservable {
 
     public void setCurrentCity(City city) {
         currentCity = city;
+        notifyAllObservers();
     }
 
     public boolean getReadyToStart() {
@@ -76,10 +80,12 @@ public class Player implements PlayerObservable {
 
     public void resetActions() {
         actions = 4;
+        notifyAllObservers();
     }
 
     public void decrementActions() {
         actions--;
+        notifyAllObservers();
     }
 
     @Override
