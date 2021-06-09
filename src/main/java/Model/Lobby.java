@@ -2,8 +2,6 @@ package Model;
 
 import Observers.LobbyObservable;
 import Observers.LobbyObserver;
-import Observers.Observable;
-import Observers.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +18,14 @@ public class Lobby implements LobbyObservable {
         this.players = new ArrayList<>();
         addPlayer(player);
         this.passwd = generateLobbyPassword();
+        notifyAllObservers();
     }
 
     public Lobby(String passwd) {
         this.joinable = true;
         this.players = new ArrayList<>();
         this.passwd = passwd;
+        notifyAllObservers();
     }
 
     public ArrayList<Player> getPlayers() {

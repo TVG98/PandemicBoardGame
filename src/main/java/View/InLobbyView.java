@@ -34,9 +34,10 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
     ArrayList<Text> playerNames = new ArrayList<Text>();
 
     public InLobbyView(Stage primaryStage) {
+        lobbyController.registerObserver(this);
+
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createInLobbyBorderPane());
-        lobbyController.registerObserver(this);
     }
 
     // Observer als argument meegeven zorgt voor goede initial BorderPane
