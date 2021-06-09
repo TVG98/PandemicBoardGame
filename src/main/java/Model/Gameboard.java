@@ -28,6 +28,7 @@ public class Gameboard implements Observable {
     private int drawnEpidemicCards = 0;
     private final ArrayList<City> citiesWithResearchStations = new ArrayList<>(Arrays.asList(this.getCity("Atlanta")));
     private ArrayList<City> citiesThatHadOutbreak;
+    private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
     public Gameboard() {
         initializeGameBoard();
@@ -217,8 +218,9 @@ public class Gameboard implements Observable {
         }
     }
 
-    public boolean cityHasCube(City currentCity) {
-        return currentCity.getCubeAmount() > 0;
+    public void handleEpidemicCard() {addDrawnEpidemicCard();
+        increaseInfectionRate(infectionRates[getDrawnEpidemicCards()]);
+        handleInfectionCardsInEpidemic();
     }
 
     public boolean cureIsFound(VirusType virus) {
@@ -240,6 +242,7 @@ public class Gameboard implements Observable {
             addCubes(infectedCity, infectedCity.getVirusType(), cubeAmount);
         }
     }
+
     public void handleOutbreak(City infectedCity) {
         increaseOutbreakCounter();
         addCityThatHadOutbreak(infectedCity);

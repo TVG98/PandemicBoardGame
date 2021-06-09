@@ -2,13 +2,13 @@ package Controller;
 
 import Model.*;
 
-import java.util.ArrayList;
-
 public class GameBoardController {
     static GameBoardController gameBoardController;
 
     private TreatDiseaseBehavior treatDiseaseBehavior;
     private BuildResearchStationBehavior buildResearchStationBehavior;
+    private DriveBehavior driveBehavior;
+    private DirectFlightBehavior directFlightBehavior;
 
     private final Gameboard gameBoard = new Gameboard();
     private final PlayerController playerController = PlayerController.getInstance();
@@ -22,18 +22,11 @@ public class GameBoardController {
     }
 
     public void handleDrive(Player currentPlayer) {
-        ArrayList<City> nearCities = playerController.getPlayerCurrentCity(currentPlayer).getNearCities();
-        //Todo: Vraag aan de speler om een stad te kiezen
-
-        City chosenCity = new City("Tokyo", VirusType.RED);  // Hier komt het resultaat
-        playerController.setCurrentCity(currentPlayer, chosenCity);
-        playerController.decrementActions(currentPlayer);
+        driveBehavior.drive(currentPlayer);
     }
 
     public void handleDirectFlight(Player currentPlayer) {
-        //Todo: Laat de speler een kaart uit zijn hand kiezen
-        CityCard chosenCard = new CityCard(gameBoard.getCity("Tokyo"), VirusType.RED);  // Hier komt het resultaat
-        playerController.setCurrentCity(currentPlayer, chosenCard.getCity());
+        directFlightBehavior.directFlight(currentPlayer);
     }
 
     public void handleCurePawn(Cure cure) {
@@ -45,17 +38,12 @@ public class GameBoardController {
     }
 
     public void handleEpidemicCard() {
-        int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};  // Dit moet nog een betere plek krijgen, misschien als attribuut in gameBoard
-
-        gameBoard.addDrawnEpidemicCard();
-        gameBoard.increaseInfectionRate(infectionRates[gameBoard.getDrawnEpidemicCards()]);
-
-        gameBoard.handleInfectionCardsInEpidemic();
+        gameBoard.handleEpidemicCard();
     }
 
     public void handleInfectionCardDraw(int cubeAmount) {
         int drawAmount = gameBoard.getInfectionRate();
-        for(int i = 0; i < drawAmount; i++) {
+        for (int i = 0; i < drawAmount; i++) {
             gameBoard.handleInfection(gameBoard.drawInfectionCard(), cubeAmount);
         }
     }
@@ -122,5 +110,13 @@ public class GameBoardController {
 
     public boolean winByCures() {
         return gameBoard.getCuredDiseases().size() == 4;
+    }
+
+    public boolean cityHasCube(City city) {
+        return city.getCubeAmount() > 0;
+    }
+
+    public City getCity(String cityName) {
+        return gameBoard.getCity(cityName);
     }
 }
