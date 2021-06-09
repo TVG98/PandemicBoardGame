@@ -162,10 +162,18 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
     private void createUpdatedInLobbyBorderPane(LobbyObservable lobbyObservable)
     {
         ArrayList<String> players = lobbyObservable.getPlayerNames();
-        for (int i = 0; players.size() > i; i++)
-        {
+        int index = 0;
+        for (String player : players) {
             System.out.println("hallo");
-            this.playerNames.get(i).setText(players.get(i));
+            this.playerNames.get(index).setText(players.get(index));
+            index++;
+        }
+
+        for (int i = 0; 4 > i; i++) {
+            if (index < 4) {
+                this.playerNames.get(index).setText("-");
+                index++;
+            }
         }
     }
 
