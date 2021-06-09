@@ -31,7 +31,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
     final double width = 1280;
     final double height = 960;
     LobbyController lobbyController = LobbyController.getInstance();
-
+    ArrayList<Text> playerNames = new ArrayList<Text>();
 
     public InLobbyView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -62,24 +62,13 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         vboxTop.getChildren().add(lobbyText);
 
         // BorderPane Center Setup (hboxCenter) //
-        Text playerOneName = new Text("Aad");
-        //Text playerOneCharacter = new Text("Medic");
-        Text playerOneStatus = new Text("Ready");
 
-        Text playerTwoName = new Text("Bartolomeüs");
-        //Text playerTwoCharacter = new Text("Scientist");
-        Text playerTwoStatus = new Text("Not Ready");
-
-        Text playerThreeName = new Text("Carlos");
-        //Text playerThreeCharacter = new Text("Dispatcher");
-        Text playerThreeStatus = new Text("Ready");
-
+        Text playerOneName = new Text("-");
+        Text playerTwoName = new Text("-");
+        Text playerThreeName = new Text("-");
         Text playerFourName = new Text("-");
-        //Text playerFourCharacter = new Text("-");
-        Text playerFourStatus = new Text("-");
 
-        ArrayList<Text> playerNames = new ArrayList<Text>();
-        Collections.addAll(playerNames, playerOneName, playerTwoName, playerThreeName, playerFourName);
+        Collections.addAll(this.playerNames, playerOneName, playerTwoName, playerThreeName, playerFourName);
 
         for (Text playerName : playerNames) {
             playerName.setTextAlignment(TextAlignment.LEFT);
@@ -93,7 +82,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         vboxPlayerNames.setSpacing(100);
 
         ArrayList<Text> playerStatuses = new ArrayList<Text>();
-        Collections.addAll(playerStatuses, playerOneStatus, playerTwoStatus, playerThreeStatus, playerFourStatus);
+        //Collections.addAll(playerStatuses, playerOneStatus, playerTwoStatus, playerThreeStatus, playerFourStatus);
 
         for (Text playerStatus : playerStatuses) {
             playerStatus.setTextAlignment(TextAlignment.LEFT);
@@ -170,14 +159,26 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         }
     }
 
+    private void createUpdatedInLobbyBorderPane(LobbyObservable lobbyObservable)
+    {
+        ArrayList<String> players = lobbyObservable.getPlayerNames();
+        for (int i = 0; players.size() > i; i++)
+        {
+            System.out.println("hallo");
+            this.playerNames.get(i).setText(players.get(i));
+        }
+    }
+
     @Override
     public void update(PlayerObservable observable) {
-        System.out.println("hoi");
+        //System.out.println("PlayerObservable geupdatet");
+        //System.out.println(observable.getPlayerName());
     }
 
     @Override
     public void update(LobbyObservable observable) {
-        System.out.println("View wordt geUpdate");
-        //createUpdatedLobbyPane(observable);
+        System.out.println("Lobby updatet");
+        System.out.println(observable.getPlayerNames());
+        createUpdatedInLobbyBorderPane(observable);
     }
 }
