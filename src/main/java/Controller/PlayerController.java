@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class PlayerController {
     static PlayerController playerController;
     ArrayList<Player> players;
-    private Player player;
+    private int playerLoc;
 
     public PlayerController() {
         players = new ArrayList<>();
@@ -44,12 +44,12 @@ public class PlayerController {
         return player.getPlayerName();
     }
 
-    public Player getPlayer() {
-        return player;
+    public int getPlayerLoc() {
+        return playerLoc;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayer(int loc) {
+        this.playerLoc = loc;
     }
 
     public boolean hasRole(Player player, Role role) {

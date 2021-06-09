@@ -32,14 +32,14 @@ public class LobbyController {
     public void makeLobby(String playerName) {
         Player player = new Player(playerName);
         lobby = databaseController.makeLobby(player);//Todo: create player via playerController
-        playerController.setPlayer(player);
+        playerController.setPlayer(0);
         System.out.println("lobby aangemaakt " + lobby.getPassword());
     }
 
     public void setPlayerReady() {
-        System.out.println(playerController.getPlayer().getPlayerName());
+        System.out.println(getCurrentPLayer().getPlayerName());
         for (Player p : lobby.getPlayers()) {
-            if (playerController.getPlayer().getPlayerName().equals(p.getPlayerName())) {
+            if (getCurrentPLayer().getPlayerName().equals(p.getPlayerName())) {
                 p.setReadyToStart(true);
             }
         }
@@ -53,8 +53,8 @@ public class LobbyController {
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
             System.out.println(playerName);
             Player player = new Player(playerName);
-            playerController.setPlayer(player);
             databaseController.addPlayer(lobbyCode, player);
+            playerController.setPlayer(Math.toIntExact(databaseController.database.getLobbyByDocumentId(lobbyCode).getLong("PlayerAmount")));
             return true;
         }
         return false;
@@ -119,7 +119,7 @@ public class LobbyController {
     }
 
     public Player getCurrentPLayer() {
-        return playerController.getPlayer();
+        return lobby.getPlayers().get(playerController.getPlayerLoc());
     }
 
     public String checkPlayerName(String playersString, String playerName) {
