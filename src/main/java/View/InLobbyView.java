@@ -2,6 +2,7 @@ package View;
 
 import Controller.LobbyController;
 import Observers.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -32,6 +33,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
     final double height = 960;
     LobbyController lobbyController = LobbyController.getInstance();
     ArrayList<Text> playerNames = new ArrayList<Text>();
+    ArrayList<Text> playerStatuses = new ArrayList<Text>();
 
     public InLobbyView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -81,8 +83,12 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         vboxPlayerNames.setAlignment(Pos.CENTER);
         vboxPlayerNames.setSpacing(100);
 
-        ArrayList<Text> playerStatuses = new ArrayList<Text>();
-        //Collections.addAll(playerStatuses, playerOneStatus, playerTwoStatus, playerThreeStatus, playerFourStatus);
+        Text playerOneStatus = new Text("-");
+        Text playerTwoStatus = new Text("-");
+        Text playerThreeStatus = new Text("-");
+        Text playerFourStatus = new Text("-");
+
+        Collections.addAll(playerStatuses, playerOneStatus, playerTwoStatus, playerThreeStatus, playerFourStatus);
 
         for (Text playerStatus : playerStatuses) {
             playerStatus.setTextAlignment(TextAlignment.LEFT);
@@ -147,7 +153,6 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         return bp;
     }
 
-
     private void loadStageWithBorderPane(BorderPane bp) {
         try {
             Scene scene = new Scene(bp, width, height);
@@ -164,8 +169,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         ArrayList<String> players = lobbyObservable.getPlayerNames();
         int index = 0;
         for (String player : players) {
-            System.out.println("hallo");
-            this.playerNames.get(index).setText(players.get(index));
+            this.playerNames.get(index).setText(player);
             index++;
         }
 
@@ -175,11 +179,35 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
                 index++;
             }
         }
+
+        ArrayList<Boolean> statuses = lobbyObservable.getPlayerReadyToStart();
+        index = 0;
+        for (Boolean status : statuses) {
+            if (status) {
+                this.playerStatuses.get(index).setText("Ready");
+                this.playerStatuses.get(index).setFill(Color.GREEN);
+                this.playerNames.get(index).setFill(Color.GREEN);
+                index++;
+            }
+            else{
+                this.playerStatuses.get(index).setText("Not Ready");
+                this.playerStatuses.get(index).setFill(Color.RED);
+                this.playerNames.get(index).setFill(Color.RED);
+                index++;
+            }
+        }
+
+        for (int i = 0; 4 > i; i++) {
+            if (index < 4) {
+                this.playerStatuses.get(index).setText("-");
+                index++;
+            }
+        }
     }
 
     @Override
     public void update(PlayerObservable observable) {
-        //System.out.println("PlayerObservable geupdatet");
+        System.out.println("PlayerObservable geupdatet");
         //System.out.println(observable.getPlayerName());
     }
 
@@ -188,5 +216,33 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         System.out.println("Lobby updatet");
         System.out.println(observable.getPlayerNames());
         createUpdatedInLobbyBorderPane(observable);
+        checkIfAllPlayersReady(observable);
+    }
+
+    private void checkIfAllPlayersReady(LobbyObservable observable)
+    {
+        ArrayList<Boolean> playersReady = observable.getPlayerReadyToStart();
+
+        if (playersReady.size() > 1 && allItemsInArraylistTrue(playersReady))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    GameView view = new GameView(primaryStage);
+                }
+            });
+        }
+    }
+
+    private boolean allItemsInArraylistTrue(ArrayList<Boolean> arrList)
+    {
+        for (Boolean arrItem : arrList)
+        {
+            if (!arrItem)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
