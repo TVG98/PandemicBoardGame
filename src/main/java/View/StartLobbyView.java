@@ -97,8 +97,11 @@ public class StartLobbyView {
         joinButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText());
-                InLobbyView view = new InLobbyView(primaryStage);
+                if (lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText())) {
+                    InLobbyView view = new InLobbyView(primaryStage);
+                } else {
+                    //Todo goto main menu view?
+                }
             }
         });
 

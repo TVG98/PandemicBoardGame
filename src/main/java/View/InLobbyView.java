@@ -116,7 +116,7 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lobbyController.removePlayerFromLobby(lobbyController.getCurrentPLayer());
+                lobbyController.removePlayerFromServer(lobbyController.getCurrentPLayer());
                 MenuView view = new MenuView(primaryStage);
             }
         });

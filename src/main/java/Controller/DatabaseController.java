@@ -48,4 +48,8 @@ public class DatabaseController {
     public void update(Map<String, Object> map) {
         LobbyController.getInstance().update(map);
     }
+
+    public DocumentSnapshot getLobbyDocument(String lobbyCode) {
+        return database.getLobbyByDocumentId(lobbyCode);
+    }
 }
