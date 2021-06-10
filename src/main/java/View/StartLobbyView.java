@@ -86,22 +86,16 @@ public class StartLobbyView {
         // Setup BorderPane Center (hboxCenter) //
 
         Button createButton = new Button("Create");
-        createButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lobbyController.makeLobby(inputName.getText());
-                InLobbyView view = new InLobbyView(primaryStage);
-            }
+        createButton.setOnAction(event -> {
+            lobbyController.makeLobby(inputName.getText());
+            InLobbyView view = new InLobbyView(primaryStage);
         });
         Button joinButton = new Button("Join");
-        joinButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText())) {
-                    InLobbyView view = new InLobbyView(primaryStage);
-                } else {
-                    //Todo goto main menu view?
-                }
+        joinButton.setOnAction(event -> {
+            if (lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText())) {
+                InLobbyView view = new InLobbyView(primaryStage);
+            } else {
+                //Todo goto main menu view?
             }
         });
 
@@ -128,12 +122,9 @@ public class StartLobbyView {
         // Setup BorderPane Bottom (vboxBottom) //
 
         Button backToMainMenuButton = new Button("Back to main menu");
-        backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //lobbyController.makeLobby(inputName.getText());
-                MenuView view = new MenuView(primaryStage);
-            }
+        backToMainMenuButton.setOnAction(event -> {
+            //lobbyController.makeLobby(inputName.getText());
+            MenuView view = new MenuView(primaryStage);
         });
 
         backToMainMenuButton.setStyle("-fx-background-color: Grey; -fx-background-radius: 30px;");

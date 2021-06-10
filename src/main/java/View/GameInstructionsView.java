@@ -54,62 +54,29 @@ public class GameInstructionsView {
         backToGameButton.setPrefHeight(100);
         backToGameButton.setPrefWidth(200);
 
-        backToGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                GameView view = new GameView(primaryStage);
-            }
+        backToGameButton.setOnMouseClicked(event -> {
+            GameView view = new GameView(primaryStage);
         });
 
         // Setup BorderPane Bottom Buttons including functionality //
 
         Button objectOfTheGameButton = new Button("Object of the game");
-        objectOfTheGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                bp.setCenter(makeObjectOfTheGameWindow());
-            }
-        });
+        objectOfTheGameButton.setOnMouseClicked(event -> bp.setCenter(makeObjectOfTheGameWindow()));
 
         Button gameplayButton = new Button("Gameplay");
-        gameplayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                bp.setCenter(makeGameplayWindow());
-            }
-        });
+        gameplayButton.setOnMouseClicked(event -> bp.setCenter(makeGameplayWindow()));
 
         Button actionsButton = new Button("Actions");
-        actionsButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                bp.setCenter(makeActionsWindow());
-            }
-        });
+        actionsButton.setOnMouseClicked(event -> bp.setCenter(makeActionsWindow()));
 
         Button winButton = new Button("Win condition");
-        winButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                bp.setCenter(makeWinWindow());
-            }
-        });
+        winButton.setOnMouseClicked(event -> bp.setCenter(makeWinWindow()));
 
         Button defeatButton = new Button("Defeat");
-        defeatButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                bp.setCenter(makeDefeatWindow());
-            }
-        });
+        defeatButton.setOnMouseClicked(event -> bp.setCenter(makeDefeatWindow()));
 
         Button rolesButton = new Button("Roles");
-        rolesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                bp.setCenter(makeRolesWindow());
-            }
-        });
+        rolesButton.setOnMouseClicked(event -> bp.setCenter(makeRolesWindow()));
 
         ArrayList<Button> infoButtons = new ArrayList<Button>();
         Collections.addAll(infoButtons, objectOfTheGameButton, gameplayButton, actionsButton, winButton, defeatButton, rolesButton);

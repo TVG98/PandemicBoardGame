@@ -9,14 +9,15 @@ import java.util.*;
 public class LobbyController {
     static LobbyController lobbyController;
 
-    Lobby lobby;
-    DatabaseController databaseController = DatabaseController.getInstance();
-    PlayerController playerController = PlayerController.getInstance();
+    private Lobby lobby;
+    private final DatabaseController databaseController;
+    private final PlayerController playerController;
 
     private String lobbyCode;
 
-    public LobbyController() {
-
+    private LobbyController() {
+        databaseController = DatabaseController.getInstance();
+        playerController = PlayerController.getInstance();
     }
 
     public static LobbyController getInstance() {

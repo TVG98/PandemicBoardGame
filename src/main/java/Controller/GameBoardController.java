@@ -1,5 +1,6 @@
 package Controller;
 
+import Exceptions.CityNotFoundException;
 import Model.*;
 
 public class GameBoardController {
@@ -10,8 +11,13 @@ public class GameBoardController {
     private DriveBehavior driveBehavior;
     private DirectFlightBehavior directFlightBehavior;
 
-    private final Gameboard gameBoard = new Gameboard();
-    private final PlayerController playerController = PlayerController.getInstance();
+    private final Gameboard gameBoard;
+    private final PlayerController playerController;
+
+    private GameBoardController() {
+        gameBoard = new Gameboard();
+        playerController = PlayerController.getInstance();
+    }
 
     public static GameBoardController getInstance() {
         if (gameBoardController == null) {
@@ -42,10 +48,8 @@ public class GameBoardController {
     }
 
     public void handleInfectionCardDraw(int cubeAmount) {
-        int drawAmount = gameBoard.getInfectionRate();
-        for (int i = 0; i < drawAmount; i++) {
-            gameBoard.handleInfection(gameBoard.drawInfectionCard(), cubeAmount);
-        }
+        gameBoard.handleInfectionCardDraw(cubeAmount);
+
     }
 
     public void handleOutbreak(City infectedCity) {
@@ -116,7 +120,7 @@ public class GameBoardController {
         return city.getCubeAmount() > 0;
     }
 
-    public City getCity(String cityName) {
+    public City getCity(String cityName) throws CityNotFoundException {
         return gameBoard.getCity(cityName);
     }
 }

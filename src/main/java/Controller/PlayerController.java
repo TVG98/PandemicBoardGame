@@ -12,7 +12,7 @@ public class PlayerController {
     ArrayList<Player> players;
     private int playerLoc;
 
-    public PlayerController() {
+    private PlayerController() {
         players = new ArrayList<>();
     }
 

@@ -52,18 +52,8 @@ public class MenuView {
             button.setOpacity(0.8f);
             button.setEffect(new DropShadow());
             button.setTextFill(Color.BLACK);
-            button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    button.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;");
-                }
-            });
-            button.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    button.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
-                }
-            });
+            button.setOnMouseEntered(event -> button.setStyle("-fx-background-color: Firebrick; -fx-background-radius: 30px;"));
+            button.setOnMouseExited(event -> button.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
         }
 
         VBox vboxCenter = new VBox();
@@ -71,26 +61,15 @@ public class MenuView {
         vboxCenter.setSpacing(80);
         vboxCenter.getChildren().addAll(startButton, optionsButton, quitButton);
 
-        buttonsArrayList.get(0).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                StartLobbyView view = new StartLobbyView(primaryStage);
-            }
+        buttonsArrayList.get(0).setOnAction(event -> {
+            StartLobbyView view = new StartLobbyView(primaryStage);
         });
 
-        buttonsArrayList.get(1).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                OptionsView view = new OptionsView(primaryStage);
-            }
+        buttonsArrayList.get(1).setOnAction(event -> {
+            OptionsView view = new OptionsView(primaryStage);
         });
 
-        buttonsArrayList.get(2).setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.close();
-            }
-        });
+        buttonsArrayList.get(2).setOnAction(event -> primaryStage.close());
 
         // BorderPane layout //
         bp.setCenter(vboxCenter);
@@ -102,8 +81,7 @@ public class MenuView {
             Scene mainMenu = new Scene(bp, width, height);
             this.primaryStage.setScene(mainMenu);
             this.primaryStage.show();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -60,26 +60,15 @@ public class InGameMenuView {
         // BorderPane Center Setup //
         Text menuText = new Text("Menu");
         Button closeMenuButton = new Button("Close Menu");
-        closeMenuButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                GameView view = new GameView(primaryStage);
-            }
+        closeMenuButton.setOnMouseClicked(event -> {
+            GameView view = new GameView(primaryStage);
         });
         Button backToMainButton = new Button("Back to main menu");
-        backToMainButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                MenuView view = new MenuView(primaryStage);
-            }
+        backToMainButton.setOnMouseClicked(event -> {
+            MenuView view = new MenuView(primaryStage);
         });
         Button quitGameButton = new Button("Quit game");
-        quitGameButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                primaryStage.close();
-            }
-        });
+        quitGameButton.setOnMouseClicked(event -> primaryStage.close());
 
         ArrayList<Button> menuButtons = new ArrayList<>();
         Collections.addAll(menuButtons, closeMenuButton, backToMainButton, quitGameButton);
@@ -94,18 +83,8 @@ public class InGameMenuView {
             menuButton.setFont(new Font("Castellar", 40));
             menuButton.setTextFill(Color.BLACK);
             menuButton.setEffect(new DropShadow());
-            menuButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    menuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
-                }
-            });
-            menuButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    menuButton.setStyle("-fx-background-color: firebrick; -fx-background-radius: 30px;");
-                }
-            });
+            menuButton.setOnMouseEntered(event -> menuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
+            menuButton.setOnMouseExited(event -> menuButton.setStyle("-fx-background-color: firebrick; -fx-background-radius: 30px;"));
         }
         menuText.setFill(Color.FIREBRICK);
         menuText.setFont(Font.font("Castellar", 80));
