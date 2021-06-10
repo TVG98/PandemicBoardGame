@@ -10,8 +10,13 @@ public class GameBoardController {
     private DriveBehavior driveBehavior;
     private DirectFlightBehavior directFlightBehavior;
 
-    private final Gameboard gameBoard = new Gameboard();
-    private final PlayerController playerController = PlayerController.getInstance();
+    private final Gameboard gameBoard;
+    private final PlayerController playerController;
+
+    private GameBoardController() {
+        gameBoard = new Gameboard();
+        playerController = PlayerController.getInstance();
+    }
 
     public static GameBoardController getInstance() {
         if (gameBoardController == null) {

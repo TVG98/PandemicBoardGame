@@ -10,9 +10,15 @@ import java.util.ArrayList;
 public class GameController {
     static GameController gameController;
 
-    Game game;
-    private final PlayerController playerController = PlayerController.getInstance();
-    private final GameBoardController gameBoardController = GameBoardController.getInstance();
+    private final Game game;
+    private final PlayerController playerController;
+    private final GameBoardController gameBoardController;
+
+    private GameController() {
+        game = new Game(new ArrayList<>());
+        playerController = PlayerController.getInstance();
+        gameBoardController = GameBoardController.getInstance();
+    }
 
     public static GameController getInstance() {
         if (gameController == null) {

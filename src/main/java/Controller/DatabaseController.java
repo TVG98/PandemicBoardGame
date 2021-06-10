@@ -7,15 +7,14 @@ import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseController {
-    FirestoreDatabase database = GameApplication.getFsDatabase();
+    FirestoreDatabase database;
     static DatabaseController databaseController;
 
-    public DatabaseController() {
-
+    private DatabaseController() {
+        database = GameApplication.getFsDatabase();
     }
 
     public static DatabaseController getInstance() {
