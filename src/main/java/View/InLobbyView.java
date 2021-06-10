@@ -159,14 +159,16 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
 
     private void createUpdatedInLobbyBorderPane(LobbyObservable lobbyObservable)
     {
+        System.out.println("ik kom hier");
         ArrayList<String> players = lobbyObservable.getPlayerNames();
         int index = 0;
         for (String player : players) {
+            System.out.println(player);
             this.playerNames.get(index).setText(player);
             index++;
         }
 
-        for (int i = 0; 4 > i; i++) {
+        for (int i = index; 4 > i; i++) {
             if (index < 4) {
                 this.playerNames.get(index).setText("-");
                 index++;
@@ -198,10 +200,38 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         }
     }
 
+    private void createUpdatedInLobbyBorderPane(PlayerObservable playerObservable)
+    {
+        int index = 0;
+        for (Text playerName : this.playerNames)
+        {
+            if (playerNames.get(index).getText() ==  playerObservable.getPlayerName())
+            {
+                playerNames.get(index).setText(playerObservable.getPlayerName());
+                Boolean status = playerObservable.getReadyToStart();
+                if (status)
+                {
+                    playerNames.get(index).setFill(Color.GREEN);
+                    playerStatuses.get(index).setText("Ready");
+                    playerStatuses.get(index).setFill(Color.GREEN);
+                }
+                else
+                {
+                    playerNames.get(index).setFill(Color.RED);
+                    playerStatuses.get(index).setText("Not ready");
+                    playerStatuses.get(index).setFill(Color.RED);
+                }
+            }
+            else{
+                index++;
+            }
+        }
+    }
+
     @Override
     public void update(PlayerObservable observable) {
         System.out.println("PlayerObservable geupdatet");
-        //System.out.println(observable.getPlayerName());
+        createUpdatedInLobbyBorderPane(observable);
     }
 
     @Override
