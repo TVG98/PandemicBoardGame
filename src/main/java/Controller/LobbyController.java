@@ -68,7 +68,7 @@ public class LobbyController {
         return false;
     }
 
-    public void updatePlayersFromLobbyDoc(Map<String, Object> map) {
+    public synchronized void updatePlayersFromLobbyDoc(Map<String, Object> map) {
         if (map != null) {
             Object playersObject = map.get("Players");
             String playersString = playersObject.toString();
