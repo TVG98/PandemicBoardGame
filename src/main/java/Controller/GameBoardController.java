@@ -40,13 +40,19 @@ public class GameBoardController {
     }
 
     public void handlePlayerCardDraw(Player currentPlayer) {
-        playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
+        for (int i = 0; i < 2; i++) {
+            playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
+        }
     }
 
     public void handleEpidemicCard() {
         gameBoard.handleEpidemicCard();
     }
 
+    // Override
+    public void handleInfectionCardDraw() {
+        gameBoard.handleInfectionCardDraw(1);
+    }
     public void handleInfectionCardDraw(int cubeAmount) {
         gameBoard.handleInfectionCardDraw(cubeAmount);
 

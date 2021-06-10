@@ -80,6 +80,10 @@ public class Player implements PlayerObservable {
         return playerName;
     }
 
+    public boolean actionsPlayed() {
+        return actions <= 0;
+    }
+
     public void resetActions() {
         actions = 4;
         notifyAllObservers();
