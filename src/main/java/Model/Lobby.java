@@ -99,6 +99,22 @@ public class Lobby implements LobbyObservable {
         return MAX_LOBBY_SIZE;
     }
 
+    public void updatePlayers(String playersString) {
+        String[] s = playersString.split("}, \\{");
+
+        for (String player : s) {
+            String playerName = player.split("playerName=")[1];
+            for (Player p : getPlayers()) {
+                if (p.getPlayerName().equals(playerName.substring(0, playerName.indexOf(",")))) {
+                    System.out.println("updating playerReadyToStart");
+                    System.out.println(player.contains("readyToStart=true"));
+                    p.setReadyToStart(player.contains("readyToStart=true"));
+                }
+            }
+        }
+        notifyAllObservers();
+    }
+
     @Override
     public void register(LobbyObserver observer) {
         observers.add(observer);

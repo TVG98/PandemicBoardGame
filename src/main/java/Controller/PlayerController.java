@@ -13,7 +13,6 @@ public class PlayerController {
     private String currentPlayerName;
 
     private PlayerController() {
-        players = new ArrayList<>();
     }
 
     public static PlayerController getInstance() {

@@ -72,6 +72,7 @@ public class Player implements PlayerObservable {
 
     public void setReadyToStart(boolean readyToStart) {
         this.readyToStart = readyToStart;
+        System.out.println("number of player observers: " + observers.size());
         notifyAllObservers();
     }
 

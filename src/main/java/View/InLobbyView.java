@@ -27,7 +27,7 @@ import java.util.Collections;
  *
  */
 
-public class InLobbyView implements PlayerObserver, LobbyObserver {
+public class InLobbyView implements LobbyObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
@@ -203,40 +203,6 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
                 index++;
             }
         }
-    }
-
-    private void createUpdatedInLobbyBorderPane(PlayerObservable playerObservable)
-    {
-        int index = 0;
-        for (Text playerName : this.playerNames)
-        {
-            if (playerNames.get(index).getText() ==  playerObservable.getPlayerName())
-            {
-                playerNames.get(index).setText(playerObservable.getPlayerName());
-                Boolean status = playerObservable.getReadyToStart();
-                if (status)
-                {
-                    playerNames.get(index).setFill(Color.GREEN);
-                    playerStatuses.get(index).setText("Ready");
-                    playerStatuses.get(index).setFill(Color.GREEN);
-                }
-                else
-                {
-                    playerNames.get(index).setFill(Color.RED);
-                    playerStatuses.get(index).setText("Not ready");
-                    playerStatuses.get(index).setFill(Color.RED);
-                }
-            }
-            else{
-                index++;
-            }
-        }
-    }
-
-    @Override
-    public void update(PlayerObservable observable) {
-        System.out.println("PlayerObservable geupdatet");
-        createUpdatedInLobbyBorderPane(observable);
     }
 
     @Override
