@@ -63,9 +63,9 @@ public class PlayerController {
         player.decrementActions();
     }
 
-    public void registerObserver(View.InLobbyView view) {
-        for (Player p : players) {
-            p.register(view);
-        }
-    }
+//    public void registerObserver(GameView view) {
+//        for (Player p : players) {
+//            p.register(view);
+//        }
+//    }
 }
