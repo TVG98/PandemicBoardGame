@@ -1,7 +1,6 @@
 package Model;
 
 import Controller.DatabaseController;
-import Controller.LobbyController;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
@@ -9,23 +8,21 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
-import javax.annotation.Nullable;
 import java.io.FileInputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 public class FirestoreDatabase {
     ListenerRegistration listenerRegistration;
 
-    private Firestore db;
+    private Firestore database;
     private static final String LOBBY_PATH = "lobbies";
     private CollectionReference lobbyRef;
     private DocumentReference docRef;
+
+    private final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final int passwordLength = 8;
 
     public FirestoreDatabase() {
         try {
@@ -45,8 +42,8 @@ public class FirestoreDatabase {
 
         FirebaseApp.initializeApp(options);
 
-        this.db = FirestoreClient.getFirestore();
-        this.lobbyRef = this.db.collection(LOBBY_PATH);
+        this.database = FirestoreClient.getFirestore();
+        this.lobbyRef = this.database.collection(LOBBY_PATH);
     }
 
     public void addPlayerToLobby(String lobbyCode, Player player) {
@@ -98,37 +95,32 @@ public class FirestoreDatabase {
             } else {
                 System.out.println("No such document!");
             }
-        } catch (InterruptedException e) {
-
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     private String generateLobbyCode() {
-        final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        final int passwordLength = 8;
         StringBuilder password = new StringBuilder();
 
         for (int i = 0; i < passwordLength; i++) {
-            int index = (int)(CHARSET.length() * Math.random());
-            password.append(CHARSET.charAt(index));
+            password.append(getRandomChar());
         }
+
         return password.toString();
+    }
+
+    public char getRandomChar() {
+        return CHARSET.charAt((int) (CHARSET.length() * Math.random()));
     }
 
     public void listen(DatabaseController controller, String lobbyCode) {
         if (listenerRegistration == null) {
-            EventListener<DocumentSnapshot> eventListener = new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(DocumentSnapshot snapshot, @Nullable FirestoreException e) {
-                    if (snapshot != null && snapshot.exists()) {
-                        System.out.println(snapshot.getData());
-                        controller.update(snapshot.getData());
-                    }
+            EventListener<DocumentSnapshot> eventListener = (snapshot, e) -> {
+                if (snapshot != null && snapshot.exists()) {
+                    System.out.println(snapshot.getData());
+                    controller.update(snapshot.getData());
                 }
             };
 
