@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class City {
     private final String name;
     private ArrayList<Cube> cubes;
-    private VirusType virusType;
+    private final VirusType virusType;
     private ArrayList<City> nearCities;
 
     public City(String name, VirusType virusType) {
