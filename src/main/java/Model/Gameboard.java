@@ -130,7 +130,7 @@ public class Gameboard implements Observable {
 
     public void handleInfectionCardsInEpidemic() {
         for (int i = 0; i < 100; i++) {
-            InfectionCard card = infectionDiscardStack.get((int) (Math.random()) * infectionDiscardStack.size());
+            InfectionCard card = infectionDiscardStack.get(getRandomIndex(infectionDiscardStack));
             infectionDiscardStack.remove(card);
             infectionDiscardStack.add(card);
         }
@@ -304,7 +304,7 @@ public class Gameboard implements Observable {
         ArrayList<Cure> curedDiseases = new ArrayList<>();
 
         for (Cure cure : cures) {
-            if(cure.getCureState().equals(CureState.CURED)){
+            if (cure.getCureState().equals(CureState.CURED)) {
                 curedDiseases.add(cure);
             }
         }

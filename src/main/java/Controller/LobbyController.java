@@ -31,6 +31,7 @@ public class LobbyController {
 
     public void makeLobby(String playerName)  {
         lobbyCode = databaseController.makeLobby();
+
         try {
             Thread.sleep(5000);
             addPlayerToServer(lobbyCode, playerName);
@@ -124,6 +125,7 @@ public class LobbyController {
                 return false;
             }
         }
+
         lobby.addPlayer(new Player(playerName, readyToStart));
         return true;
     }
@@ -138,10 +140,10 @@ public class LobbyController {
     }
 
     public String checkPlayerName(String playersString, String playerName) {
-        int MAX_LOBBY_SIZE = 4;
         System.out.println(playersString);
         String newName = playerName;
-        for (int i = 0; i < MAX_LOBBY_SIZE; i++) {
+
+        for (int i = 0; i < lobby.getMaxLobbySize(); i++) {
             if (playersString.contains(newName)) {
                 newName = playerName += Integer.toString(i + 1);
             }
