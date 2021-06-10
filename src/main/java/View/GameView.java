@@ -2,13 +2,11 @@ package View;
 
 import Observers.Observable;
 import Observers.Observer;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -46,22 +44,12 @@ public class GameView implements Observer {
         title.setFont(new Font("Castellar", 50));
 
         Button openMenuButton = new Button("Open Menu");
-        openMenuButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                openMenuButtonHandler();
-            }
-        });
+        openMenuButton.setOnMouseClicked(event -> openMenuButtonHandler());
 
         Button howToPlayButton = new Button("How to play");
-        howToPlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                howToPlayButtonHandler();
-            }
-        });
+        howToPlayButton.setOnMouseClicked(event -> howToPlayButtonHandler());
 
-        ArrayList<Button> menuButtons = new ArrayList<Button>();
+        ArrayList<Button> menuButtons = new ArrayList<>();
         Collections.addAll(menuButtons, openMenuButton, howToPlayButton);
 
         for (Button menuButton : menuButtons) {
@@ -71,18 +59,8 @@ public class GameView implements Observer {
             menuButton.setFont(new Font("Arial", 20));
             menuButton.setPrefHeight(60);
             menuButton.setPrefWidth(150);
-            menuButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;");
-                }
-            });
-            menuButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
-                }
-            });
+            menuButton.setOnMouseEntered(event -> menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
+            menuButton.setOnMouseExited(event -> menuButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxMenuButtons = new HBox();
@@ -144,7 +122,7 @@ public class GameView implements Observer {
         Text playerThreeOverview = new Text("Carl" + " - " + "Medic");
         Text playerFourOverview = new Text("Dirk" + " - " + "Containment Specialist");
 
-        ArrayList<Text> playerOverviews = new ArrayList<Text>();
+        ArrayList<Text> playerOverviews = new ArrayList<>();
         Collections.addAll(playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
 
         for (Text playerOverview : playerOverviews) {
@@ -165,38 +143,18 @@ public class GameView implements Observer {
         movement.setFont(new Font("Castellar", 20));
 
         Button driveButton = new Button("Drive/Ferry");
-        driveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                driveButtonHandler();
-            }
-        });
+        driveButton.setOnMouseClicked(event -> driveButtonHandler());
 
         Button directFlightButton = new Button("Direct Flight");
-        directFlightButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                directFlightButtonHandler();
-            }
-        });
+        directFlightButton.setOnMouseClicked(event -> directFlightButtonHandler());
 
         Button charterFlightButton = new Button("Charter Flight");
-        charterFlightButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                charterFlightButtonHandler();
-            }
-        });
+        charterFlightButton.setOnMouseClicked(event -> charterFlightButtonHandler());
 
         Button shuttleFlightButton = new Button("Shuttle Flight");
-        shuttleFlightButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                shuttleFlightButtonHandler();
-            }
-        });
+        shuttleFlightButton.setOnMouseClicked(event -> shuttleFlightButtonHandler());
 
-        ArrayList<Button> movementButtons = new ArrayList<Button>();
+        ArrayList<Button> movementButtons = new ArrayList<>();
         Collections.addAll(movementButtons, driveButton, directFlightButton, charterFlightButton, shuttleFlightButton);
 
         for (Button movementButton : movementButtons) {
@@ -206,18 +164,8 @@ public class GameView implements Observer {
             movementButton.setFont(new Font("Arial", 15));
             movementButton.setPrefHeight(30);
             movementButton.setPrefWidth(120);
-            movementButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;");
-                }
-            });
-            movementButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
-                }
-            });
+            movementButton.setOnMouseEntered(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
+            movementButton.setOnMouseExited(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxMovementButtons = new HBox();
@@ -234,38 +182,18 @@ public class GameView implements Observer {
         actions.setFont(new Font("Castellar", 20));
 
         Button treatButton = new Button("Treat");
-        treatButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                treatButtonHandler();
-            }
-        });
+        treatButton.setOnMouseClicked(event -> treatButtonHandler());
 
         Button cureButton = new Button("Cure");
-        cureButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                cureButtonHandler();
-            }
-        });
+        cureButton.setOnMouseClicked(event -> cureButtonHandler());
 
         Button buildButton = new Button("Build");
-        buildButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                buildButtonHandler();
-            }
-        });
+        buildButton.setOnMouseClicked(event -> buildButtonHandler());
 
         Button shareButton = new Button("Share");
-        shareButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                shareButtonHandler();
-            }
-        });
+        shareButton.setOnMouseClicked(event -> shareButtonHandler());
 
-        ArrayList<Button> actionButtons = new ArrayList<Button>();
+        ArrayList<Button> actionButtons = new ArrayList<>();
         Collections.addAll(actionButtons,treatButton, cureButton, buildButton, shareButton);
 
         for (Button actionButton : actionButtons) {
@@ -275,18 +203,8 @@ public class GameView implements Observer {
             actionButton.setFont(new Font("Arial", 15));
             actionButton.setPrefHeight(30);
             actionButton.setPrefWidth(120);
-            actionButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;");
-                }
-            });
-            actionButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
-                }
-            });
+            actionButton.setOnMouseEntered(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
+            actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxActionsButtons = new HBox();
@@ -308,24 +226,9 @@ public class GameView implements Observer {
         endTurnButton.setFont(new Font("Arial", 20));
         endTurnButton.setPrefHeight(100);
         endTurnButton.setPrefWidth(120);
-        endTurnButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                endTurnButtonHandler();
-            }
-        });
-        endTurnButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: red;");
-            }
-        });
-        endTurnButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white;");
-            }
-        });
+        endTurnButton.setOnMouseClicked(event -> endTurnButtonHandler());
+        endTurnButton.setOnMouseEntered(event -> endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: red;"));
+        endTurnButton.setOnMouseExited(event -> endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white;"));
 
         HBox hboxBottomBottom = new HBox();
         hboxBottomBottom.getChildren().addAll(vboxPlayers, vboxMovement, vboxActions, actionsLeft, endTurnButton);
@@ -417,7 +320,7 @@ public class GameView implements Observer {
     }
 
     private HashMap<String, int[]> makeGreenCityCoordinates() {
-        HashMap<String, int[]> greenCityCoords = new HashMap<String, int[]>();
+        HashMap<String, int[]> greenCityCoords = new HashMap<>();
 
         greenCityCoords.put("Moscow", new int[]{935, 295});
         greenCityCoords.put("Tehran", new int[]{1020, 340});
@@ -436,7 +339,7 @@ public class GameView implements Observer {
     }
 
     private HashMap<String, int[]> makeRedCityCoordinates() {
-        HashMap<String, int[]> redCityCoords = new HashMap<String, int[]>();
+        HashMap<String, int[]> redCityCoords = new HashMap<>();
 
         redCityCoords.put("Beijing", new int[]{1235, 325});
         redCityCoords.put("Seoul", new int[]{1300, 320});
@@ -455,7 +358,7 @@ public class GameView implements Observer {
     }
 
     private HashMap<String, int[]> makeYellowCityCoordinates() {
-        HashMap<String, int[]> yellowCityCoords = new HashMap<String, int[]>();
+        HashMap<String, int[]> yellowCityCoords = new HashMap<>();
 
         yellowCityCoords.put("Los Angeles", new int[]{255, 410});
         yellowCityCoords.put("Mexico City", new int[]{325, 450});
@@ -474,7 +377,7 @@ public class GameView implements Observer {
     }
 
     private HashMap<String, int[]> makeBlueCityCoordinates() {
-        HashMap<String, int[]> blueCityCoords = new HashMap<String, int[]>();
+        HashMap<String, int[]> blueCityCoords = new HashMap<>();
 
         blueCityCoords.put("Chicago", new int[]{360, 320});
         blueCityCoords.put("Montréal", new int[]{435, 320});
@@ -493,7 +396,7 @@ public class GameView implements Observer {
     }
 
     private void placeCitiesWithColorOnBp(HashMap<String, int[]> cityCoords, Color color, BorderPane bp) {
-        HashMap<String, Circle> cities = new HashMap<String, Circle>();
+        HashMap<String, Circle> cities = new HashMap<>();
 
         for (Map.Entry<String, int[]> entry : cityCoords.entrySet()) {
             int[] coordinates = entry.getValue();
@@ -504,18 +407,8 @@ public class GameView implements Observer {
             c1.setFill(color);
             c1.setCenterX(xCoord);
             c1.setCenterY(yCoord);
-            c1.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(color.darker());
-                }
-            });
-            c1.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    c1.setFill(color);
-                }
-            });
+            c1.setOnMouseEntered(event -> c1.setFill(color.darker()));
+            c1.setOnMouseExited(event -> c1.setFill(color));
 
             cities.put(entry.getKey(), c1);
 
