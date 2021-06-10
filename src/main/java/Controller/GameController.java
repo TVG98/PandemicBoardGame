@@ -1,11 +1,9 @@
 package Controller;
 
-import Model.City;
-import Model.Game;
-import Model.Player;
-import Model.PlayerCard;
+import Model.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameController {
     static GameController gameController;
@@ -13,11 +11,13 @@ public class GameController {
     private final Game game;
     private final PlayerController playerController;
     private final GameBoardController gameBoardController;
+    private final LobbyController lobbyController;
 
     private GameController() {
         game = new Game(new ArrayList<>());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
+        lobbyController = LobbyController.getInstance();
     }
 
     public static GameController getInstance() {
@@ -31,6 +31,10 @@ public class GameController {
     // Misschien dat dit ook wel in de constructor kan
     public void startGame() {
 
+        for(Player player : lobbyController.getPlayersInLobby()) {
+            player.setRole(getRandomRole());
+        }
+
         int drawAmount = 3;
         while(drawAmount > 0) {
             for(int x = 0; x < 3; x++) {
@@ -41,6 +45,10 @@ public class GameController {
 
         // Todo: zet de players in Atlanta + een researchstation mits we die uit de initialisatie willen halen
 
+    }
+
+    private Role getRandomRole() {
+        return Role.values()[new Random().nextInt(Role.values().length)];
     }
 
     public void changeTurn(){
