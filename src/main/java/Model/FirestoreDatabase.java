@@ -52,8 +52,8 @@ public class FirestoreDatabase {
     public void addPlayerToLobby(String lobbyCode, Player player) {
         docRef = lobbyRef.document(lobbyCode);
         System.out.println(getLobbyByDocumentId(lobbyCode).getDouble("PlayerAmount"));
-        docRef.update("Players", FieldValue.arrayUnion(player));
         docRef.update("PlayerAmount", FieldValue.increment(1));
+        docRef.update("Players", FieldValue.arrayUnion(player));
     }
 
     public void removePlayerFromLobby(String LobbyCode, Player player) {
@@ -68,19 +68,19 @@ public class FirestoreDatabase {
         docRef.update("Players", players);
     }
 
-    public Lobby makeLobby(Player player) {
-        Lobby lobby = new Lobby(player);
-        HashMap<String, Object> quote = createLobbyData(lobby);
-        docRef = lobbyRef.document(lobby.getPassword());
+    public String makeLobby() {
+        HashMap<String, Object> quote = createLobbyData();
+        String lobbyCode = generateLobbyCode();
+        docRef = lobbyRef.document(lobbyCode);
         docRef.set(quote);
-        return lobby;
+        return lobbyCode;
     }
 
-    public HashMap<String, Object> createLobbyData(Lobby lobby) {
+    public HashMap<String, Object> createLobbyData() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        hashMap.put("PlayerAmount", 1);
-        hashMap.put("Players", lobby.getPlayers());
+        hashMap.put("PlayerAmount", 0);
+        hashMap.put("Players", new ArrayList<Player>());
         return hashMap;
     }
 
@@ -106,6 +106,18 @@ public class FirestoreDatabase {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String generateLobbyCode() {
+        final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        final int passwordLength = 8;
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < passwordLength; i++) {
+            int index = (int)(CHARSET.length() * Math.random());
+            password.append(CHARSET.charAt(index));
+        }
+        return password.toString();
     }
 
     public void listen(DatabaseController controller, String lobbyCode) {

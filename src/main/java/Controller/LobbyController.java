@@ -28,10 +28,14 @@ public class LobbyController {
         return lobbyController;
     }
 
-    public void makeLobby(String playerName) {
-        Player player = new Player(playerName);
-        lobby = databaseController.makeLobby(player);//Todo: create player via playerController
-        playerController.setPlayer(0);
+    public void makeLobby(String playerName)  {
+        lobbyCode = databaseController.makeLobby();
+        try {
+            Thread.sleep(5000);
+            addPlayerToServer(lobbyCode, playerName);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 
     public void setPlayerReady() {
@@ -44,15 +48,16 @@ public class LobbyController {
         databaseController.updatePlayersInLobby(lobby.getPlayers());
     }
 
-    public boolean addPlayerToServer(String passwd, String playerName) {
-        lobbyCode = passwd;
+    public boolean addPlayerToServer(String lobbyCode, String playerName) {
+        this.lobbyCode = lobbyCode;
+        System.out.println(this.lobbyCode);
         if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4) {
             lobby = new Lobby(lobbyCode);
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
             System.out.println(playerName);
             Player player = new Player(playerName);
             databaseController.addPlayer(lobbyCode, player);
-            playerController.setPlayer(Math.toIntExact(databaseController.database.getLobbyByDocumentId(lobbyCode).getLong("PlayerAmount")));
+            playerController.setPlayer(Math.toIntExact(databaseController.database.getLobbyByDocumentId(lobbyCode).getLong("PlayerAmount")) - 1);
             return true;
         }
         return false;
@@ -66,11 +71,14 @@ public class LobbyController {
             int index = 0;
 
             for (String player : s) {
-                if (lobby.getPlayers().size() == index) {
+                System.out.println("updating players " + lobby.getPlayers().size());
+                System.out.println("lobbyCode: " + lobbyCode);
+                System.out.println("serverPlayerAmount: " + databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount"));
+                if (lobby.getPlayers().size() < databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
+                    System.out.println("playerString: " + player);
                     String playerName = player.split("playerName=")[1];
-                    if (addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")))) {
-                        index++;
-                    }
+                    System.out.println("adding player: " + playerName.substring(0, playerName.indexOf(",")));
+                    addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")));
 
                 } else if(lobby.getPlayers().size() > databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
                     for (Player p : lobby.getPlayers()) {
@@ -95,8 +103,8 @@ public class LobbyController {
                     currentCity = currentCity.substring(0, currentCity.indexOf(","));
                     //Todo updateCity();
                     //Todo updateHand();
-                    index++;
                 }
+                index++;
             }
             for (Player p : lobby.getPlayers()) {
                 System.out.println(p.getPlayerName());

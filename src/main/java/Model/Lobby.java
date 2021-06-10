@@ -13,11 +13,11 @@ public class Lobby implements LobbyObservable {
     private final ArrayList<Player> players;
     private final String passwd;
 
-    public Lobby(Player player) {
+    public Lobby(Player player, String lobbyCode) {
         this.joinable = true;
         this.players = new ArrayList<>();
         addPlayer(player);
-        this.passwd = generateLobbyPassword();
+        this.passwd = lobbyCode;
         notifyAllObservers();
     }
 
@@ -84,18 +84,6 @@ public class Lobby implements LobbyObservable {
             }
             //Todo: start game
         }
-    }
-
-    private String generateLobbyPassword() {
-        final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        final int passwordLength = 8;
-        StringBuilder password = new StringBuilder();
-
-        for (int i = 0; i < passwordLength; i++) {
-            int index = (int)(CHARSET.length() * Math.random());
-            password.append(CHARSET.charAt(index));
-        }
-        return password.toString();
     }
 
     public String getPassword() {
