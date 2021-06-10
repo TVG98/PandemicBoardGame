@@ -143,14 +143,25 @@ public class Gameboard implements Observable {
 
     public void shuffleAllStacks() {
         for (int i = 0; i < 100; i++) {
-            PlayerCard playerCard = playerStack.get((int) (Math.random()) * playerStack.size());
-            playerStack.remove(playerCard);
-            playerStack.add(playerCard);
-
-            InfectionCard infectionCard = infectionStack.get((int) (Math.random()) * infectionStack.size());
-            infectionStack.remove(infectionCard);
-            infectionStack.add(infectionCard);
+            shufflePlayerCardStack();
+            shuffleInfectionStack();
         }
+    }
+
+    private void shufflePlayerCardStack() {
+        PlayerCard playerCard = playerStack.get(getRandomIndex(playerStack));
+        playerStack.remove(playerCard);
+        playerStack.add(playerCard);
+    }
+
+    private void shuffleInfectionStack() {
+        InfectionCard infectionCard = infectionStack.get(getRandomIndex(infectionStack));
+        infectionStack.remove(infectionCard);
+        infectionStack.add(infectionCard);
+    }
+
+    private int getRandomIndex(ArrayList arrayList) {
+        return (int) (Math.random() * arrayList.size());
     }
 
     public void increaseOutbreakCounter() {
@@ -161,21 +172,27 @@ public class Gameboard implements Observable {
         this.infectionRate = infectionRate;
     }
 
-    public void addCubes(City currentCity, VirusType type, int cubeAmount) {
-        currentCity.addCube(type);
+    public void addCubes(City currentCity, VirusType virusType, int cubeAmount) {
+        currentCity.addCube(virusType);
+        tryToIncreaseCubeAmount(virusType, cubeAmount);
+    }
 
+    private void tryToIncreaseCubeAmount(VirusType virusType, int cubeAmount) {
         try {
-            getVirusByType(type).decreaseCubeAmount(cubeAmount);
+            getVirusByType(virusType).increaseCubeAmount(cubeAmount);
         } catch (VirusNotFoundException vnfe) {
             vnfe.printStackTrace();
         }
     }
 
-    public void removeCubes(City currentCity, VirusType type, int cubeAmount) {
+    public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.removeCube();
+        tryToDecreaseCubeAmount(virusType, cubeAmount);
+    }
 
+    private void tryToDecreaseCubeAmount(VirusType virusType, int cubeAmount) {
         try {
-            getVirusByType(type).increaseCubeAmount(cubeAmount);
+            getVirusByType(virusType).decreaseCubeAmount(cubeAmount);
         } catch (VirusNotFoundException vnfe) {
             vnfe.printStackTrace();
         }
@@ -223,7 +240,7 @@ public class Gameboard implements Observable {
 
     public void addResearchStationToCity(City city) {
         for (City c : cities) {
-            if (c.equals(city)) { ;
+            if (c.equals(city)) {
                 citiesWithResearchStations.add(c);
                 break;
             }
@@ -308,8 +325,8 @@ public class Gameboard implements Observable {
     }
 
     public boolean lossByCubeAmount() {
-        for (Virus virus : getViruses()) {
-            if(virus.getCubeAmount() < 0) {
+        for (Virus virus : viruses) {
+            if (virus.getCubeAmount() < 0) {
                 return true;
             }
         }
