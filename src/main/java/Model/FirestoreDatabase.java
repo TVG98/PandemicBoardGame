@@ -23,27 +23,30 @@ public class FirestoreDatabase {
 
     private final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final int passwordLength = 8;
+    private final String fireBaseJsonPath = "src/main/Firebasejson/gametest-3a5f7-firebase-adminsdk-lfjkr-3d3c163166.json";
 
     public FirestoreDatabase() {
-        try {
             initialize();
+    }
+
+    public void initialize() {
+        try {
+            startUpFirebase();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        database = FirestoreClient.getFirestore();
+        lobbyRef = this.database.collection(LOBBY_PATH);
     }
 
-    public void initialize() throws Exception {
-        FileInputStream serviceAccount =
-                new FileInputStream("src/main/Firebasejson/gametest-3a5f7-firebase-adminsdk-lfjkr-3d3c163166.json");
-
+    private void startUpFirebase() throws Exception {
+        FileInputStream serviceAccount = new FileInputStream(fireBaseJsonPath);
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
 
         FirebaseApp.initializeApp(options);
-
-        this.database = FirestoreClient.getFirestore();
-        this.lobbyRef = this.database.collection(LOBBY_PATH);
     }
 
     public void addPlayerToLobby(String lobbyCode, Player player) {
@@ -62,6 +65,7 @@ public class FirestoreDatabase {
         for (Player p: players) {
             System.out.println(p.getReadyToStart());
         }
+
         docRef.update("Players", players);
     }
 
@@ -117,17 +121,22 @@ public class FirestoreDatabase {
 
     public void listen(DatabaseController controller, String lobbyCode) {
         if (listenerRegistration == null) {
-            EventListener<DocumentSnapshot> eventListener = (snapshot, e) -> {
-                if (snapshot != null && snapshot.exists()) {
-                    System.out.println(snapshot.getData());
-                    controller.update(snapshot.getData());
-                }
-            };
+            EventListener<DocumentSnapshot> eventListener = makeEventListener(controller);
 
             if (docRef == null) {
                 docRef = lobbyRef.document(lobbyCode);
             }
+
             listenerRegistration = docRef.addSnapshotListener(eventListener);
         }
+    }
+
+    private EventListener<DocumentSnapshot> makeEventListener(DatabaseController controller) {
+        return (snapshot, e) -> {
+            if (snapshot != null && snapshot.exists()) {
+                System.out.println(snapshot.getData());
+                controller.update(snapshot.getData());
+            }
+        };
     }
 }
