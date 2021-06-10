@@ -1,6 +1,5 @@
 package View;
 
-import Controller.LobbyController;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,17 +12,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.File;
 
-/**
- * @created June 09 2021 - 10:25 AM
- * @project testGame
- */
-public class JoinFailedView
-{
+public class JoinFailedView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";
     final double width = 1280;
@@ -36,20 +29,17 @@ public class JoinFailedView
         loadStageWithBorderPane(createJoinFailedBorderPane());
     }
 
-    private void loadStageWithBorderPane(BorderPane bp)
-    {
+    private void loadStageWithBorderPane(BorderPane bp) {
         try {
             Scene scene = new Scene(bp, width, height);
             primaryStage.show();
             primaryStage.setScene(scene);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private BorderPane createJoinFailedBorderPane()
-    {
+    private BorderPane createJoinFailedBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -89,18 +79,8 @@ public class JoinFailedView
         backButton.setFont(new Font("Castellar", 40));
         backButton.setTextFill(Color.BLACK);
         backButton.setEffect(new DropShadow());
-        backButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                backButton.setStyle("-fx-background-color: Red;");
-            }
-        });
-        backButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                backButton.setStyle("-fx-background-color: Firebrick;");
-            }
-        });
+        backButton.setOnMouseEntered(event -> backButton.setStyle("-fx-background-color: Red;"));
+        backButton.setOnMouseExited(event -> backButton.setStyle("-fx-background-color: Firebrick;"));
 
         VBox vboxCenter = new VBox();
         vboxCenter.getChildren().addAll(joinFailedText, reasonText, reasonForFailureText, backButton);

@@ -113,27 +113,14 @@ public class OptionsView {
         // Setup Bottom BorderPane (vboxBottom) //
 
         Button backToMainMenuButton = new Button("Back to main menu");
-        backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                MenuView view = new MenuView(primaryStage);
-            }
+        backToMainMenuButton.setOnAction(event -> {
+            MenuView view = new MenuView(primaryStage);
         });
 
         backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
         backToMainMenuButton.setTextFill(Color.BLACK);
-        backToMainMenuButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                backToMainMenuButton.setStyle("-fx-background-color: firebrick; -fx-background-radius: 30px;");
-            }
-        });
-        backToMainMenuButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
-            }
-        });
+        backToMainMenuButton.setOnMouseEntered(event -> backToMainMenuButton.setStyle("-fx-background-color: firebrick; -fx-background-radius: 30px;"));
+        backToMainMenuButton.setOnMouseExited(event -> backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;"));
         backToMainMenuButton.setFont(new Font("Arial", 50));
         backToMainMenuButton.setOpacity(0.95f);
         backToMainMenuButton.setPrefHeight(100);
@@ -156,8 +143,7 @@ public class OptionsView {
             Scene mainMenu = new Scene(bp, width, height);
             this.primaryStage.setScene(mainMenu);
             this.primaryStage.show();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

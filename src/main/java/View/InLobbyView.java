@@ -109,21 +109,13 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
 
         // BorderPane Bottom Setup (hboxBottom) //
         Button backToMainMenuButton = new Button("Back to main menu");
-        backToMainMenuButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lobbyController.removePlayerFromServer(lobbyController.getCurrentPLayer());
-                MenuView view = new MenuView(primaryStage);
-            }
+        backToMainMenuButton.setOnAction(event -> {
+            lobbyController.removePlayerFromServer(lobbyController.getCurrentPLayer());
+            MenuView view = new MenuView(primaryStage);
         });
 
         Button readyUpButton = new Button("Ready Up");
-        readyUpButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lobbyController.setPlayerReady();
-            }
-        });
+        readyUpButton.setOnAction(event -> lobbyController.setPlayerReady());
 
         backToMainMenuButton.setStyle("-fx-background-color: Gray");
         backToMainMenuButton.setTextFill(Color.BLACK);
@@ -183,19 +175,19 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
 
         ArrayList<Boolean> statuses = lobbyObservable.getPlayerReadyToStart();
         index = 0;
+
         for (Boolean status : statuses) {
             if (status) {
                 this.playerStatuses.get(index).setText("Ready");
                 this.playerStatuses.get(index).setFill(Color.GREEN);
                 this.playerNames.get(index).setFill(Color.GREEN);
-                index++;
-            }
-            else{
+            } else {
                 this.playerStatuses.get(index).setText("Not Ready");
                 this.playerStatuses.get(index).setFill(Color.RED);
                 this.playerNames.get(index).setFill(Color.RED);
-                index++;
             }
+
+            index++;
         }
 
         for (int i = 0; 4 > i; i++) {
@@ -220,30 +212,23 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         checkIfAllPlayersReady(observable);
     }
 
-    private void checkIfAllPlayersReady(LobbyObservable observable)
-    {
+    private void checkIfAllPlayersReady(LobbyObservable observable) {
         ArrayList<Boolean> playersReady = observable.getPlayerReadyToStart();
 
-        if (playersReady.size() > 1 && allItemsInArraylistTrue(playersReady))
-        {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    GameView view = new GameView(primaryStage);
-                }
+        if (playersReady.size() > 1 && allItemsInArraylistTrue(playersReady)) {
+            Platform.runLater(() -> {
+                GameView view = new GameView(primaryStage);
             });
         }
     }
 
-    private boolean allItemsInArraylistTrue(ArrayList<Boolean> arrList)
-    {
-        for (Boolean arrItem : arrList)
-        {
-            if (!arrItem)
-            {
+    private boolean allItemsInArraylistTrue(ArrayList<Boolean> arrList) {
+        for (Boolean arrItem : arrList) {
+            if (!arrItem) {
                 return false;
             }
         }
+
         return true;
     }
 }
