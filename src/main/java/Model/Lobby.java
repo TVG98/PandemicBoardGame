@@ -12,6 +12,7 @@ public class Lobby implements LobbyObservable {
     private boolean joinable;
     private final ArrayList<Player> players;
     private final String passwd;
+    private final int MAX_LOBBY_SIZE = 4;
 
     public Lobby(Player player, String lobbyCode) {
         this.joinable = true;
@@ -92,6 +93,10 @@ public class Lobby implements LobbyObservable {
 
     public boolean checkLobbyCode(String code) {
         return this.passwd.equals(code);
+    }
+
+    public int getMaxLobbySize() {
+        return MAX_LOBBY_SIZE;
     }
 
     @Override
