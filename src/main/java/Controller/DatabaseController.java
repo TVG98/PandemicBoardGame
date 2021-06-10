@@ -30,10 +30,8 @@ public class DatabaseController {
         database.updatePlayersInLobby(players);
     }
 
-    public Lobby makeLobby(Player player) {
-        Lobby lobby = database.makeLobby(player);
-        database.listen(this, lobby.getPassword());
-        return lobby;
+    public String makeLobby() {
+        return database.makeLobby();
     }
 
     public void addPlayer(String lobbyCode,Player player) {
