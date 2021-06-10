@@ -1,6 +1,7 @@
 package View;
 
 import Controller.LobbyController;
+import Exceptions.PlayerNotFoundException;
 import Observers.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -110,8 +111,12 @@ public class InLobbyView implements PlayerObserver, LobbyObserver {
         // BorderPane Bottom Setup (hboxBottom) //
         Button backToMainMenuButton = new Button("Back to main menu");
         backToMainMenuButton.setOnAction(event -> {
-            lobbyController.removePlayerFromServer(lobbyController.getCurrentPLayer());
-            MenuView view = new MenuView(primaryStage);
+            try {
+                lobbyController.removePlayerFromServer(lobbyController.getCurrentPLayer());
+                MenuView view = new MenuView(primaryStage);
+            } catch (PlayerNotFoundException e) {
+                e.printStackTrace();
+            }
         });
 
         Button readyUpButton = new Button("Ready Up");

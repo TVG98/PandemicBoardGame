@@ -12,12 +12,13 @@ public class Player implements PlayerObservable {
     private ArrayList<PlayerCard> hand = new ArrayList<>();
     private Role role;
     private City currentCity;
-    private boolean readyToStart = false;
+    private boolean readyToStart;
     private String playerName;
     private int actions = 4;
 
-    public Player(String playerName) {
+    public Player(String playerName, boolean readyToStart) {
         this.playerName = playerName;
+        this.readyToStart = readyToStart;
     }
 
     public void endTurn() {
