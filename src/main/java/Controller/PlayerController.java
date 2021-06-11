@@ -35,6 +35,9 @@ public class PlayerController {
         return player.getCurrentCity();
     }
 
+    public boolean checkCardInHandBasedOnCity(City city, Player player) {
+        return player.checkCardInHandBasedOnCity(city);
+    }
     public boolean checkCardInHand(PlayerCard card, Player player) {
         return player.checkCardInHand(card);
     }

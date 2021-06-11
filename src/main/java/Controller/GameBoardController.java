@@ -35,6 +35,10 @@ public class GameBoardController {
         directFlightBehavior.directFlight(currentPlayer);
     }
 
+    public void handleCharterFlight(Player currentPlayer) {
+
+    }
+
     public void handleCurePawn(Cure cure) {
         gameBoard.flipCurePawn(cure);
     }

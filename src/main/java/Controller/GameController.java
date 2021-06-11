@@ -94,11 +94,11 @@ public class GameController {
     }
 
     public void handleDirectFlight(City city) {
-
+        gameBoardController.handleDirectFlight(getCurrentPlayer());
     }
 
     public void handleCharterFlight(City city) {
-
+        gameBoardController.handleCharterFlight(getCurrentPlayer());
     }
 
     public void handleShuttleFlight(City city) {
