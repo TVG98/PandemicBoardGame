@@ -24,11 +24,112 @@ public class GameView implements Observer {
     final double width = 1600;
     final double height = 900;
 
+    private final String[][] connectedCities = new String[89][2];
+    private final HashMap<String, int[]> cities = new HashMap<>();
 
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createGameViewBorderPane());
+    }
+
+    private void initializeConnectionBetweenCities() {
+        connectedCities[0] = new String[] {"Los Angeles", "Mexico City"};
+        connectedCities[1] = new String[] {"Los Angeles", "San Francisco"};
+        connectedCities[2] = new String[] {"Los Angeles", "Chicago"};
+        connectedCities[3] = new String[] {"Chicago", "Mexico City"};
+        connectedCities[4] = new String[] {"Miami", "Mexico City"};
+        connectedCities[5] = new String[] {"Bogota", "Mexico City"};
+        connectedCities[6] = new String[] {"Lima", "Mexico City"};
+        connectedCities[7] = new String[] {"Chicago", "Atlanta"};
+        connectedCities[8] = new String[] {"Chicago", "Montréal"};
+        connectedCities[9] = new String[] {"Atlanta", "Miami"};
+        connectedCities[10] = new String[] {"Atlanta", "Washington"};
+        connectedCities[11] = new String[] {"Montréal", "Washington"};
+        connectedCities[12] = new String[] {"Montréal", "New York"};
+        connectedCities[13] = new String[] {"Washington", "New York"};
+        connectedCities[14] = new String[] {"Washington", "Miami"};
+        connectedCities[15] = new String[] {"Miami", "Bogota"};
+        connectedCities[16] = new String[] {"Bogota", "Lima"};
+        connectedCities[17] = new String[] {"Lima", "Santiago"};
+        connectedCities[18] = new String[] {"Bogota", "Buenos Aires"};
+        connectedCities[19] = new String[] {"São Paulo", "Buenos Aires"};
+        connectedCities[20] = new String[] {"San Francisco", "Chicago"};
+        connectedCities[21] = new String[] {"São Paulo", "Bogota"};
+        connectedCities[22] = new String[] {"São Paulo", "Madrid"};
+        connectedCities[23] = new String[] {"Madrid", "New York"};
+        connectedCities[24] = new String[] {"Lagos", "São Paulo"};
+        connectedCities[25] = new String[] {"Madrid", "London"};
+        connectedCities[26] = new String[] {"London", "New York"};
+        connectedCities[27] = new String[] {"Madrid", "Paris"};
+        connectedCities[28] = new String[] {"London", "Paris"};
+        connectedCities[29] = new String[] {"Essen", "London"};
+        connectedCities[30] = new String[] {"Essen", "Milan"};
+        connectedCities[31] = new String[] {"Milan", "Paris"};
+        connectedCities[32] = new String[] {"Algiers", "Madrid"};
+        connectedCities[33] = new String[] {"Algiers", "Paris"};
+        connectedCities[34] = new String[] {"Cairo", "Algiers"};
+        connectedCities[35] = new String[] {"Algiers", "Istanbul"};
+        connectedCities[36] = new String[] {"Cairo", "Istanbul"};
+        connectedCities[37] = new String[] {"Istanbul", "Milan"};
+        connectedCities[38] = new String[] {"Baghdad", "Cairo"};
+        connectedCities[39] = new String[] {"Baghdad", "Istanbul"};
+        connectedCities[40] = new String[] {"Istanbul", "Moscow"};
+        connectedCities[41] = new String[] {"Kinshasa", "Lagos"};
+        connectedCities[42] = new String[] {"Johannesburg", "Kinshasa"};
+        connectedCities[43] = new String[] {"Khartoum", "Kinshasa"};
+        connectedCities[44] = new String[] {"Khartoum", "Lagos"};
+        connectedCities[45] = new String[] {"Khartoum", "Johannesburg"};
+        connectedCities[46] = new String[] {"Khartoum", "Cairo"};
+        connectedCities[47] = new String[] {"St. Petersburg", "Moscow"};
+        connectedCities[48] = new String[] {"St. Petersburg", "Essen"};
+        connectedCities[49] = new String[] {"St. Petersburg", "Istanbul"};
+        connectedCities[50] = new String[] {"Riyadh", "Cairo"};
+        connectedCities[51] = new String[] {"Riyadh", "Baghdad"};
+        connectedCities[52] = new String[] {"Riyadh", "Karachi"};
+        connectedCities[53] = new String[] {"Karachi", "Baghdad"};
+        connectedCities[54] = new String[] {"Mumbai", "Karachi"};
+        connectedCities[55] = new String[] {"Tehran", "Baghdad"};
+        connectedCities[56] = new String[] {"Tehran", "Karachi"};
+        connectedCities[57] = new String[] {"Tehran", "Moscow"};
+        connectedCities[58] = new String[] {"Delhi", "Tehran"};
+        connectedCities[59] = new String[] {"Delhi", "Karachi"};
+        connectedCities[60] = new String[] {"Delhi", "Mumbai"};
+        connectedCities[61] = new String[] {"Chennai", "Kolkata"};
+        connectedCities[62] = new String[] {"Kolkata", "Delhi"};
+        connectedCities[63] = new String[] {"Chennai", "Mumbai"};
+        connectedCities[64] = new String[] {"Chennai", "Delhi"};
+        connectedCities[65] = new String[] {"Chennai", "Bangkok"};
+        connectedCities[66] = new String[] {"Jakarta", "Chennai"};
+        connectedCities[67] = new String[] {"Jakarta", "Bangkok"};
+        connectedCities[68] = new String[] {"Kolkata", "Bangkok"};
+        connectedCities[69] = new String[] {"H.K.", "Bangkok"};
+        connectedCities[70] = new String[] {"Ho Chi Minh City", "Bangkok"};
+        connectedCities[71] = new String[] {"Jakarta", "Ho Chi Minh City"};
+        connectedCities[72] = new String[] {"Ho Chi Minh City", "H.K."};
+        connectedCities[73] = new String[] {"Kolkata", "H.K."};
+        connectedCities[74] = new String[] {"Jakarta", "Sydney"};
+        connectedCities[75] = new String[] {"Sydney", "Manila"};
+        connectedCities[76] = new String[] {"Ho Chi Minh City", "Manila"};
+        connectedCities[77] = new String[] {"Manila", "H.K."};
+        connectedCities[78] = new String[] {"Taipei", "H.K."};
+        connectedCities[79] = new String[] {"H.K.", "Shanghai"};
+        connectedCities[80] = new String[] {"Shanghai", "Taipei"};
+        connectedCities[81] = new String[] {"Taipei", "Manila"};
+        connectedCities[82] = new String[] {"Shanghai", "Beijing"};
+        connectedCities[83] = new String[] {"Beijing", "Seoul"};
+        connectedCities[84] = new String[] {"Seoul", "Shanghai"};
+        connectedCities[85] = new String[] {"Tokyo", "Seoul"};
+        connectedCities[86] = new String[] {"Tokyo", "Shanghai"};
+        connectedCities[87] = new String[] {"Taipei", "Osaka"};
+        connectedCities[88] = new String[] {"Tokyo", "Osaka"};
+    }
+
+    private void initializeCitiesWithCoords() {
+        cities.putAll(makeBlueCityCoordinates());
+        cities.putAll(makeGreenCityCoordinates());
+        cities.putAll(makeRedCityCoordinates());
+        cities.putAll(makeYellowCityCoordinates());
     }
 
     private BorderPane createGameViewBorderPane() {
@@ -313,6 +414,10 @@ public class GameView implements Observer {
 
 
     private void makeGameBoard(BorderPane bp) {
+        initializeConnectionBetweenCities();
+        initializeCitiesWithCoords();
+        placeAllLines(bp);
+
         placeCitiesWithColorOnBp(makeBlueCityCoordinates(), Color.DEEPSKYBLUE, bp);
         placeCitiesWithColorOnBp(makeGreenCityCoordinates(), Color.GREEN, bp);
         placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, bp);
@@ -336,6 +441,27 @@ public class GameView implements Observer {
         greenCityCoords.put("Riyadh", new int[]{920, 450});
 
         return greenCityCoords;
+    }
+
+    private void placeAllLines(BorderPane bp) {
+        for (String[] connection : connectedCities) {
+            makeConnection(connection, bp);
+        }
+    }
+
+    private void makeConnection(String[] connection, BorderPane bp) {
+        placeLine(cities.get(connection[0]), cities.get(connection[1]), bp);
+    }
+
+    private void placeLine(int[] pointOne, int[] pointTwo, BorderPane bp) {
+        Line line = new Line();
+        line.setStartX(pointOne[0]);
+        line.setStartY(pointOne[1]);
+        line.setEndX(pointTwo[0]);
+        line.setEndY(pointTwo[1]);
+        line.setStyle("-fx-stroke:" + "#9a1ac9;");
+        line.setStrokeWidth(4);
+        bp.getChildren().addAll(line);
     }
 
     private HashMap<String, int[]> makeRedCityCoordinates() {
