@@ -1,6 +1,7 @@
 package GameApplication;
 
 import Model.FirestoreDatabase;
+import View.DirectFlightView;
 import View.InGameMenuView;
 import View.JoinFailedView;
 import View.MenuView;
@@ -21,7 +22,7 @@ public class GameApplication extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(new File("src/main/media/PandemicIcon.png").toURI().toString()));
         primaryStage.setTitle("Pandemic: The Board Game");
-        MenuView a = new MenuView(primaryStage);
+        //MenuView a = new MenuView(primaryStage);
         //WinView b = new WinView(primaryStage);
         //StartLobbyView c = new StartLobbyView(primaryStage);
         //OptionsView d = new OptionsView(primaryStage);
@@ -33,6 +34,7 @@ public class GameApplication extends Application {
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
         //InGameMenuView j = new InGameMenuView(primaryStage);
         //JoinFailedView k = new JoinFailedView(primaryStage, "No name entered, please enter a name!");
+        DirectFlightView m = new DirectFlightView(primaryStage);
     }
 
     public static void main(String[] args) {

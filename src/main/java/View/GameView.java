@@ -275,7 +275,7 @@ public class GameView implements Observer {
     }
 
     private void directFlightButtonHandler() {
-
+        DirectFlightView view = new DirectFlightView(primaryStage);
     }
 
     private void charterFlightButtonHandler() {
