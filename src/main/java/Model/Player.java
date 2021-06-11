@@ -39,6 +39,15 @@ public class Player implements PlayerObservable {
         return hand;
     }
 
+    public boolean checkCardInHandBasedOnCity(City city) {
+        for (PlayerCard nextCard : hand) {
+            if (nextCard.getName().equals(city.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean checkCardInHand(PlayerCard card) {
         for (PlayerCard nextCard : hand) {
             if (nextCard == card) {
@@ -78,6 +87,10 @@ public class Player implements PlayerObservable {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public boolean actionsPlayed() {
+        return actions <= 0;
     }
 
     public void resetActions() {

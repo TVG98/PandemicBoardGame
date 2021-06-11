@@ -1,11 +1,10 @@
 package Controller;
 
-import Model.City;
-import Model.Game;
-import Model.Player;
-import Model.PlayerCard;
+import Exceptions.CityNotFoundException;
+import Model.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameController {
     static GameController gameController;
@@ -13,11 +12,13 @@ public class GameController {
     private final Game game;
     private final PlayerController playerController;
     private final GameBoardController gameBoardController;
+    private final LobbyController lobbyController;
 
     private GameController() {
         game = new Game(new ArrayList<>());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
+        lobbyController = LobbyController.getInstance();
     }
 
     public static GameController getInstance() {
@@ -28,9 +29,26 @@ public class GameController {
         return gameController;
     }
 
-    // Misschien dat dit ook wel in de constructor kan
     public void startGame() {
+        setPlayers();
+        drawInitialInfectionCards();
+    }
 
+    private void setPlayers() {
+        for(Player player : lobbyController.getPlayersInLobby()) {
+            player.setRole(getRandomRole());
+            try {
+                player.setCurrentCity(gameBoardController.getCity("Atlanta"));
+            } catch(CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
+            }
+        }
+    }
+    private Role getRandomRole() {
+        return Role.values()[new Random().nextInt(Role.values().length)];
+    }
+
+    private void drawInitialInfectionCards() {
         int drawAmount = 3;
         while(drawAmount > 0) {
             for(int x = 0; x < 3; x++) {
@@ -38,9 +56,17 @@ public class GameController {
             }
             drawAmount--;
         }
+    }
 
-        // Todo: zet de players in Atlanta + een researchstation mits we die uit de initialisatie willen halen
+    public void turn() {
+        // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
 
+        if(getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
+            gameBoardController.handlePlayerCardDraw(getCurrentPlayer());  // Pak twee spelerkaarten
+            gameBoardController.handleInfectionCardDraw();  // Doe de infections
+            getCurrentPlayer().endTurn();  // Reset
+            changeTurn();  // end
+        }
     }
 
     public void changeTurn(){
@@ -68,11 +94,11 @@ public class GameController {
     }
 
     public void handleDirectFlight(City city) {
-
+        gameBoardController.handleDirectFlight(getCurrentPlayer());
     }
 
     public void handleCharterFlight(City city) {
-
+        gameBoardController.handleCharterFlight(getCurrentPlayer());
     }
 
     public void handleShuttleFlight(City city) {
