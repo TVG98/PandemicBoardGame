@@ -238,6 +238,10 @@ public class Gameboard implements Observable {
         return citiesWithResearchStations;
     }
 
+    public boolean cityHasResearchStation(City city) {
+        return citiesWithResearchStations.contains(city);
+    }
+
     public void addResearchStationToCity(City city) {
         for (City c : cities) {
             if (c.equals(city)) {

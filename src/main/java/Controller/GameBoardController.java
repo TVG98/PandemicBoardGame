@@ -10,6 +10,7 @@ public class GameBoardController {
     private BuildResearchStationBehavior buildResearchStationBehavior;
     private DriveBehavior driveBehavior;
     private DirectFlightBehavior directFlightBehavior;
+    private CharterFlightBehavior charterFlightBehavior;
 
     private final Gameboard gameBoard;
     private final PlayerController playerController;
@@ -36,6 +37,10 @@ public class GameBoardController {
     }
 
     public void handleCharterFlight(Player currentPlayer) {
+        charterFlightBehavior.charterFlight(currentPlayer);
+    }
+
+    public void handleShuttleFlight(Player currentPlayer) {
 
     }
 
@@ -92,6 +97,10 @@ public class GameBoardController {
 
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
         treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
+    }
+
+    public boolean cityHasResearchStation(City city) {
+        return gameBoard.cityHasResearchStation(city);
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
