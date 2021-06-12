@@ -1,12 +1,9 @@
 package View;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -20,10 +17,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @created June 11 2021 - 1:34 PM
+ * @created June 12 2021 - 2:08 PM
  * @project testGame
  */
-public class DirectFlightView {
+public class DriveView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
@@ -31,11 +28,10 @@ public class DirectFlightView {
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
 
-
-    public DirectFlightView(Stage primaryStage) {
+    public DriveView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
-        loadStageWithBorderPane(createDirectFlightViewBorderPane());
+        loadStageWithBorderPane(createDriveViewBorderPane());
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -48,8 +44,7 @@ public class DirectFlightView {
         }
     }
 
-    private BorderPane createDirectFlightViewBorderPane()
-    {
+    private BorderPane createDriveViewBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -67,15 +62,13 @@ public class DirectFlightView {
         menuBackground.setY((height / 2) - (800 / 2f));
 
         // Setup BorderPane Center //
-        Text actionTitle = new Text("Direct Flight");
+        Text actionTitle = new Text("Drive / Ferry");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        Text statusText = new Text("You are currently in: " + "New York");
+        Text statusText = new Text("You are currently in: " + "Washington");
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
-        Text infoText = new Text(
-                "By handing over a city card from your hand you can move to the matching city\n" +
-                "Click on the city that you want to move to and then press 'Move'");
+        Text infoText = new Text("You are able to move to the cities connected to your current city");
         selectedCityText.setFill(Color.WHITE);
         selectedCityText.setFont(Font.font("Arial", 30));
         infoText.setFill(Color.WHITE);
@@ -99,7 +92,7 @@ public class DirectFlightView {
             cityButton.setStyle("-fx-background-color: Gray;");
             cityButton.setFont(Font.font("Arial", 20));
         }
-        
+
         int index = 0;
         HBox hboxCityRowOne = new HBox();
         hboxCityRowOne.setAlignment(Pos.CENTER);
@@ -168,7 +161,7 @@ public class DirectFlightView {
 
     private ArrayList<Button> getCitiesButtons()
     {
-        // TODO: Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
+        // TODO: Moet alle steden verbonden aan de huidige stad van de speler ophalen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
@@ -205,15 +198,13 @@ public class DirectFlightView {
         return buttons;
     }
 
-    private void backButtonHandler()
-    {
+    private void backButtonHandler() {
         GameView view = new GameView(primaryStage);
     }
 
-    private void moveButtonHandler()
-    {
+    private void moveButtonHandler() {
         // TODO: behaviour implementeren
         GameView view = new GameView(primaryStage);
     }
-
 }
+

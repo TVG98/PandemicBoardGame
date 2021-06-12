@@ -260,7 +260,7 @@ public class GameView implements Observer {
     }
 
     private void driveButtonHandler() {
-
+        DriveView view = new DriveView(primaryStage);
     }
 
     private void directFlightButtonHandler() {
@@ -268,11 +268,11 @@ public class GameView implements Observer {
     }
 
     private void charterFlightButtonHandler() {
-
+        CharterFlightView view = new CharterFlightView(primaryStage);
     }
 
     private void shuttleFlightButtonHandler() {
-
+        ShuttleFlightView view = new ShuttleFlightView(primaryStage);
     }
 
     private void treatButtonHandler() {
