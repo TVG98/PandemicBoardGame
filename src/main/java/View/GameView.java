@@ -27,20 +27,20 @@ public class GameView implements Observer {
     private final double height = 900;
     private final HashMap<String, int[]> cities = new HashMap<>();
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
+    private final BorderPane borderPane = new BorderPane();
 
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
-        loadStageWithBorderPane(createGameViewBorderPane());
+        createGameViewBorderPane();
+        loadStageWithBorderPane(borderPane);
     }
 
-    private BorderPane createGameViewBorderPane() {
-        BorderPane bp = new BorderPane();
-
+    private void createGameViewBorderPane() {
         // Setup Background Image //
         Image image = new Image(new File(pathToImage).toURI().toString());
         BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        bp.setBackground(new Background(bgImage));
+        borderPane.setBackground(new Background(bgImage));
 
         // Setup BorderPane Top //
         Text title = new Text("Pandemic");
@@ -246,11 +246,9 @@ public class GameView implements Observer {
         vboxBottom.setPadding(new Insets(10, 0, 0, 0));
 
         // BorderPane Layout //
-        bp.setTop(hboxTop);
-        bp.setBottom(vboxBottom);
-        makeGameBoard(bp);
-
-        return bp;
+        borderPane.setTop(hboxTop);
+        borderPane.setBottom(vboxBottom);
+        makeGameBoard();
     }
 
     private void openMenuButtonHandler() {
@@ -297,18 +295,18 @@ public class GameView implements Observer {
 
     }
 
-    private void makeGameBoard(BorderPane bp) {
-        placeLinesOnBoard(bp);
-        placeCitiesWithColorOnBp(makeBlueCityCoordinates(), Color.DEEPSKYBLUE, bp);
-        placeCitiesWithColorOnBp(makeGreenCityCoordinates(), Color.GREEN, bp);
-        placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, bp);
-        placeCitiesWithColorOnBp(makeYellowCityCoordinates(), Color.YELLOW, bp);
+    private void makeGameBoard() {
+        placeLinesOnBoard();
+        placeCitiesWithColorOnBp(makeBlueCityCoordinates(), Color.DEEPSKYBLUE, borderPane);
+        placeCitiesWithColorOnBp(makeGreenCityCoordinates(), Color.GREEN, borderPane);
+        placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, borderPane);
+        placeCitiesWithColorOnBp(makeYellowCityCoordinates(), Color.YELLOW, borderPane);
     }
 
-    private void placeLinesOnBoard(BorderPane bp) {
+    private void placeLinesOnBoard() {
         initializeCitiesWithCoords();
         addConnectedCities();
-        placeAllLines(bp);
+        placeAllLines();
     }
 
     private void initializeCitiesWithCoords() {
@@ -429,14 +427,14 @@ public class GameView implements Observer {
         return new BufferedReader(fileReader);
     }
 
-    private void placeAllLines(BorderPane bp) {
+    private void placeAllLines() {
         for (Connection connection : connectedCities) {
-            placeLine(connection, bp);
+            placeLine(connection);
         }
     }
 
-    private void placeLine(Connection connection, BorderPane bp) {
-        bp.getChildren().addAll(connection.getLineFromConnection());
+    private void placeLine(Connection connection) {
+        borderPane.getChildren().addAll(connection.getLineFromConnection());
     }
 
     private void placeCitiesWithColorOnBp(HashMap<String, int[]> cityCoords, Color color, BorderPane bp) {
