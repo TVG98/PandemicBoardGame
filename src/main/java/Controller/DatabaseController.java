@@ -2,7 +2,6 @@ package Controller;
 
 import GameApplication.GameApplication;
 import Model.FirestoreDatabase;
-import Model.Lobby;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 

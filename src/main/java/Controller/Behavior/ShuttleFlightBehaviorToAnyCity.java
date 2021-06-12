@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Behavior;
 
 import Model.City;
 import Model.Player;

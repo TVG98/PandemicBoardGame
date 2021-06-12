@@ -1,6 +1,5 @@
 package View.Unused;
 
-import Controller.DatabaseController;
 import Controller.LobbyController;
 import View.InLobbyView;
 import View.MenuView;

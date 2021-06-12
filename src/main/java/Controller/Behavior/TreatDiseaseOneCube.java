@@ -1,5 +1,6 @@
-package Controller;
+package Controller.Behavior;
 
+import Controller.PlayerController;
 import Model.City;
 import Model.Player;
 

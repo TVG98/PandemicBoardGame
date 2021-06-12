@@ -1,5 +1,7 @@
-package Controller;
+package Controller.Behavior;
 
+import Controller.GameBoardController;
+import Controller.PlayerController;
 import Exceptions.CityNotFoundException;
 import Model.City;
 import Model.CityCard;
