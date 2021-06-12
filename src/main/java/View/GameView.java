@@ -26,7 +26,7 @@ public class GameView implements Observer {
     private final double width = 1600;
     private final double height = 900;
     private final HashMap<String, int[]> cities = new HashMap<>();
-    private Connection[] connectedCities;
+    private final ArrayList<Connection> connectedCities = new ArrayList<>();
 
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -307,7 +307,7 @@ public class GameView implements Observer {
 
     private void placeLinesOnBoard(BorderPane bp) {
         initializeCitiesWithCoords();
-        connectedCities = getConnectedCities();
+        addConnectedCities();
         placeAllLines(bp);
     }
 
@@ -394,34 +394,32 @@ public class GameView implements Observer {
         return yellowCityCoords;
     }
 
-    private Connection[] getConnectedCities() {
-        ArrayList<Connection> connections = new ArrayList<>();
-
+    private void addConnectedCities() {
         try {
-            return tryGettingAllConnectedCities(connections);
+            tryAddingConnectedCities();
         } catch (IOException e) {
             e.printStackTrace();
-            return new Connection[] {};
         }
     }
 
-    private Connection[] tryGettingAllConnectedCities(ArrayList<Connection> connections) throws IOException {
+    private void tryAddingConnectedCities() throws IOException {
         BufferedReader bufferedReader = makeBufferedReader();
-        addConnections(connections, bufferedReader);
+        addConnections(bufferedReader);
         bufferedReader.close();
-
-        return convertArrayListToArray(connections);
     }
 
-    private void addConnections(ArrayList<Connection> connections, BufferedReader bufferedReader) throws IOException {
+    private void addConnections(BufferedReader bufferedReader) throws IOException {
         String line = bufferedReader.readLine();
 
         while (line != null) {
-            String[] con = line.split(";");
-            connections.add(new Connection(cities.get(con[0]), cities.get(con[1])));
+            addConnection(line);
             line = bufferedReader.readLine();
         }
+    }
 
+    private void addConnection(String line) {
+        String[] con = line.split(";");
+        connectedCities.add(new Connection(cities.get(con[0]), cities.get(con[1])));
     }
 
     private BufferedReader makeBufferedReader() throws FileNotFoundException {
@@ -429,16 +427,6 @@ public class GameView implements Observer {
         FileReader fileReader = new FileReader(textFile);
 
         return new BufferedReader(fileReader);
-    }
-
-    private Connection[] convertArrayListToArray(ArrayList<Connection> arrayList) {
-        Connection[] connections = new Connection[arrayList.size()];
-
-        for (int i = 0; i < arrayList.size(); i++) {
-            connections[i] = arrayList.get(i);
-        }
-
-        return connections;
     }
 
     private void placeAllLines(BorderPane bp) {
