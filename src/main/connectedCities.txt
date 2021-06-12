@@ -1,0 +1,89 @@
+Los Angeles;Mexico City
+Los Angeles;San Francisco
+Los Angeles;Chicago
+Chicago;Mexico City
+Miami;Mexico City
+Bogota;Mexico City
+Lima;Mexico City
+Chicago;Atlanta
+Chicago;Montréal
+Atlanta;Miami
+Atlanta;Washington
+Montréal;Washington
+Montréal;New York
+Washington;New York
+Washington;Miami
+Miami;Bogota
+Bogota;Lima
+Lima;Santiago
+Bogota;Buenos Aires
+São Paulo;Buenos Aires
+San Francisco;Chicago
+São Paulo;Bogota
+São Paulo;Madrid
+Madrid;New York
+Lagos;São Paulo
+Madrid;London
+London;New York
+Madrid;Paris
+London;Paris
+Essen;London
+Essen;Milan
+Milan;Paris
+Algiers;Madrid
+Algiers;Paris
+Cairo;Algiers
+Algiers;Istanbul
+Cairo;Istanbul
+Istanbul;Milan
+Baghdad;Cairo
+Baghdad;Istanbul
+Istanbul;Moscow
+Kinshasa;Lagos
+Johannesburg;Kinshasa
+Khartoum;Kinshasa
+Khartoum;Lagos
+Khartoum;Johannesburg
+Khartoum;Cairo
+St. Petersburg;Moscow
+St. Petersburg;Essen
+St. Petersburg;Istanbul
+Riyadh;Cairo
+Riyadh;Baghdad
+Riyadh;Karachi
+Karachi;Baghdad
+Mumbai;Karachi
+Tehran;Baghdad
+Tehran;Karachi
+Tehran;Moscow
+Delhi;Tehran
+Delhi;Karachi
+Delhi;Mumbai
+Chennai;Kolkata
+Kolkata;Delhi
+Chennai;Mumbai
+Chennai;Delhi
+Chennai;Bangkok
+Jakarta;Chennai
+Jakarta;Bangkok
+Kolkata;Bangkok
+H.K.;Bangkok
+Ho Chi Minh City;Bangkok
+Jakarta;Ho Chi Minh City
+Ho Chi Minh City;H.K.
+Kolkata;H.K.
+Jakarta;Sydney
+Sydney;Manila
+Ho Chi Minh City;Manila
+Manila;H.K.
+Taipei;H.K.
+H.K.;Shanghai
+Shanghai;Taipei
+Taipei;Manila
+Shanghai;Beijing
+Beijing;Seoul
+Seoul;Shanghai
+Tokyo;Seoul
+Tokyo;Shanghai
+Taipei;Osaka
+Tokyo;Osaka
