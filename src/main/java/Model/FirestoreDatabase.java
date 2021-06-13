@@ -56,7 +56,7 @@ public class FirestoreDatabase {
         docRef.update("Players", FieldValue.arrayUnion(player));
     }
 
-    public void removePlayerFromLobby(String LobbyCode, Player player) {
+    public void removePlayerFromLobby(Player player) {
         docRef.update("Players", FieldValue.arrayRemove(player));
         docRef.update("PlayerAmount", FieldValue.increment(-1));
     }

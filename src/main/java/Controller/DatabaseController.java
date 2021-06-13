@@ -37,8 +37,8 @@ public class DatabaseController {
         database.addPlayerToLobby(lobbyCode, player);
     }
 
-    public void removePlayer(String lobbyCode, Player player) {
-        database.removePlayerFromLobby(lobbyCode, player);
+    public void removePlayer(Player player) {
+        database.removePlayerFromLobby(player);
     }
 
     public void update(Map<String, Object> map) {
