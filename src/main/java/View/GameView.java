@@ -280,7 +280,7 @@ public class GameView implements Observer {
     }
 
     private void cureButtonHandler() {
-
+        CureView view = new CureView(primaryStage);
     }
 
     private void buildButtonHandler() {
