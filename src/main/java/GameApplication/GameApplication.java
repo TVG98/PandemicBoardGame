@@ -25,14 +25,14 @@ public class GameApplication extends Application {
         //OptionsView d = new OptionsView(primaryStage);
         //InLobbyView e = new InLobbyView(primaryStage);
         //JoinLobbyView f = new JoinLobbyView(primaryStage);
-        //GameView g = new GameView(primaryStage);
+        GameView g = new GameView(primaryStage);
         //LobbyServersView h = new LobbyServersView(primaryStage);
         //LossView l = new LossView(primaryStage);
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
         //InGameMenuView j = new InGameMenuView(primaryStage);
         //JoinFailedView k = new JoinFailedView(primaryStage, "No name entered, please enter a name!");
         //DirectFlightView m = new DirectFlightView(primaryStage);
-        DriveView n = new DriveView(primaryStage);
+        //DriveView n = new DriveView(primaryStage);
         //CharterFlightView o = new CharterFlightView(primaryStage);
         //ShuttleFlightView p = new ShuttleFlightView(primaryStage);
     }

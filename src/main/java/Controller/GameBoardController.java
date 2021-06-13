@@ -12,6 +12,7 @@ public class GameBoardController {
     private DriveBehavior driveBehavior;
     private DirectFlightBehavior directFlightBehavior;
     private CharterFlightBehavior charterFlightBehavior;
+    private ShuttleFlightBehavior shuttleFlightBehavior;
 
     private final Gameboard gameBoard;
     private final PlayerController playerController;
@@ -42,7 +43,7 @@ public class GameBoardController {
     }
 
     public void handleShuttleFlight(Player currentPlayer) {
-
+        shuttleFlightBehavior.shuttleFlight(currentPlayer);
     }
 
     public void handleCurePawn(Cure cure) {

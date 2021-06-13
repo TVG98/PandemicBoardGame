@@ -103,7 +103,7 @@ public class GameController {
     }
 
     public void handleShuttleFlight(City city) {
-
+        gameBoardController.handleShuttleFlight(getCurrentPlayer());
     }
 
     public void handleBuildResearchStation() {
