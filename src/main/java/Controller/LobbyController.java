@@ -60,7 +60,6 @@ public class LobbyController {
         if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4) {
             lobby = new Lobby(lobbyCode);
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
-            System.out.println(playerName);
             Player player = new Player(playerName, false);
             databaseController.addPlayer(lobbyCode, player);
             return true;
@@ -76,12 +75,8 @@ public class LobbyController {
 
             for (String player : s) {
                 String playerName = player.split("playerName=")[1];
-                System.out.println("updating players " + lobby.getPlayers().size());
-                System.out.println("lobbyCode: " + lobbyCode);
-                System.out.println("serverPlayerAmount: " + databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount"));
                 if (lobby.getPlayers().size() < databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
                     boolean readyToStart = player.contains("readyToStart=true");
-                    System.out.println("adding player: " + playerName.substring(0, playerName.indexOf(",")));
                     addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")), readyToStart);
 
                 } else if(lobby.getPlayers().size() > databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
@@ -94,9 +89,6 @@ public class LobbyController {
                     lobby.updatePlayers(playersString);
                 }
             }
-            for (Player p : lobby.getPlayers()) {
-                System.out.println(p.getPlayerName());
-            }
         }
     }
 
@@ -104,18 +96,16 @@ public class LobbyController {
         return lobby.getPlayers();
     }
 
-    public boolean addPlayerToLobby(String playerName, boolean readyToStart) {
+    public void addPlayerToLobby(String playerName, boolean readyToStart) {
         for (Player p : lobby.getPlayers()) {
             if (p.getPlayerName().equals(playerName)) {
-                return false;
+                return;
             }
         }
-
         lobby.addPlayer(new Player(playerName, readyToStart));
-        return true;
     }
 
-    public Player getCurrentPLayer() throws PlayerNotFoundException{
+    public Player getCurrentPLayer() throws PlayerNotFoundException {
         for (Player p : lobby.getPlayers()) {
             if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
                 return p;
@@ -125,7 +115,6 @@ public class LobbyController {
     }
 
     public String checkPlayerName(String playersString, String playerName) {
-        System.out.println(playersString);
         String newName = playerName;
 
         for (int i = 0; i < lobby.getMaxLobbySize(); i++) {
@@ -133,12 +122,11 @@ public class LobbyController {
                 newName = playerName += Integer.toString(i + 1);
             }
         }
-
         return newName;
     }
 
     public void removePlayerFromServer(Player player) {
-        databaseController.removePlayer(lobbyCode, player);
+        databaseController.removePlayer(player);
     }
 
     public void startGame() {
