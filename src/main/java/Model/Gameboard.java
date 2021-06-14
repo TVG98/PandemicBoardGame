@@ -82,7 +82,7 @@ public class Gameboard implements Observable {
             newCities[i] = new City(newCities[i].getName(), virusType);
         }
 
-        return cities;
+        return newCities;
     }
 
 
