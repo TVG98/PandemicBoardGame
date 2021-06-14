@@ -170,6 +170,10 @@ public class GameController {
         getCurrentPlayer().decrementActions();
     }
 
+    private void setShareKnowledgeBehavior() {
+
+    }
+
     public void handleTreatDisease() {
         Player currentPlayer = getCurrentPlayer();
         City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
