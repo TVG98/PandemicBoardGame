@@ -7,11 +7,9 @@ import Model.VirusType;
 public class ShuttleFlightBehaviorNormal implements ShuttleFlightBehavior{
 
     @Override
-    public void shuttleFlight(Player currentPlayer) {
+    public void shuttleFlight(Player currentPlayer, City chosenCity) {
 
         if(gameBoardController.cityHasResearchStation(playerController.getPlayerCurrentCity(currentPlayer))) {
-            // Todo: Kies een stad met een researchstation
-            City chosenCity = new City("Tokyo", VirusType.RED); // Hier komt de gekozen stad met een researchstation
             currentPlayer.setCurrentCity(chosenCity);
         }
     }

@@ -9,5 +9,5 @@ public interface ShuttleFlightBehavior {
     GameBoardController gameBoardController = GameBoardController.getInstance();
     PlayerController playerController = PlayerController.getInstance();
 
-    void shuttleFlight(Player currentPlayer);
+    void shuttleFlight(Player currentPlayer, City chosenCity);
 }

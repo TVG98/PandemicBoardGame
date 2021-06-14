@@ -44,6 +44,10 @@ public class Game implements Observable {
         return playersInCity;
     }
 
+    public int getPlayerAmount() {
+        return this.players.size();
+    }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }

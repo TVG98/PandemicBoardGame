@@ -36,15 +36,20 @@ public class GameController {
     }
 
     private void setPlayers() {
-        for(Player player : lobbyController.getPlayersInLobby()) {
+        for (Player player : lobbyController.getPlayersInLobby()) {
             player.setRole(getRandomRole());
-            try {
-                player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-            } catch(CityNotFoundException cnfe) {
-                cnfe.printStackTrace();
-            }
+            setPlayer(player);
         }
     }
+
+    private void setPlayer(Player player) {
+        try {
+            player.setCurrentCity(gameBoardController.getCity("Atlanta"));
+        } catch(CityNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
+    }
+
     private Role getRandomRole() {
         return Role.values()[new Random().nextInt(Role.values().length)];
     }
@@ -62,8 +67,8 @@ public class GameController {
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
 
-        if(getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
-            gameBoardController.handlePlayerCardDraw(getCurrentPlayer());  // Pak twee spelerkaarten
+        if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
+            gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
             gameBoardController.handleInfectionCardDraw();  // Doe de infections
             getCurrentPlayer().endTurn();  // Reset
             changeTurn();  // end
@@ -90,20 +95,31 @@ public class GameController {
         }
     }
 
-    public void handleDrive() {
-        gameBoardController.handleDrive(getCurrentPlayer());
+    public void handleDrive(City city) {
+        gameBoardController.handleDrive(getCurrentPlayer(), city);
     }
 
     public void handleDirectFlight(City city) {
-        gameBoardController.handleDirectFlight(getCurrentPlayer());
+        gameBoardController.handleDirectFlight(getCurrentPlayer(), city);
     }
 
     public void handleCharterFlight(City city) {
-        gameBoardController.handleCharterFlight(getCurrentPlayer());
+        gameBoardController.handleCharterFlight(getCurrentPlayer(), city);
     }
 
     public void handleShuttleFlight(City city) {
-        gameBoardController.handleShuttleFlight(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setBuildResearchBehavior(currentPlayer);
+        gameBoardController.handleShuttleFlight(currentPlayer, currentCity);
+    }
+
+    public void setShuttleFlightBehavior(Player currentPlayer) {
+        if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
+            gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
+        } else {
+            gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorNormal());
+        }
     }
 
     public void handleBuildResearchStation() {

@@ -30,28 +30,28 @@ public class GameBoardController {
         return gameBoardController;
     }
 
-    public void handleDrive(Player currentPlayer) {
-        driveBehavior.drive(currentPlayer);
+    public void handleDrive(Player currentPlayer, City chosenCity) {
+        driveBehavior.drive(currentPlayer, chosenCity);
     }
 
-    public void handleDirectFlight(Player currentPlayer) {
-        directFlightBehavior.directFlight(currentPlayer);
+    public void handleDirectFlight(Player currentPlayer, City chosenCity) {
+        directFlightBehavior.directFlight(currentPlayer, chosenCity);
     }
 
-    public void handleCharterFlight(Player currentPlayer) {
-        charterFlightBehavior.charterFlight(currentPlayer);
+    public void handleCharterFlight(Player currentPlayer, City chosenCity) {
+        charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
     }
 
-    public void handleShuttleFlight(Player currentPlayer) {
-        shuttleFlightBehavior.shuttleFlight(currentPlayer);
+    public void handleShuttleFlight(Player currentPlayer, City chosenCity) {
+        shuttleFlightBehavior.shuttleFlight(currentPlayer, chosenCity);
     }
 
     public void handleCurePawn(Cure cure) {
         gameBoard.flipCurePawn(cure);
     }
 
-    public void handlePlayerCardDraw(Player currentPlayer) {
-        for (int i = 0; i < 2; i++) {
+    public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) {
+        for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
         }
     }
@@ -87,6 +87,14 @@ public class GameBoardController {
 
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
+    }
+
+    public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
+        return playerController.hasRole(currrentPlayer, Role.OPERATIONSEXPERT);
+    }
+
+    public void setShuttleFlightBehavior(ShuttleFlightBehavior shuttleFlightBehavior) {
+        this.shuttleFlightBehavior = shuttleFlightBehavior;
     }
 
     public void addResearchStationToCity(City city) {
