@@ -35,6 +35,7 @@ public class InLobbyView implements LobbyObserver {
     LobbyController lobbyController = LobbyController.getInstance();
     ArrayList<Text> playerNames = new ArrayList<Text>();
     ArrayList<Text> playerStatuses = new ArrayList<Text>();
+    Text lobbyCode = new Text("xxxxxxxx");
 
     public InLobbyView(Stage primaryStage) {
         lobbyController.registerObserver(this);
@@ -57,10 +58,14 @@ public class InLobbyView implements LobbyObserver {
         lobbyWindowBackground.setFill(Color.color(0f, 0f, 0f, 0.7f));
         lobbyWindowBackground.setX((width / 2) - (800 / 2f));
         lobbyWindowBackground.setY((height / 2) - (700 / 2f));
+        Rectangle lobbyCodeBackground = new Rectangle(300, 100);
+        lobbyCodeBackground.setFill(Color.color(0f, 0f, 0f, 0.7f));
+        lobbyCodeBackground.setX((width / 2 - 150));
+        lobbyCodeBackground.setY((height - 100));
 
         // BorderPane Top Setup (vboxTop) //
         Text lobbyText = new Text("Lobby");
-        lobbyText.setFont(new Font("Castellar", 80));
+        lobbyText.setFont(Font.font("Castellar", 80));
         VBox vboxTop = new VBox();
         vboxTop.setAlignment(Pos.CENTER);
         vboxTop.getChildren().add(lobbyText);
@@ -126,24 +131,27 @@ public class InLobbyView implements LobbyObserver {
         backToMainMenuButton.setTextFill(Color.BLACK);
         backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Dimgray"));
         backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: Gray"));
-        backToMainMenuButton.setFont(new Font("Arial", 40));
+        backToMainMenuButton.setFont(new Font("Arial", 25));
         backToMainMenuButton.setPrefHeight(100);
         backToMainMenuButton.setPrefWidth(400);
 
         readyUpButton.setStyle("-fx-background-color: Gray");
         readyUpButton.setOnMouseClicked(e -> readyUpButton.setStyle("-fx-background-color: Dimgray"));
-        readyUpButton.setFont(new Font("Arial", 40));
+        readyUpButton.setFont(new Font("Arial", 25));
         readyUpButton.setTextFill(Color.BLACK);
         readyUpButton.setPrefHeight(100);
         readyUpButton.setPrefWidth(400);
+        lobbyCode.setFont(Font.font("Arial", 35));
+        lobbyCode.setFill(Color.WHITE);
+        lobbyCode.setTextAlignment(TextAlignment.CENTER);
 
         HBox hboxBottom = new HBox();
-        hboxBottom.getChildren().addAll(backToMainMenuButton, readyUpButton);
+        hboxBottom.getChildren().addAll(backToMainMenuButton, lobbyCode, readyUpButton);
         hboxBottom.setAlignment(Pos.BOTTOM_CENTER);
         hboxBottom.setSpacing(200);
 
         // BorderPane layout //
-        bp.getChildren().add(lobbyWindowBackground);
+        bp.getChildren().addAll(lobbyWindowBackground, lobbyCodeBackground);
         bp.setTop(vboxTop);
         bp.setCenter(hboxCenter);
         bp.setBottom(hboxBottom);
@@ -164,7 +172,7 @@ public class InLobbyView implements LobbyObserver {
 
     private void createUpdatedInLobbyBorderPane(LobbyObservable lobbyObservable)
     {
-        System.out.println("ik kom hier");
+        lobbyCode.setText("Lobby code:\n" + lobbyObservable.getPassword());
         ArrayList<String> players = lobbyObservable.getPlayerNames();
         int index = 0;
         for (String player : players) {
