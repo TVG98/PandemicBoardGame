@@ -107,7 +107,13 @@ public class GameController {
     }
 
     public void handleDirectFlight(City city) {
-        gameBoardController.handleDirectFlight(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        gameBoardController.handleDirectFlight(currentPlayer, currentCity);
+    }
+
+    private void setDirectFlightBehavior() {
+        gameBoardController.setDirectFlightBehavior(new DirectFlightBehavior());
     }
 
     public void handleCharterFlight(City city) {

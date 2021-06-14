@@ -42,6 +42,10 @@ public class GameBoardController {
         directFlightBehavior.directFlight(currentPlayer, chosenCity);
     }
 
+    public void setDirectFlightBehavior(DirectFlightBehavior directFlightBehavior) {
+        this.directFlightBehavior = directFlightBehavior;
+    }
+
     public void handleCharterFlight(Player currentPlayer, City chosenCity) {
         charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
     }
