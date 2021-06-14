@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Game implements Observable {
     private final List<Observer> observers = new ArrayList<>();
+
     private ArrayList<Player> players;
     private int currentPlayerIndex = 0;
     private boolean lost = false;
@@ -53,6 +54,10 @@ public class Game implements Observable {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     @Override

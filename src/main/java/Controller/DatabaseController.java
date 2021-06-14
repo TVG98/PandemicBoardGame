@@ -6,7 +6,6 @@ import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DatabaseController {
     FirestoreDatabase database;
