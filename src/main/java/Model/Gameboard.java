@@ -47,23 +47,44 @@ public class Gameboard implements Observable {
     }
 
     private City[] initializeCities() {
-        City[] cities = new City[48];
-        String[] cityNames = new String[]{"San Fransisco", "Chicago", "Atlanta", "Montreal", "Washington", "New York", "Madrid", "London", "Paris", "Essen", "Milan", "St. Petersburg",  // Blue
-            "Los Angeles", "Mexico City", "Miami", "Bogota", "Lima", "Santiago", "Buenos Aires", "Sao Paulo", "Lagos", "Kinshasa", "Khartoum", "Johannesburg",  // Yellow
-            "Algiers", "Istanbul", "Moscow", "Cairo", "Baghdad", "Riyadh", "Karachi", "Tehran", " Delhi", "Mumbai", "Kolkata", "Chennai",  // Black
-            "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong", "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei", "Manila", "Sydney"};  // Red
+        City[] newCities = new City[48];
+        String[] cityNames = getCityNames();
+        return assignVirusToCities(newCities, cityNames);
+    }
 
-        int x = 0;
+    private String[] getCityNames() {
+        return new String[] {"San Fransisco", "Chicago", "Atlanta",
+                "Montreal", "Washington", "New York", "Madrid", "London",
+                "Paris", "Essen", "Milan", "St. Petersburg",  // Blue
+
+                "Los Angeles", "Mexico City", "Miami", "Bogota", "Lima",
+                "Santiago", "Buenos Aires", "Sao Paulo", "Lagos", "Kinshasa",
+                "Khartoum", "Johannesburg",  // Yellow
+
+                "Algiers", "Istanbul", "Moscow", "Cairo", "Baghdad", "Riyadh",
+                "Karachi", "Tehran", " Delhi", "Mumbai", "Kolkata",
+                "Chennai",  // Black
+
+                "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong",
+                "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei",
+                "Manila", "Sydney"};  // Red
+    }
+
+    private City[] assignVirusToCities(City[] newCities, String[] cityNames) {
+        int virusIndex = 0;
 
         for (int i = 0; i < cityNames.length; i++){
             if (i % (cityNames.length/viruses.length) == 0) {
-                x++;
+                virusIndex++;
             }
-            cities[i] = new City(cities[i].getName(), viruses[x-1].getType());
+
+            VirusType virusType = viruses[virusIndex-1].getType();
+            newCities[i] = new City(newCities[i].getName(), virusType);
         }
 
         return cities;
     }
+
 
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
         ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
