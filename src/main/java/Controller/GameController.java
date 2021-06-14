@@ -168,7 +168,7 @@ public class GameController {
         }
     }
 
-    public void handleFindCure() {
+    public void handleFindCure(Player currentPlayer) {
 
     }
 
