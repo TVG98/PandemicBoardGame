@@ -229,7 +229,6 @@ public class InLobbyView implements LobbyObserver {
                 return false;
             }
         }
-
         return true;
     }
 }

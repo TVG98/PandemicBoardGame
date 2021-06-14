@@ -5,11 +5,8 @@ import Model.Player;
 import Model.PlayerCard;
 import Model.Role;
 
-import java.util.ArrayList;
-
 public class PlayerController {
     static PlayerController playerController;
-    ArrayList<Player> players;
     private String currentPlayerName;
 
     private PlayerController() {
