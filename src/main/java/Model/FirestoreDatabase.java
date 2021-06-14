@@ -25,8 +25,18 @@ public class FirestoreDatabase {
     private final int passwordLength = 8;
     private final String fireBaseJsonPath = "src/main/Firebasejson/gametest-3a5f7-firebase-adminsdk-lfjkr-3d3c163166.json";
 
-    public FirestoreDatabase() {
+    static FirestoreDatabase firestoreDatabase;
+
+    private FirestoreDatabase() {
             initialize();
+    }
+
+    public static FirestoreDatabase getInstance() {
+        if (firestoreDatabase == null) {
+            firestoreDatabase = new FirestoreDatabase();
+        }
+
+        return firestoreDatabase;
     }
 
     public void initialize() {
@@ -58,7 +68,6 @@ public class FirestoreDatabase {
 
     public void addPlayerToLobby(String lobbyCode, Player player) {
         docRef = lobbyRef.document(lobbyCode);
-        System.out.println(getLobbyByDocumentId(lobbyCode).getDouble("PlayerAmount"));
         docRef.update("PlayerAmount", FieldValue.increment(1));
         docRef.update("Players", FieldValue.arrayUnion(player));
     }
@@ -69,10 +78,6 @@ public class FirestoreDatabase {
     }
 
     public void updatePlayersInLobby(ArrayList<Player> players) {
-        for (Player p: players) {
-            System.out.println(p.getReadyToStart());
-        }
-
         docRef.update("Players", players);
     }
 
@@ -102,14 +107,13 @@ public class FirestoreDatabase {
             document = future.get();
 
             if (document.exists()) {
-                System.out.println("Document exists");
                 return document;
-            } else {
-                System.out.println("No such document!");
             }
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

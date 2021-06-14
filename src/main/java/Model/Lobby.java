@@ -101,8 +101,6 @@ public class Lobby implements LobbyObservable {
             String playerName = player.split("playerName=")[1];
             for (Player p : getPlayers()) {
                 if (p.getPlayerName().equals(playerName.substring(0, playerName.indexOf(",")))) {
-                    System.out.println("updating playerReadyToStart");
-                    System.out.println(player.contains("readyToStart=true"));
                     p.setReadyToStart(player.contains("readyToStart=true"));
                 }
             }

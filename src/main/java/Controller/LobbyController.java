@@ -42,7 +42,6 @@ public class LobbyController {
 
     public void setPlayerReady() {
         try {
-            System.out.println(getCurrentPLayer().getPlayerName());
             for (Player p : lobby.getPlayers()) {
                 if (getCurrentPLayer().getPlayerName().equals(p.getPlayerName())) {
                     p.setReadyToStart(true);
@@ -61,8 +60,8 @@ public class LobbyController {
     public boolean addPlayerToServer(String lobbyCode, String playerName) {
         this.lobbyCode = lobbyCode;
         playerController.setPlayer(playerName);
-        System.out.println(this.lobbyCode);
-        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4 && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
+        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4
+                && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
             lobby = new Lobby(lobbyCode);
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
             Player player = new Player(playerName, false);

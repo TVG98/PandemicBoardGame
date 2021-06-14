@@ -7,5 +7,6 @@ public class DirectFlightBehaviorNormal implements DirectFlightBehavior {
 
     public void directFlight(Player currentPlayer, City chosenCity) {
         playerController.setCurrentCity(currentPlayer, chosenCity);
+        playerController.decrementActions(currentPlayer);
     }
 }

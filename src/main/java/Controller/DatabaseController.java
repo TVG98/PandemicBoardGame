@@ -1,19 +1,17 @@
 package Controller;
 
-import GameApplication.GameApplication;
 import Model.FirestoreDatabase;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class DatabaseController {
     FirestoreDatabase database;
     static DatabaseController databaseController;
 
     private DatabaseController() {
-        database = GameApplication.getFsDatabase();
+        database = FirestoreDatabase.getInstance();
     }
 
     public static DatabaseController getInstance() {

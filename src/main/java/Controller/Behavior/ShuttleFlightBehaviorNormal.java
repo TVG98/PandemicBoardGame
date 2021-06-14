@@ -2,7 +2,6 @@ package Controller.Behavior;
 
 import Model.City;
 import Model.Player;
-import Model.VirusType;
 
 public class ShuttleFlightBehaviorNormal implements ShuttleFlightBehavior{
 
@@ -11,6 +10,7 @@ public class ShuttleFlightBehaviorNormal implements ShuttleFlightBehavior{
 
         if(gameBoardController.cityHasResearchStation(playerController.getPlayerCurrentCity(currentPlayer))) {
             currentPlayer.setCurrentCity(chosenCity);
+            playerController.decrementActions(currentPlayer);
         }
     }
 }

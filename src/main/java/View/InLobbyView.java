@@ -176,7 +176,6 @@ public class InLobbyView implements LobbyObserver {
         ArrayList<String> players = lobbyObservable.getPlayerNames();
         int index = 0;
         for (String player : players) {
-            System.out.println(player);
             this.playerNames.get(index).setText(player);
             index++;
         }
@@ -215,8 +214,6 @@ public class InLobbyView implements LobbyObserver {
 
     @Override
     public void update(LobbyObservable observable) {
-        System.out.println("Lobby updatet");
-        System.out.println(observable.getPlayerNames());
         createUpdatedInLobbyBorderPane(observable);
         checkIfAllPlayersReady(observable);
     }
