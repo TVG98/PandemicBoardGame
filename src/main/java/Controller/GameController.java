@@ -104,7 +104,14 @@ public class GameController {
     }
 
     public void handleCharterFlight(City city) {
-        gameBoardController.handleCharterFlight(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setCharterFlightBehavior();
+        gameBoardController.handleCharterFlight(currentPlayer, currentCity);
+    }
+
+    public void setCharterFlightBehavior() {
+        gameController.setCharterFlightBehavior();
     }
 
     public void handleShuttleFlight(City city) {

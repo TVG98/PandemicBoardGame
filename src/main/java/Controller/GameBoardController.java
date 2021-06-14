@@ -42,6 +42,10 @@ public class GameBoardController {
         charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
     }
 
+    public void setCharterFlightBehavior(CharterFlightBehavior charterFlightBehavior) {
+        this.charterFlightBehavior = charterFlightBehavior;
+    }
+
     public void handleShuttleFlight(Player currentPlayer, City chosenCity) {
         shuttleFlightBehavior.shuttleFlight(currentPlayer, chosenCity);
     }
