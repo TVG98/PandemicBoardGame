@@ -19,7 +19,7 @@ public class GameApplication extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(new File("src/main/media/PandemicIcon.png").toURI().toString()));
         primaryStage.setTitle("Pandemic: The Board Game");
-        MenuView a = new MenuView(primaryStage);
+        //MenuView a = new MenuView(primaryStage);
         //WinView b = new WinView(primaryStage);
         //StartLobbyView c = new StartLobbyView(primaryStage);
         //OptionsView d = new OptionsView(primaryStage);
@@ -36,6 +36,7 @@ public class GameApplication extends Application {
         //CharterFlightView o = new CharterFlightView(primaryStage);
         //ShuttleFlightView p = new ShuttleFlightView(primaryStage);
         //CureView q = new CureView(primaryStage);
+        //DoShareView r = new DoShareView(primaryStage);
     }
 
     public static void main(String[] args) {

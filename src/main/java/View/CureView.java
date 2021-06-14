@@ -230,74 +230,80 @@ public class CureView {
 
         Button b1 = new Button("Ho Chi Minh");
         b1.setOnAction(e -> {
-            String allSelectedCities = "";
-            for (String selectedCity : selectedCities)
-            {
-                allSelectedCities += selectedCity + ", ";
+            if (selectedCities.size() < 5) {
+                String allSelectedCities = "";
+                for (String selectedCity : selectedCities) {
+                    allSelectedCities += selectedCity + ", ";
+                }
+                allSelectedCities += b1.getText() + ", ";
+                selectedCities.add(b1.getText());
+                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
             }
-            allSelectedCities += b1.getText() + ", ";
-            selectedCities.add(b1.getText());
-            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
         });
 
         Button b2 = new Button("Jakarta");
         b2.setOnAction(e -> {
-            String allSelectedCities = "";
-            for (String selectedCity : selectedCities)
-            {
-                allSelectedCities += selectedCity + ", ";
+            if (selectedCities.size() < 5) {
+                String allSelectedCities = "";
+                for (String selectedCity : selectedCities) {
+                    allSelectedCities += selectedCity + ", ";
+                }
+                allSelectedCities += b2.getText() + ", ";
+                selectedCities.add(b2.getText());
+                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
             }
-            allSelectedCities += b2.getText() + ", ";
-            selectedCities.add(b2.getText());
-            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
         });
 
         Button b3 = new Button("St. Petersburg");
         b3.setOnAction(e -> {
-            String allSelectedCities = "";
-            for (String selectedCity : selectedCities)
-            {
-                allSelectedCities += selectedCity + ", ";
+            if (selectedCities.size() < 5) {
+                String allSelectedCities = "";
+                for (String selectedCity : selectedCities) {
+                    allSelectedCities += selectedCity + ", ";
+                }
+                allSelectedCities += b3.getText() + ", ";
+                selectedCities.add(b3.getText());
+                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
             }
-            allSelectedCities += b3.getText() + ", ";
-            selectedCities.add(b3.getText());
-            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
         });
 
         Button b4 = new Button("Chennai");
         b4.setOnAction(e -> {
-            String allSelectedCities = "";
-            for (String selectedCity : selectedCities)
-            {
-                allSelectedCities += selectedCity + ", ";
+            if (selectedCities.size() < 5) {
+                String allSelectedCities = "";
+                for (String selectedCity : selectedCities) {
+                    allSelectedCities += selectedCity + ", ";
+                }
+                allSelectedCities += b4.getText() + ", ";
+                selectedCities.add(b4.getText());
+                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
             }
-            allSelectedCities += b4.getText() + ", ";
-            selectedCities.add(b4.getText());
-            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
         });
 
         Button b5 = new Button("Istanbul");
         b5.setOnAction(e -> {
-            String allSelectedCities = "";
-            for (String selectedCity : selectedCities)
-            {
-                allSelectedCities += selectedCity + ", ";
+            if (selectedCities.size() < 5) {
+                String allSelectedCities = "";
+                for (String selectedCity : selectedCities) {
+                    allSelectedCities += selectedCity + ", ";
+                }
+                allSelectedCities += b5.getText() + ", ";
+                selectedCities.add(b5.getText());
+                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
             }
-            allSelectedCities += b5.getText() + ", ";
-            selectedCities.add(b5.getText());
-            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
         });
 
         Button b6 = new Button("Johannesburg");
         b6.setOnAction(e -> {
-            String allSelectedCities = "";
-            for (String selectedCity : selectedCities)
-            {
-                allSelectedCities += selectedCity + ", ";
+            if (selectedCities.size() < 5) {
+                String allSelectedCities = "";
+                for (String selectedCity : selectedCities) {
+                    allSelectedCities += selectedCity + ", ";
+                }
+                allSelectedCities += b6.getText() + ", ";
+                selectedCities.add(b6.getText());
+                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
             }
-            allSelectedCities += b6.getText() + ", ";
-            selectedCities.add(b6.getText());
-            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
         });
         Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
         return buttons;
