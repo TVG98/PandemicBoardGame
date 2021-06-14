@@ -30,7 +30,7 @@ public class Gameboard implements Observable {
     private int infectionRate = 1;
     private int drawnEpidemicCards = 0;
 
-    private final ArrayList<City> citiesWithResearchStations = createCitiesWithResearchStation();
+    private final ArrayList<City> citiesWithResearchStations;
     private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
     private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
@@ -39,6 +39,7 @@ public class Gameboard implements Observable {
         cities = initializeCities();
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
+        citiesWithResearchStations = createCitiesWithResearchStation();
     }
 
     public void initializeGameBoard() {
