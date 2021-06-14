@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Game implements Observable {
     private final List<Observer> observers = new ArrayList<>();
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> players;
     private int currentPlayerIndex = 0;
     private boolean lost = false;
     private boolean won = false;
@@ -21,17 +21,20 @@ public class Game implements Observable {
 
     public void nextTurn() {
         currentPlayerIndex++;
-        currentPlayer = players.get(currentPlayerIndex);
+        currentPlayer = players.get(currentPlayerIndex % players.size());
+        notifyAllObservers();
     }
 
     public void setLost() {
         lost = true;
         won = false;
+        notifyAllObservers();
     }
 
     public void setWon() {
         won = true;
         lost = false;
+        notifyAllObservers();
     }
 
     public ArrayList<Player> getPlayersInCity(City city) {
