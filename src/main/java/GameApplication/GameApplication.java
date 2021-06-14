@@ -25,7 +25,7 @@ public class GameApplication extends Application {
         //OptionsView d = new OptionsView(primaryStage);
         //InLobbyView e = new InLobbyView(primaryStage);
         //JoinLobbyView f = new JoinLobbyView(primaryStage);
-        GameView g = new GameView(primaryStage);
+        //GameView g = new GameView(primaryStage);
         //LobbyServersView h = new LobbyServersView(primaryStage);
         //LossView l = new LossView(primaryStage);
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
@@ -36,6 +36,7 @@ public class GameApplication extends Application {
         //CharterFlightView o = new CharterFlightView(primaryStage);
         //ShuttleFlightView p = new ShuttleFlightView(primaryStage);
         //CureView q = new CureView(primaryStage);
+        //DoShareView r = new DoShareView(primaryStage);
     }
 
     public static void main(String[] args) {

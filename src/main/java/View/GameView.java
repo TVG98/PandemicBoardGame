@@ -292,7 +292,7 @@ public class GameView implements Observer {
     }
 
     private void shareButtonHandler() {
-
+        DoShareView view = new DoShareView(primaryStage);
     }
 
     private void endTurnButtonHandler() {

@@ -3,6 +3,7 @@ package Controller;
 import Exceptions.PlayerNotFoundException;
 import Model.Lobby;
 import Model.Player;
+import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.*;
 
@@ -57,18 +58,23 @@ public class LobbyController {
         this.lobbyCode = lobbyCode;
         playerController.setPlayer(playerName);
         System.out.println(this.lobbyCode);
-        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4) {
+        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4 && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
             lobby = new Lobby(lobbyCode);
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
             Player player = new Player(playerName, false);
             databaseController.addPlayer(lobbyCode, player);
+            if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") == 4) {
+                databaseController.updateJoinable(lobbyCode, false);
+            }
             return true;
         }
         return false;
     }
 
-    public synchronized void updatePlayersFromLobbyDoc(Map<String, Object> map) {
+    public synchronized void updatePlayersFromLobbyDoc(DocumentSnapshot snapshot) {
+        Map<String, Object> map = snapshot.getData();
         if (map != null) {
+            lobby.setJoinable(snapshot.getBoolean("Joinable"));
             Object playersObject = map.get("Players");
             String playersString = playersObject.toString();
             String[] s = playersString.split("}, \\{");
@@ -133,8 +139,8 @@ public class LobbyController {
 
     }
 
-    public void update(Map<String, Object> map) {
-        updatePlayersFromLobbyDoc(map);
+    public void update(DocumentSnapshot snapshot) {
+        updatePlayersFromLobbyDoc(snapshot);
     }
 
     public void registerObserver(View.InLobbyView view) {

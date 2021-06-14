@@ -37,12 +37,16 @@ public class DatabaseController {
         database.addPlayerToLobby(lobbyCode, player);
     }
 
+    public void updateJoinable(String lobbyCode, boolean joinable) {
+        database.updateJoinable(lobbyCode, joinable);
+    }
+
     public void removePlayer(Player player) {
         database.removePlayerFromLobby(player);
     }
 
-    public void update(Map<String, Object> map) {
-        LobbyController.getInstance().update(map);
+    public void update(DocumentSnapshot snapshot) {
+        LobbyController.getInstance().update(snapshot);
     }
 
     public DocumentSnapshot getLobbyDocument(String lobbyCode) {
