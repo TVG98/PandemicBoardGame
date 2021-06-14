@@ -1,6 +1,5 @@
 package Controller;
 
-import Exceptions.VirusNotFoundException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -8,11 +7,9 @@ import java.util.HashMap;
 
 public class PlayerController {
     static PlayerController playerController;
-    ArrayList<Player> players;
     private String currentPlayerName;
 
-    private PlayerController() {
-    }
+    private PlayerController() {}
 
     public static PlayerController getInstance() {
         if (playerController == null) {
@@ -22,8 +19,7 @@ public class PlayerController {
         return playerController;
     }
 
-    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(
-            Player player) throws VirusNotFoundException {
+    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player) {
 
         HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<>();
         ArrayList<PlayerCard> playerHand = player.getHand();

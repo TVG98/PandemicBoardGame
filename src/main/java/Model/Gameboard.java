@@ -381,6 +381,19 @@ public class Gameboard implements Observable {
         return cities;
     }
 
+    public ArrayList<InfectionCard> getTopSixInfectionStack() {
+        ArrayList<InfectionCard> topSix = (ArrayList<InfectionCard>) infectionStack.subList(0, 6);  // Ik weet niet zeker of dit werkt, kan errors geven
+
+        for(int i = 0; i < topSix.size(); i++) {
+            infectionStack.remove(0);
+        }
+
+        return topSix;
+    }
+
+    public void addInfectionStack(ArrayList<InfectionCard> infectionCards) {
+        infectionStack.addAll(infectionCards);
+    }
     @Override
     public void register(Observer observer) {
         observers.add(observer);

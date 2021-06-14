@@ -4,6 +4,8 @@ import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
 import Model.*;
 
+import java.util.ArrayList;
+
 public class GameBoardController {
     static GameBoardController gameBoardController;
 
@@ -85,6 +87,14 @@ public class GameBoardController {
 
     public void handleOutbreak(City infectedCity) {
         gameBoard.handleOutbreak(infectedCity);
+    }
+
+    public ArrayList<InfectionCard> getTopSixCards() {
+        return gameBoard.getTopSixInfectionStack();
+    }
+
+    public void addTopSixCards(ArrayList<InfectionCard> cards) {
+        gameBoard.addInfectionStack(cards);
     }
 
     public void handlePlayerPawnMovement(Player player) {
