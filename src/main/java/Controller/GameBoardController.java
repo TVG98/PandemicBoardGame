@@ -9,8 +9,8 @@ public class GameBoardController {
 
     private TreatDiseaseBehavior treatDiseaseBehavior;
     private BuildResearchStationBehavior buildResearchStationBehavior;
-    private DriveBehavior driveBehavior;
-    private DirectFlightBehavior directFlightBehavior;
+    private DriveBehaviorNormal driveBehavior;
+    private DirectFlightBehaviorNormal directFlightBehavior;
     private CharterFlightBehaviorNormal charterFlightBehavior;
     private ShuttleFlightBehavior shuttleFlightBehavior;
 
@@ -34,7 +34,7 @@ public class GameBoardController {
         driveBehavior.drive(currentPlayer, chosenCity);
     }
 
-    public void setDriveBehavior(DriveBehavior driveBehavior) {
+    public void setDriveBehavior(DriveBehaviorNormal driveBehavior) {
         this.driveBehavior = driveBehavior;
     }
 
@@ -42,7 +42,7 @@ public class GameBoardController {
         directFlightBehavior.directFlight(currentPlayer, chosenCity);
     }
 
-    public void setDirectFlightBehavior(DirectFlightBehavior directFlightBehavior) {
+    public void setDirectFlightBehavior(DirectFlightBehaviorNormal directFlightBehavior) {
         this.directFlightBehavior = directFlightBehavior;
     }
 

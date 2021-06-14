@@ -103,7 +103,7 @@ public class GameController {
     }
 
     private void setDriveBehavior() {
-        gameBoardController.setDriveBehavior(new DriveBehavior());
+        gameBoardController.setDriveBehavior(new DriveBehaviorNormal());
     }
 
     public void handleDirectFlight(City city) {
@@ -113,7 +113,7 @@ public class GameController {
     }
 
     private void setDirectFlightBehavior() {
-        gameBoardController.setDirectFlightBehavior(new DirectFlightBehavior());
+        gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
     }
 
     public void handleCharterFlight(City city) {
