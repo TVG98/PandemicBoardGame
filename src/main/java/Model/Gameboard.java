@@ -21,13 +21,15 @@ public class Gameboard implements Observable {
                                                  new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
                                                  new Virus(VirusType.BLACK)};
-    private final ArrayList<InfectionCard> infectionStack = this.initializeInfectionCardStack();
+    private final ArrayList<InfectionCard> infectionStack;
     private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
-    private final ArrayList<PlayerCard> playerStack = this.initializePlayerCardStack();
+    private final ArrayList<PlayerCard> playerStack;
     private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
+
     private int outbreakCounter = 0;
     private int infectionRate = 1;
     private int drawnEpidemicCards = 0;
+
     private final ArrayList<City> citiesWithResearchStations = createCitiesWithResearchStation();
     private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
     private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
@@ -35,6 +37,8 @@ public class Gameboard implements Observable {
     public Gameboard() {
         initializeGameBoard();
         cities = initializeCities();
+        infectionStack = initializeInfectionCardStack();
+        playerStack = initializePlayerCardStack();
     }
 
     public void initializeGameBoard() {
