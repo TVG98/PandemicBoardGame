@@ -10,4 +10,5 @@ public interface LobbyObservable {
     ArrayList<String> getPlayerNames();
     ArrayList<Boolean> getPlayerReadyToStart();
     String getPassword();
+
 }

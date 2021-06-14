@@ -37,6 +37,10 @@ public class DatabaseController {
         database.addPlayerToLobby(lobbyCode, player);
     }
 
+    public void updateJoinable(boolean joinable) {
+        database.updateJoinable(joinable);
+    }
+
     public void removePlayer(Player player) {
         database.removePlayerFromLobby(player);
     }

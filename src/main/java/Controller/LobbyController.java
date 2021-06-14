@@ -57,11 +57,12 @@ public class LobbyController {
         this.lobbyCode = lobbyCode;
         playerController.setPlayer(playerName);
         System.out.println(this.lobbyCode);
-        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4) {
+        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4 && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
             lobby = new Lobby(lobbyCode);
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
             Player player = new Player(playerName, false);
             databaseController.addPlayer(lobbyCode, player);
+            databaseController.updateJoinable(lobby.getJoinable());
             return true;
         }
         return false;
@@ -69,6 +70,7 @@ public class LobbyController {
 
     public synchronized void updatePlayersFromLobbyDoc(Map<String, Object> map) {
         if (map != null) {
+            System.out.println(map.get("Joinable").equals(true));
             Object playersObject = map.get("Players");
             String playersString = playersObject.toString();
             String[] s = playersString.split("}, \\{");
