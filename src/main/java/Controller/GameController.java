@@ -124,7 +124,7 @@ public class GameController {
     }
 
     private void setCharterFlightBehavior() {
-        gameBoardController.setCharterFlightBehavior(new CharterFlightBehavior());
+        gameBoardController.setCharterFlightBehavior(new CharterFlightBehaviorNormal());
     }
 
     public void handleShuttleFlight(City city) {

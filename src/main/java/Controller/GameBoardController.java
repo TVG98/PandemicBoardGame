@@ -11,7 +11,7 @@ public class GameBoardController {
     private BuildResearchStationBehavior buildResearchStationBehavior;
     private DriveBehavior driveBehavior;
     private DirectFlightBehavior directFlightBehavior;
-    private CharterFlightBehavior charterFlightBehavior;
+    private CharterFlightBehaviorNormal charterFlightBehavior;
     private ShuttleFlightBehavior shuttleFlightBehavior;
 
     private final Gameboard gameBoard;
@@ -50,7 +50,7 @@ public class GameBoardController {
         charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
     }
 
-    public void setCharterFlightBehavior(CharterFlightBehavior charterFlightBehavior) {
+    public void setCharterFlightBehavior(CharterFlightBehaviorNormal charterFlightBehavior) {
         this.charterFlightBehavior = charterFlightBehavior;
     }
 
