@@ -54,6 +54,10 @@ public class LobbyController {
         }
     }
 
+    public void setServerLobbyNotJoinable() {
+        databaseController.updateJoinable(lobbyCode, false);
+    }
+
     public boolean addPlayerToServer(String lobbyCode, String playerName) {
         this.lobbyCode = lobbyCode;
         playerController.setPlayer(playerName);
@@ -64,7 +68,7 @@ public class LobbyController {
             Player player = new Player(playerName, false);
             databaseController.addPlayer(lobbyCode, player);
             if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") == 4) {
-                databaseController.updateJoinable(lobbyCode, false);
+                setServerLobbyNotJoinable();
             }
             return true;
         }

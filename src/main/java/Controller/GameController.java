@@ -20,6 +20,7 @@ public class GameController {
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
         lobbyController = LobbyController.getInstance();
+        lobbyController.setServerLobbyNotJoinable();
     }
 
     public static GameController getInstance() {
