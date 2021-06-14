@@ -109,7 +109,17 @@ public class GameController {
 
     public void handleShuttleFlight(City city) {
         Player currentPlayer = getCurrentPlayer();
-        gameBoardController.handleShuttleFlight(getCurrentPlayer());
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setBuildResearchBehavior(currentPlayer);
+        gameBoardController.handleShuttleFlight(currentPlayer, currentCity);
+    }
+
+    public void setShuttleFlightBehavior(Player currentPlayer) {
+        if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
+            gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
+        } else {
+            gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorNormal());
+        }
     }
 
     public void handleBuildResearchStation() {
