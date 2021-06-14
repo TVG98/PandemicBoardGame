@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Gameboard implements Observable {
     private final List<Observer> observers = new ArrayList<>();
-    private final City[] cities = this.initializeCities();
+    private final City[] cities;
     private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
                                             new Cure(VirusType.BLACK),
@@ -34,6 +34,7 @@ public class Gameboard implements Observable {
 
     public Gameboard() {
         initializeGameBoard();
+        cities = initializeCities();
     }
 
     public void initializeGameBoard() {
