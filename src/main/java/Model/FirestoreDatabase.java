@@ -25,8 +25,18 @@ public class FirestoreDatabase {
     private final int passwordLength = 8;
     private final String fireBaseJsonPath = "src/main/Firebasejson/gametest-3a5f7-firebase-adminsdk-lfjkr-3d3c163166.json";
 
-    public FirestoreDatabase() {
+    static FirestoreDatabase firestoreDatabase;
+
+    private FirestoreDatabase() {
             initialize();
+    }
+
+    public static FirestoreDatabase getInstance() {
+        if (firestoreDatabase == null) {
+            firestoreDatabase = new FirestoreDatabase();
+        }
+
+        return firestoreDatabase;
     }
 
     public void initialize() {
