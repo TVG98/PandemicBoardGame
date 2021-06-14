@@ -63,7 +63,7 @@ public class GameController {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
 
         if(getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
-            gameBoardController.handlePlayerCardDraw(getCurrentPlayer());  // Pak twee spelerkaarten
+            gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak spelerkaarten
             gameBoardController.handleInfectionCardDraw();  // Doe de infections
             getCurrentPlayer().endTurn();  // Reset
             changeTurn();  // end

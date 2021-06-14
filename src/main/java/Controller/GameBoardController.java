@@ -50,8 +50,8 @@ public class GameBoardController {
         gameBoard.flipCurePawn(cure);
     }
 
-    public void handlePlayerCardDraw(Player currentPlayer) {
-        for (int i = 0; i < 2; i++) {
+    public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) {
+        for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
         }
     }
