@@ -49,6 +49,10 @@ public class FirestoreDatabase {
         FirebaseApp.initializeApp(options);
     }
 
+    public void updateJoinable(boolean joinable) {
+        docRef.update("Joinable", joinable);
+    }
+
     public void addPlayerToLobby(String lobbyCode, Player player) {
         docRef = lobbyRef.document(lobbyCode);
         System.out.println(getLobbyByDocumentId(lobbyCode).getDouble("PlayerAmount"));
@@ -80,6 +84,7 @@ public class FirestoreDatabase {
     public HashMap<String, Object> createLobbyData() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
+        hashMap.put("Joinable", false);
         hashMap.put("PlayerAmount", 0);
         hashMap.put("Players", new ArrayList<Player>());
         return hashMap;

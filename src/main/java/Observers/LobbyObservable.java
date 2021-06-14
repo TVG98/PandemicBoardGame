@@ -9,4 +9,5 @@ public interface LobbyObservable {
     boolean getJoinable();
     ArrayList<String> getPlayerNames();
     ArrayList<Boolean> getPlayerReadyToStart();
+
 }
