@@ -34,6 +34,10 @@ public class GameBoardController {
         driveBehavior.drive(currentPlayer, chosenCity);
     }
 
+    public void setDriveBehavior(DriveBehavior driveBehavior) {
+        this.driveBehavior = driveBehavior;
+    }
+
     public void handleDirectFlight(Player currentPlayer, City chosenCity) {
         directFlightBehavior.directFlight(currentPlayer, chosenCity);
     }

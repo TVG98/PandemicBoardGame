@@ -96,7 +96,14 @@ public class GameController {
     }
 
     public void handleDrive() {
-        gameBoardController.handleDrive(getCurrentPlayer());
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setDriveBehavior();
+        gameBoardController.handleDrive(currentPlayer, currentCity);
+    }
+
+    private void setDriveBehavior() {
+        gameBoardController.setDriveBehavior(new DriveBehavior());
     }
 
     public void handleDirectFlight(City city) {
@@ -110,8 +117,8 @@ public class GameController {
         gameBoardController.handleCharterFlight(currentPlayer, currentCity);
     }
 
-    public void setCharterFlightBehavior() {
-        gameController.setCharterFlightBehavior();
+    private void setCharterFlightBehavior() {
+        gameBoardController.setCharterFlightBehavior(new CharterFlightBehavior());
     }
 
     public void handleShuttleFlight(City city) {
@@ -121,7 +128,7 @@ public class GameController {
         gameBoardController.handleShuttleFlight(currentPlayer, currentCity);
     }
 
-    public void setShuttleFlightBehavior(Player currentPlayer) {
+    private void setShuttleFlightBehavior(Player currentPlayer) {
         if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
             gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
         } else {
@@ -138,7 +145,7 @@ public class GameController {
         }
     }
 
-    public void setBuildResearchBehavior(Player currentPlayer) {
+    private void setBuildResearchBehavior(Player currentPlayer) {
         if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
             gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
         } else {
@@ -165,7 +172,7 @@ public class GameController {
         gameBoardController.handleTreatDisease(currentPlayer, currentCity);
     }
 
-    public void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
+    private void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
         if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
         } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
