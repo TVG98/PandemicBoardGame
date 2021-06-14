@@ -143,6 +143,10 @@ public class LobbyController {
 
     }
 
+    public Lobby getLobby() {
+        return lobby;
+    }
+
     public void update(DocumentSnapshot snapshot) {
         updatePlayersFromLobbyDoc(snapshot);
     }
