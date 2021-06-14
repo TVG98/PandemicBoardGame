@@ -67,7 +67,7 @@ public class Gameboard implements Observable {
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
         ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
 
-        for (City city : this.cities) {
+        for (City city : cities) {
             infectionCardStack.add(new InfectionCard(city));
         }
 
@@ -77,7 +77,7 @@ public class Gameboard implements Observable {
     private ArrayList<PlayerCard> initializePlayerCardStack() {
         ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
-        for (City city : this.cities) {
+        for (City city : cities) {
             playerCardStack.add(new CityCard(city, city.getVirusType()));
         }
 
@@ -205,7 +205,7 @@ public class Gameboard implements Observable {
 
     public Virus getVirusByType(VirusType type) throws VirusNotFoundException {
         for (Virus virus : viruses) {
-            if (virus.getType() == type) {
+            if (virus.getType().equals(type)) {
                 return virus;
             }
         }
