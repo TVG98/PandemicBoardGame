@@ -89,6 +89,14 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
+    public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
+        return playerController.hasRole(currrentPlayer, Role.OPERATIONSEXPERT);
+    }
+
+    public void setShuttleFlightBehavior(ShuttleFlightBehavior shuttleFlightBehavior) {
+        this.shuttleFlightBehavior = shuttleFlightBehavior;
+    }
+
     public void addResearchStationToCity(City city) {
         gameBoard.addResearchStationToCity(city);
     }
