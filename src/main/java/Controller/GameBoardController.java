@@ -13,6 +13,8 @@ public class GameBoardController {
     private DirectFlightBehaviorNormal directFlightBehavior;
     private CharterFlightBehaviorNormal charterFlightBehavior;
     private ShuttleFlightBehavior shuttleFlightBehavior;
+    private FindCureBehavior findCureBehavior;
+    private ShareKnowledgeBehavior shareKnowledgeBehavior;
 
     private final Gameboard gameBoard;
     private final PlayerController playerController;
@@ -99,6 +101,14 @@ public class GameBoardController {
 
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
+    }
+
+    public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
+        this.findCureBehavior = findCureBehavior;
+    }
+
+    public  void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
+        this.shareKnowledgeBehavior = shareKnowledgeBehavior;
     }
 
     public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
