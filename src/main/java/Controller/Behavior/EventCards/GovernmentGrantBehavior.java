@@ -9,7 +9,7 @@ public class GovernmentGrantBehavior {
 
     public void play() {
         //Todo: Kies 1 van elke stad uit
-        City chosenCity = new City("Tokyo", VirusType.RED) // Hier komt het resultaat
+        City chosenCity = new City("Tokyo", VirusType.RED); // Hier komt het resultaat
         gameBoardController.addResearchStationToCity(chosenCity);
     }
 
