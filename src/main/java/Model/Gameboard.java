@@ -73,13 +73,13 @@ public class Gameboard implements Observable {
     private City[] assignVirusToCities(City[] newCities, String[] cityNames) {
         int virusIndex = 0;
 
-        for (int i = 0; i < cityNames.length; i++){
+        for (int i = 0; i < cityNames.length; i++) {
             if (i % (cityNames.length/viruses.length) == 0) {
                 virusIndex++;
             }
 
             VirusType virusType = viruses[virusIndex-1].getType();
-            newCities[i] = new City(newCities[i].getName(), virusType);
+            newCities[i] = new City(cityNames[i], virusType);
         }
 
         return newCities;
