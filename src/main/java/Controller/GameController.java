@@ -16,12 +16,11 @@ public class GameController {
     private final LobbyController lobbyController;
 
     private GameController() {
-
-        playerController = PlayerController.getInstance();
-        gameBoardController = GameBoardController.getInstance();
         lobbyController = LobbyController.getInstance();
         lobbyController.setServerLobbyNotJoinable();
         game = new Game(lobbyController.getLobby().getPlayers());
+        playerController = PlayerController.getInstance();
+        gameBoardController = GameBoardController.getInstance();
     }
 
     public static GameController getInstance() {
