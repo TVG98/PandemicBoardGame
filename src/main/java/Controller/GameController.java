@@ -36,15 +36,20 @@ public class GameController {
     }
 
     private void setPlayers() {
-        for(Player player : lobbyController.getPlayersInLobby()) {
+        for (Player player : lobbyController.getPlayersInLobby()) {
             player.setRole(getRandomRole());
-            try {
-                player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-            } catch(CityNotFoundException cnfe) {
-                cnfe.printStackTrace();
-            }
+            setPlayer(player);
         }
     }
+
+    private void setPlayer(Player player) {
+        try {
+            player.setCurrentCity(gameBoardController.getCity("Atlanta"));
+        } catch(CityNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
+    }
+
     private Role getRandomRole() {
         return Role.values()[new Random().nextInt(Role.values().length)];
     }
@@ -62,7 +67,7 @@ public class GameController {
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
 
-        if(getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
+        if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer());  // Pak twee spelerkaarten
             gameBoardController.handleInfectionCardDraw();  // Doe de infections
             getCurrentPlayer().endTurn();  // Reset
@@ -103,6 +108,7 @@ public class GameController {
     }
 
     public void handleShuttleFlight(City city) {
+        Player currentPlayer = getCurrentPlayer();
         gameBoardController.handleShuttleFlight(getCurrentPlayer());
     }
 
