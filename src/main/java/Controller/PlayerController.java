@@ -1,12 +1,14 @@
 package Controller;
 
-import Model.City;
-import Model.Player;
-import Model.PlayerCard;
-import Model.Role;
+import Exceptions.VirusNotFoundException;
+import Model.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlayerController {
     static PlayerController playerController;
+    ArrayList<Player> players;
     private String currentPlayerName;
 
     private PlayerController() {
@@ -18,6 +20,38 @@ public class PlayerController {
         }
 
         return playerController;
+    }
+
+    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player, VirusType virusType) throws VirusNotFoundException {
+        ArrayList<CityCard> cityCards = new ArrayList<>();
+        HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<VirusType, Integer>();
+
+        for(PlayerCard card : player.getHand()) {
+            if(card instanceof CityCard) {
+                cityCards.add((CityCard) card);
+            }
+        }
+
+        for(CityCard card : cityCards) {
+            switch (card.getVirusType()) {
+                case BLUE:
+                    virusTypeHashMap.put(VirusType.BLUE, virusTypeHashMap.get(VirusType.BLUE)+1);
+                    break;
+                case YELLOW:
+                    virusTypeHashMap.put(VirusType.YELLOW, virusTypeHashMap.get(VirusType.YELLOW)+1);
+                    break;
+                case BLACK:
+                    virusTypeHashMap.put(VirusType.BLACK, virusTypeHashMap.get(VirusType.BLACK)+1);
+                    break;
+                case RED:
+                    virusTypeHashMap.put(VirusType.RED, virusTypeHashMap.get(VirusType.RED)+1);
+                    break;
+                default:
+                    throw new VirusNotFoundException("Virus not found");
+            }
+        }
+
+        return virusTypeHashMap;
     }
 
     public void addCard(PlayerCard card, Player player) {

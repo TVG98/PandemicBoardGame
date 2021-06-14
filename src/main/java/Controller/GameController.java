@@ -20,6 +20,7 @@ public class GameController {
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
         lobbyController = LobbyController.getInstance();
+        lobbyController.setServerLobbyNotJoinable();
     }
 
     public static GameController getInstance() {
@@ -191,7 +192,7 @@ public class GameController {
         }
     }
 
-    public void handleFindCure() {
+    public void handleFindCure(Player currentPlayer) {
 
     }
 
