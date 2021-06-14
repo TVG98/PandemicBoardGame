@@ -153,13 +153,12 @@ public class GameController {
         }
     }
 
-    public void handleShareKnowledge(PlayerCard card) {
+    public void handleShareKnowledge(Player chosenPlayer, PlayerCard card) {
         City city = playerController.getPlayerCurrentCity(getCurrentPlayer());
         ArrayList<Player> playersInCity = game.getPlayersInCity(city);
 
         if (playersInCity.size() > 1) {
-            Player chosenPlayer = getCurrentPlayer();//Todo choose player to share with/change this
-            //game.getCurrentPlayer().getRole().shareKnowledge(card, chosenPlayer);
+            //game.getCurrentPlayer()
         }
 
         getCurrentPlayer().decrementActions();
