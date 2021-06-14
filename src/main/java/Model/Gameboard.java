@@ -35,11 +35,11 @@ public class Gameboard implements Observable {
     private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
     public Gameboard() {
-        initializeGameBoard();
         cities = initializeCities();
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
+        initializeGameBoard();
     }
 
     public void initializeGameBoard() {
@@ -167,6 +167,7 @@ public class Gameboard implements Observable {
     }
 
     private int getRandomIndex(ArrayList arrayList) {
+        System.out.println("randomIndex " + arrayList);
         return (int) (Math.random() * arrayList.size());
     }
 
