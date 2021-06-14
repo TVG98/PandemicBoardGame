@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import Model.Connection;
 import Observers.Observable;
 import Observers.Observer;
@@ -29,8 +30,11 @@ public class GameView implements Observer {
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
 
+    private final GameController gameController;
+
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        this.gameController = GameController.getInstance();
         //this.primaryStage.setResizable(true);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
@@ -280,7 +284,7 @@ public class GameView implements Observer {
     }
 
     private void cureButtonHandler() {
-
+        CureView view = new CureView(primaryStage);
     }
 
     private void buildButtonHandler() {
