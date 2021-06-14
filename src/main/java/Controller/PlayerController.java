@@ -22,33 +22,36 @@ public class PlayerController {
         return playerController;
     }
 
-    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player, VirusType virusType) throws VirusNotFoundException {
-        ArrayList<CityCard> cityCards = new ArrayList<>();
-        HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<VirusType, Integer>();
+    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(
+            Player player) throws VirusNotFoundException {
 
-        for(PlayerCard card : player.getHand()) {
-            if(card instanceof CityCard) {
+        HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<>();
+        ArrayList<PlayerCard> playerHand = player.getHand();
+        ArrayList<CityCard> cityCards = getCityCardFromPlayer(playerHand);
+
+        return getCountedVirusTypeInHand(cityCards, virusTypeHashMap);
+    }
+
+    private ArrayList<CityCard> getCityCardFromPlayer(ArrayList<PlayerCard> playerHand) {
+        ArrayList<CityCard> cityCards = new ArrayList<>();
+
+        for (PlayerCard card : playerHand) {
+            if (card instanceof CityCard) {
                 cityCards.add((CityCard) card);
             }
         }
 
-        for(CityCard card : cityCards) {
-            switch (card.getVirusType()) {
-                case BLUE:
-                    virusTypeHashMap.put(VirusType.BLUE, virusTypeHashMap.get(VirusType.BLUE)+1);
-                    break;
-                case YELLOW:
-                    virusTypeHashMap.put(VirusType.YELLOW, virusTypeHashMap.get(VirusType.YELLOW)+1);
-                    break;
-                case BLACK:
-                    virusTypeHashMap.put(VirusType.BLACK, virusTypeHashMap.get(VirusType.BLACK)+1);
-                    break;
-                case RED:
-                    virusTypeHashMap.put(VirusType.RED, virusTypeHashMap.get(VirusType.RED)+1);
-                    break;
-                default:
-                    throw new VirusNotFoundException("Virus not found");
-            }
+        return cityCards;
+    }
+
+    private HashMap<VirusType, Integer> getCountedVirusTypeInHand(
+            ArrayList<CityCard> cityCards,
+            HashMap<VirusType, Integer> virusTypeHashMap) {
+
+        for (CityCard card : cityCards) {
+            VirusType virusType = card.getVirusType();
+            int countIncreasedByOne = virusTypeHashMap.get(virusType) + 1;
+            virusTypeHashMap.put(virusType, countIncreasedByOne);
         }
 
         return virusTypeHashMap;
