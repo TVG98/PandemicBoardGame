@@ -30,20 +30,20 @@ public class GameBoardController {
         return gameBoardController;
     }
 
-    public void handleDrive(Player currentPlayer) {
-        driveBehavior.drive(currentPlayer);
+    public void handleDrive(Player currentPlayer, City chosenCity) {
+        driveBehavior.drive(currentPlayer, chosenCity);
     }
 
-    public void handleDirectFlight(Player currentPlayer) {
-        directFlightBehavior.directFlight(currentPlayer);
+    public void handleDirectFlight(Player currentPlayer, City chosenCity) {
+        directFlightBehavior.directFlight(currentPlayer, chosenCity);
     }
 
-    public void handleCharterFlight(Player currentPlayer) {
-        charterFlightBehavior.charterFlight(currentPlayer);
+    public void handleCharterFlight(Player currentPlayer, City chosenCity) {
+        charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
     }
 
-    public void handleShuttleFlight(Player currentPlayer) {
-        shuttleFlightBehavior.shuttleFlight(currentPlayer);
+    public void handleShuttleFlight(Player currentPlayer, City chosenCity) {
+        shuttleFlightBehavior.shuttleFlight(currentPlayer, chosenCity);
     }
 
     public void handleCurePawn(Cure cure) {
