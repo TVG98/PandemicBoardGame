@@ -11,11 +11,7 @@ public class DriveBehavior {
 
     PlayerController playerController = PlayerController.getInstance();
 
-    public void drive(Player currentPlayer) {
-        ArrayList<City> nearCities = playerController.getPlayerCurrentCity(currentPlayer).getNearCities();
-        //Todo: Vraag aan de speler om een stad te kiezen
-
-        City chosenCity = new City("Tokyo", VirusType.RED);  // Hier komt het resultaat
+    public void drive(Player currentPlayer, City chosenCity) {
         playerController.setCurrentCity(currentPlayer, chosenCity);
         playerController.decrementActions(currentPlayer);
     }
