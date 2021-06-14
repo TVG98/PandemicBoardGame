@@ -188,7 +188,6 @@ public class Gameboard implements Observable {
     }
 
     private int getRandomIndex(ArrayList arrayList) {
-        System.out.println("randomIndex " + arrayList);
         return (int) (Math.random() * arrayList.size());
     }
 

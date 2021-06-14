@@ -58,7 +58,6 @@ public class FirestoreDatabase {
 
     public void addPlayerToLobby(String lobbyCode, Player player) {
         docRef = lobbyRef.document(lobbyCode);
-        System.out.println(getLobbyByDocumentId(lobbyCode).getDouble("PlayerAmount"));
         docRef.update("PlayerAmount", FieldValue.increment(1));
         docRef.update("Players", FieldValue.arrayUnion(player));
     }
@@ -98,14 +97,13 @@ public class FirestoreDatabase {
             document = future.get();
 
             if (document.exists()) {
-                System.out.println("Document exists");
                 return document;
-            } else {
-                System.out.println("No such document!");
             }
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
