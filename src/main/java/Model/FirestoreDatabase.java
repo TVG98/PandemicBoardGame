@@ -69,10 +69,6 @@ public class FirestoreDatabase {
     }
 
     public void updatePlayersInLobby(ArrayList<Player> players) {
-        for (Player p: players) {
-            System.out.println(p.getReadyToStart());
-        }
-
         docRef.update("Players", players);
     }
 

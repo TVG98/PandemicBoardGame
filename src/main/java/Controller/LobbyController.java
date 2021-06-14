@@ -62,7 +62,8 @@ public class LobbyController {
         this.lobbyCode = lobbyCode;
         playerController.setPlayer(playerName);
         System.out.println(this.lobbyCode);
-        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4 && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
+        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4
+                && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
             lobby = new Lobby(lobbyCode);
             playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
             Player player = new Player(playerName, false);

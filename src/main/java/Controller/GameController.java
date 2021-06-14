@@ -14,13 +14,16 @@ public class GameController {
     private final PlayerController playerController;
     private final GameBoardController gameBoardController;
     private final LobbyController lobbyController;
+    private final DatabaseController databaseController;
 
     private GameController() {
         lobbyController = LobbyController.getInstance();
         lobbyController.setServerLobbyNotJoinable();
+        databaseController = DatabaseController.getInstance();
         game = new Game(lobbyController.getLobby().getPlayers());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
+        startGame();
     }
 
     public static GameController getInstance() {
@@ -37,10 +40,11 @@ public class GameController {
     }
 
     private void setPlayers() {
-        for (Player player : lobbyController.getPlayersInLobby()) {
+        for (Player player : game.getPlayers()) {
             player.setRole(getRandomRole());
             setPlayer(player);
         }
+        databaseController.updatePlayersInLobby(game.getPlayers());
     }
 
     private void setPlayer(Player player) {

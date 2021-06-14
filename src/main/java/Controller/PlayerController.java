@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class PlayerController {
     static PlayerController playerController;
-    ArrayList<Player> players;
     private String currentPlayerName;
 
     private PlayerController() {
