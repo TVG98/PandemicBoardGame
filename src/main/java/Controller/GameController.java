@@ -96,15 +96,15 @@ public class GameController {
     }
 
     public void handleDrive(City city) {
-        gameBoardController.handleDrive(getCurrentPlayer(), City city);
+        gameBoardController.handleDrive(getCurrentPlayer(), city);
     }
 
     public void handleDirectFlight(City city) {
-        gameBoardController.handleDirectFlight(getCurrentPlayer(), City city);
+        gameBoardController.handleDirectFlight(getCurrentPlayer(), city);
     }
 
     public void handleCharterFlight(City city) {
-        gameBoardController.handleCharterFlight(getCurrentPlayer(), City city);
+        gameBoardController.handleCharterFlight(getCurrentPlayer(), city);
     }
 
     public void handleShuttleFlight(City city) {
