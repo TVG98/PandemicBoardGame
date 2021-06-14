@@ -62,12 +62,7 @@ public class Lobby implements LobbyObservable {
     }
 
     public void addPlayer(Player player) {
-        if (joinable) {
-            this.players.add(player);
-            if (players.size() == 4) {
-                setJoinable(false);
-            }
-        }
+        this.players.add(player);
         notifyAllObservers();
     }
 
