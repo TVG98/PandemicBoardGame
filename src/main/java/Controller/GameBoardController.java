@@ -60,6 +60,14 @@ public class GameBoardController {
         shuttleFlightBehavior.shuttleFlight(currentPlayer, chosenCity);
     }
 
+    public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
+        return playerController.hasRole(currrentPlayer, Role.OPERATIONSEXPERT);
+    }
+
+    public void setShuttleFlightBehavior(ShuttleFlightBehavior shuttleFlightBehavior) {
+        this.shuttleFlightBehavior = shuttleFlightBehavior;
+    }
+
     public void handleCurePawn(Cure cure) {
         gameBoard.flipCurePawn(cure);
     }
@@ -78,9 +86,9 @@ public class GameBoardController {
     public void handleInfectionCardDraw() {
         gameBoard.handleInfectionCardDraw(1);
     }
+
     public void handleInfectionCardDraw(int cubeAmount) {
         gameBoard.handleInfectionCardDraw(cubeAmount);
-
     }
 
     public void handleOutbreak(City infectedCity) {
@@ -107,16 +115,12 @@ public class GameBoardController {
         this.findCureBehavior = findCureBehavior;
     }
 
+    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
+        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
+    }
+
     public  void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
         this.shareKnowledgeBehavior = shareKnowledgeBehavior;
-    }
-
-    public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
-        return playerController.hasRole(currrentPlayer, Role.OPERATIONSEXPERT);
-    }
-
-    public void setShuttleFlightBehavior(ShuttleFlightBehavior shuttleFlightBehavior) {
-        this.shuttleFlightBehavior = shuttleFlightBehavior;
     }
 
     public void addResearchStationToCity(City city) {
@@ -136,11 +140,13 @@ public class GameBoardController {
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
-        return playerController.hasRole(currentPlayer, Role.MEDIC) || cureIsFound(currentCity);
+        boolean isMedic = playerController.hasRole(currentPlayer, Role.MEDIC);
+        return isMedic || cureIsFound(currentCity);
     }
 
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
-        return playerController.hasRole(currentPlayer, Role.MEDIC) && cureIsFound(currentCity);
+        boolean isMedic = playerController.hasRole(currentPlayer, Role.MEDIC);
+        return isMedic && cureIsFound(currentCity);
     }
 
     public boolean canAddResearchStation() {

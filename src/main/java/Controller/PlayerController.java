@@ -97,10 +97,4 @@ public class PlayerController {
     public void decrementActions(Player player) {
         player.decrementActions();
     }
-
-//    public void registerObserver(GameView view) {
-//        for (Player p : players) {
-//            p.register(view);
-//        }
-//    }
 }

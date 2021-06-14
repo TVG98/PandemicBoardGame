@@ -161,14 +161,13 @@ public class GameController {
     }
 
     public void handleShareKnowledge(Player chosenPlayer, PlayerCard card) {
+        Player currentPlayer = getCurrentPlayer();
         City city = playerController.getPlayerCurrentCity(getCurrentPlayer());
         ArrayList<Player> playersInCity = game.getPlayersInCity(city);
 
-        if (playersInCity.size() > 1) {
-            //game.getCurrentPlayer()
-        }
+        setDriveBehavior();
 
-        getCurrentPlayer().decrementActions();
+        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer);
     }
 
     private void setShareKnowledgeBehavior() {
