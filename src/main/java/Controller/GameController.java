@@ -95,16 +95,30 @@ public class GameController {
         }
     }
 
-    public void handleDrive(City city) {
-        gameBoardController.handleDrive(getCurrentPlayer(), city);
+    public void handleDrive() {
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setDriveBehavior();
+        gameBoardController.handleDrive(currentPlayer, currentCity);
+    }
+
+    private void setDriveBehavior() {
+        gameBoardController.setDriveBehavior(new DriveBehavior());
     }
 
     public void handleDirectFlight(City city) {
-        gameBoardController.handleDirectFlight(getCurrentPlayer(), city);
+        gameBoardController.handleDirectFlight(getCurrentPlayer());
     }
 
     public void handleCharterFlight(City city) {
-        gameBoardController.handleCharterFlight(getCurrentPlayer(), city);
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setCharterFlightBehavior();
+        gameBoardController.handleCharterFlight(currentPlayer, currentCity);
+    }
+
+    private void setCharterFlightBehavior() {
+        gameBoardController.setCharterFlightBehavior(new CharterFlightBehavior());
     }
 
     public void handleShuttleFlight(City city) {
@@ -114,7 +128,7 @@ public class GameController {
         gameBoardController.handleShuttleFlight(currentPlayer, currentCity);
     }
 
-    public void setShuttleFlightBehavior(Player currentPlayer) {
+    private void setShuttleFlightBehavior(Player currentPlayer) {
         if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
             gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
         } else {
@@ -131,7 +145,7 @@ public class GameController {
         }
     }
 
-    public void setBuildResearchBehavior(Player currentPlayer) {
+    private void setBuildResearchBehavior(Player currentPlayer) {
         if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
             gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
         } else {
@@ -157,7 +171,7 @@ public class GameController {
         gameBoardController.handleTreatDisease(currentPlayer, currentCity);
     }
 
-    public void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
+    private void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
         if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
             gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
         } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){

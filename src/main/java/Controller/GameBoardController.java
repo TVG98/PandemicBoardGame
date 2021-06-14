@@ -34,12 +34,20 @@ public class GameBoardController {
         driveBehavior.drive(currentPlayer, chosenCity);
     }
 
+    public void setDriveBehavior(DriveBehavior driveBehavior) {
+        this.driveBehavior = driveBehavior;
+    }
+
     public void handleDirectFlight(Player currentPlayer, City chosenCity) {
         directFlightBehavior.directFlight(currentPlayer, chosenCity);
     }
 
     public void handleCharterFlight(Player currentPlayer, City chosenCity) {
         charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
+    }
+
+    public void setCharterFlightBehavior(CharterFlightBehavior charterFlightBehavior) {
+        this.charterFlightBehavior = charterFlightBehavior;
     }
 
     public void handleShuttleFlight(Player currentPlayer, City chosenCity) {
