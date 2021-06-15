@@ -36,7 +36,7 @@ public class InLobbyView implements LobbyObserver {
     Text lobbyCode = new Text("xxxxxxxx");
 
     public InLobbyView(Stage primaryStage) {
-        lobbyController.registerObserver(this);
+        lobbyController.registerLobbyObserver(this);
 
         this.primaryStage = primaryStage;
         loadStageWithBorderPane(createInLobbyBorderPane());

@@ -6,6 +6,8 @@ import Exceptions.LobbyNotJoinableException;
 import Exceptions.PlayerNotFoundException;
 import Model.Lobby;
 import Model.Player;
+import Observers.LobbyObserver;
+import Observers.PlayerObserver;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 public class LobbyController {
@@ -189,7 +191,7 @@ public class LobbyController {
         updatePlayersFromLobbyDoc(snapshot);
     }
 
-    public void registerObserver(View.InLobbyView view) {
-        lobby.register(view);
+    public void registerLobbyObserver(LobbyObserver lobbyObserver) {
+        lobby.register(lobbyObserver);
     }
 }

@@ -4,6 +4,7 @@ import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Model.*;
+import Observers.GameBoardObserver;
 
 import java.util.ArrayList;
 
@@ -203,5 +204,9 @@ public class GameBoardController {
 
     public City getCity(String cityName) throws CityNotFoundException {
         return gameBoard.getCity(cityName);
+    }
+
+    public void registerObserver(GameBoardObserver observer) {
+        gameBoard.register(observer);
     }
 }
