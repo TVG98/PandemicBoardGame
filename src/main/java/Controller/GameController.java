@@ -100,11 +100,10 @@ public class GameController {
         }
     }
 
-    public void handleDrive() {
+    public void handleDrive(City city) {
         Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
         setDriveBehavior();
-        gameBoardController.handleDrive(currentPlayer, currentCity);
+        gameBoardController.handleDrive(currentPlayer, city);
     }
 
     private void setDriveBehavior() {
@@ -113,8 +112,7 @@ public class GameController {
 
     public void handleDirectFlight(City city) {
         Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        gameBoardController.handleDirectFlight(currentPlayer, currentCity);
+        gameBoardController.handleDirectFlight(currentPlayer, city);
     }
 
     private void setDirectFlightBehavior() {
@@ -123,9 +121,8 @@ public class GameController {
 
     public void handleCharterFlight(City city) {
         Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
         setCharterFlightBehavior();
-        gameBoardController.handleCharterFlight(currentPlayer, currentCity);
+        gameBoardController.handleCharterFlight(currentPlayer, city);
     }
 
     private void setCharterFlightBehavior() {
@@ -134,9 +131,8 @@ public class GameController {
 
     public void handleShuttleFlight(City city) {
         Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
         setBuildResearchBehavior(currentPlayer);
-        gameBoardController.handleShuttleFlight(currentPlayer, currentCity);
+        gameBoardController.handleShuttleFlight(currentPlayer, city);
     }
 
     private void setShuttleFlightBehavior(Player currentPlayer) {
@@ -195,8 +191,19 @@ public class GameController {
         }
     }
 
-    public void handleFindCure(Player currentPlayer) {
+    public void handleFindCure() {
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setFindCureBehavior(currentPlayer);
+        gameBoardController.handleFindCure(currentPlayer, currentCity);
+    }
 
+    private void setFindCureBehavior(Player currentPLayer) {
+        if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
+            gameBoardController.setFindCureBehavior(new FindCureWithFourCardsBehavior());
+        } else {
+            gameBoardController.setFindCureBehavior(new FindCureWithFiveCardsBehavior());
+        }
     }
 
     public void checkCardInHand(PlayerCard card, Player player) {

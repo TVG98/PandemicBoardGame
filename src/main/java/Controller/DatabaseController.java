@@ -1,7 +1,6 @@
 package Controller;
 
 import Exceptions.LobbyFullException;
-import GameApplication.GameApplication;
 import Model.FirestoreDatabase;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -11,7 +10,7 @@ public class DatabaseController {
     static DatabaseController databaseController;
 
     private DatabaseController() {
-        database = GameApplication.getFsDatabase();
+        database = FirestoreDatabase.getInstance();
     }
 
     public static DatabaseController getInstance() {

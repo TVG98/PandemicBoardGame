@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerController {
-
     static PlayerController playerController;
     private String currentPlayerName;
-    private PlayerController() {
-    }
+
+    private PlayerController() {}
 
     public static PlayerController getInstance() {
         if (playerController == null) {
@@ -45,8 +44,7 @@ public class PlayerController {
         return player;
     }
 
-    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(
-            Player player) {
+    public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player) {
 
         HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<>();
         ArrayList<PlayerCard> playerHand = player.getHand();

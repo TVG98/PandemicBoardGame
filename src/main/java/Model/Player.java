@@ -58,10 +58,11 @@ public class Player implements PlayerObservable {
 
     public boolean checkCardInHand(PlayerCard card) {
         for (PlayerCard nextCard : hand) {
-            if (nextCard == card) {
+            if (nextCard.equals(card)) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -103,6 +104,10 @@ public class Player implements PlayerObservable {
     public void resetActions() {
         actions = 4;
         notifyAllObservers();
+    }
+
+    public int getActionsLeft() {
+        return actions;
     }
 
     public void decrementActions() {

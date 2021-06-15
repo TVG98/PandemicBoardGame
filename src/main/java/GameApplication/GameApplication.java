@@ -1,6 +1,5 @@
 package GameApplication;
 
-import Model.FirestoreDatabase;
 import View.*;
 
 import javafx.application.Application;
@@ -10,8 +9,6 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class GameApplication extends Application {
-
-    public static FirestoreDatabase fsDatabase = new FirestoreDatabase();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -41,9 +38,5 @@ public class GameApplication extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public static FirestoreDatabase getFsDatabase() {
-        return fsDatabase;
     }
 }

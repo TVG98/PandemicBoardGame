@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.CityNotFoundException;
+import Exceptions.CureNotFoundException;
 import Exceptions.VirusNotFoundException;
 import Observers.Observable;
 import Observers.Observer;
@@ -100,7 +101,7 @@ public class Gameboard implements Observable {
         ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
         for (City city : cities) {
-            playerCardStack.add(new CityCard(city, city.getVirusType()));
+            playerCardStack.add(new CityCard(city));
         }
 
         playerCardStack.addAll(Arrays.asList(initializeEventCards()));
@@ -136,6 +137,15 @@ public class Gameboard implements Observable {
         } else if (cure.getCureState().equals(CureState.CURED)) {
             cure.setCureState(CureState.ERADICATED);
         }
+    }
+
+    public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
+        for(Cure cure : cures) {
+            if(cure.getType() == virusType) {
+                return cure;
+            }
+        }
+        throw new CureNotFoundException("Cure is not found");
     }
 
     public PlayerCard drawPlayerCard() {
@@ -378,6 +388,20 @@ public class Gameboard implements Observable {
         ArrayList<City> cities = new ArrayList<>();
         cities.add(new City("Atlanta", VirusType.BLUE));
         return cities;
+    }
+
+    public ArrayList<InfectionCard> getTopSixInfectionStack() {
+        ArrayList<InfectionCard> topSix = (ArrayList<InfectionCard>) infectionStack.subList(0, 6);  // Ik weet niet zeker of dit werkt, kan errors geven
+
+        for(int i = 0; i < topSix.size(); i++) {
+            infectionStack.remove(0);
+        }
+
+        return topSix;
+    }
+
+    public void addInfectionStack(ArrayList<InfectionCard> infectionCards) {
+        infectionStack.addAll(infectionCards);
     }
 
     @Override

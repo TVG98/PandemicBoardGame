@@ -52,9 +52,7 @@ public class WinView {
         backToMainMenuButton.setFont(new Font("Arial", 20));
         backToMainMenuButton.setStyle("-fx-background-color: Green");
         backToMainMenuButton.setEffect(new DropShadow());
-        backToMainMenuButton.setOnAction(event -> {
-            MenuView view = new MenuView(primaryStage);
-        });
+        backToMainMenuButton.setOnAction(event -> backToMainMenuButtonHandler());
 
         backToMainMenuButton.setOnMouseEntered(e -> backToMainMenuButton.setStyle("-fx-background-color: Red"));
         backToMainMenuButton.setOnMouseExited(e -> backToMainMenuButton.setStyle("-fx-background-color: Green"));
@@ -79,5 +77,9 @@ public class WinView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void backToMainMenuButtonHandler() {
+        MenuView view = new MenuView(primaryStage);
     }
 }

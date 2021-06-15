@@ -9,7 +9,7 @@ import java.util.List;
 public class Game implements Observable {
     private final List<Observer> observers = new ArrayList<>();
 
-    private Player[] players;
+    private final Player[] players;
     private int currentPlayerIndex = 0;
     private boolean lost = false;
     private boolean won = false;
@@ -28,23 +28,23 @@ public class Game implements Observable {
 
     public void setLost() {
         lost = true;
-        won = false;
         notifyAllObservers();
     }
 
     public void setWon() {
         won = true;
-        lost = false;
         notifyAllObservers();
     }
 
     public ArrayList<Player> getPlayersInCity(City city) {
         ArrayList<Player> playersInCity = new ArrayList<>();
+
         for (Player nextPlayer : players) {
             if (nextPlayer.getCurrentCity() == city) {
                 playersInCity.add(nextPlayer);
             }
         }
+
         return playersInCity;
     }
 
@@ -58,6 +58,14 @@ public class Game implements Observable {
 
     public Player[] getPlayers() {
         return players;
+    }
+
+    public boolean getLost() {
+        return lost;
+    }
+
+    public boolean getWon() {
+        return won;
     }
 
     @Override
