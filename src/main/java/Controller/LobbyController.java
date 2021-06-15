@@ -7,7 +7,6 @@ import Exceptions.PlayerNotFoundException;
 import Model.Lobby;
 import Model.Player;
 import Observers.LobbyObserver;
-import Observers.PlayerObserver;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 public class LobbyController {
@@ -84,9 +83,7 @@ public class LobbyController {
 
     public void addPlayerToServer(String lobbyCode, String playerName)
             throws LobbyNotFoundException, LobbyNotJoinableException {
-
         this.lobbyCode = lobbyCode;
-
         if (canJoinLobby()) {
             lobby = new Lobby(lobbyCode);
             playerName = getPlayerName(playerName);
@@ -132,7 +129,6 @@ public class LobbyController {
 
     public synchronized void updatePlayersFromLobbyDoc(DocumentSnapshot snapshot) {
         lobby.setJoinable(snapshot.getBoolean("Joinable"));
-
         for (int i = 0; i < 4; i++) {
             tryToUpdatePlayerInLobby(snapshot, i);
         }

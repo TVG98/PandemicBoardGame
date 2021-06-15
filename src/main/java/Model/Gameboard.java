@@ -12,7 +12,7 @@ import java.util.*;
 public class Gameboard implements GameBoardObservable {
     private List<GameBoardObserver> observers = new ArrayList<>();
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
-    
+
     private final City[] cities;
     private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
@@ -51,8 +51,6 @@ public class Gameboard implements GameBoardObservable {
         City[] newCities = new City[48];
         String[] cityNames = getCityNames();
         // TODO: initialize connections between cities
-
-        notifyAllConnectionObservers();
         return assignVirusToCities(newCities, cityNames);
     }
 
@@ -76,21 +74,19 @@ public class Gameboard implements GameBoardObservable {
 
     private City[] assignVirusToCities(City[] newCities, String[] cityNames) {
         int virusIndex = 0;
-
         for (int i = 0; i < cityNames.length; i++) {
             if (i % (cityNames.length/viruses.length) == 0) {
                 virusIndex++;
             }
-
             VirusType virusType = viruses[virusIndex-1].getType();
             newCities[i] = new City(cityNames[i], virusType);
-            try {
-                assignNeighboursToCity(newCities[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //todo test dit voordat je pusht, lobby werkt hierdoor niet meer
+//            try {
+//                assignNeighboursToCity(newCities[i]);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
-
         return newCities;
     }
 
@@ -495,10 +491,5 @@ public class Gameboard implements GameBoardObservable {
         for (GameBoardObserver observer : observers) {
             observer.update(this);
         }
-    }
-
-
-    public void notifyAllConnectionObservers() {
-
     }
 }
