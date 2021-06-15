@@ -115,9 +115,14 @@ public class GameController {
         gameBoardController.setDriveBehavior(new DriveBehaviorNormal());
     }
 
-    public void handleDirectFlight(City city) {
-        Player currentPlayer = getCurrentPlayer();
-        gameBoardController.handleDirectFlight(currentPlayer, city);
+    public void handleDirectFlight(String cityName) {
+        try {
+            City city = gameBoardController.getCity(cityName);
+            Player currentPlayer = getCurrentPlayer();
+            gameBoardController.handleDirectFlight(currentPlayer, city);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setDirectFlightBehavior() {

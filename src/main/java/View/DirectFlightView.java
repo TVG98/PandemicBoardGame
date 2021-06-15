@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -30,6 +31,7 @@ public class DirectFlightView {
     final double height = 900;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    GameController gameController = GameController.getInstance();
 
 
     public DirectFlightView(Stage primaryStage) {
@@ -200,7 +202,7 @@ public class DirectFlightView {
 
     private void moveButtonHandler()
     {
-        // TODO: behaviour implementeren
+        gameController.handleDirectFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 
