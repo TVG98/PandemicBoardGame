@@ -18,10 +18,10 @@ public class Gameboard implements Observable {
                                             new Cure(VirusType.YELLOW),
                                             new Cure(VirusType.BLACK),
                                             new Cure(VirusType.RED)};
-    private final Virus[] viruses = new Virus[]{new Virus(VirusType.RED),
-                                                 new Virus(VirusType.BLUE),
+    private final Virus[] viruses = new Virus[]{new Virus(VirusType.BLUE),
                                                  new Virus(VirusType.YELLOW),
-                                                 new Virus(VirusType.BLACK)};
+                                                 new Virus(VirusType.BLACK),
+                                                 new Virus(VirusType.RED)};
     private final ArrayList<InfectionCard> infectionStack;
     private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
     private final ArrayList<PlayerCard> playerStack;
@@ -43,7 +43,7 @@ public class Gameboard implements Observable {
         initializeGameBoard();
     }
 
-    public void initializeGameBoard() {
+    private void initializeGameBoard() {
         shuffleAllStacks();
     }
 
@@ -85,7 +85,6 @@ public class Gameboard implements Observable {
 
         return newCities;
     }
-
 
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
         ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
@@ -269,6 +268,10 @@ public class Gameboard implements Observable {
 
     public ArrayList<PlayerCard> getPlayerStack() {
         return playerStack;
+    }
+
+    public ArrayList<PlayerCard> getPlayerDiscardStack() {
+        return playerDiscardStack;
     }
 
     public ArrayList<City> getCitiesWithResearchStations() {
