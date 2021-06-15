@@ -90,13 +90,10 @@ public class LobbyController {
             Object obj = snapshot.get("Player" + (i+1));
             if (obj != null) {
                 players[i] = obj.toString();
-                System.out.println("players " + players[i]);
                 Player player = playerController.createPlayer(players[i]);
-                System.out.println("player name = " + player.getPlayerName());
                 lobby.updatePlayer(i, player);
             }
         }
-        System.out.println(lobby.getPlayers()[0].getPlayerName());
     }
 
     public Player[] getPlayersInLobby() {
@@ -104,11 +101,8 @@ public class LobbyController {
     }
 
     public Player getCurrentPlayer() throws PlayerNotFoundException {
-        System.out.println(lobby.getPlayers().length);
-        System.out.println(playerController.getCurrentPlayerName());
         for (Player p : lobby.getPlayers()) {
             if (p != null) {
-                    System.out.println(p.getPlayerName());
                 if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
                     return p;
                 }

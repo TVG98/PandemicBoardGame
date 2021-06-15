@@ -31,8 +31,8 @@ public class InLobbyView implements LobbyObserver {
     final double width = 1280;
     final double height = 960;
     LobbyController lobbyController = LobbyController.getInstance();
-    ArrayList<Text> playerNames = new ArrayList<Text>();
-    ArrayList<Text> playerStatuses = new ArrayList<Text>();
+    ArrayList<Text> playerNames = new ArrayList<>();
+    ArrayList<Text> playerStatuses = new ArrayList<>();
     Text lobbyCode = new Text("xxxxxxxx");
 
     public InLobbyView(Stage primaryStage) {
@@ -134,7 +134,6 @@ public class InLobbyView implements LobbyObserver {
         backToMainMenuButton.setPrefWidth(400);
 
         readyUpButton.setStyle("-fx-background-color: Gray");
-        readyUpButton.setOnAction(e -> readyUpButton.setStyle("-fx-background-color: Dimgray"));
         readyUpButton.setFont(new Font("Arial", 25));
         readyUpButton.setTextFill(Color.BLACK);
         readyUpButton.setPrefHeight(100);
@@ -237,9 +236,6 @@ public class InLobbyView implements LobbyObserver {
                 }
             }
         }
-        if (amountOfPlayers == counter && amountOfPlayers >= 2) {
-            return true;
-        }
-        return false;
+        return amountOfPlayers == counter && amountOfPlayers >= 2;
     }
 }

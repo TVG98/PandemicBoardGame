@@ -74,7 +74,6 @@ public class Lobby implements LobbyObservable {
     }
 
     public void updatePlayer(int loc, Player player) {
-        System.out.println(player.getPlayerName());
         players[loc] = player;
         notifyAllObservers();
     }
