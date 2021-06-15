@@ -191,8 +191,19 @@ public class GameController {
         }
     }
 
-    public void handleFindCure(Player currentPlayer) {
+    public void handleFindCure() {
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setFindCureBehavior(currentPlayer);
+        gameBoardController.handleFindCure(currentPlayer, currentCity);
+    }
 
+    private void setFindCureBehavior(Player currentPLayer) {
+        if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
+            gameBoardController.setFindCureBehavior(new FindCureWithFourCardsBehavior());
+        } else {
+            gameBoardController.setFindCureBehavior(new FindCureWithFiveCardsBehavior());
+        }
     }
 
     public void checkCardInHand(PlayerCard card, Player player) {

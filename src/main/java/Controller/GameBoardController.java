@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
+import Exceptions.CureNotFoundException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -70,8 +71,21 @@ public class GameBoardController {
         this.shuttleFlightBehavior = shuttleFlightBehavior;
     }
 
-    public void handleCurePawn(Cure cure) {
-        gameBoard.flipCurePawn(cure);
+    public void handleFindCure(Player currentPlayer, City chosenCity) {
+        findCureBehavior.findCure(currentPlayer, chosenCity);
+    }
+
+    public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
+        this.findCureBehavior = findCureBehavior;
+    }
+
+    public void handleCurePawn(VirusType virusType) {
+        try {
+            Cure cure = gameBoard.getCureWithVirusType(virusType);
+            gameBoard.flipCurePawn(cure);
+        } catch (CureNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) {
@@ -121,10 +135,6 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
-    public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
-        this.findCureBehavior = findCureBehavior;
-    }
-
     public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
         shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
     }
@@ -165,6 +175,10 @@ public class GameBoardController {
 
     public boolean cureIsFound(City currentCity) {
         return gameBoard.cureIsFound(currentCity.getVirusType());
+    }
+
+    public boolean canFindCureWithFourCards(Player currentPlayer) {
+        return playerController.hasRole(currentPlayer, Role.RESEARCHER);
     }
 
     public boolean lossByCubeAmount() {
