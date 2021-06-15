@@ -16,19 +16,24 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DoShareView {
+/**
+ * @created June 15 2021 - 4:10 PM
+ * @project testGame
+ */
+public class TakeShareView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text selectedCityText = new Text("You currently have no city card selected to give away");
+    ArrayList<String> availableCardsToTake;
+    Text selectedCityText = new Text("You currently have no city card selected to take away");
     String selectedCity = "None";
     Text selectedPlayerText = new Text("You have no player selected");
     String selectedPlayer = "None";
 
-    public DoShareView(Stage primaryStage) {
+    public TakeShareView(Stage primaryStage, ArrayList<String> availableCardsToTake) {
         this.primaryStage = primaryStage;
-        //this.primaryStage.setResizable(true);
+        this.availableCardsToTake = availableCardsToTake;
         loadStageWithBorderPane(createDoShareViewBorderPane());
     }
 
@@ -60,7 +65,7 @@ public class DoShareView {
         menuBackground.setY((height / 2) - (800 / 2f));
 
         // Setup BorderPane Center //
-        Text actionTitle = new Text("Share knowledge");
+        Text actionTitle = new Text("Take knowledge");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
         Text statusText = new Text("You are currently in: " + "Washington");
@@ -98,7 +103,7 @@ public class DoShareView {
         hboxPlayers.getChildren().addAll(playerButtons);
         hboxPlayers.setSpacing(30);
 
-        ArrayList<Button> cityButtons = getCitiesButtons();
+        ArrayList<Button> cityButtons = getAvailableCityCardsButtons();
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -140,12 +145,12 @@ public class DoShareView {
         vboxCityRows.setSpacing(30);
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> {backButtonHandler();});
-        Button giveCardButton = new Button("Give card");
-        giveCardButton.setOnAction(e -> {giveCardButtonHandler();});
+        backButton.setOnAction(e -> backButtonHandler());
+        Button takeCardButton = new Button("Take card");
+        takeCardButton.setOnAction(e -> takeCardButtonHandler());
 
         ArrayList<Button> menuButtons = new ArrayList<Button>();
-        Collections.addAll(menuButtons, backButton, giveCardButton);
+        Collections.addAll(menuButtons, backButton, takeCardButton);
 
         for (Button menuButton : menuButtons)
         {
@@ -173,30 +178,16 @@ public class DoShareView {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesButtons()
+    private ArrayList<Button> getAvailableCityCardsButtons()
     {
-        // TODO: Moet alle steden verbonden aan de huidige stad van de speler ophalen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
-        Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> getCitiesButtonHandler(b1));
+        for (String availableCard : availableCardsToTake) {
+            Button button = new Button(availableCard);
+            button.setOnAction(e -> getCitiesButtonHandler(button));
+            buttons.add(button);
+        }
 
-        Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> getCitiesButtonHandler(b2));
-
-        Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> getCitiesButtonHandler(b3));
-
-        Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> getCitiesButtonHandler(b4));
-
-        Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> getCitiesButtonHandler(b5));
-
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getCitiesButtonHandler(b6));
-
-        Collections.addAll(buttons, b1, b2, b3);
         return buttons;
     }
 
@@ -222,20 +213,20 @@ public class DoShareView {
         GameView view = new GameView(primaryStage);
     }
 
-    private void giveCardButtonHandler() {
-        // TODO: behaviour implementeren
+    private void takeCardButtonHandler() {
+        // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
         GameView view = new GameView(primaryStage);
     }
 
     private void getPlayerButtonHandler(Button button)
     {
-        selectedPlayerText.setText("You selected " + button.getText() + " to give a card to");
+        selectedPlayerText.setText("You selected " + button.getText() + " to take a card from");
         selectedPlayer = button.getText();
     }
 
     private void getCitiesButtonHandler(Button button)
     {
-        selectedCityText.setText("You selected the city card of " + button.getText() + " to give away");
+        selectedCityText.setText("You selected the city card of " + button.getText() + " to take away");
         selectedCity = button.getText();
     }
 }
