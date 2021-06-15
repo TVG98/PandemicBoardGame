@@ -190,7 +190,7 @@ public class GameController {
 
         setDriveBehavior();
 
-        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer);
+        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer, city);
     }
 
     private void setShareKnowledgeBehavior() {
