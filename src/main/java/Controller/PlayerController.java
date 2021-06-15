@@ -1,5 +1,6 @@
 package Controller;
 
+import Exceptions.CityNotFoundException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 
 public class PlayerController {
     static PlayerController playerController;
+    private GameBoardController gameBoardController;
     private String currentPlayerName;
 
     private PlayerController() {}
@@ -24,13 +26,14 @@ public class PlayerController {
         hand = hand.substring(0, hand.indexOf("]"));//todo check if correct
         String role = playerString.split("role=")[1];
         role = role.substring(0, role.indexOf(","));
-        String currentCity = playerString.split("currentCity=")[1];
-        currentCity = currentCity.substring(0, currentCity.indexOf(","));
         String readyToStart = playerString.split("readyToStart=")[1];
         readyToStart = readyToStart.substring(0, readyToStart.indexOf(","));
         String playerName = playerString.split("playerName=")[1];
         playerName = playerName.substring(0, playerName.indexOf(","));
 
+        if (gameBoardController == null) {
+            gameBoardController = GameBoardController.getInstance();
+        }
         Player player = new Player(new ArrayList<>(), null, null, readyToStart.equals("true"), playerName);
         if (!hand.equals("[")) {
             //todo update hand
@@ -38,8 +41,16 @@ public class PlayerController {
         if (!role.equals("null")) {
             player.setRole(Role.valueOf(role));
         }
-        if (!currentCity.equals("null")) {
-            //todo update city
+        if (!playerString.contains("currentCity=null")) {
+            try {
+                String currentCity = playerString.split("currentCity=")[1];
+                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
+                currentCity = currentCity.split("name=")[1];
+                currentCity = currentCity.substring(0, currentCity.indexOf(","));
+                player.setCurrentCity(gameBoardController.getCity(currentCity));
+            } catch (CityNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return player;
     }
