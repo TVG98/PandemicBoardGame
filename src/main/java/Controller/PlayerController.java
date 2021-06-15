@@ -20,6 +20,31 @@ public class PlayerController {
         return playerController;
     }
 
+    public Player createPlayer(String playerString) {
+        String hand = playerString.split("hand=")[1];
+        hand = hand.substring(0, hand.indexOf("]"));//todo check if correct
+        String role = playerString.split("role=")[1];
+        role = role.substring(0, role.indexOf(","));
+        String currentCity = playerString.split("currentCity=")[1];
+        currentCity = currentCity.substring(0, currentCity.indexOf(","));
+        String readyToStart = playerString.split("readyToStart=")[1];
+        readyToStart = readyToStart.substring(0, readyToStart.indexOf(","));
+        String playerName = playerString.split("playerName=")[1];
+        playerName = playerName.substring(0, playerName.indexOf(","));
+
+        Player player = new Player(new ArrayList<>(), null, null, readyToStart.equals("true"), playerName);
+        if (!hand.equals("[")) {
+            //todo update hand
+        }
+        if (!role.equals("null")) {
+            player.setRole(Role.valueOf(role));
+        }
+        if (!currentCity.equals("null")) {
+            //todo update city
+        }
+        return player;
+    }
+
     public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(
             Player player) {
 

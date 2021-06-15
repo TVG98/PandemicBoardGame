@@ -35,21 +35,21 @@ public class GameController {
     }
 
     public void startGame() {
-        setPlayers();
-        drawInitialInfectionCards();
-    }
-
-    private void setPlayers() {
-        for (Player player : game.getPlayers()) {
-            player.setRole(getRandomRole());
-            setPlayer(player);
+        for (Player p : game.getPlayers()) {
+            if (p != null) {
+                if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
+                    setPlayer(p);
+                }
+            }
         }
-        databaseController.updatePlayersInLobby(game.getPlayers());
+        drawInitialInfectionCards();
     }
 
     private void setPlayer(Player player) {
         try {
+            player.setRole(getRandomRole());
             player.setCurrentCity(gameBoardController.getCity("Atlanta"));
+            databaseController.updatePlayerInServer(player);
         } catch(CityNotFoundException cnfe) {
             cnfe.printStackTrace();
         }

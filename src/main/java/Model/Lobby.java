@@ -10,26 +10,18 @@ public class Lobby implements LobbyObservable {
     private final List<LobbyObserver> observers = new ArrayList<>();
 
     private boolean joinable;
-    private final ArrayList<Player> players;
+    private final Player[] players;
     private final String passwd;
     private final int MAX_LOBBY_SIZE = 4;
 
-    public Lobby(Player player, String lobbyCode) {
-        this.joinable = true;
-        this.players = new ArrayList<>();
-        addPlayer(player);
-        this.passwd = lobbyCode;
-        notifyAllObservers();
-    }
-
     public Lobby(String passwd) {
         this.joinable = true;
-        this.players = new ArrayList<>();
+        this.players = new Player[4];
         this.passwd = passwd;
         notifyAllObservers();
     }
 
-    public ArrayList<Player> getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
@@ -42,7 +34,11 @@ public class Lobby implements LobbyObservable {
     public ArrayList<String> getPlayerNames() {
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player player : players) {
-            playerNames.add(player.getPlayerName());
+            if (player != null) {
+                playerNames.add(player.getPlayerName());
+            } else {
+                playerNames.add("");
+            }
         }
         return playerNames;
     }
@@ -51,7 +47,11 @@ public class Lobby implements LobbyObservable {
     public ArrayList<Boolean> getPlayerReadyToStart() {
         ArrayList<Boolean> playerReadyToStart = new ArrayList<>();
         for (Player player : players) {
-            playerReadyToStart.add(player.getReadyToStart());
+            if (player != null) {
+                playerReadyToStart.add(player.getReadyToStart());
+            } else {
+                playerReadyToStart.add(null);
+            }
         }
         return playerReadyToStart;
     }
@@ -59,27 +59,6 @@ public class Lobby implements LobbyObservable {
     public void setJoinable(boolean joinable) {
         this.joinable = joinable;
         notifyAllObservers();
-    }
-
-    public void addPlayer(Player player) {
-        this.players.add(player);
-        notifyAllObservers();
-    }
-
-    public void removePlayer(Player player) {
-        this.players.remove(player);
-        notifyAllObservers();
-    }
-
-    public void startGame() {
-        if (players.size() > 1) {
-            for (Player player : players) {
-                if (!player.getReadyToStart()) {
-                    return;
-                }
-            }
-            //Todo: start game
-        }
     }
 
     public String getPassword() {
@@ -94,17 +73,9 @@ public class Lobby implements LobbyObservable {
         return MAX_LOBBY_SIZE;
     }
 
-    public void updatePlayers(String playersString) {
-        String[] s = playersString.split("}, \\{");
-
-        for (String player : s) {
-            String playerName = player.split("playerName=")[1];
-            for (Player p : getPlayers()) {
-                if (p.getPlayerName().equals(playerName.substring(0, playerName.indexOf(",")))) {
-                    p.setReadyToStart(player.contains("readyToStart=true"));
-                }
-            }
-        }
+    public void updatePlayer(int loc, Player player) {
+        System.out.println(player.getPlayerName());
+        players[loc] = player;
         notifyAllObservers();
     }
 

@@ -1,5 +1,6 @@
 package Controller;
 
+import Exceptions.LobbyFullException;
 import Exceptions.PlayerNotFoundException;
 import Model.Lobby;
 import Model.Player;
@@ -43,11 +44,13 @@ public class LobbyController {
     public void setPlayerReady() {
         try {
             for (Player p : lobby.getPlayers()) {
-                if (getCurrentPLayer().getPlayerName().equals(p.getPlayerName())) {
-                    p.setReadyToStart(true);
+                if (p != null) {
+                    if (getCurrentPlayer().getPlayerName().equals(p.getPlayerName())) {
+                        p.setReadyToStart(true);
+                        databaseController.updatePlayerInServer(p);
+                    }
                 }
             }
-            databaseController.updatePlayersInLobby(lobby.getPlayers());
         } catch (PlayerNotFoundException e) {
             e.printStackTrace();
         }
@@ -59,15 +62,21 @@ public class LobbyController {
 
     public boolean addPlayerToServer(String lobbyCode, String playerName) {
         this.lobbyCode = lobbyCode;
-        playerController.setPlayer(playerName);
-        if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") < 4
-                && databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
+        if (databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable")) {
             lobby = new Lobby(lobbyCode);
-            playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get("Players").toString(), playerName);
+            for (int i = 0; i < 4; i++) {
+                String playerId = "Player" + (i + 1);
+                if (databaseController.getLobbyDocument(lobbyCode).get(playerId) != null) {
+                    playerName = checkPlayerName(databaseController.getLobbyDocument(lobbyCode).get(playerId).toString(), playerName);
+                }
+            }
             Player player = new Player(playerName, false);
-            databaseController.addPlayer(lobbyCode, player);
-            if (databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount") == 4) {
-                setServerLobbyNotJoinable();
+
+            try {
+                databaseController.addPlayer(lobbyCode, player);
+                playerController.setPlayer(playerName);
+            } catch (LobbyFullException e) {
+                e.printStackTrace();
             }
             return true;
         }
@@ -75,49 +84,34 @@ public class LobbyController {
     }
 
     public synchronized void updatePlayersFromLobbyDoc(DocumentSnapshot snapshot) {
-        Map<String, Object> map = snapshot.getData();
-        if (map != null) {
-            lobby.setJoinable(snapshot.getBoolean("Joinable"));
-            Object playersObject = map.get("Players");
-            String playersString = playersObject.toString();
-            String[] s = playersString.split("}, \\{");
-
-            for (String player : s) {
-                String playerName = player.split("playerName=")[1];
-                if (lobby.getPlayers().size() < databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
-                    boolean readyToStart = player.contains("readyToStart=true");
-                    addPlayerToLobby(playerName.substring(0, playerName.indexOf(",")), readyToStart);
-
-                } else if(lobby.getPlayers().size() > databaseController.getLobbyDocument(lobbyCode).getLong("PlayerAmount")) {
-                    for (Player p : lobby.getPlayers()) {
-                        if (!databaseController.getLobbyDocument(lobbyCode).get("Players").toString().contains(p.getPlayerName() + ",")) {
-                            lobby.removePlayer(p);
-                        }
-                    }
-                } else {
-                    lobby.updatePlayers(playersString);
-                }
+        lobby.setJoinable(snapshot.getBoolean("Joinable"));
+        String[] players = new String[4];
+        for (int i = 0; i < players.length; i++) {
+            Object obj = snapshot.get("Player" + (i+1));
+            if (obj != null) {
+                players[i] = obj.toString();
+                System.out.println("players " + players[i]);
+                Player player = playerController.createPlayer(players[i]);
+                System.out.println("player name = " + player.getPlayerName());
+                lobby.updatePlayer(i, player);
             }
         }
+        System.out.println(lobby.getPlayers()[0].getPlayerName());
     }
 
-    public ArrayList<Player> getPlayersInLobby() {
+    public Player[] getPlayersInLobby() {
         return lobby.getPlayers();
     }
 
-    public void addPlayerToLobby(String playerName, boolean readyToStart) {
+    public Player getCurrentPlayer() throws PlayerNotFoundException {
+        System.out.println(lobby.getPlayers().length);
+        System.out.println(playerController.getCurrentPlayerName());
         for (Player p : lobby.getPlayers()) {
-            if (p.getPlayerName().equals(playerName)) {
-                return;
-            }
-        }
-        lobby.addPlayer(new Player(playerName, readyToStart));
-    }
-
-    public Player getCurrentPLayer() throws PlayerNotFoundException {
-        for (Player p : lobby.getPlayers()) {
-            if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
-                return p;
+            if (p != null) {
+                    System.out.println(p.getPlayerName());
+                if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
+                    return p;
+                }
             }
         }
         throw new PlayerNotFoundException("Player not found.");

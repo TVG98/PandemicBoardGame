@@ -9,20 +9,20 @@ import java.util.List;
 public class Game implements Observable {
     private final List<Observer> observers = new ArrayList<>();
 
-    private ArrayList<Player> players;
+    private Player[] players;
     private int currentPlayerIndex = 0;
     private boolean lost = false;
     private boolean won = false;
     private Player currentPlayer;
 
-    public Game(ArrayList<Player> players) {
+    public Game(Player[] players) {
         this.players = players;
-        currentPlayer = this.players.get(this.currentPlayerIndex);
+        currentPlayer = this.players[this.currentPlayerIndex];
     }
 
     public void nextTurn() {
         currentPlayerIndex++;
-        currentPlayer = players.get(currentPlayerIndex % players.size());
+        currentPlayer = players[currentPlayerIndex % players.length];
         notifyAllObservers();
     }
 
@@ -49,14 +49,14 @@ public class Game implements Observable {
     }
 
     public int getPlayerAmount() {
-        return this.players.size();
+        return this.players.length;
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 

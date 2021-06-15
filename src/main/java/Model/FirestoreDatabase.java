@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.DatabaseController;
+import Exceptions.LobbyFullException;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
@@ -56,19 +57,26 @@ public class FirestoreDatabase {
         docRef.update("Joinable", joinable);
     }
 
-    public void addPlayerToLobby(String lobbyCode, Player player) {
+    public void addPlayerToLobby(String lobbyCode, Player player) throws LobbyFullException {
         docRef = lobbyRef.document(lobbyCode);
-        docRef.update("PlayerAmount", FieldValue.increment(1));
-        docRef.update("Players", FieldValue.arrayUnion(player));
+        String playerId = getServerPlayerId(null);
+        docRef.update(playerId, player);
     }
 
     public void removePlayerFromLobby(Player player) {
-        docRef.update("Players", FieldValue.arrayRemove(player));
-        docRef.update("PlayerAmount", FieldValue.increment(-1));
+        try {
+            docRef.update(getServerPlayerId(player.getPlayerName()), null);
+        } catch (LobbyFullException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updatePlayersInLobby(ArrayList<Player> players) {
-        docRef.update("Players", players);
+    public void updatePlayerInServer(Player player) {
+        try {
+            docRef.update(getServerPlayerId(player.getPlayerName()), player);
+        } catch (LobbyFullException e) {
+            e.printStackTrace();
+        }
     }
 
     public String makeLobby() {
@@ -83,9 +91,31 @@ public class FirestoreDatabase {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("Joinable", true);
-        hashMap.put("PlayerAmount", 0);
-        hashMap.put("Players", new ArrayList<Player>());
+        hashMap.put("Player1", null);
+        hashMap.put("Player2", null);
+        hashMap.put("Player3", null);
+        hashMap.put("Player4", null);
         return hashMap;
+    }
+
+    public String getServerPlayerId(String obj) throws LobbyFullException {
+        for (int i = 0; i < 4; i++) {
+            String playerString = "Player" + (i + 1);
+            try {
+                if (obj == null) {
+                    if (docRef.get().get().get(playerString) == null) {
+                        return playerString;
+                    }
+                } else if (docRef.get().get().get(playerString).toString().contains(obj)) {
+                    return playerString;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        throw new LobbyFullException("Lobby is full.");
     }
 
     public DocumentSnapshot getLobbyByDocumentId(String lobbyCode) {

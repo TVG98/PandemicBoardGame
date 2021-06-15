@@ -21,6 +21,14 @@ public class Player implements PlayerObservable {
         this.readyToStart = readyToStart;
     }
 
+    public Player(ArrayList<PlayerCard> hand, Role role, City currentCity, boolean readyToStart, String playerName) {
+        this.hand = hand;
+        this.role = role;
+        this.currentCity = currentCity;
+        this.readyToStart = readyToStart;
+        this.playerName = playerName;
+    }
+
     public void endTurn() {
         resetActions();
     }

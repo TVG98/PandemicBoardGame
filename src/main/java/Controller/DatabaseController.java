@@ -1,11 +1,10 @@
 package Controller;
 
+import Exceptions.LobbyFullException;
 import GameApplication.GameApplication;
 import Model.FirestoreDatabase;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
-
-import java.util.ArrayList;
 
 public class DatabaseController {
     FirestoreDatabase database;
@@ -23,15 +22,15 @@ public class DatabaseController {
         return databaseController;
     }
 
-    public void updatePlayersInLobby(ArrayList<Player> players) {
-        database.updatePlayersInLobby(players);
+    public void updatePlayerInServer(Player player) {
+        database.updatePlayerInServer(player);
     }
 
     public String makeLobby() {
         return database.makeLobby();
     }
 
-    public void addPlayer(String lobbyCode,Player player) {
+    public void addPlayer(String lobbyCode, Player player) throws LobbyFullException {
         database.listen(this, lobbyCode);
         database.addPlayerToLobby(lobbyCode, player);
     }

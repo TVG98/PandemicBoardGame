@@ -4,8 +4,6 @@ import Controller.LobbyController;
 import Exceptions.PlayerNotFoundException;
 import Observers.*;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -117,7 +115,7 @@ public class InLobbyView implements LobbyObserver {
         Button backToMainMenuButton = new Button("Back to main menu");
         backToMainMenuButton.setOnAction(event -> {
             try {
-                lobbyController.removePlayerFromServer(lobbyController.getCurrentPLayer());
+                lobbyController.removePlayerFromServer(lobbyController.getCurrentPlayer());
                 MenuView view = new MenuView(primaryStage);
             } catch (PlayerNotFoundException e) {
                 e.printStackTrace();
@@ -179,19 +177,20 @@ public class InLobbyView implements LobbyObserver {
             this.playerNames.get(index).setText(player);
             index++;
         }
-
-        for (int i = index; 4 > i; i++) {
-            if (index < 4) {
-                this.playerNames.get(index).setText("-");
-                index++;
-            }
-        }
+//        for (int i = index; 4 > i; i++) {
+//            if (index < 4) {
+//                this.playerNames.get(index).setText("-");
+//                index++;
+//            }
+//        }
 
         ArrayList<Boolean> statuses = lobbyObservable.getPlayerReadyToStart();
         index = 0;
-
         for (Boolean status : statuses) {
-            if (status) {
+            if (status == null) {
+                this.playerStatuses.get(index).setText("-");
+                this.playerStatuses.get(index).setFill(Color.WHITE);
+            } else if (status) {
                 this.playerStatuses.get(index).setText("Ready");
                 this.playerStatuses.get(index).setFill(Color.GREEN);
                 this.playerNames.get(index).setFill(Color.GREEN);
@@ -203,7 +202,6 @@ public class InLobbyView implements LobbyObserver {
 
             index++;
         }
-
         for (int i = 0; 4 > i; i++) {
             if (index < 4) {
                 this.playerStatuses.get(index).setText("-");
@@ -220,8 +218,7 @@ public class InLobbyView implements LobbyObserver {
 
     private void checkIfAllPlayersReady(LobbyObservable observable) {
         ArrayList<Boolean> playersReady = observable.getPlayerReadyToStart();
-
-        if (playersReady.size() > 1 && allItemsInArraylistTrue(playersReady)) {
+        if (allItemsInArraylistTrue(playersReady)) {
             Platform.runLater(() -> {
                 GameView view = new GameView(primaryStage);
             });
@@ -229,11 +226,20 @@ public class InLobbyView implements LobbyObserver {
     }
 
     private boolean allItemsInArraylistTrue(ArrayList<Boolean> arrList) {
+        int counter = 0;
+        int amountOfPlayers = 0;
+
         for (Boolean arrItem : arrList) {
-            if (!arrItem) {
-                return false;
+            if (arrItem != null) {
+                amountOfPlayers++;
+                if (arrItem) {
+                    counter++;
+                }
             }
         }
-        return true;
+        if (amountOfPlayers == counter && amountOfPlayers >= 2) {
+            return true;
+        }
+        return false;
     }
 }
