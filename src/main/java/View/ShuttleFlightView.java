@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +30,7 @@ public class ShuttleFlightView {
     Text cityHasResearchStationText = new Text("Your current city has a research station");
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    GameController gameController = GameController.getInstance();
 
     public ShuttleFlightView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -192,7 +194,7 @@ public class ShuttleFlightView {
     }
 
     private void moveButtonHandler() {
-        // TODO: behaviour implementeren
+        gameController.handleShuttleFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 
