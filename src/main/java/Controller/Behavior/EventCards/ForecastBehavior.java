@@ -1,13 +1,10 @@
 package Controller.Behavior.EventCards;
 
-import Controller.GameBoardController;
-import Controller.PlayerController;
 import Model.InfectionCard;
 
 import java.util.ArrayList;
 
-public class ForecastBehavior {
-    GameBoardController gameBoardController = GameBoardController.getInstance();
+public class ForecastBehavior implements EventBehavior {
 
     public void play() {
         ArrayList<InfectionCard> topSixCards = gameBoardController.getTopSixCards();

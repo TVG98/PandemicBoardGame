@@ -2,8 +2,7 @@ package Controller.Behavior.EventCards;
 
 import Controller.GameBoardController;
 
-public class AirLiftBehavior {
-    GameBoardController gameBoardController = GameBoardController.getInstance();
+public class AirLiftBehavior implements EventBehavior {
 
     public void play() {
         // Todo: Kies een pion en een city
