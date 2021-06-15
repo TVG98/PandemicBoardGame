@@ -14,7 +14,7 @@ public class TestPlayer {
     @Before
     public void setup() {
         player = new Player("Thimo", true);
-        playerCard = new CityCard(new City("Atlanta", VirusType.BLUE), VirusType.BLUE);
+        playerCard = new CityCard(new City("Atlanta", VirusType.BLUE));
     }
 
     @Test
@@ -26,8 +26,8 @@ public class TestPlayer {
     }
 
     @Test
-    public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentVirusType() {
-        PlayerCard differentPlayerCard = new CityCard(new City("Atlanta", VirusType.BLUE), VirusType.BLUE);
+    public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentObject() {
+        PlayerCard differentPlayerCard = new CityCard(new City("Atlanta", VirusType.BLUE));
         player.addCardToHand(playerCard);
 
         boolean playerHasCard = player.checkCardInHand(differentPlayerCard);
@@ -37,7 +37,7 @@ public class TestPlayer {
 
     @Test
     public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentCityName() {
-        PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE), VirusType.BLUE);
+        PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE));
         player.addCardToHand(playerCard);
 
         boolean playerHasCard = player.checkCardInHand(differentPlayerCard);
@@ -57,7 +57,7 @@ public class TestPlayer {
 
     @Test
     public void Should_KeepCardFromHandFromPlayer() {
-        PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE), VirusType.BLUE);
+        PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE));
 
         player.addCardToHand(playerCard);
         player.removeCardFromHand(differentPlayerCard);

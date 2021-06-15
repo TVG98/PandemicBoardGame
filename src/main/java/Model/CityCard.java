@@ -4,19 +4,17 @@ public class CityCard implements PlayerCard {
 
     private final String name;
     private final City city;
-    private final VirusType virusType;
 
-    public CityCard(City city, VirusType virusType) {
+    public CityCard(City city) {
         this.city = city;
         this.name = city.getName();
-        this.virusType = virusType;
     }
 
     public City getCity() {
         return city;
     }
     public VirusType getVirusType() {
-        return virusType;
+        return city.getVirusType();
     }
 
     @Override

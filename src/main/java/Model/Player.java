@@ -50,10 +50,11 @@ public class Player implements PlayerObservable {
 
     public boolean checkCardInHand(PlayerCard card) {
         for (PlayerCard nextCard : hand) {
-            if (nextCard == card) {
+            if (nextCard.equals(card)) {
                 return true;
             }
         }
+
         return false;
     }
 
