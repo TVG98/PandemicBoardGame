@@ -13,6 +13,7 @@ public class CityCard implements PlayerCard {
     public City getCity() {
         return city;
     }
+
     public VirusType getVirusType() {
         return city.getVirusType();
     }
