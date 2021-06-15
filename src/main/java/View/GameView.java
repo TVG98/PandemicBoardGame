@@ -32,6 +32,13 @@ public class GameView implements PlayerObserver, GameBoardObserver {
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
 
+    Text playerOneOverview = new Text();
+    Text playerTwoOverview = new Text();
+    Text playerThreeOverview = new Text();
+    Text playerFourOverview = new Text();
+    Text outbreakCounter = new Text();
+    Text infectionRate = new Text();
+
     private final GameController gameController;
 
     public GameView(Stage primaryStage) {
@@ -107,9 +114,8 @@ public class GameView implements PlayerObserver, GameBoardObserver {
 
         // Top Right //
 
-        Text outbreakCounter = new Text("Outbreak Counter: " + "2" + "/8");
+
         outbreakCounter.setFont(new Font("Castellar", 28));
-        Text infectionRate = new Text("Infection Rate: 3");
         infectionRate.setFont(new Font("Castellar", 28));
 
         VBox vboxTopRight = new VBox();
@@ -131,10 +137,6 @@ public class GameView implements PlayerObserver, GameBoardObserver {
 
         Text playerText = new Text("Players");
         playerText.setFont(new Font("Castellar", 20));
-        Text playerOneOverview = new Text("Aad" + " - " + "Researcher");
-        Text playerTwoOverview = new Text("Bert" + " - " + "Dispatcher");
-        Text playerThreeOverview = new Text("Carl" + " - " + "Medic");
-        Text playerFourOverview = new Text("Dirk" + " - " + "Containment Specialist");
 
         ArrayList<Text> playerOverviews = new ArrayList<>();
         Collections.addAll(playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
@@ -509,14 +511,23 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         }
     }
 
+    private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
+        outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
+        infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
+    }
+
+    private void createUpdatedGameViewBorderPane(PlayerObservable playerObservable) {
+
+    }
+
     @Override
-    public void update(PlayerObservable observable) {
-        System.out.println("Updating the game");
+    public void update(PlayerObservable playerObservable) {
+        createUpdatedGameViewBorderPane(playerObservable);
     }
 
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
-        System.out.println("updating game");
+        createUpdatedGameViewBorderPane(gameBoardObservable);
     }
 }
 
