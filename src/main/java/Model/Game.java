@@ -1,13 +1,8 @@
 package Model;
 
-import Observers.Observable;
-import Observers.Observer;
-
 import java.util.ArrayList;
-import java.util.List;
 
-public class Game implements Observable {
-    private final List<Observer> observers = new ArrayList<>();
+public class Game {
 
     private final Player[] players;
     private int currentPlayerIndex = 0;
@@ -23,17 +18,14 @@ public class Game implements Observable {
     public void nextTurn() {
         currentPlayerIndex++;
         currentPlayer = players[currentPlayerIndex % players.length];
-        notifyAllObservers();
     }
 
     public void setLost() {
         lost = true;
-        notifyAllObservers();
     }
 
     public void setWon() {
         won = true;
-        notifyAllObservers();
     }
 
     public ArrayList<Player> getPlayersInCity(City city) {
@@ -66,22 +58,5 @@ public class Game implements Observable {
 
     public boolean getWon() {
         return won;
-    }
-
-    @Override
-    public void register(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void unregister(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyAllObservers() {
-        for (Observer observer : observers) {
-            observer.update(this);
-        }
     }
 }

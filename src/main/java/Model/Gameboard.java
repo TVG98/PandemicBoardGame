@@ -3,13 +3,14 @@ package Model;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Exceptions.VirusNotFoundException;
-import Observers.Observable;
-import Observers.Observer;
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
 
 import java.io.*;
 import java.util.*;
 
-public class Gameboard implements Observable {
+public class Gameboard implements GameBoardObservable {
+    private List<GameBoardObserver> observers = new ArrayList<>();
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
 
     private final List<Observer> observers = new ArrayList<>();
@@ -171,6 +172,7 @@ public class Gameboard implements Observable {
         } else if (cure.getCureState().equals(CureState.CURED)) {
             cure.setCureState(CureState.ERADICATED);
         }
+        notifyAllObservers();
     }
 
     public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
@@ -190,6 +192,7 @@ public class Gameboard implements Observable {
 
     public void discardPlayerCard(PlayerCard card) {
         playerDiscardStack.add(0, playerStack.get(0));
+        notifyAllObservers();
     }
 
     public InfectionCard drawInfectionCard() {
@@ -210,6 +213,7 @@ public class Gameboard implements Observable {
         Collections.reverse(infectionStack);
         infectionStack.addAll(infectionDiscardStack);
         Collections.reverse(infectionStack);
+        notifyAllObservers();
     }
 
     public void shuffleAllStacks() {
@@ -217,6 +221,7 @@ public class Gameboard implements Observable {
             shufflePlayerCardStack();
             shuffleInfectionStack();
         }
+        notifyAllObservers();
     }
 
     private void shufflePlayerCardStack() {
@@ -237,15 +242,18 @@ public class Gameboard implements Observable {
 
     public void increaseOutbreakCounter() {
         outbreakCounter++;
+        notifyAllObservers();
     }
 
     public void increaseInfectionRate(int infectionRate) {
         this.infectionRate = infectionRate;
+        notifyAllObservers();
     }
 
     public void addCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.addCube(virusType);
         tryToDecreaseCubeAmount(virusType, cubeAmount);
+        notifyAllObservers();
     }
 
     private void tryToIncreaseCubeAmount(VirusType virusType, int cubeAmount) {
@@ -259,6 +267,7 @@ public class Gameboard implements Observable {
     public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.removeCube();
         tryToIncreaseCubeAmount(virusType, cubeAmount);
+        notifyAllObservers();
     }
 
     private void tryToDecreaseCubeAmount(VirusType virusType, int cubeAmount) {
@@ -324,6 +333,7 @@ public class Gameboard implements Observable {
                 break;
             }
         }
+        notifyAllObservers();
     }
 
     public void handleEpidemicCard() {
@@ -397,6 +407,7 @@ public class Gameboard implements Observable {
 
     public void addDrawnEpidemicCard() {
         drawnEpidemicCards++;
+        notifyAllObservers();
     }
 
     public boolean gameboardHasResearchStationsLeft() {
@@ -440,21 +451,23 @@ public class Gameboard implements Observable {
 
     public void addInfectionStack(ArrayList<InfectionCard> infectionCards) {
         infectionStack.addAll(infectionCards);
+        notifyAllObservers();
     }
 
     @Override
-    public void register(Observer observer) {
-        observers.add(observer);
+    public void register(GameBoardObserver gameBoardObserver) {
+        unregisterAllObservers();
+        observers.add(gameBoardObserver);
     }
 
     @Override
-    public void unregister(Observer observer) {
-        observers.remove(observer);
+    public void unregisterAllObservers() {
+        observers = new ArrayList<>();
     }
 
     @Override
     public void notifyAllObservers() {
-        for (Observer observer : observers) {
+        for (GameBoardObserver observer : observers) {
             observer.update(this);
         }
     }

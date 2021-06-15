@@ -2,8 +2,10 @@ package View;
 
 import Controller.GameController;
 import Model.Connection;
-import Observers.Observable;
-import Observers.Observer;
+import Observers.GameBoardObservable;
+import Observers.PlayerObservable;
+import Observers.PlayerObserver;
+import Observers.GameBoardObserver;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +22,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
-public class GameView implements Observer {
+public class GameView implements PlayerObserver, GameBoardObserver {
     private Stage primaryStage;
     private final String pathToImage = "src/main/media/GameBoardResized.jpg";
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
@@ -30,11 +32,13 @@ public class GameView implements Observer {
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
 
-    //private final GameController gameController;
+    private final GameController gameController;
 
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        //this.gameController = GameController.getInstance();
+        this.gameController = GameController.getInstance();
+        gameController.registerPlayerObserver(this);
+        gameController.registerGameBoardObserver(this);
         //this.primaryStage.setResizable(true);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
@@ -292,6 +296,7 @@ public class GameView implements Observer {
     }
 
     private void buildButtonHandler() {
+
     }
 
     private void takeShareButtonHandler(){
@@ -504,8 +509,13 @@ public class GameView implements Observer {
     }
 
     @Override
-    public void update(Observable observable) {
+    public void update(PlayerObservable observable) {
+        System.out.println("Updating the game");
+    }
 
+    @Override
+    public void update(GameBoardObservable gameBoardObservable) {
+        System.out.println("updating game");
     }
 }
 
