@@ -1,5 +1,8 @@
 package View;
 
+import Controller.GameBoardController;
+import Controller.GameController;
+import Exceptions.CityNotFoundException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +30,7 @@ public class DriveView {
     final double height = 900;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    GameController gameController = GameController.getInstance();
 
     public DriveView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -191,7 +195,7 @@ public class DriveView {
     }
 
     private void moveButtonHandler() {
-        // TODO: behaviour implementeren
+        gameController.handleDrive(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 
