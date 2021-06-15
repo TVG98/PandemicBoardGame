@@ -100,10 +100,15 @@ public class GameController {
         }
     }
 
-    public void handleDrive(City city) {
-        Player currentPlayer = getCurrentPlayer();
-        setDriveBehavior();
-        gameBoardController.handleDrive(currentPlayer, city);
+    public void handleDrive(String cityName) {
+        try {
+            Player currentPlayer = getCurrentPlayer();
+            City city = gameBoardController.getCity(cityName);
+            setDriveBehavior();
+            gameBoardController.handleDrive(currentPlayer, city);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setDriveBehavior() {
