@@ -11,13 +11,13 @@ public class Lobby implements LobbyObservable {
 
     private boolean joinable;
     private final Player[] players;
-    private final String passwd;
+    private final String password;
     private final int MAX_LOBBY_SIZE = 4;
 
-    public Lobby(String passwd) {
+    public Lobby(String password) {
         this.joinable = true;
         this.players = new Player[4];
-        this.passwd = passwd;
+        this.password = password;
         notifyAllObservers();
     }
 
@@ -33,6 +33,7 @@ public class Lobby implements LobbyObservable {
     @Override
     public ArrayList<String> getPlayerNames() {
         ArrayList<String> playerNames = new ArrayList<>();
+
         for (Player player : players) {
             if (player != null) {
                 playerNames.add(player.getPlayerName());
@@ -40,12 +41,14 @@ public class Lobby implements LobbyObservable {
                 playerNames.add("");
             }
         }
+
         return playerNames;
     }
 
     @Override
     public ArrayList<Boolean> getPlayerReadyToStart() {
         ArrayList<Boolean> playerReadyToStart = new ArrayList<>();
+
         for (Player player : players) {
             if (player != null) {
                 playerReadyToStart.add(player.getReadyToStart());
@@ -53,6 +56,7 @@ public class Lobby implements LobbyObservable {
                 playerReadyToStart.add(null);
             }
         }
+
         return playerReadyToStart;
     }
 
@@ -62,11 +66,11 @@ public class Lobby implements LobbyObservable {
     }
 
     public String getPassword() {
-        return passwd;
+        return password;
     }
 
     public boolean checkLobbyCode(String code) {
-        return this.passwd.equals(code);
+        return password.equals(code);
     }
 
     public int getMaxLobbySize() {

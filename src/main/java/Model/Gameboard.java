@@ -50,6 +50,9 @@ public class Gameboard implements Observable {
     private City[] initializeCities() {
         City[] newCities = new City[48];
         String[] cityNames = getCityNames();
+        // TODO: initialize connections between cities
+
+        notifyAllConnectionObservers();
         return assignVirusToCities(newCities, cityNames);
     }
 
@@ -422,5 +425,10 @@ public class Gameboard implements Observable {
         for (Observer observer : observers) {
             observer.update(this);
         }
+    }
+
+
+    public void notifyAllConnectionObservers() {
+
     }
 }
