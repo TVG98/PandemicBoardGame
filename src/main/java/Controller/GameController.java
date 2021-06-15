@@ -130,20 +130,30 @@ public class GameController {
         gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
     }
 
-    public void handleCharterFlight(City city) {
-        Player currentPlayer = getCurrentPlayer();
-        setCharterFlightBehavior();
-        gameBoardController.handleCharterFlight(currentPlayer, city);
+    public void handleCharterFlight(String cityName) {
+        try {
+            City city = gameBoardController.getCity(cityName);
+            Player currentPlayer = getCurrentPlayer();
+            setCharterFlightBehavior();
+            gameBoardController.handleCharterFlight(currentPlayer, city);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCharterFlightBehavior() {
         gameBoardController.setCharterFlightBehavior(new CharterFlightBehaviorNormal());
     }
 
-    public void handleShuttleFlight(City city) {
-        Player currentPlayer = getCurrentPlayer();
-        setBuildResearchBehavior(currentPlayer);
-        gameBoardController.handleShuttleFlight(currentPlayer, city);
+    public void handleShuttleFlight(String cityName) {
+        try {
+            City city = gameBoardController.getCity(cityName);
+            Player currentPlayer = getCurrentPlayer();
+            setBuildResearchBehavior(currentPlayer);
+            gameBoardController.handleShuttleFlight(currentPlayer, city);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setShuttleFlightBehavior(Player currentPlayer) {
