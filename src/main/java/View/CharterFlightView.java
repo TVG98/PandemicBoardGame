@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class CharterFlightView {
     final double height = 900;
     String currentCity = "Washington";
     String selectedCity = "None";
+    GameController gameController = GameController.getInstance();
 
     public CharterFlightView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -215,7 +217,7 @@ public class CharterFlightView {
 
     private void moveButtonHandler()
     {
-        // TODO: behaviour implementeren
+        gameController.handleCharterFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 

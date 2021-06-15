@@ -130,10 +130,15 @@ public class GameController {
         gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
     }
 
-    public void handleCharterFlight(City city) {
-        Player currentPlayer = getCurrentPlayer();
-        setCharterFlightBehavior();
-        gameBoardController.handleCharterFlight(currentPlayer, city);
+    public void handleCharterFlight(String cityName) {
+        try {
+            City city = gameBoardController.getCity(cityName);
+            Player currentPlayer = getCurrentPlayer();
+            setCharterFlightBehavior();
+            gameBoardController.handleCharterFlight(currentPlayer, city);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCharterFlightBehavior() {
