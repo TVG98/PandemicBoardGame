@@ -43,10 +43,6 @@ public class Gameboard implements GameBoardObservable {
         initializeGameBoard();
     }
 
-    public void testObserver() {
-        notifyAllObservers();
-    }
-
     private void initializeGameBoard() {
         shuffleAllStacks();
     }
@@ -54,6 +50,9 @@ public class Gameboard implements GameBoardObservable {
     private City[] initializeCities() {
         City[] newCities = new City[48];
         String[] cityNames = getCityNames();
+        // TODO: initialize connections between cities
+
+        notifyAllConnectionObservers();
         return assignVirusToCities(newCities, cityNames);
     }
 
@@ -220,7 +219,7 @@ public class Gameboard implements GameBoardObservable {
 
     public void addCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.addCube(virusType);
-        tryToIncreaseCubeAmount(virusType, cubeAmount);
+        tryToDecreaseCubeAmount(virusType, cubeAmount);
         notifyAllObservers();
     }
 
@@ -234,7 +233,7 @@ public class Gameboard implements GameBoardObservable {
 
     public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.removeCube();
-        tryToDecreaseCubeAmount(virusType, cubeAmount);
+        tryToIncreaseCubeAmount(virusType, cubeAmount);
         notifyAllObservers();
     }
 
@@ -422,7 +421,6 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
-
     @Override
     public void register(GameBoardObserver gameBoardObserver) {
         unregisterAllObservers();
@@ -436,9 +434,13 @@ public class Gameboard implements GameBoardObservable {
 
     @Override
     public void notifyAllObservers() {
-        System.out.println(observers.size());
         for (GameBoardObserver observer : observers) {
             observer.update(this);
         }
+    }
+
+
+    public void notifyAllConnectionObservers() {
+
     }
 }

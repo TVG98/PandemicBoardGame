@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,6 +29,8 @@ public class CharterFlightView {
     final double width = 1600;
     final double height = 900;
     String currentCity = "Washington";
+    String selectedCity = "None";
+    GameController gameController = GameController.getInstance();
 
     public CharterFlightView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -93,6 +96,7 @@ public class CharterFlightView {
         movementText.setFill(Color.WHITE);
         movementText.setFont(Font.font("Arial", 20));
         movementText.setTextAlignment(TextAlignment.CENTER);
+
         ComboBox citiesToMoveTo = new ComboBox<>();
         citiesToMoveTo.setEditable(false);
         citiesToMoveTo.setPrefSize(300, 30);
@@ -102,8 +106,9 @@ public class CharterFlightView {
         for (String city : allCityNames)
         {
             citiesToMoveTo.getItems().add(city);
-
         }
+
+        citiesToMoveTo.setOnAction(e -> citiesToMoveToDropboxHandler(citiesToMoveTo));
 
         vboxMovement.getChildren().addAll(movementText, citiesToMoveTo);
 
@@ -113,10 +118,10 @@ public class CharterFlightView {
         hboxCharterFlightMenu.setSpacing(200);
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> {backButtonHandler();});
+        backButton.setOnAction(e -> backButtonHandler());
 
         Button moveButton = new Button("Move");
-        moveButton.setOnAction(e -> {moveButtonHandler();});
+        moveButton.setOnAction(e -> moveButtonHandler());
 
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, backButton, moveButton);
@@ -211,8 +216,12 @@ public class CharterFlightView {
 
     private void moveButtonHandler()
     {
-        // TODO: behaviour implementeren
+        gameController.handleCharterFlight(selectedCity);
         GameView view = new GameView(primaryStage);
+    }
+
+    private void citiesToMoveToDropboxHandler(ComboBox comboBox) {
+        selectedCity = (String) comboBox.getValue();
     }
 }
 

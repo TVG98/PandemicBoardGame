@@ -175,15 +175,15 @@ public class GameView implements PlayerObserver, GameBoardObserver {
             movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
             movementButton.setTextFill(Color.BLACK);
             movementButton.setFont(new Font("Arial", 15));
-            movementButton.setPrefHeight(30);
-            movementButton.setPrefWidth(120);
+            movementButton.setPrefHeight(50);
+            movementButton.setPrefWidth(130);
             movementButton.setOnMouseEntered(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
             movementButton.setOnMouseExited(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxMovementButtons = new HBox();
         hboxMovementButtons.getChildren().addAll(movementButtons);
-        hboxMovementButtons.setSpacing(10);
+        hboxMovementButtons.setSpacing(5);
 
         VBox vboxMovement = new VBox();
         vboxMovement.setAlignment(Pos.CENTER);
@@ -203,26 +203,29 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         Button buildButton = new Button("Build");
         buildButton.setOnAction(event -> buildButtonHandler());
 
-        Button shareButton = new Button("Share");
-        shareButton.setOnAction(event -> shareButtonHandler());
+        Button giveShareButton = new Button("Give share");
+        giveShareButton.setOnAction(event -> giveShareButtonHandler());
+
+        Button takeShareButton = new Button("Take share");
+        takeShareButton.setOnAction(event -> takeShareButtonHandler());
 
         ArrayList<Button> actionButtons = new ArrayList<>();
-        Collections.addAll(actionButtons,treatButton, cureButton, buildButton, shareButton);
+        Collections.addAll(actionButtons,treatButton, cureButton, buildButton, takeShareButton, giveShareButton);
 
         for (Button actionButton : actionButtons) {
             actionButton.setOpacity(0.95f);
             actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             actionButton.setTextFill(Color.BLACK);
             actionButton.setFont(new Font("Arial", 15));
-            actionButton.setPrefHeight(30);
-            actionButton.setPrefWidth(120);
+            actionButton.setPrefHeight(50);
+            actionButton.setPrefWidth(130);
             actionButton.setOnMouseEntered(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
             actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxActionsButtons = new HBox();
         hboxActionsButtons.getChildren().addAll(actionButtons);
-        hboxActionsButtons.setSpacing(10);
+        hboxActionsButtons.setSpacing(5);
 
         VBox vboxActions = new VBox();
         vboxActions.getChildren().addAll(actions, hboxActionsButtons);
@@ -285,7 +288,7 @@ public class GameView implements PlayerObserver, GameBoardObserver {
     }
 
     private void treatButtonHandler() {
-        
+
     }
 
     private void cureButtonHandler() {
@@ -296,8 +299,24 @@ public class GameView implements PlayerObserver, GameBoardObserver {
 
     }
 
-    private void shareButtonHandler() {
-        DoShareView view = new DoShareView(primaryStage);
+    private void takeShareButtonHandler(){
+        // Replace this //
+        ArrayList<String> placeholder = new ArrayList<String>();
+        placeholder.add("Washington");
+        placeholder.add("New York");
+        //              //
+
+        TakeShareView view = new TakeShareView(primaryStage, placeholder);
+    }
+
+    private void giveShareButtonHandler() {
+        // Replace this //
+        ArrayList<String> placeholder = new ArrayList<String>();
+        placeholder.add("Washington");
+        placeholder.add("Sydney");
+        //              //
+
+        GiveShareView view = new GiveShareView(primaryStage, placeholder);
     }
 
     private void endTurnButtonHandler() {

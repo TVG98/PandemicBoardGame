@@ -1,6 +1,5 @@
 package View;
 
-import Controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,25 +16,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created June 12 2021 - 6:44 PM
- * @project testGame
- */
-
-public class ShuttleFlightView {
+public class GiveShareView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text cityHasResearchStationText = new Text("Your current city has a research station");
-    Text selectedCityText = new Text("You currently have no city selected");
+    ArrayList<String> availableCardsToGive;
+    Text selectedCityText = new Text("You currently have no city card selected to give away");
     String selectedCity = "None";
-    GameController gameController = GameController.getInstance();
+    Text selectedPlayerText = new Text("You have no player selected");
+    String selectedPlayer = "None";
 
-    public ShuttleFlightView(Stage primaryStage) {
+    public GiveShareView(Stage primaryStage, ArrayList<String> availableCardsToGive) {
         this.primaryStage = primaryStage;
-        //this.primaryStage.setResizable(true);
-        loadStageWithBorderPane(createDriveViewBorderPane());
+        this.availableCardsToGive = availableCardsToGive;
+        loadStageWithBorderPane(createDoShareViewBorderPane());
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -48,8 +43,9 @@ public class ShuttleFlightView {
         }
     }
 
-    private BorderPane createDriveViewBorderPane() {
+    private BorderPane createDoShareViewBorderPane() {
         BorderPane bp = new BorderPane();
+
         // Setup Background Image //
         Image image = new Image(new File(pathToImage).toURI().toString());
         BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -65,36 +61,49 @@ public class ShuttleFlightView {
         menuBackground.setY((height / 2) - (800 / 2f));
 
         // Setup BorderPane Center //
-        Text actionTitle = new Text("Shuttle Flight");
+        Text actionTitle = new Text("Give knowledge");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
         Text statusText = new Text("You are currently in: " + "Washington");
         statusText.setFill(Color.WHITE);
-        statusText.setFont(Font.font("Arial", 30));
-        Text infoText = new Text("You are able to move from a city with a research station to another city with a research station");
+        statusText.setFont(Font.font("Arial", 20));
+        Text infoText = new Text("Select a card to give to another player");
+        selectedCityText.setFill(Color.WHITE);
+        selectedCityText.setFont(Font.font("Arial", 20));
+        selectedPlayerText.setFill(Color.WHITE);
+        selectedPlayerText.setFont(Font.font("Arial", 20));
         infoText.setFill(Color.WHITE);
         infoText.setFont(Font.font("Arial", 20));
         infoText.setTextAlignment(TextAlignment.CENTER);
 
-        selectedCityText.setFill(Color.WHITE);
-        selectedCityText.setFont(Font.font("Arial", 20));
-
-        cityHasResearchStationText.setFill(Color.WHITE);
-        cityHasResearchStationText.setFont(Font.font("Arial", 20));
-
         ArrayList<Text> texts = new ArrayList<Text>();
-        Collections.addAll(texts, actionTitle, statusText, infoText, cityHasResearchStationText, selectedCityText);
+        Collections.addAll(texts, actionTitle, statusText, infoText, selectedCityText, selectedPlayerText);
 
         VBox vboxTexts = new VBox();
         vboxTexts.getChildren().addAll(texts);
         vboxTexts.setAlignment(Pos.CENTER);
-        vboxTexts.setSpacing(20);
+        vboxTexts.setSpacing(10);
 
-        ArrayList<Button> cityButtons = getCitiesWithResearchStationButtons();
+        ArrayList<Button> playerButtons = getPlayerButtons();
+        for (Button playerButton : playerButtons)
+        {
+            playerButton.setTextFill(Color.WHITE);
+            playerButton.setPrefHeight(50);
+            playerButton.setPrefWidth(200);
+            playerButton.setStyle("-fx-background-color: Gray;");
+            playerButton.setFont(Font.font("Arial", 20));
+        }
+
+        HBox hboxPlayers = new HBox();
+        hboxPlayers.setAlignment(Pos.CENTER);
+        hboxPlayers.getChildren().addAll(playerButtons);
+        hboxPlayers.setSpacing(30);
+
+        ArrayList<Button> cityButtons = getAvailableCityCardsButtons();
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
-            cityButton.setPrefHeight(80);
+            cityButton.setPrefHeight(50);
             cityButton.setPrefWidth(200);
             cityButton.setStyle("-fx-background-color: Gray;");
             cityButton.setFont(Font.font("Arial", 20));
@@ -108,11 +117,13 @@ public class ShuttleFlightView {
 
         for (Button cityButton : cityButtons)
         {
-            if (index < 3) {
-              hboxCityRowOne.getChildren().add(cityButton);
+            if (index < 3)
+            {
+                hboxCityRowOne.getChildren().add(cityButton);
             }
-            else {
-              hboxCityRowTwo.getChildren().add(cityButton);
+            else
+            {
+                hboxCityRowTwo.getChildren().add(cityButton);
             }
             index++;
         }
@@ -131,13 +142,14 @@ public class ShuttleFlightView {
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {backButtonHandler();});
-        Button moveButton = new Button("Move");
-        moveButton.setOnAction(e -> {moveButtonHandler();});
+        Button giveCardButton = new Button("Give card");
+        giveCardButton.setOnAction(e -> {giveCardButtonHandler();});
 
         ArrayList<Button> menuButtons = new ArrayList<Button>();
-        Collections.addAll(menuButtons, backButton, moveButton);
+        Collections.addAll(menuButtons, backButton, giveCardButton);
 
-        for (Button menuButton : menuButtons) {
+        for (Button menuButton : menuButtons)
+        {
             menuButton.setTextFill(Color.WHITE);
             menuButton.setPrefHeight(100);
             menuButton.setPrefWidth(200);
@@ -151,8 +163,8 @@ public class ShuttleFlightView {
         hboxBottomButtons.setSpacing(width / 2);
 
         VBox vboxCenter = new VBox();
-        vboxCenter.getChildren().addAll(vboxTexts, vboxCityRows, hboxBottomButtons);
-        vboxCenter.setSpacing(100);
+        vboxCenter.getChildren().addAll(vboxTexts, hboxPlayers, vboxCityRows, hboxBottomButtons);
+        vboxCenter.setSpacing(20);
         vboxCenter.setAlignment(Pos.CENTER);
 
         // BorderPane Layout //
@@ -162,30 +174,34 @@ public class ShuttleFlightView {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesWithResearchStationButtons()
+    private ArrayList<Button> getAvailableCityCardsButtons()
     {
-        // TODO: Moet alle steden met een research station ophalen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
-        Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b1));
+        for (String availableCard : availableCardsToGive) {
+            Button button = new Button(availableCard);
+            button.setOnAction(e -> getCitiesButtonHandler(button));
+            buttons.add(button);
+        }
 
-        Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b2));
+        return buttons;
+    }
 
-        Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b3));
 
-        Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b4));
+    private ArrayList<Button> getPlayerButtons()
+    {
+        // TODO: get initial player
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        Button b1 = new Button("playerName1");
+        b1.setOnAction(e -> getPlayerButtonHandler(b1));
 
-        Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b5));
+        Button b2 = new Button("playerName2");
+        b2.setOnAction(e -> getPlayerButtonHandler(b2));
 
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b6));
+        Button b3 = new Button("playerName3");
+        b3.setOnAction(e -> getPlayerButtonHandler(b3));
 
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
+        Collections.addAll(buttons, b1, b2, b3);
         return buttons;
     }
 
@@ -193,15 +209,20 @@ public class ShuttleFlightView {
         GameView view = new GameView(primaryStage);
     }
 
-    private void moveButtonHandler() {
-        gameController.handleShuttleFlight(selectedCity);
+    private void giveCardButtonHandler() {
+        // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
         GameView view = new GameView(primaryStage);
     }
 
-    private void getCitiesWithResearchStationButtonHandler(Button button) {
-        selectedCityText.setText("You selected: " + button.getText());
-        selectedCity = button.getText();
+    private void getPlayerButtonHandler(Button button)
+    {
+        selectedPlayerText.setText("You selected " + button.getText() + " to give a card to");
+        selectedPlayer = button.getText();
+    }
 
+    private void getCitiesButtonHandler(Button button)
+    {
+        selectedCityText.setText("You selected the city card of " + button.getText() + " to give away");
+        selectedCity = button.getText();
     }
 }
-
