@@ -12,8 +12,7 @@ import java.util.*;
 public class Gameboard implements GameBoardObservable {
     private List<GameBoardObserver> observers = new ArrayList<>();
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
-
-    private final List<Observer> observers = new ArrayList<>();
+    
     private final City[] cities;
     private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
