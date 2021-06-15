@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.CityNotFoundException;
+import Exceptions.CureNotFoundException;
 import Exceptions.VirusNotFoundException;
 import Observers.Observable;
 import Observers.Observer;
@@ -135,6 +136,15 @@ public class Gameboard implements Observable {
         } else if (cure.getCureState().equals(CureState.CURED)) {
             cure.setCureState(CureState.ERADICATED);
         }
+    }
+
+    public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
+        for(Cure cure : cures) {
+            if(cure.getType() == virusType) {
+                return cure;
+            }
+        }
+        throw new CureNotFoundException("Cure is not found");
     }
 
     public PlayerCard drawPlayerCard() {
@@ -396,6 +406,7 @@ public class Gameboard implements Observable {
     public void addInfectionStack(ArrayList<InfectionCard> infectionCards) {
         infectionStack.addAll(infectionCards);
     }
+
     @Override
     public void register(Observer observer) {
         observers.add(observer);

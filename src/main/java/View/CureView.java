@@ -195,28 +195,19 @@ public class CureView {
 
         Button b1 = new Button("Red");
         b1.setStyle("-fx-background-color: Red;");
-        b1.setOnAction(e -> {
-            selectedVirusToCure = "Red";
-            selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
-        });
+        b1.setOnAction(e -> getVirusButtonHandler(b1));
+
         Button b2 = new Button("Blue");
         b2.setStyle("-fx-background-color: Blue;");
-        b2.setOnAction(e -> {
-            selectedVirusToCure = "Blue";
-            selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
-        });
+        b2.setOnAction(e -> getVirusButtonHandler(b2));
+
         Button b3 = new Button("Green");
         b3.setStyle("-fx-background-color: Green;");
-        b3.setOnAction(e -> {
-            selectedVirusToCure = "Green";
-            selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
-        });
+        b3.setOnAction(e -> getVirusButtonHandler(b3));
+
         Button b4 = new Button("Yellow");
         b4.setStyle("-fx-background-color: Yellow;");
-        b4.setOnAction(e -> {
-            selectedVirusToCure = "Yellow";
-            selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
-        });
+        b4.setOnAction(e -> getVirusButtonHandler(b4));
 
        Collections.addAll(buttons, b1, b2, b3, b4);
         return buttons;
@@ -229,82 +220,22 @@ public class CureView {
         ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> {
-            if (selectedCities.size() < 5) {
-                String allSelectedCities = "";
-                for (String selectedCity : selectedCities) {
-                    allSelectedCities += selectedCity + ", ";
-                }
-                allSelectedCities += b1.getText() + ", ";
-                selectedCities.add(b1.getText());
-                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
-            }
-        });
+        b1.setOnAction(e -> getPlayerCityCardsButtonHandler(b1));
 
         Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> {
-            if (selectedCities.size() < 5) {
-                String allSelectedCities = "";
-                for (String selectedCity : selectedCities) {
-                    allSelectedCities += selectedCity + ", ";
-                }
-                allSelectedCities += b2.getText() + ", ";
-                selectedCities.add(b2.getText());
-                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
-            }
-        });
+        b2.setOnAction(e -> getPlayerCityCardsButtonHandler(b2));
 
         Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> {
-            if (selectedCities.size() < 5) {
-                String allSelectedCities = "";
-                for (String selectedCity : selectedCities) {
-                    allSelectedCities += selectedCity + ", ";
-                }
-                allSelectedCities += b3.getText() + ", ";
-                selectedCities.add(b3.getText());
-                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
-            }
-        });
+        b3.setOnAction(e -> getPlayerCityCardsButtonHandler(b3));
 
         Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> {
-            if (selectedCities.size() < 5) {
-                String allSelectedCities = "";
-                for (String selectedCity : selectedCities) {
-                    allSelectedCities += selectedCity + ", ";
-                }
-                allSelectedCities += b4.getText() + ", ";
-                selectedCities.add(b4.getText());
-                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
-            }
-        });
+        b4.setOnAction(e -> getPlayerCityCardsButtonHandler(b4));
 
         Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> {
-            if (selectedCities.size() < 5) {
-                String allSelectedCities = "";
-                for (String selectedCity : selectedCities) {
-                    allSelectedCities += selectedCity + ", ";
-                }
-                allSelectedCities += b5.getText() + ", ";
-                selectedCities.add(b5.getText());
-                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
-            }
-        });
+        b5.setOnAction(e -> getPlayerCityCardsButtonHandler(b5));
 
         Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> {
-            if (selectedCities.size() < 5) {
-                String allSelectedCities = "";
-                for (String selectedCity : selectedCities) {
-                    allSelectedCities += selectedCity + ", ";
-                }
-                allSelectedCities += b6.getText() + ", ";
-                selectedCities.add(b6.getText());
-                selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
-            }
-        });
+        b6.setOnAction(e -> getPlayerCityCardsButtonHandler(b6));
         Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
         return buttons;
     }
@@ -323,5 +254,23 @@ public class CureView {
     {
         selectedCities.clear();
         selectedCityText.setText("You haven't selected any city card to discard");
+    }
+
+    private void getPlayerCityCardsButtonHandler(Button button) {
+        if (selectedCities.size() < 5) {
+            String allSelectedCities = "";
+            for (String selectedCity : selectedCities) {
+                allSelectedCities += selectedCity + ", ";
+            }
+            allSelectedCities += button.getText() + ", ";
+            selectedCities.add(button.getText());
+            selectedCityText.setText("You selected: " + allSelectedCities.substring(0, allSelectedCities.length() - 2));
+        }
+    }
+
+    private void getVirusButtonHandler(Button button)
+    {
+        selectedVirusToCure = button.getText();
+        selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
     }
 }

@@ -179,35 +179,23 @@ public class DoShareView {
         ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> {
-            selectedCityText.setText("You selected the city card of " + b1.getText() + " to give away");
-            selectedCity = b1.getText();
-        });
+        b1.setOnAction(e -> getCitiesButtonHandler(b1));
+
         Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> {
-            selectedCityText.setText("You selected the city card of " + b2.getText() + " to give away");
-            selectedCity = b2.getText();
-        });
+        b2.setOnAction(e -> getCitiesButtonHandler(b2));
+
         Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> {
-            selectedCityText.setText("You selected the city card of " + b3.getText() + " to give away");
-            selectedCity = b3.getText();
-        });
+        b3.setOnAction(e -> getCitiesButtonHandler(b3));
+
         Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> {
-            selectedCityText.setText("You selected the city card of " + b4.getText() + " to give away");
-            selectedCity = b4.getText();
-        });
+        b4.setOnAction(e -> getCitiesButtonHandler(b4));
+
         Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> {
-            selectedCityText.setText("You selected the city card of " + b5.getText() + " to give away");
-            selectedCity = b5.getText();
-        });
+        b5.setOnAction(e -> getCitiesButtonHandler(b5));
+
         Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> {
-            selectedCityText.setText("You selected the city card of " + b6.getText() + " to give away");
-            selectedCity = b6.getText();
-        });
+        b6.setOnAction(e -> getCitiesButtonHandler(b6));
+
         Collections.addAll(buttons, b1, b2, b3);
         return buttons;
     }
@@ -218,20 +206,14 @@ public class DoShareView {
         // TODO: get initial player
         ArrayList<Button> buttons = new ArrayList<Button>();
         Button b1 = new Button("playerName1");
-        b1.setOnAction(e -> {
-            selectedPlayerText.setText("You selected " + b1.getText() + " to give a card to");
-            selectedPlayer = b1.getText();
-        });
+        b1.setOnAction(e -> getPlayerButtonHandler(b1));
+
         Button b2 = new Button("playerName2");
-        b2.setOnAction(e -> {
-            selectedPlayerText.setText("You selected " + b2.getText() + " to give a card to");
-            selectedPlayer = b2.getText();
-        });
+        b2.setOnAction(e -> getPlayerButtonHandler(b2));
+
         Button b3 = new Button("playerName3");
-        b3.setOnAction(e -> {
-            selectedPlayerText.setText("You selected " + b3.getText() + " to give a card to");
-            selectedPlayer = b3.getText();
-        });
+        b3.setOnAction(e -> getPlayerButtonHandler(b3));
+
         Collections.addAll(buttons, b1, b2, b3);
         return buttons;
     }
@@ -243,5 +225,17 @@ public class DoShareView {
     private void giveCardButtonHandler() {
         // TODO: behaviour implementeren
         GameView view = new GameView(primaryStage);
+    }
+
+    private void getPlayerButtonHandler(Button button)
+    {
+        selectedPlayerText.setText("You selected " + button.getText() + " to give a card to");
+        selectedPlayer = button.getText();
+    }
+
+    private void getCitiesButtonHandler(Button button)
+    {
+        selectedCityText.setText("You selected the city card of " + button.getText() + " to give away");
+        selectedCity = button.getText();
     }
 }

@@ -59,21 +59,19 @@ public class InGameMenuView {
 
         // BorderPane Center Setup //
         Text menuText = new Text("Menu");
+
         Button closeMenuButton = new Button("Close Menu");
-        closeMenuButton.setOnAction(event -> {
-            GameView view = new GameView(primaryStage);
-        });
+        closeMenuButton.setOnAction(event -> closeMenuButtonHandler());
+
         Button backToMainButton = new Button("Back to main menu");
-        backToMainButton.setOnAction(event -> {
-            MenuView view = new MenuView(primaryStage);
-        });
+        backToMainButton.setOnAction(event -> backToMainMenuButtonHandler());
+
         Button quitGameButton = new Button("Quit game");
         quitGameButton.setOnAction(event -> primaryStage.close());
 
         ArrayList<Button> menuButtons = new ArrayList<>();
         Collections.addAll(menuButtons, closeMenuButton, backToMainButton, quitGameButton);
 
-        //  //
         for (Button menuButton : menuButtons) {
             menuButton.setAlignment(Pos.CENTER);
             menuButton.setOpacity(0.70);
@@ -99,5 +97,13 @@ public class InGameMenuView {
         bp.setCenter(vboxCenter);
 
         return bp;
+    }
+
+    private void closeMenuButtonHandler() {
+        GameView view = new GameView(primaryStage);
+    }
+
+    private void backToMainMenuButtonHandler() {
+        MenuView view = new MenuView(primaryStage);
     }
 }

@@ -100,10 +100,15 @@ public class GameController {
         }
     }
 
-    public void handleDrive(City city) {
-        Player currentPlayer = getCurrentPlayer();
-        setDriveBehavior();
-        gameBoardController.handleDrive(currentPlayer, city);
+    public void handleDrive(String cityName) {
+        try {
+            Player currentPlayer = getCurrentPlayer();
+            City city = gameBoardController.getCity(cityName);
+            setDriveBehavior();
+            gameBoardController.handleDrive(currentPlayer, city);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setDriveBehavior() {
@@ -191,8 +196,19 @@ public class GameController {
         }
     }
 
-    public void handleFindCure(Player currentPlayer) {
+    public void handleFindCure() {
+        Player currentPlayer = getCurrentPlayer();
+        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+        setFindCureBehavior(currentPlayer);
+        gameBoardController.handleFindCure(currentPlayer, currentCity);
+    }
 
+    private void setFindCureBehavior(Player currentPLayer) {
+        if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
+            gameBoardController.setFindCureBehavior(new FindCureWithFourCardsBehavior());
+        } else {
+            gameBoardController.setFindCureBehavior(new FindCureWithFiveCardsBehavior());
+        }
     }
 
     public void checkCardInHand(PlayerCard card, Player player) {

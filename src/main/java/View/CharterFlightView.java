@@ -115,6 +115,7 @@ public class CharterFlightView {
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {backButtonHandler();});
+
         Button moveButton = new Button("Move");
         moveButton.setOnAction(e -> {moveButtonHandler();});
 
