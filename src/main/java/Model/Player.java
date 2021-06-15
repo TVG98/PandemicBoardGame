@@ -97,6 +97,10 @@ public class Player implements PlayerObservable {
         notifyAllObservers();
     }
 
+    public int getActionsLeft() {
+        return actions;
+    }
+
     public void decrementActions() {
         actions--;
         notifyAllObservers();

@@ -44,4 +44,47 @@ public class TestPlayer {
 
         assertThat(playerHasCard,  is(false));
     }
+
+    @Test
+    public void Should_RemoveCardFromHandFromPlayer() {
+        player.addCardToHand(playerCard);
+        player.removeCardFromHand(playerCard);
+
+        boolean playerHasCard = player.checkCardInHand(playerCard);
+
+        assertThat(playerHasCard, is(false));
+    }
+
+    @Test
+    public void Should_KeepCardFromHandFromPlayer() {
+        PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE), VirusType.BLUE);
+
+        player.addCardToHand(playerCard);
+        player.removeCardFromHand(differentPlayerCard);
+
+        boolean playerHasCard = player.checkCardInHand(playerCard);
+
+        assertThat(playerHasCard, is(true));
+    }
+
+    @Test
+    public void Should_DecrementActionsByOne() {
+        player.decrementActions();
+
+        int expectedActionsLeft = 3;
+        int actionsLeft = player.getActionsLeft();
+
+        assertThat(actionsLeft, is(expectedActionsLeft));
+    }
+
+    @Test
+    public void Should_ResetActionsToFourActionsLeft() {
+        player.decrementActions();
+        player.resetActions();
+
+        int expectedActionsLeft = 4;
+        int actionsLeft = player.getActionsLeft();
+
+        assertThat(actionsLeft, is(expectedActionsLeft));
+    }
 }
