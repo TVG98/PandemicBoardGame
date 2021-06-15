@@ -51,10 +51,10 @@ public class GameView implements Observer {
         title.setFont(new Font("Castellar", 50));
 
         Button openMenuButton = new Button("Open Menu");
-        openMenuButton.setOnMouseClicked(event -> openMenuButtonHandler());
+        openMenuButton.setOnAction(event -> openMenuButtonHandler());
 
         Button howToPlayButton = new Button("How to play");
-        howToPlayButton.setOnMouseClicked(event -> howToPlayButtonHandler());
+        howToPlayButton.setOnAction(event -> howToPlayButtonHandler());
 
         ArrayList<Button> menuButtons = new ArrayList<>();
         Collections.addAll(menuButtons, openMenuButton, howToPlayButton);
@@ -150,16 +150,16 @@ public class GameView implements Observer {
         movement.setFont(new Font("Castellar", 20));
 
         Button driveButton = new Button("Drive/Ferry");
-        driveButton.setOnMouseClicked(event -> driveButtonHandler());
+        driveButton.setOnAction(event -> driveButtonHandler());
 
         Button directFlightButton = new Button("Direct Flight");
-        directFlightButton.setOnMouseClicked(event -> directFlightButtonHandler());
+        directFlightButton.setOnAction(event -> directFlightButtonHandler());
 
         Button charterFlightButton = new Button("Charter Flight");
-        charterFlightButton.setOnMouseClicked(event -> charterFlightButtonHandler());
+        charterFlightButton.setOnAction(event -> charterFlightButtonHandler());
 
         Button shuttleFlightButton = new Button("Shuttle Flight");
-        shuttleFlightButton.setOnMouseClicked(event -> shuttleFlightButtonHandler());
+        shuttleFlightButton.setOnAction(event -> shuttleFlightButtonHandler());
 
         ArrayList<Button> movementButtons = new ArrayList<>();
         Collections.addAll(movementButtons, driveButton, directFlightButton, charterFlightButton, shuttleFlightButton);
@@ -189,16 +189,16 @@ public class GameView implements Observer {
         actions.setFont(new Font("Castellar", 20));
 
         Button treatButton = new Button("Treat");
-        treatButton.setOnMouseClicked(event -> treatButtonHandler());
+        treatButton.setOnAction(event -> treatButtonHandler());
 
         Button cureButton = new Button("Cure");
-        cureButton.setOnMouseClicked(event -> cureButtonHandler());
+        cureButton.setOnAction(event -> cureButtonHandler());
 
         Button buildButton = new Button("Build");
-        buildButton.setOnMouseClicked(event -> buildButtonHandler());
+        buildButton.setOnAction(event -> buildButtonHandler());
 
         Button shareButton = new Button("Share");
-        shareButton.setOnMouseClicked(event -> shareButtonHandler());
+        shareButton.setOnAction(event -> shareButtonHandler());
 
         ArrayList<Button> actionButtons = new ArrayList<>();
         Collections.addAll(actionButtons,treatButton, cureButton, buildButton, shareButton);
@@ -233,7 +233,7 @@ public class GameView implements Observer {
         endTurnButton.setFont(new Font("Arial", 20));
         endTurnButton.setPrefHeight(100);
         endTurnButton.setPrefWidth(120);
-        endTurnButton.setOnMouseClicked(event -> endTurnButtonHandler());
+        endTurnButton.setOnAction(event -> endTurnButtonHandler());
         endTurnButton.setOnMouseEntered(event -> endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: red;"));
         endTurnButton.setOnMouseExited(event -> endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white;"));
 

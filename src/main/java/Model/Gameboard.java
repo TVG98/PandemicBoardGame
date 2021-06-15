@@ -100,7 +100,7 @@ public class Gameboard implements Observable {
         ArrayList<PlayerCard> playerCardStack = new ArrayList<>();
 
         for (City city : cities) {
-            playerCardStack.add(new CityCard(city, city.getVirusType()));
+            playerCardStack.add(new CityCard(city));
         }
 
         playerCardStack.addAll(Arrays.asList(initializeEventCards()));
