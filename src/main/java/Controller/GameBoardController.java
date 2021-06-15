@@ -135,8 +135,8 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
-    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
-        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
+    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, City chosenCity) {
+        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, chosenCity);
     }
 
     public  void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {

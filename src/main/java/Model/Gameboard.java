@@ -6,12 +6,12 @@ import Exceptions.VirusNotFoundException;
 import Observers.Observable;
 import Observers.Observer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class Gameboard implements Observable {
+    private final String pathToConnectedCities = "src/main/connectedCities.txt";
+
     private final List<Observer> observers = new ArrayList<>();
     private final City[] cities;
     private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
@@ -84,9 +84,41 @@ public class Gameboard implements Observable {
 
             VirusType virusType = viruses[virusIndex-1].getType();
             newCities[i] = new City(cityNames[i], virusType);
+            try {
+                assignNeighboursToCity(newCities[i]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return newCities;
+    }
+
+    private void assignNeighboursToCity(City city) throws IOException {
+        BufferedReader bufferedReader = makeBufferedReader();
+        String line = bufferedReader.readLine();
+        ArrayList<City> neighbours = new ArrayList<>();
+
+        try {
+            while (line != null) {
+                line = bufferedReader.readLine();
+                String[] cityName = line.split(";");
+                if(cityName[0].equals(city.getName())) {
+                    neighbours.add(getCity(cityName[1]));
+                }
+            }
+        } catch (CityNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        city.initializeNeighbours(neighbours);
+    }
+
+    private BufferedReader makeBufferedReader() throws FileNotFoundException {
+        File textFile = new File(pathToConnectedCities);
+        FileReader fileReader = new FileReader(textFile);
+
+        return new BufferedReader(fileReader);
     }
 
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
