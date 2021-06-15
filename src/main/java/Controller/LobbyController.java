@@ -6,8 +6,6 @@ import Model.Lobby;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
-import java.util.*;
-
 public class LobbyController {
     static LobbyController lobbyController;
 
@@ -32,7 +30,10 @@ public class LobbyController {
 
     public void makeLobby(String playerName)  {
         lobbyCode = databaseController.makeLobby();
+        tryToAddPlayerToServer(playerName);
+    }
 
+    private void tryToAddPlayerToServer(String playerName) {
         try {
             Thread.sleep(5000);
             addPlayerToServer(lobbyCode, playerName);
@@ -41,19 +42,36 @@ public class LobbyController {
         }
     }
 
-    public void setPlayerReady() {
+    public void tryToSetPlayerReady() {
         try {
-            for (Player p : lobby.getPlayers()) {
-                if (p != null) {
-                    if (getCurrentPlayer().getPlayerName().equals(p.getPlayerName())) {
-                        p.setReadyToStart(true);
-                        databaseController.updatePlayerInServer(p);
-                    }
-                }
-            }
+            setCorrectPlayerReady();
         } catch (PlayerNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setCorrectPlayerReady() throws PlayerNotFoundException {
+        Player[] players = lobby.getPlayers();
+
+        for (Player player : players) {
+            if (!playerSpotIsEmpty(player) && isCurrentPlayer(player)) {
+                setPlayerReady(player);
+            }
+        }
+    }
+
+    private boolean playerSpotIsEmpty(Player player) {
+        return player == null;
+    }
+
+    private boolean isCurrentPlayer(Player player) throws PlayerNotFoundException {
+        String currentPlayerName = getCurrentPlayer().getPlayerName();
+        return currentPlayerName.equals(player.getPlayerName());
+    }
+
+    private void setPlayerReady(Player player) {
+        player.setReadyToStart(true);
+        databaseController.updatePlayerInServer(player);
     }
 
     public void setServerLobbyNotJoinable() {
