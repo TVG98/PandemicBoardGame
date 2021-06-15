@@ -1,6 +1,8 @@
 package View;
 
 import Controller.LobbyController;
+import Exceptions.LobbyNotFoundException;
+import Exceptions.LobbyNotJoinableException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -92,10 +94,12 @@ public class StartLobbyView {
         });
         Button joinButton = new Button("Join");
         joinButton.setOnAction(event -> {
-            if (lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText())) {
+            try {
+                lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText());
                 InLobbyView view = new InLobbyView(primaryStage);
-            } else {
-                //Todo goto main menu view?
+            } catch (LobbyNotFoundException | LobbyNotJoinableException e) {
+                    e.printStackTrace();
+                    //Todo goto main menu view?
             }
         });
 
