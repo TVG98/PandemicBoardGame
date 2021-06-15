@@ -61,15 +61,11 @@ public class MenuView {
         vboxCenter.setSpacing(80);
         vboxCenter.getChildren().addAll(startButton, optionsButton, quitButton);
 
-        buttonsArrayList.get(0).setOnAction(event -> {
-            StartLobbyView view = new StartLobbyView(primaryStage);
-        });
+        startButton.setOnAction(event -> startButtonHandler());
 
-        buttonsArrayList.get(1).setOnAction(event -> {
-            OptionsView view = new OptionsView(primaryStage);
-        });
+        optionsButton.setOnAction(event -> optionsButtonHandler());
 
-        buttonsArrayList.get(2).setOnAction(event -> primaryStage.close());
+        quitButton.setOnAction(event -> primaryStage.close());
 
         // BorderPane layout //
         bp.setCenter(vboxCenter);
@@ -84,5 +80,13 @@ public class MenuView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void startButtonHandler() {
+        StartLobbyView view = new StartLobbyView(primaryStage);
+    }
+
+    private void optionsButtonHandler() {
+        OptionsView view = new OptionsView(primaryStage);
     }
 }

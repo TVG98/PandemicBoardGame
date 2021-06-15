@@ -113,9 +113,7 @@ public class OptionsView {
         // Setup Bottom BorderPane (vboxBottom) //
 
         Button backToMainMenuButton = new Button("Back to main menu");
-        backToMainMenuButton.setOnAction(event -> {
-            MenuView view = new MenuView(primaryStage);
-        });
+        backToMainMenuButton.setOnAction(event -> backToMainMenuButtonHandler());
 
         backToMainMenuButton.setStyle("-fx-background-color: #ff5c6c; -fx-background-radius: 30px;");
         backToMainMenuButton.setTextFill(Color.BLACK);
@@ -146,5 +144,9 @@ public class OptionsView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void backToMainMenuButtonHandler() {
+        MenuView view = new MenuView(primaryStage);
     }
 }
