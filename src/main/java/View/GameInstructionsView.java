@@ -54,29 +54,29 @@ public class GameInstructionsView {
         backToGameButton.setPrefHeight(100);
         backToGameButton.setPrefWidth(200);
 
-        backToGameButton.setOnMouseClicked(event -> {
+        backToGameButton.setOnAction(event -> {
             GameView view = new GameView(primaryStage);
         });
 
         // Setup BorderPane Bottom Buttons including functionality //
 
         Button objectOfTheGameButton = new Button("Object of the game");
-        objectOfTheGameButton.setOnMouseClicked(event -> bp.setCenter(makeObjectOfTheGameWindow()));
+        objectOfTheGameButton.setOnAction(event -> bp.setCenter(makeObjectOfTheGameWindow()));
 
         Button gameplayButton = new Button("Gameplay");
-        gameplayButton.setOnMouseClicked(event -> bp.setCenter(makeGameplayWindow()));
+        gameplayButton.setOnAction(event -> bp.setCenter(makeGameplayWindow()));
 
         Button actionsButton = new Button("Actions");
-        actionsButton.setOnMouseClicked(event -> bp.setCenter(makeActionsWindow()));
+        actionsButton.setOnAction(event -> bp.setCenter(makeActionsWindow()));
 
         Button winButton = new Button("Win condition");
-        winButton.setOnMouseClicked(event -> bp.setCenter(makeWinWindow()));
+        winButton.setOnAction(event -> bp.setCenter(makeWinWindow()));
 
         Button defeatButton = new Button("Defeat");
-        defeatButton.setOnMouseClicked(event -> bp.setCenter(makeDefeatWindow()));
+        defeatButton.setOnAction(event -> bp.setCenter(makeDefeatWindow()));
 
         Button rolesButton = new Button("Roles");
-        rolesButton.setOnMouseClicked(event -> bp.setCenter(makeRolesWindow()));
+        rolesButton.setOnAction(event -> bp.setCenter(makeRolesWindow()));
 
         ArrayList<Button> infoButtons = new ArrayList<Button>();
         Collections.addAll(infoButtons, objectOfTheGameButton, gameplayButton, actionsButton, winButton, defeatButton, rolesButton);

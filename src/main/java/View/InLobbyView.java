@@ -136,7 +136,7 @@ public class InLobbyView implements LobbyObserver {
         backToMainMenuButton.setPrefWidth(400);
 
         readyUpButton.setStyle("-fx-background-color: Gray");
-        readyUpButton.setOnMouseClicked(e -> readyUpButton.setStyle("-fx-background-color: Dimgray"));
+        readyUpButton.setOnAction(e -> readyUpButton.setStyle("-fx-background-color: Dimgray"));
         readyUpButton.setFont(new Font("Arial", 25));
         readyUpButton.setTextFill(Color.BLACK);
         readyUpButton.setPrefHeight(100);

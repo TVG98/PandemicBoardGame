@@ -152,11 +152,11 @@ public class CureView {
 
 
         Button backButton = new Button("Back");
-        backButton.setOnMouseClicked(e -> {backButtonHandler();});
+        backButton.setOnAction(e -> {backButtonHandler();});
         Button resetButton = new Button("Reset");
-        resetButton.setOnMouseClicked(event -> {resetButtonHandler();});
+        resetButton.setOnAction(event -> {resetButtonHandler();});
         Button cureButton = new Button("Cure");
-        cureButton.setOnMouseClicked(e -> {cureButtonHandler();});
+        cureButton.setOnAction(e -> {cureButtonHandler();});
 
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, backButton, resetButton, cureButton);
@@ -195,25 +195,25 @@ public class CureView {
 
         Button b1 = new Button("Red");
         b1.setStyle("-fx-background-color: Red;");
-        b1.setOnMouseClicked(e -> {
+        b1.setOnAction(e -> {
             selectedVirusToCure = "Red";
             selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
         });
         Button b2 = new Button("Blue");
         b2.setStyle("-fx-background-color: Blue;");
-        b2.setOnMouseClicked(e -> {
+        b2.setOnAction(e -> {
             selectedVirusToCure = "Blue";
             selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
         });
         Button b3 = new Button("Green");
         b3.setStyle("-fx-background-color: Green;");
-        b3.setOnMouseClicked(e -> {
+        b3.setOnAction(e -> {
             selectedVirusToCure = "Green";
             selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
         });
         Button b4 = new Button("Yellow");
         b4.setStyle("-fx-background-color: Yellow;");
-        b4.setOnMouseClicked(e -> {
+        b4.setOnAction(e -> {
             selectedVirusToCure = "Yellow";
             selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
         });

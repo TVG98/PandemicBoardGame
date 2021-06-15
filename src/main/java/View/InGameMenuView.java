@@ -60,15 +60,15 @@ public class InGameMenuView {
         // BorderPane Center Setup //
         Text menuText = new Text("Menu");
         Button closeMenuButton = new Button("Close Menu");
-        closeMenuButton.setOnMouseClicked(event -> {
+        closeMenuButton.setOnAction(event -> {
             GameView view = new GameView(primaryStage);
         });
         Button backToMainButton = new Button("Back to main menu");
-        backToMainButton.setOnMouseClicked(event -> {
+        backToMainButton.setOnAction(event -> {
             MenuView view = new MenuView(primaryStage);
         });
         Button quitGameButton = new Button("Quit game");
-        quitGameButton.setOnMouseClicked(event -> primaryStage.close());
+        quitGameButton.setOnAction(event -> primaryStage.close());
 
         ArrayList<Button> menuButtons = new ArrayList<>();
         Collections.addAll(menuButtons, closeMenuButton, backToMainButton, quitGameButton);
