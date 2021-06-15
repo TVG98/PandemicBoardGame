@@ -325,7 +325,7 @@ public class Gameboard implements GameBoardObservable {
 
     @Override
     public int getInfectionRate() {
-        return infectionRate;
+        return infectionRates[infectionRate];
     }
 
     @Override
