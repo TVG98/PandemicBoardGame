@@ -154,7 +154,7 @@ public class LobbyController {
         Player[] players = lobby.getPlayers();
 
         for (Player player : players) {
-            if (player != null && isCurrentPlayer(player)) {
+            if (player != null && player.getPlayerName().equals(playerController.getCurrentPlayerName())) {
                 return player;
             }
         }
