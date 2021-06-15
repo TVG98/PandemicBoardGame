@@ -123,7 +123,7 @@ public class InLobbyView implements LobbyObserver {
         });
 
         Button readyUpButton = new Button("Ready Up");
-        readyUpButton.setOnAction(event -> lobbyController.setPlayerReady());
+        readyUpButton.setOnAction(event -> lobbyController.tryToSetPlayerReady());
 
         backToMainMenuButton.setStyle("-fx-background-color: Gray");
         backToMainMenuButton.setTextFill(Color.BLACK);

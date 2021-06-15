@@ -112,4 +112,9 @@ public class TestGameBoard {
             cnfe.printStackTrace();
         }
     }
+
+//    @Test
+//    public void Should_SayCureIsFoundForBlackVirusType() {
+//        gameboard.
+//    }
 }
