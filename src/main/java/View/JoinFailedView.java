@@ -81,6 +81,7 @@ public class JoinFailedView {
         backButton.setEffect(new DropShadow());
         backButton.setOnMouseEntered(event -> backButton.setStyle("-fx-background-color: Red;"));
         backButton.setOnMouseExited(event -> backButton.setStyle("-fx-background-color: Firebrick;"));
+        backButton.setOnAction(e -> backButtonHandler());
 
         VBox vboxCenter = new VBox();
         vboxCenter.getChildren().addAll(joinFailedText, reasonText, reasonForFailureText, backButton);
@@ -92,5 +93,9 @@ public class JoinFailedView {
         bp.setCenter(vboxCenter);
 
         return bp;
+    }
+
+    private void backButtonHandler() {
+        StartLobbyView view = new StartLobbyView(primaryStage);
     }
 }

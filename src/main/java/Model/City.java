@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class City {
     private final String name;
-    private ArrayList<Cube> cubes;
+    private final ArrayList<Cube> cubes = new ArrayList<>();
     private final VirusType virusType;
     private ArrayList<City> nearCities;
 
@@ -46,6 +46,8 @@ public class City {
     }
 
     public void removeCube() {
-        cubes.remove(0);
+        if (cubes.size() > 0) {
+            cubes.remove(0);
+        }
     }
 }

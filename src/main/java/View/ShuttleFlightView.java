@@ -88,7 +88,7 @@ public class ShuttleFlightView {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(20);
 
-        ArrayList<Button> cityButtons = getCitiesWithResearchStationsButtons();
+        ArrayList<Button> cityButtons = getCitiesWithResearchStationButtons();
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -160,41 +160,29 @@ public class ShuttleFlightView {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesWithResearchStationsButtons()
+    private ArrayList<Button> getCitiesWithResearchStationButtons()
     {
         // TODO: Moet alle steden met een research station ophalen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> {
-          selectedCityText.setText("You selected: " + b1.getText());
-          selectedCity = b1.getText();
-        });
+        b1.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b1));
+
         Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> {
-          selectedCityText.setText("You selected: " + b2.getText());
-          selectedCity = b2.getText();
-        });
+        b2.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b2));
+
         Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> {
-          selectedCityText.setText("You selected: " + b3.getText());
-          selectedCity = b3.getText();
-        });
+        b3.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b3));
+
         Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> {
-          selectedCityText.setText("You selected: " + b4.getText());
-          selectedCity = b4.getText();
-        });
+        b4.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b4));
+
         Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> {
-          selectedCityText.setText("You selected: " + b5.getText());
-          selectedCity = b5.getText();
-        });
+        b5.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b5));
+
         Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> {
-          selectedCityText.setText("You selected: " + b6.getText());
-          selectedCity = b6.getText();
-        });
+        b6.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b6));
+
         Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
         return buttons;
     }
@@ -206,6 +194,12 @@ public class ShuttleFlightView {
     private void moveButtonHandler() {
         // TODO: behaviour implementeren
         GameView view = new GameView(primaryStage);
+    }
+
+    private void getCitiesWithResearchStationButtonHandler(Button button) {
+        selectedCityText.setText("You selected: " + button.getText());
+        selectedCity = button.getText();
+
     }
 }
 

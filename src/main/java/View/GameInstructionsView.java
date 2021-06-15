@@ -54,9 +54,7 @@ public class GameInstructionsView {
         backToGameButton.setPrefHeight(100);
         backToGameButton.setPrefWidth(200);
 
-        backToGameButton.setOnAction(event -> {
-            GameView view = new GameView(primaryStage);
-        });
+        backToGameButton.setOnAction(event -> backToGameButtonHandler());
 
         // Setup BorderPane Bottom Buttons including functionality //
 
@@ -373,5 +371,9 @@ public class GameInstructionsView {
         vboxRoles.setSpacing(30);
 
         return vboxRoles;
+    }
+
+    private void backToGameButtonHandler(){
+        GameView view = new GameView(primaryStage);
     }
 }

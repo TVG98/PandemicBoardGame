@@ -118,6 +118,8 @@ public class GameView implements Observer {
 
         // Setup BorderPane Center //
 
+        makeGameBoard();
+
         // Setup BorderPane Bottom //
 
         // Player overview //
@@ -252,7 +254,6 @@ public class GameView implements Observer {
         // BorderPane Layout //
         borderPane.setTop(hboxTop);
         borderPane.setBottom(vboxBottom);
-        makeGameBoard();
     }
 
     private void openMenuButtonHandler() {
