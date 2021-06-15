@@ -47,7 +47,7 @@ public class TestGameBoard {
             cityNotFoundExceptionThrown = true;
         }
 
-        assertThat(cityNotFoundExceptionThrown, is(false));
+        assertThat(cityNotFoundExceptionThrown, is(true));
     }
 
     @Test
@@ -112,9 +112,4 @@ public class TestGameBoard {
             cnfe.printStackTrace();
         }
     }
-
-//    @Test
-//    public void Should_SayCureIsFoundForBlackVirusType() {
-//        gameboard.
-//    }
 }

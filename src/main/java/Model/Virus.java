@@ -1,7 +1,7 @@
 package Model;
 
 public class Virus {
-    private VirusType type;
+    private final VirusType type;
     private int cubeAmount = 24;
 
     public Virus(VirusType type) {
@@ -17,9 +17,10 @@ public class Virus {
     }
 
     public void increaseCubeAmount(int amount) {
-        cubeAmount += amount;
+        cubeAmount = Math.min(cubeAmount + amount, 24);
     }
+
     public void decreaseCubeAmount(int amount) {
-        cubeAmount -= amount;
+        cubeAmount = Math.max(cubeAmount - amount, 0);
     }
 }

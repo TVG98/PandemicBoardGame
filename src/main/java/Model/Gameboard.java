@@ -210,7 +210,7 @@ public class Gameboard implements Observable {
 
     public void addCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.addCube(virusType);
-        tryToIncreaseCubeAmount(virusType, cubeAmount);
+        tryToDecreaseCubeAmount(virusType, cubeAmount);
     }
 
     private void tryToIncreaseCubeAmount(VirusType virusType, int cubeAmount) {
@@ -223,7 +223,7 @@ public class Gameboard implements Observable {
 
     public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.removeCube();
-        tryToDecreaseCubeAmount(virusType, cubeAmount);
+        tryToIncreaseCubeAmount(virusType, cubeAmount);
     }
 
     private void tryToDecreaseCubeAmount(VirusType virusType, int cubeAmount) {
