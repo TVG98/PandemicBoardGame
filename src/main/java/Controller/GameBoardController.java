@@ -207,6 +207,10 @@ public class GameBoardController {
         return gameBoard.getCity(cityName);
     }
 
+    public void notifyGameBoardObserver() {
+        gameBoard.notifyAllObservers();
+    }
+
     public void registerObserver(GameBoardObserver observer) {
         gameBoard.register(observer);
     }

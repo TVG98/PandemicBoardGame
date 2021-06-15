@@ -255,8 +255,29 @@ public class Gameboard implements GameBoardObservable {
         throw new VirusNotFoundException("Virus not Found");
     }
 
+    @Override
+    public City[] getCities() {
+        return cities;
+    }
+
+    @Override
+    public Cure[] getCures() {
+        return cures;
+    }
+
+    @Override
     public Virus[] getViruses() {
         return viruses;
+    }
+
+    @Override
+    public ArrayList<InfectionCard> getInfectionStack() {
+        return infectionStack;
+    }
+
+    @Override
+    public ArrayList<InfectionCard> getInfectionDiscardStack() {
+        return infectionDiscardStack;
     }
 
     public City getCity(String cityName) throws CityNotFoundException {
@@ -269,22 +290,27 @@ public class Gameboard implements GameBoardObservable {
         throw new CityNotFoundException("City not found");
     }
 
+    @Override
     public int getOutbreakCounter() {
         return outbreakCounter;
     }
 
+    @Override
     public int getInfectionRate() {
         return infectionRate;
     }
 
+    @Override
     public ArrayList<PlayerCard> getPlayerStack() {
         return playerStack;
     }
 
+    @Override
     public ArrayList<PlayerCard> getPlayerDiscardStack() {
         return playerDiscardStack;
     }
 
+    @Override
     public ArrayList<City> getCitiesWithResearchStations() {
         return citiesWithResearchStations;
     }

@@ -42,6 +42,7 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         //this.primaryStage.setResizable(true);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
+        gameController.notifyObservers();
     }
 
     private void createGameViewBorderPane() {

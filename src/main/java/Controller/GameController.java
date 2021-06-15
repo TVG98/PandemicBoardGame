@@ -253,4 +253,9 @@ public class GameController {
     public void registerGameBoardObserver(GameBoardObserver observer) {
         gameBoardController.registerObserver(observer);
     }
+
+    public void notifyObservers() {
+        gameBoardController.notifyGameBoardObserver();
+        //todo notify playerObserver
+    }
 }
