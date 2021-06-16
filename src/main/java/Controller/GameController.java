@@ -26,8 +26,9 @@ public class GameController {
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
         gameBoardController.makeGameBoard();
+        startGame();
         if (localPlayerIsPlayerOne()) {
-            startGame();
+            initializeStartingCubes();
         }
     }
 
@@ -52,8 +53,6 @@ public class GameController {
                 }
             }
         }
-
-        initializeStartingCubes();
     }
 
     private void setPlayer(Player player) {

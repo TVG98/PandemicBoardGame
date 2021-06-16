@@ -51,6 +51,7 @@ public class GameView implements GameObserver, GameBoardObserver {
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
         gameController.notifyGameBoardObserver();
+        gameController.notifyGameObserver();
     }
 
     private void createGameViewBorderPane() {
