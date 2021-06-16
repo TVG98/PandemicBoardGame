@@ -30,7 +30,7 @@ public class GameApplication extends Application {
         //JoinFailedView k = new JoinFailedView(primaryStage, "No name entered, please enter a name!");
         //DirectFlightView m = new DirectFlightView(primaryStage);
         //DriveView n = new DriveView(primaryStage);
-        //CharterFlightView o = new CharterFlightView(primaryStage);
+//        CharterFlightView o = new CharterFlightView(primaryStage);
         //ShuttleFlightView p = new ShuttleFlightView(primaryStage);
         //CureView q = new CureView(primaryStage);
         //DoShareView r = new DoShareView(primaryStage);
