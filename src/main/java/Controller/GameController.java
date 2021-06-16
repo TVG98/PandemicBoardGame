@@ -45,7 +45,7 @@ public class GameController {
             }
         }
 
-        drawInitialInfectionCards();
+        initializeStartingCubes();
     }
 
     private void setPlayer(Player player) {
@@ -62,14 +62,8 @@ public class GameController {
         return Role.values()[new Random().nextInt(Role.values().length)];
     }
 
-    private void drawInitialInfectionCards() {
-        int drawAmount = 3;
-        while(drawAmount > 0) {
-            for(int x = 0; x < 3; x++) {
-                gameBoardController.handleInfectionCardDraw(drawAmount);
-            }
-            drawAmount--;
-        }
+    private void initializeStartingCubes() {
+        gameBoardController.initializeStartingCubes();
     }
 
     public void turn() {

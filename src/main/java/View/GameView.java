@@ -1,6 +1,7 @@
 package View;
 
 import Controller.GameController;
+import Model.City;
 import Model.Connection;
 import Observers.GameBoardObservable;
 import Observers.PlayerObservable;
@@ -46,7 +47,7 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         this.gameController = GameController.getInstance();
         gameController.registerPlayerObserver(this);
         gameController.registerGameBoardObserver(this);
-        //this.primaryStage.setResizable(true);
+        this.primaryStage.setResizable(true);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
         gameController.notifyObservers();
@@ -113,7 +114,6 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         vboxTopCenter.setAlignment(Pos.CENTER);
 
         // Top Right //
-
 
         outbreakCounter.setFont(new Font("Castellar", 28));
         infectionRate.setFont(new Font("Castellar", 28));
@@ -318,7 +318,6 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         placeholder.add("Washington");
         placeholder.add("Sydney");
         //              //
-
         GiveShareView view = new GiveShareView(primaryStage, placeholder);
     }
 
@@ -514,6 +513,22 @@ public class GameView implements PlayerObserver, GameBoardObserver {
     private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
         outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
+        City[] cities = gameBoardObservable.getCities();
+
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet() )
+        {
+            for (City city : cities)
+            {
+                if (city.getName().equals(entry.getKey()))
+                {
+                    Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
+                    cubeAmountText.setX(entry.getValue()[0] - 5);
+                    cubeAmountText.setY(entry.getValue()[1] + 8);
+                    cubeAmountText.setFont(Font.font("Arial", 20));
+                    this.borderPane.getChildren().add(cubeAmountText);
+                }
+            }
+        }
     }
 
     private void createUpdatedGameViewBorderPane(PlayerObservable playerObservable) {
