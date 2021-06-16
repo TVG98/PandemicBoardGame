@@ -313,7 +313,6 @@ public class GameView implements GameObserver, GameBoardObserver {
         placeholder.add("Washington");
         placeholder.add("New York");
         //              //
-
         TakeShareView view = new TakeShareView(primaryStage, placeholder);
     }
 

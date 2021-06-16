@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
+import Exceptions.PlayerNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
@@ -78,6 +79,7 @@ public class GameController {
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
         // ik ook niet man
+        // nice xD
 
         if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
@@ -85,6 +87,7 @@ public class GameController {
             getCurrentPlayer().endTurn();
             changeTurn();
         }
+
     }
 
     public void changeTurn(){
@@ -155,7 +158,7 @@ public class GameController {
         try {
             City city = gameBoardController.getCity(cityName);
             Player currentPlayer = getCurrentPlayer();
-            setBuildResearchBehavior(currentPlayer);
+            setShuttleFlightBehavior(currentPlayer);
             gameBoardController.handleShuttleFlight(currentPlayer, city);
         } catch (Exception e) {
             e.printStackTrace();
@@ -187,18 +190,41 @@ public class GameController {
         }
     }
 
-    public void handleShareKnowledge(Player chosenPlayer, PlayerCard card) {
-        Player currentPlayer = getCurrentPlayer();
-        City city = playerController.getPlayerCurrentCity(getCurrentPlayer());
-        ArrayList<Player> playersInCity = game.getPlayersInCity(city);
+    public void handleShareKnowledge(String playerName, boolean giveCard) {
+        Player givingPlayer = null;
+        Player receivingPlayer = null;
 
-        setDriveBehavior();
-
-        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer, city);
+        try {
+            if (giveCard) {
+                givingPlayer = getCurrentPlayer();
+                receivingPlayer = getPlayerByName(playerName);
+            } else {
+                givingPlayer = getPlayerByName(playerName);
+                receivingPlayer = getCurrentPlayer();
+            }
+            setShareKnowledgeBehavior(givingPlayer, receivingPlayer);
+            gameBoardController.handleShareKnowledge(givingPlayer, receivingPlayer);
+        } catch (PlayerNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        }
     }
 
-    private void setShareKnowledgeBehavior() {
+    private Player getPlayerByName(String playerName) throws PlayerNotFoundException {
+        for(Player player : game.getPlayers()) {
+            if(player.getPlayerName().equals(playerName)) {
+                return player;
+            }
+        }
 
+        throw new PlayerNotFoundException("Player with " + playerName + " does not exist");
+    }
+
+    private void setShareKnowledgeBehavior(Player givingPlayer, Player receivingPlayer) {
+        if(gameBoardController.canShareAnyCard(givingPlayer, receivingPlayer)) {
+            gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnAnyCityBehavior());
+        } else {
+            gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnSameCityBehavior());
+        }
     }
 
     public void handleTreatDisease() {

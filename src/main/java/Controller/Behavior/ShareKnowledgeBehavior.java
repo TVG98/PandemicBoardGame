@@ -7,5 +7,5 @@ import Model.Player;
 public interface ShareKnowledgeBehavior {
     PlayerController playerController = PlayerController.getInstance();
 
-    void shareKnowledge(Player currentPlayer, Player chosenPlayer, City chosenCity);
+    void shareKnowledge(Player currentPlayer, Player chosenPlayer);
 }

@@ -163,8 +163,8 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
-    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, City chosenCity) {
-        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, chosenCity);
+    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
+        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
         updateGameBoardInServer();
     }
 
@@ -190,6 +190,10 @@ public class GameBoardController {
         return gameBoard.cityHasResearchStation(city);
     }
 
+    public boolean canShareAnyCard(Player givingPlayer, Player receivingPlayer) {
+        return givingPlayer.getRole() == Role.RESEARCHER || receivingPlayer.getRole() == Role.RESEARCHER;
+    }
+
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
         boolean isMedic = playerController.hasRole(currentPlayer, Role.MEDIC);
         return isMedic || cureIsFound(currentCity);
@@ -209,7 +213,7 @@ public class GameBoardController {
     }
 
     public boolean canFindCureWithFourCards(Player currentPlayer) {
-        return playerController.hasRole(currentPlayer, Role.RESEARCHER);
+        return playerController.hasRole(currentPlayer, Role.SCIENTIST);
     }
 
     public boolean lossByCubeAmount() {

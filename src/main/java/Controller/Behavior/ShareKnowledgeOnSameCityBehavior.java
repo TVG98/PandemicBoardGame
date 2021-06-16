@@ -5,7 +5,7 @@ import Model.Player;
 
 public class ShareKnowledgeOnSameCityBehavior implements ShareKnowledgeBehavior {
 
-    public void shareKnowledge(Player currentPlayer, Player chosenPlayer, City chosenCity) {
+    public void shareKnowledge(Player currentPlayer, Player chosenPlayer) {
 
         playerController.decrementActions(currentPlayer);
     }

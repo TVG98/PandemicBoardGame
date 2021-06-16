@@ -156,9 +156,9 @@ public class Gameboard implements GameBoardObservable {
         EventCard[] eventCards = new EventCard[5];
         eventCards[0] = new OneQuietNight("One quiet night", "Skip the next Infect Cities step.");
         eventCards[1] = new GovernmentGrant("Government grant", "Add 1 research station to any city.");
-        eventCards[2] = new OneQuietNight("Airlift", "Move any 1 pawn to any city.");
-        eventCards[3] = new OneQuietNight("Forecast", "Draw, look at and rearrange the top 6 cards of the Infection Deck, put them back on top.");
-        eventCards[4] = new OneQuietNight("Resilient population", "Remove any 1 card in the Infection Discard Pile from the game.");
+        eventCards[2] = new Airlift("Airlift", "Move any 1 pawn to any city.");
+        eventCards[3] = new Forecast("Forecast", "Draw, look at and rearrange the top 6 cards of the Infection Deck, put them back on top.");
+        eventCards[4] = new ResilientPopulation("Resilient population", "Remove any 1 card in the Infection Discard Pile from the game.");
 
         return eventCards;
     }
