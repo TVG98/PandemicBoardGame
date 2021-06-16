@@ -130,6 +130,10 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         // Setup BorderPane Center //
 
         makeGameBoard();
+        drawPlayerOneOnCity("Washington");
+        drawPlayerTwoOnCity("Washington");
+        drawPlayerThreeOnCity("Washington");
+        drawPlayerFourOnCity("Washington");
 
         // Setup BorderPane Bottom //
 
@@ -425,6 +429,7 @@ public class GameView implements PlayerObserver, GameBoardObserver {
     private void addConnectedCities() {
         try {
             tryAddingConnectedCities();
+            makeEdgeConnections();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -465,6 +470,51 @@ public class GameView implements PlayerObserver, GameBoardObserver {
 
     private void placeLine(Connection connection) {
         borderPane.getChildren().addAll(connection.getLineFromConnection());
+    }
+
+    private void makeEdgeConnections() {
+        ArrayList<Connection> imaginaryConnections = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            addImaginaryConnections(i, imaginaryConnections);
+        }
+
+        replaceLastThreeConnectionsWithSixImaginaryConnections(imaginaryConnections);
+    }
+
+    private void addImaginaryConnections(int i, ArrayList<Connection> imaginaryConnections) {
+        Connection connection = connectedCities.get(connectedCities.size() - (1 + i));
+        imaginaryConnections.add(getLeftConnection(connection));
+        imaginaryConnections.add(getRightConnection(connection));
+    }
+
+    private Connection getLeftConnection(Connection connection) {
+        int shortestY = connection.getShortestY();
+        int HalfYDifference = connection.getYDifference() / 2;
+        int[] leftPoint = new int[] {0, HalfYDifference + shortestY};
+        int[] leftCity = connection.getLeftCity();
+
+        return new Connection(leftPoint, leftCity);
+    }
+
+    private Connection getRightConnection(Connection connection) {
+        int shortestY = connection.getShortestY();
+        int HalfYDifference = connection.getYDifference() / 2;
+        int[] rightPoint = new int[] {(int) width, HalfYDifference + shortestY};
+        int[] rightCity = connection.getRightCity();
+
+        return new Connection(rightPoint, rightCity);
+    }
+
+    private void replaceLastThreeConnectionsWithSixImaginaryConnections(ArrayList<Connection> imaginaryConnections) {
+        removeLastThreeConnections();
+        connectedCities.addAll(imaginaryConnections);
+    }
+
+    private void removeLastThreeConnections() {
+        for (int i = 0; i < 3; i++) {
+            connectedCities.remove(connectedCities.size() - 1);
+        }
     }
 
     private void placeCitiesWithColorOnBp(HashMap<String, int[]> cityCoords, Color color, BorderPane bp) {
@@ -508,6 +558,73 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void drawPlayerOneOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.RED);
+                playerOne.setStroke(Color.DARKRED);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] - 27);
+                playerOne.setY(entry.getValue()[1] - 7);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+    }
+
+    private void drawPlayerTwoOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.BLUE);
+                playerOne.setStroke(Color.DARKBLUE);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] - 18);
+                playerOne.setY(entry.getValue()[1] + 12);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+
+    }
+
+    private void drawPlayerThreeOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.ORANGE);
+                playerOne.setStroke(Color.DARKORANGE);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] + 4);
+                playerOne.setY(entry.getValue()[1] + 12);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+
+    }
+
+    private void drawPlayerFourOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.GREEN);
+                playerOne.setStroke(Color.DARKGREEN);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] + 12);
+                playerOne.setY(entry.getValue()[1] - 7);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+
     }
 
     private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
