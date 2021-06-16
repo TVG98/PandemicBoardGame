@@ -109,6 +109,10 @@ public class GameBoardController {
         gameBoard.handleInfectionCardDraw(cubeAmount);
     }
 
+    public void initializeStartingCubes() {
+        gameBoard.initializeStartingCubes();
+    }
+
     public void handleOutbreak(City infectedCity) {
         gameBoard.handleOutbreak(infectedCity);
     }

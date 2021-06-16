@@ -112,4 +112,19 @@ public class TestGameBoard {
             cnfe.printStackTrace();
         }
     }
+
+    @Test
+    public void Should_SayThatWashingTonIsConnectedToAtlanta() {
+        boolean isConnected = false;
+
+
+        try {
+            City atlanta = gameboard.getCity("Atlanta");
+            isConnected = gameboard.getCity("Washington").checkCityForAdjacency(atlanta);
+        } catch (CityNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
+
+        assertThat(isConnected, is(true));
+    }
 }

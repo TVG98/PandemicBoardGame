@@ -251,9 +251,14 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
-    public void addCubes(City currentCity, VirusType virusType, int cubeAmount) {
-        currentCity.addCube(virusType);
-        tryToDecreaseCubeAmount(virusType, cubeAmount);
+    public void addCubes(City currentCity, int cubeAmount) {
+        VirusType virusType = currentCity.getVirusType();
+
+        for (int i = 0; i < cubeAmount; i++) {
+            currentCity.addCube(virusType);
+            tryToDecreaseCubeAmount(virusType, cubeAmount);
+        }
+
         notifyAllObservers();
     }
 
@@ -385,13 +390,26 @@ public class Gameboard implements GameBoardObservable {
         return false;
     }
 
+    public void initializeStartingCubes() {
+        for (int drawAmount = 3; drawAmount > 0; drawAmount--) {
+            for (int i = 0; i < 3; i++) {
+                assignStartingCubeToRandomCity(drawAmount);
+            }
+        }
+    }
+
+    private void assignStartingCubeToRandomCity(int cubeAmount) {
+        City randomCity = drawInfectionCard().getCity();
+        addCubes(randomCity, cubeAmount);
+    }
+
     public void handleInfection(InfectionCard infectionCard, int cubeAmount) {
         City infectedCity = infectionCard.getCity();
 
         if (infectedCity.getCubeAmount() >= 3) {  // Hier moet de quarantine specialist nog toegevoegd worden
             handleOutbreak(infectedCity);
         } else {
-            addCubes(infectedCity, infectedCity.getVirusType(), cubeAmount);
+            addCubes(infectedCity, cubeAmount);
         }
     }
 
@@ -405,7 +423,7 @@ public class Gameboard implements GameBoardObservable {
             if (infectedCity.getCubeAmount() >= 3 && !cityHadOutbreak(city)) {  // Hier moet de quarantine specialist nog toegevoegd worden
                 handleOutbreak(city);
             } else {
-                addCubes(city, infectedCity.getVirusType(), 1);
+                addCubes(city, 1);
             }
         }
     }
