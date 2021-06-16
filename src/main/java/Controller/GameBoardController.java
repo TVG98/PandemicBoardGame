@@ -4,6 +4,8 @@ import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Model.*;
+import Observers.GameBoardObserver;
+
 
 import java.util.ArrayList;
 
@@ -135,8 +137,8 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
-    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
-        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
+    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, City chosenCity) {
+        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, chosenCity);
     }
 
     public  void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
@@ -203,5 +205,13 @@ public class GameBoardController {
 
     public City getCity(String cityName) throws CityNotFoundException {
         return gameBoard.getCity(cityName);
+    }
+
+    public void notifyGameBoardObserver() {
+        gameBoard.notifyAllObservers();
+    }
+
+    public void registerObserver(GameBoardObserver observer) {
+        gameBoard.register(observer);
     }
 }

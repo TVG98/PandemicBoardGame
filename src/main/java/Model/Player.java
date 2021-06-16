@@ -31,6 +31,7 @@ public class Player implements PlayerObservable {
 
     public void endTurn() {
         resetActions();
+        notifyAllObservers();
     }
 
     public void addCardToHand(PlayerCard card) {
@@ -118,11 +119,6 @@ public class Player implements PlayerObservable {
     @Override
     public void register(PlayerObserver observer) {
         observers.add(observer);
-    }
-
-    @Override
-    public void unregister(PlayerObserver observer) {
-        observers.remove(observer);
     }
 
     @Override

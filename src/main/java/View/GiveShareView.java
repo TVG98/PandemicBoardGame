@@ -1,6 +1,5 @@
 package View;
 
-import Controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,23 +16,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created June 12 2021 - 2:08 PM
- * @project testGame
- */
-public class DriveView {
+public class GiveShareView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text selectedCityText = new Text("You currently have no city selected");
+    ArrayList<String> availableCardsToGive;
+    Text selectedCityText = new Text("You currently have no city card selected to give away");
     String selectedCity = "None";
-    GameController gameController = GameController.getInstance();
+    Text selectedPlayerText = new Text("You have no player selected");
+    String selectedPlayer = "None";
 
-    public DriveView(Stage primaryStage) {
+    public GiveShareView(Stage primaryStage, ArrayList<String> availableCardsToGive) {
         this.primaryStage = primaryStage;
-        //this.primaryStage.setResizable(true);
-        loadStageWithBorderPane(createDriveViewBorderPane());
+        this.availableCardsToGive = availableCardsToGive;
+        loadStageWithBorderPane(createDoShareViewBorderPane());
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -46,7 +43,7 @@ public class DriveView {
         }
     }
 
-    private BorderPane createDriveViewBorderPane() {
+    private BorderPane createDoShareViewBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -64,32 +61,49 @@ public class DriveView {
         menuBackground.setY((height / 2) - (800 / 2f));
 
         // Setup BorderPane Center //
-        Text actionTitle = new Text("Drive / Ferry");
+        Text actionTitle = new Text("Give knowledge");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
         Text statusText = new Text("You are currently in: " + "Washington");
         statusText.setFill(Color.WHITE);
-        statusText.setFont(Font.font("Arial", 30));
-        Text infoText = new Text("You are able to move to the cities connected to your current city");
+        statusText.setFont(Font.font("Arial", 20));
+        Text infoText = new Text("Select a card to give to another player");
         selectedCityText.setFill(Color.WHITE);
-        selectedCityText.setFont(Font.font("Arial", 30));
+        selectedCityText.setFont(Font.font("Arial", 20));
+        selectedPlayerText.setFill(Color.WHITE);
+        selectedPlayerText.setFont(Font.font("Arial", 20));
         infoText.setFill(Color.WHITE);
         infoText.setFont(Font.font("Arial", 20));
         infoText.setTextAlignment(TextAlignment.CENTER);
 
         ArrayList<Text> texts = new ArrayList<Text>();
-        Collections.addAll(texts, actionTitle, statusText, infoText, selectedCityText);
+        Collections.addAll(texts, actionTitle, statusText, infoText, selectedCityText, selectedPlayerText);
 
         VBox vboxTexts = new VBox();
         vboxTexts.getChildren().addAll(texts);
         vboxTexts.setAlignment(Pos.CENTER);
-        vboxTexts.setSpacing(20);
+        vboxTexts.setSpacing(10);
 
-        ArrayList<Button> cityButtons = getCitiesButtons();
+        ArrayList<Button> playerButtons = getPlayerButtons();
+        for (Button playerButton : playerButtons)
+        {
+            playerButton.setTextFill(Color.WHITE);
+            playerButton.setPrefHeight(50);
+            playerButton.setPrefWidth(200);
+            playerButton.setStyle("-fx-background-color: Gray;");
+            playerButton.setFont(Font.font("Arial", 20));
+        }
+
+        HBox hboxPlayers = new HBox();
+        hboxPlayers.setAlignment(Pos.CENTER);
+        hboxPlayers.getChildren().addAll(playerButtons);
+        hboxPlayers.setSpacing(30);
+
+        ArrayList<Button> cityButtons = getAvailableCityCardsButtons();
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
-            cityButton.setPrefHeight(80);
+            cityButton.setPrefHeight(50);
             cityButton.setPrefWidth(200);
             cityButton.setStyle("-fx-background-color: Gray;");
             cityButton.setFont(Font.font("Arial", 20));
@@ -128,11 +142,11 @@ public class DriveView {
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {backButtonHandler();});
-        Button moveButton = new Button("Move");
-        moveButton.setOnAction(e -> {moveButtonHandler();});
+        Button giveCardButton = new Button("Give card");
+        giveCardButton.setOnAction(e -> {giveCardButtonHandler();});
 
         ArrayList<Button> menuButtons = new ArrayList<Button>();
-        Collections.addAll(menuButtons, backButton, moveButton);
+        Collections.addAll(menuButtons, backButton, giveCardButton);
 
         for (Button menuButton : menuButtons)
         {
@@ -149,42 +163,45 @@ public class DriveView {
         hboxBottomButtons.setSpacing(width / 2);
 
         VBox vboxCenter = new VBox();
-        vboxCenter.getChildren().addAll(vboxTexts, vboxCityRows, hboxBottomButtons);
-        vboxCenter.setSpacing(100);
+        vboxCenter.getChildren().addAll(vboxTexts, hboxPlayers, vboxCityRows, hboxBottomButtons);
+        vboxCenter.setSpacing(20);
         vboxCenter.setAlignment(Pos.CENTER);
 
         // BorderPane Layout //
         bp.getChildren().addAll(backgroundDrop, menuBackground);
         bp.setCenter(vboxCenter);
 
-
         return bp;
     }
 
-    private ArrayList<Button> getCitiesButtons()
+    private ArrayList<Button> getAvailableCityCardsButtons()
     {
-        // TODO: Moet alle steden verbonden aan de huidige stad van de speler ophalen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
-        Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> getCitiesButtonHandler(b1));
+        for (String availableCard : availableCardsToGive) {
+            Button button = new Button(availableCard);
+            button.setOnAction(e -> getCitiesButtonHandler(button));
+            buttons.add(button);
+        }
 
-        Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> getCitiesButtonHandler(b2));
+        return buttons;
+    }
 
-        Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> getCitiesButtonHandler(b3));
 
-        Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> getCitiesButtonHandler(b4));
+    private ArrayList<Button> getPlayerButtons()
+    {
+        // TODO: get initial player
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        Button b1 = new Button("playerName1");
+        b1.setOnAction(e -> getPlayerButtonHandler(b1));
 
-        Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> getCitiesButtonHandler(b5));
+        Button b2 = new Button("playerName2");
+        b2.setOnAction(e -> getPlayerButtonHandler(b2));
 
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getCitiesButtonHandler(b6));
+        Button b3 = new Button("playerName3");
+        b3.setOnAction(e -> getPlayerButtonHandler(b3));
 
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
+        Collections.addAll(buttons, b1, b2, b3);
         return buttons;
     }
 
@@ -192,15 +209,20 @@ public class DriveView {
         GameView view = new GameView(primaryStage);
     }
 
-    private void moveButtonHandler() {
-        gameController.handleDrive(selectedCity);
+    private void giveCardButtonHandler() {
+        // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
         GameView view = new GameView(primaryStage);
+    }
+
+    private void getPlayerButtonHandler(Button button)
+    {
+        selectedPlayerText.setText("You selected " + button.getText() + " to give a card to");
+        selectedPlayer = button.getText();
     }
 
     private void getCitiesButtonHandler(Button button)
     {
-        selectedCityText.setText("You selected: " + button.getText());
+        selectedCityText.setText("You selected the city card of " + button.getText() + " to give away");
         selectedCity = button.getText();
     }
 }
-

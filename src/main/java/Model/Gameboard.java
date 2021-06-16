@@ -3,17 +3,17 @@ package Model;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Exceptions.VirusNotFoundException;
-import Observers.Observable;
-import Observers.Observer;
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-public class Gameboard implements Observable {
-    private final List<Observer> observers = new ArrayList<>();
-    private final City[] cities;
+public class Gameboard implements GameBoardObservable {
+    private List<GameBoardObserver> observers = new ArrayList<>();
+    private final String pathToConnectedCities = "src/main/connectedCities.txt";
+
+    private final City[] cities = new City[48];
     private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
                                             new Cure(VirusType.BLACK),
@@ -36,7 +36,7 @@ public class Gameboard implements Observable {
     private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
     public Gameboard() {
-        cities = initializeCities();
+        initializeCities();
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
@@ -47,31 +47,35 @@ public class Gameboard implements Observable {
         shuffleAllStacks();
     }
 
-    private City[] initializeCities() {
-        City[] newCities = new City[48];
+    private void initializeCities() {
         String[] cityNames = getCityNames();
-        return assignVirusToCities(newCities, cityNames);
+        assignVirusToCities(cityNames);
+        try {
+            assignNeighboursToCities();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     private String[] getCityNames() {
-        return new String[] {"San Fransisco", "Chicago", "Atlanta",
-                "Montreal", "Washington", "New York", "Madrid", "London",
+        return new String[] {"San Francisco", "Chicago", "Atlanta",
+                "Montréal", "Washington", "New York", "Madrid", "London",
                 "Paris", "Essen", "Milan", "St. Petersburg",  // Blue
 
                 "Los Angeles", "Mexico City", "Miami", "Bogota", "Lima",
-                "Santiago", "Buenos Aires", "Sao Paulo", "Lagos", "Kinshasa",
+                "Santiago", "Buenos Aires", "São Paulo", "Lagos", "Kinshasa",
                 "Khartoum", "Johannesburg",  // Yellow
 
                 "Algiers", "Istanbul", "Moscow", "Cairo", "Baghdad", "Riyadh",
-                "Karachi", "Tehran", " Delhi", "Mumbai", "Kolkata",
+                "Karachi", "Tehran", "Delhi", "Mumbai", "Kolkata",
                 "Chennai",  // Black
 
-                "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong",
+                "Bangkok", "Jakarta", "Ho Chi Minh City", "H.K.",
                 "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei",
                 "Manila", "Sydney"};  // Red
     }
 
-    private City[] assignVirusToCities(City[] newCities, String[] cityNames) {
+    private void assignVirusToCities(String[] cityNames) {
         int virusIndex = 0;
 
         for (int i = 0; i < cityNames.length; i++) {
@@ -80,10 +84,40 @@ public class Gameboard implements Observable {
             }
 
             VirusType virusType = viruses[virusIndex-1].getType();
-            newCities[i] = new City(cityNames[i], virusType);
+            cities[i] = new City(cityNames[i], virusType);
+        }
+    }
+
+    private void assignNeighboursToCities() throws IOException {
+        BufferedReader bufferedReader = makeBufferedReader();
+        String line = bufferedReader.readLine();
+
+        while (line != null) {
+            try {
+                assignNeighboursToCity(line);
+            } catch (CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
+            }
+
+            line = bufferedReader.readLine();
         }
 
-        return newCities;
+        bufferedReader.close();
+    }
+
+    private void assignNeighboursToCity(String line) throws CityNotFoundException {
+        City CityOne = getCity(line.split(";")[0]);
+        City CityTwo = getCity(line.split(";")[1]);
+
+        CityOne.addNeighbour(CityTwo);
+        CityTwo.addNeighbour(CityOne);
+    }
+
+    private BufferedReader makeBufferedReader() throws FileNotFoundException {
+        File textFile = new File(pathToConnectedCities);
+        FileReader fileReader = new FileReader(textFile);
+
+        return new BufferedReader(fileReader);
     }
 
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
@@ -136,6 +170,7 @@ public class Gameboard implements Observable {
         } else if (cure.getCureState().equals(CureState.CURED)) {
             cure.setCureState(CureState.ERADICATED);
         }
+        notifyAllObservers();
     }
 
     public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
@@ -155,6 +190,7 @@ public class Gameboard implements Observable {
 
     public void discardPlayerCard(PlayerCard card) {
         playerDiscardStack.add(0, playerStack.get(0));
+        notifyAllObservers();
     }
 
     public InfectionCard drawInfectionCard() {
@@ -175,6 +211,7 @@ public class Gameboard implements Observable {
         Collections.reverse(infectionStack);
         infectionStack.addAll(infectionDiscardStack);
         Collections.reverse(infectionStack);
+        notifyAllObservers();
     }
 
     public void shuffleAllStacks() {
@@ -182,6 +219,7 @@ public class Gameboard implements Observable {
             shufflePlayerCardStack();
             shuffleInfectionStack();
         }
+        notifyAllObservers();
     }
 
     private void shufflePlayerCardStack() {
@@ -202,15 +240,18 @@ public class Gameboard implements Observable {
 
     public void increaseOutbreakCounter() {
         outbreakCounter++;
+        notifyAllObservers();
     }
 
     public void increaseInfectionRate(int infectionRate) {
         this.infectionRate = infectionRate;
+        notifyAllObservers();
     }
 
     public void addCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.addCube(virusType);
         tryToDecreaseCubeAmount(virusType, cubeAmount);
+        notifyAllObservers();
     }
 
     private void tryToIncreaseCubeAmount(VirusType virusType, int cubeAmount) {
@@ -224,6 +265,7 @@ public class Gameboard implements Observable {
     public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.removeCube();
         tryToIncreaseCubeAmount(virusType, cubeAmount);
+        notifyAllObservers();
     }
 
     private void tryToDecreaseCubeAmount(VirusType virusType, int cubeAmount) {
@@ -244,8 +286,29 @@ public class Gameboard implements Observable {
         throw new VirusNotFoundException("Virus not Found");
     }
 
+    @Override
+    public City[] getCities() {
+        return cities;
+    }
+
+    @Override
+    public Cure[] getCures() {
+        return cures;
+    }
+
+    @Override
     public Virus[] getViruses() {
         return viruses;
+    }
+
+    @Override
+    public ArrayList<InfectionCard> getInfectionStack() {
+        return infectionStack;
+    }
+
+    @Override
+    public ArrayList<InfectionCard> getInfectionDiscardStack() {
+        return infectionDiscardStack;
     }
 
     public City getCity(String cityName) throws CityNotFoundException {
@@ -255,25 +318,30 @@ public class Gameboard implements Observable {
             }
         }
 
-        throw new CityNotFoundException("City not found");
+        throw new CityNotFoundException("City not found" + " : " + cityName);
     }
 
+    @Override
     public int getOutbreakCounter() {
         return outbreakCounter;
     }
 
+    @Override
     public int getInfectionRate() {
-        return infectionRate;
+        return infectionRates[infectionRate];
     }
 
+    @Override
     public ArrayList<PlayerCard> getPlayerStack() {
         return playerStack;
     }
 
+    @Override
     public ArrayList<PlayerCard> getPlayerDiscardStack() {
         return playerDiscardStack;
     }
 
+    @Override
     public ArrayList<City> getCitiesWithResearchStations() {
         return citiesWithResearchStations;
     }
@@ -289,6 +357,7 @@ public class Gameboard implements Observable {
                 break;
             }
         }
+        notifyAllObservers();
     }
 
     public void handleEpidemicCard() {
@@ -362,6 +431,7 @@ public class Gameboard implements Observable {
 
     public void addDrawnEpidemicCard() {
         drawnEpidemicCards++;
+        notifyAllObservers();
     }
 
     public boolean gameboardHasResearchStationsLeft() {
@@ -405,21 +475,23 @@ public class Gameboard implements Observable {
 
     public void addInfectionStack(ArrayList<InfectionCard> infectionCards) {
         infectionStack.addAll(infectionCards);
+        notifyAllObservers();
     }
 
     @Override
-    public void register(Observer observer) {
-        observers.add(observer);
+    public void register(GameBoardObserver gameBoardObserver) {
+        unregisterAllObservers();
+        observers.add(gameBoardObserver);
     }
 
     @Override
-    public void unregister(Observer observer) {
-        observers.remove(observer);
+    public void unregisterAllObservers() {
+        observers = new ArrayList<>();
     }
 
     @Override
     public void notifyAllObservers() {
-        for (Observer observer : observers) {
+        for (GameBoardObserver observer : observers) {
             observer.update(this);
         }
     }

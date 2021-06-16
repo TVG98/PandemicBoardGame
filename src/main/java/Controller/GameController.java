@@ -3,6 +3,8 @@ package Controller;
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
 import Model.*;
+import Observers.GameBoardObserver;
+import Observers.PlayerObserver;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -188,7 +190,7 @@ public class GameController {
 
         setDriveBehavior();
 
-        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer);
+        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer, city);
     }
 
     private void setShareKnowledgeBehavior() {
@@ -238,5 +240,22 @@ public class GameController {
 
     public Player getCurrentPlayer() {
         return game.getCurrentPlayer();
+    }
+
+    public void registerPlayerObserver(PlayerObserver observer) {
+        for (Player p : game.getPlayers()) {
+            if (p != null) {
+                p.register(observer);
+            }
+        }
+    }
+
+    public void registerGameBoardObserver(GameBoardObserver observer) {
+        gameBoardController.registerObserver(observer);
+    }
+
+    public void notifyObservers() {
+        gameBoardController.notifyGameBoardObserver();
+        //todo notify playerObserver
     }
 }

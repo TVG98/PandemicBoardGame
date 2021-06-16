@@ -2,8 +2,10 @@ package View;
 
 import Controller.GameController;
 import Model.Connection;
-import Observers.Observable;
-import Observers.Observer;
+import Observers.GameBoardObservable;
+import Observers.PlayerObservable;
+import Observers.PlayerObserver;
+import Observers.GameBoardObserver;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +22,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
-public class GameView implements Observer {
+public class GameView implements PlayerObserver, GameBoardObserver {
     private Stage primaryStage;
     private final String pathToImage = "src/main/media/GameBoardResized.jpg";
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
@@ -30,14 +32,24 @@ public class GameView implements Observer {
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
 
+    Text playerOneOverview = new Text();
+    Text playerTwoOverview = new Text();
+    Text playerThreeOverview = new Text();
+    Text playerFourOverview = new Text();
+    Text outbreakCounter = new Text();
+    Text infectionRate = new Text();
+
     private final GameController gameController;
 
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
+        gameController.registerPlayerObserver(this);
+        gameController.registerGameBoardObserver(this);
         //this.primaryStage.setResizable(true);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
+        gameController.notifyObservers();
     }
 
     private void createGameViewBorderPane() {
@@ -102,9 +114,8 @@ public class GameView implements Observer {
 
         // Top Right //
 
-        Text outbreakCounter = new Text("Outbreak Counter: " + "2" + "/8");
+
         outbreakCounter.setFont(new Font("Castellar", 28));
-        Text infectionRate = new Text("Infection Rate: 3");
         infectionRate.setFont(new Font("Castellar", 28));
 
         VBox vboxTopRight = new VBox();
@@ -126,10 +137,6 @@ public class GameView implements Observer {
 
         Text playerText = new Text("Players");
         playerText.setFont(new Font("Castellar", 20));
-        Text playerOneOverview = new Text("Aad" + " - " + "Researcher");
-        Text playerTwoOverview = new Text("Bert" + " - " + "Dispatcher");
-        Text playerThreeOverview = new Text("Carl" + " - " + "Medic");
-        Text playerFourOverview = new Text("Dirk" + " - " + "Containment Specialist");
 
         ArrayList<Text> playerOverviews = new ArrayList<>();
         Collections.addAll(playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
@@ -171,15 +178,15 @@ public class GameView implements Observer {
             movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
             movementButton.setTextFill(Color.BLACK);
             movementButton.setFont(new Font("Arial", 15));
-            movementButton.setPrefHeight(30);
-            movementButton.setPrefWidth(120);
+            movementButton.setPrefHeight(50);
+            movementButton.setPrefWidth(130);
             movementButton.setOnMouseEntered(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
             movementButton.setOnMouseExited(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxMovementButtons = new HBox();
         hboxMovementButtons.getChildren().addAll(movementButtons);
-        hboxMovementButtons.setSpacing(10);
+        hboxMovementButtons.setSpacing(5);
 
         VBox vboxMovement = new VBox();
         vboxMovement.setAlignment(Pos.CENTER);
@@ -199,26 +206,29 @@ public class GameView implements Observer {
         Button buildButton = new Button("Build");
         buildButton.setOnAction(event -> buildButtonHandler());
 
-        Button shareButton = new Button("Share");
-        shareButton.setOnAction(event -> shareButtonHandler());
+        Button giveShareButton = new Button("Give share");
+        giveShareButton.setOnAction(event -> giveShareButtonHandler());
+
+        Button takeShareButton = new Button("Take share");
+        takeShareButton.setOnAction(event -> takeShareButtonHandler());
 
         ArrayList<Button> actionButtons = new ArrayList<>();
-        Collections.addAll(actionButtons,treatButton, cureButton, buildButton, shareButton);
+        Collections.addAll(actionButtons,treatButton, cureButton, buildButton, takeShareButton, giveShareButton);
 
         for (Button actionButton : actionButtons) {
             actionButton.setOpacity(0.95f);
             actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             actionButton.setTextFill(Color.BLACK);
             actionButton.setFont(new Font("Arial", 15));
-            actionButton.setPrefHeight(30);
-            actionButton.setPrefWidth(120);
+            actionButton.setPrefHeight(50);
+            actionButton.setPrefWidth(130);
             actionButton.setOnMouseEntered(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
             actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
 
         HBox hboxActionsButtons = new HBox();
         hboxActionsButtons.getChildren().addAll(actionButtons);
-        hboxActionsButtons.setSpacing(10);
+        hboxActionsButtons.setSpacing(5);
 
         VBox vboxActions = new VBox();
         vboxActions.getChildren().addAll(actions, hboxActionsButtons);
@@ -292,8 +302,24 @@ public class GameView implements Observer {
 
     }
 
-    private void shareButtonHandler() {
-        DoShareView view = new DoShareView(primaryStage);
+    private void takeShareButtonHandler(){
+        // Replace this //
+        ArrayList<String> placeholder = new ArrayList<String>();
+        placeholder.add("Washington");
+        placeholder.add("New York");
+        //              //
+
+        TakeShareView view = new TakeShareView(primaryStage, placeholder);
+    }
+
+    private void giveShareButtonHandler() {
+        // Replace this //
+        ArrayList<String> placeholder = new ArrayList<String>();
+        placeholder.add("Washington");
+        placeholder.add("Sydney");
+        //              //
+
+        GiveShareView view = new GiveShareView(primaryStage, placeholder);
     }
 
     private void endTurnButtonHandler() {
@@ -485,9 +511,23 @@ public class GameView implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable observable) {
+    private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
+        outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
+        infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
+    }
 
+    private void createUpdatedGameViewBorderPane(PlayerObservable playerObservable) {
+
+    }
+
+    @Override
+    public void update(PlayerObservable playerObservable) {
+        createUpdatedGameViewBorderPane(playerObservable);
+    }
+
+    @Override
+    public void update(GameBoardObservable gameBoardObservable) {
+        createUpdatedGameViewBorderPane(gameBoardObservable);
     }
 }
 

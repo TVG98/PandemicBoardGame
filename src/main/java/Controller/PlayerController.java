@@ -30,17 +30,15 @@ public class PlayerController {
         readyToStart = readyToStart.substring(0, readyToStart.indexOf(","));
         String playerName = playerString.split("playerName=")[1];
         playerName = playerName.substring(0, playerName.indexOf(","));
-
-        if (gameBoardController == null) {
-            gameBoardController = GameBoardController.getInstance();
-        }
         Player player = new Player(new ArrayList<>(), null, null, readyToStart.equals("true"), playerName);
+
         if (!hand.equals("[")) {
             //todo update hand
         }
         if (!role.equals("null")) {
             player.setRole(Role.valueOf(role));
         }
+        gameBoardController = GameBoardController.getInstance();
         if (!playerString.contains("currentCity=null")) {
             try {
                 String currentCity = playerString.split("currentCity=")[1];
