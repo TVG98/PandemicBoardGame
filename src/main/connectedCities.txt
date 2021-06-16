@@ -87,3 +87,6 @@ Tokyo;Seoul
 Tokyo;Shanghai
 Taipei;Osaka
 Tokyo;Osaka
+San Francisco;Tokyo
+San Francisco;Manila
+Los Angeles;Sydney
