@@ -93,7 +93,6 @@ public class Player {
         actions = 4;
     }
 
-
     public int getActions() {
         return actions;
     }

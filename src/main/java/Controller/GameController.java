@@ -25,7 +25,7 @@ public class GameController {
         game = new Game(lobbyController.getLobby().getPlayers());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
-
+        gameBoardController.makeGameBoard();
         if (localPlayerIsPlayerOne()) {
             startGame();
         }
@@ -45,8 +45,6 @@ public class GameController {
     }
 
     public void startGame() {
-        gameBoardController.makeGameBoard();
-
         for (Player p : game.getPlayers()) {
             if (p != null) {
                 if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
