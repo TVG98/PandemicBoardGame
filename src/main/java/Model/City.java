@@ -6,7 +6,7 @@ public class City {
     private final String name;
     private final ArrayList<Cube> cubes = new ArrayList<>();
     private final VirusType virusType;
-    private ArrayList<City> nearCities;
+    private final ArrayList<City> nearCities = new ArrayList<>();
 
     public City(String name, VirusType virusType) {
         this.name = name;
@@ -29,8 +29,8 @@ public class City {
         return nearCities.contains(city);
     }
 
-    public void initializeNeighbours(ArrayList<City> nearCities) {
-        this.nearCities = nearCities;
+    public void addNeighbour(City city) {
+        nearCities.add(city);
     }
 
     public ArrayList<City> getNearCities() {

@@ -13,7 +13,7 @@ public class Gameboard implements GameBoardObservable {
     private List<GameBoardObserver> observers = new ArrayList<>();
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
 
-    private final City[] cities;
+    private final City[] cities = new City[48];
     private final Cure[] cures = new Cure[]{new Cure(VirusType.BLUE),
                                             new Cure(VirusType.YELLOW),
                                             new Cure(VirusType.BLACK),
@@ -36,7 +36,7 @@ public class Gameboard implements GameBoardObservable {
     private final int[] infectionRates = new int[]{2, 2, 2, 3, 3, 4, 4};
 
     public Gameboard() {
-        cities = initializeCities();
+        initializeCities();
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
@@ -47,67 +47,70 @@ public class Gameboard implements GameBoardObservable {
         shuffleAllStacks();
     }
 
-    private City[] initializeCities() {
-        City[] newCities = new City[48];
+    private void initializeCities() {
         String[] cityNames = getCityNames();
-        // TODO: initialize connections between cities
-        return assignVirusToCities(newCities, cityNames);
+        assignVirusToCities(cityNames);
+        try {
+            assignNeighboursToCities();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     private String[] getCityNames() {
-        return new String[] {"San Fransisco", "Chicago", "Atlanta",
-                "Montreal", "Washington", "New York", "Madrid", "London",
+        return new String[] {"San Francisco", "Chicago", "Atlanta",
+                "Montréal", "Washington", "New York", "Madrid", "London",
                 "Paris", "Essen", "Milan", "St. Petersburg",  // Blue
 
                 "Los Angeles", "Mexico City", "Miami", "Bogota", "Lima",
-                "Santiago", "Buenos Aires", "Sao Paulo", "Lagos", "Kinshasa",
+                "Santiago", "Buenos Aires", "São Paulo", "Lagos", "Kinshasa",
                 "Khartoum", "Johannesburg",  // Yellow
 
                 "Algiers", "Istanbul", "Moscow", "Cairo", "Baghdad", "Riyadh",
-                "Karachi", "Tehran", " Delhi", "Mumbai", "Kolkata",
+                "Karachi", "Tehran", "Delhi", "Mumbai", "Kolkata",
                 "Chennai",  // Black
 
-                "Bangkok", "Jakarta", "Ho Chi Minh City", "Hong Kong",
+                "Bangkok", "Jakarta", "Ho Chi Minh City", "H.K.",
                 "Shanghai", "Beijing", "Seoul", "Tokyo", "Osaka", "Taipei",
                 "Manila", "Sydney"};  // Red
     }
 
-    private City[] assignVirusToCities(City[] newCities, String[] cityNames) {
+    private void assignVirusToCities(String[] cityNames) {
         int virusIndex = 0;
+
         for (int i = 0; i < cityNames.length; i++) {
             if (i % (cityNames.length/viruses.length) == 0) {
                 virusIndex++;
             }
+
             VirusType virusType = viruses[virusIndex-1].getType();
-            newCities[i] = new City(cityNames[i], virusType);
-            //todo test dit voordat je pusht, lobby werkt hierdoor niet meer
-//            try {
-//                assignNeighboursToCity(newCities[i]);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            cities[i] = new City(cityNames[i], virusType);
         }
-        return newCities;
     }
 
-    private void assignNeighboursToCity(City city) throws IOException {
+    private void assignNeighboursToCities() throws IOException {
         BufferedReader bufferedReader = makeBufferedReader();
         String line = bufferedReader.readLine();
-        ArrayList<City> neighbours = new ArrayList<>();
 
-        try {
-            while (line != null) {
-                line = bufferedReader.readLine();
-                String[] cityName = line.split(";");
-                if(cityName[0].equals(city.getName())) {
-                    neighbours.add(getCity(cityName[1]));
-                }
+        while (line != null) {
+            try {
+                assignNeighboursToCity(line);
+            } catch (CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
             }
-        } catch (CityNotFoundException e) {
-            e.printStackTrace();
+
+            line = bufferedReader.readLine();
         }
 
-        city.initializeNeighbours(neighbours);
+        bufferedReader.close();
+    }
+
+    private void assignNeighboursToCity(String line) throws CityNotFoundException {
+        City CityOne = getCity(line.split(";")[0]);
+        City CityTwo = getCity(line.split(";")[1]);
+
+        CityOne.addNeighbour(CityTwo);
+        CityTwo.addNeighbour(CityOne);
     }
 
     private BufferedReader makeBufferedReader() throws FileNotFoundException {
@@ -315,7 +318,7 @@ public class Gameboard implements GameBoardObservable {
             }
         }
 
-        throw new CityNotFoundException("City not found");
+        throw new CityNotFoundException("City not found" + " : " + cityName);
     }
 
     @Override

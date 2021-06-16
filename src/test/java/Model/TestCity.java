@@ -3,8 +3,6 @@ package Model;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -21,10 +19,8 @@ public class TestCity {
     }
 
     private void makeAtlantaCity() {
-        ArrayList<City> neighbours = new ArrayList<>();
-        neighbours.add(newYork);
-        neighbours.add(miami);
-        atlanta.initializeNeighbours(neighbours);
+        atlanta.addNeighbour(newYork);
+        atlanta.addNeighbour(miami);
     }
 
     @Test
