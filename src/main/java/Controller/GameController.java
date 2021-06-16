@@ -25,7 +25,10 @@ public class GameController {
         game = new Game(lobbyController.getLobby().getPlayers());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
-        startGame();
+
+        if (localPlayerIsPlayerOne()) {
+            startGame();
+        }
     }
 
     public static GameController getInstance() {
@@ -35,7 +38,15 @@ public class GameController {
         return gameController;
     }
 
+    private boolean localPlayerIsPlayerOne() {
+        String localPlayerName = playerController.getCurrentPlayerName();
+        String firstPlayerName = game.getPlayers()[0].getPlayerName();
+        return localPlayerName.equals(firstPlayerName);
+    }
+
     public void startGame() {
+        gameBoardController.makeGameBoard();
+
         for (Player p : game.getPlayers()) {
             if (p != null) {
                 if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
@@ -67,12 +78,13 @@ public class GameController {
 
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
+        // ik ook niet man
 
         if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
-            gameBoardController.handleInfectionCardDraw();  // Doe de infections
-            getCurrentPlayer().endTurn();  // Reset
-            changeTurn();  // end
+            gameBoardController.handleInfectionCardDraw();
+            getCurrentPlayer().endTurn();
+            changeTurn();
         }
     }
 

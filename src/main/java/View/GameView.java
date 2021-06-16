@@ -630,7 +630,8 @@ public class GameView implements GameObserver, GameBoardObserver {
     private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
         outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
-        City[] cities = gameBoardObservable.getCities();
+        List<City> cityList = gameBoardObservable.getCities();
+        City[] cities = cityList.toArray(new City[cityList.size()]);
 
         for (Map.Entry<String, int[]> entry : this.cities.entrySet() )
         {

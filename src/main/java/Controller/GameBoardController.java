@@ -5,9 +5,13 @@ import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
+import com.google.cloud.firestore.DocumentSnapshot;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class GameBoardController {
     static GameBoardController gameBoardController;
@@ -21,12 +25,13 @@ public class GameBoardController {
     private FindCureBehavior findCureBehavior;
     private ShareKnowledgeBehavior shareKnowledgeBehavior;
 
-    private final Gameboard gameBoard;
+    private Gameboard gameBoard;
     private final PlayerController playerController;
+    private final DatabaseController databaseController;
 
     private GameBoardController() {
-        gameBoard = new Gameboard();
         playerController = PlayerController.getInstance();
+        databaseController = DatabaseController.getInstance();
     }
 
     public static GameBoardController getInstance() {
@@ -35,6 +40,10 @@ public class GameBoardController {
         }
 
         return gameBoardController;
+    }
+
+    public void makeGameBoard() {
+        gameBoard = new Gameboard();
     }
 
     public void handleDrive(Player currentPlayer, City chosenCity) {
@@ -75,6 +84,7 @@ public class GameBoardController {
 
     public void handleFindCure(Player currentPlayer, City chosenCity) {
         findCureBehavior.findCure(currentPlayer, chosenCity);
+        updateGameBoardInServer();
     }
 
     public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
@@ -85,6 +95,7 @@ public class GameBoardController {
         try {
             Cure cure = gameBoard.getCureWithVirusType(virusType);
             gameBoard.flipCurePawn(cure);
+            updateGameBoardInServer();
         } catch (CureNotFoundException e) {
             e.printStackTrace();
         }
@@ -94,35 +105,45 @@ public class GameBoardController {
         for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
         }
+
+        updateGameBoardInServer();
     }
 
     public void handleEpidemicCard() {
         gameBoard.handleEpidemicCard();
+        updateGameBoardInServer();
     }
 
     // Override
     public void handleInfectionCardDraw() {
         gameBoard.handleInfectionCardDraw(1);
+        updateGameBoardInServer();
     }
 
     public void handleInfectionCardDraw(int cubeAmount) {
         gameBoard.handleInfectionCardDraw(cubeAmount);
+        updateGameBoardInServer();
     }
 
     public void initializeStartingCubes() {
         gameBoard.initializeStartingCubes();
+        updateGameBoardInServer();
     }
 
     public void handleOutbreak(City infectedCity) {
         gameBoard.handleOutbreak(infectedCity);
+        updateGameBoardInServer();
     }
 
     public ArrayList<InfectionCard> getTopSixCards() {
-        return gameBoard.getTopSixInfectionStack();
+        ArrayList<InfectionCard> infectionCards = gameBoard.getTopSixInfectionStack();
+        updateGameBoardInServer();
+        return infectionCards;
     }
 
     public void addTopSixCards(ArrayList<InfectionCard> cards) {
         gameBoard.addInfectionStack(cards);
+        updateGameBoardInServer();
     }
 
     public void handlePlayerPawnMovement(Player player) {
@@ -135,6 +156,7 @@ public class GameBoardController {
 
     public void handleBuildResearchStation(Player currentPlayer, City currentCity) {
         buildResearchStationBehavior.buildResearchStation(currentPlayer, currentCity);
+        updateGameBoardInServer();
     }
 
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
@@ -143,14 +165,16 @@ public class GameBoardController {
 
     public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, City chosenCity) {
         shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, chosenCity);
+        updateGameBoardInServer();
     }
 
-    public  void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
+    public void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
         this.shareKnowledgeBehavior = shareKnowledgeBehavior;
     }
 
     public void addResearchStationToCity(City city) {
         gameBoard.addResearchStationToCity(city);
+        updateGameBoardInServer();
     }
 
     public void setTreatDiseaseBehavior(TreatDiseaseBehavior treatDiseaseBehavior) {
@@ -159,6 +183,7 @@ public class GameBoardController {
 
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
         treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
+        updateGameBoardInServer();
     }
 
     public boolean cityHasResearchStation(City city) {
@@ -217,5 +242,89 @@ public class GameBoardController {
 
     public void registerObserver(GameBoardObserver observer) {
         gameBoard.register(observer);
+    }
+
+    public void updateGameBoardInServer() {
+        databaseController.updateGameBoard(gameBoard);
+    }
+
+    public void update(DocumentSnapshot snapshot) {
+        if (gameBoard != null) {
+            updateGameBoardLocal(snapshot);
+        }
+    }
+
+    private void updateGameBoardLocal(DocumentSnapshot snapshot) {
+        Map<String, Object> data = snapshot.getData();
+        updateCitiesInGameBoard(data.get("cities").toString());
+    }
+
+    private void updateCitiesInGameBoard(String citiesString) {
+        citiesString = getCityStringWithoutFirstAndLastChar(citiesString);
+        String[] citiesArray = getSplittedCityStringsAsArray(citiesString);
+        citiesArray = getCitiesWithoutCurlyBrackets(citiesArray);
+        gameBoard.setCities(createAllCitiesFromDoc(citiesArray));
+    }
+
+    private String getCityStringWithoutFirstAndLastChar(String cities) {
+        return cities.substring(1, cities.length() - 1);
+    }
+
+    private String[] getSplittedCityStringsAsArray(String cities) {
+        return cities.split("}, ");
+    }
+
+    private String[] getCitiesWithoutCurlyBrackets(String[] citiesArray) {
+        for (int i = 0; i < citiesArray.length; i++) {
+            citiesArray[i] = citiesArray[i].substring(1);
+        }
+
+        return citiesArray;
+    }
+
+    private List<City> createAllCitiesFromDoc(String[] citiesArray) {
+        ArrayList<City> cities = new ArrayList<>();
+
+        for (String city : citiesArray) {
+            cities.add(createCityFromDoc(city));
+        }
+
+        return cities;
+    }
+
+    private City createCityFromDoc(String cityString) {
+        cityString = cityString + ",";
+        String name = getCityNameFromString(cityString);
+        VirusType virusType = getCityVirusTypeFromString(cityString);
+        ArrayList<Cube> cubeAmount = getCityCubeAmountFromString(cityString, virusType);
+        ArrayList<String> nearCities = getCityNearCitiesFromString(cityString);
+
+        return new City(name, cubeAmount, virusType, nearCities);
+    }
+
+    private VirusType getCityVirusTypeFromString(String cityString) {
+        String virusTypeString = cityString.split("virusType=")[1].split(",")[0];
+        return VirusType.valueOf(virusTypeString);
+    }
+
+    private String getCityNameFromString(String cityString) {
+        return cityString.split("name=")[1].split(",")[0];
+    }
+
+    private ArrayList<Cube> getCityCubeAmountFromString(String cityString, VirusType virusType) {
+        String cubeAmountString = cityString.split("cubeAmount=")[1].split(",")[0];
+        int cubeAmount = Integer.parseInt(cubeAmountString);
+        ArrayList<Cube> cubes = new ArrayList<>();
+
+        for (int i = 0; i < cubeAmount; i++) {
+            cubes.add(new Cube(virusType));
+        }
+
+        return cubes;
+    }
+
+    private ArrayList<String> getCityNearCitiesFromString(String cityString) {
+        String[] nearCities = cityString.split("\\[")[1].split("]")[0].split(", ");
+        return new ArrayList<>(Arrays.asList(nearCities));
     }
 }

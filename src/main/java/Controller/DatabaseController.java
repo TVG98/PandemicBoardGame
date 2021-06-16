@@ -2,6 +2,7 @@ package Controller;
 
 import Exceptions.LobbyFullException;
 import Model.FirestoreDatabase;
+import Model.Gameboard;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
@@ -25,6 +26,10 @@ public class DatabaseController {
         database.updatePlayerInServer(player);
     }
 
+    public void updateGameBoard(Gameboard gameboard) {
+        database.updateCities(gameboard.getCities());
+    }
+
     public String makeLobby() {
         return database.makeLobby();
     }
@@ -44,6 +49,7 @@ public class DatabaseController {
 
     public void update(DocumentSnapshot snapshot) {
         LobbyController.getInstance().update(snapshot);
+        GameBoardController.getInstance().update(snapshot);
     }
 
     public DocumentSnapshot getLobbyDocument(String lobbyCode) {
