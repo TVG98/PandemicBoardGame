@@ -76,6 +76,7 @@ public class Player implements PlayerObservable {
         notifyAllObservers();
     }
 
+    @Override
     public City getCurrentCity() {
         return currentCity;
     }
@@ -94,6 +95,7 @@ public class Player implements PlayerObservable {
         notifyAllObservers();
     }
 
+    @Override
     public String getPlayerName() {
         return playerName;
     }
@@ -107,7 +109,8 @@ public class Player implements PlayerObservable {
         notifyAllObservers();
     }
 
-    public int getActionsLeft() {
+    @Override
+    public int getActions() {
         return actions;
     }
 
@@ -126,5 +129,10 @@ public class Player implements PlayerObservable {
         for (PlayerObserver observer : observers) {
             observer.update(this);
         }
+    }
+
+    @Override
+    public String getRoleAsString() {
+        return role.toString();
     }
 }

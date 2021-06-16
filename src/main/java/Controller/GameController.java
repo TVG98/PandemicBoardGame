@@ -262,6 +262,10 @@ public class GameController {
 
     public void notifyObservers() {
         gameBoardController.notifyGameBoardObserver();
-        //todo notify playerObserver
+        for (Player p : game.getPlayers()) {
+            if (p != null) {
+                p.notifyAllObservers();
+            }
+        }
     }
 }

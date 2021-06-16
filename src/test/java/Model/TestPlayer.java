@@ -72,7 +72,7 @@ public class TestPlayer {
         player.decrementActions();
 
         int expectedActionsLeft = 3;
-        int actionsLeft = player.getActionsLeft();
+        int actionsLeft = player.getActions();
 
         assertThat(actionsLeft, is(expectedActionsLeft));
     }
@@ -83,7 +83,7 @@ public class TestPlayer {
         player.resetActions();
 
         int expectedActionsLeft = 4;
-        int actionsLeft = player.getActionsLeft();
+        int actionsLeft = player.getActions();
 
         assertThat(actionsLeft, is(expectedActionsLeft));
     }

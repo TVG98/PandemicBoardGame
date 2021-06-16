@@ -21,7 +21,7 @@ public class PlayerController {
         return playerController;
     }
 
-    public Player createPlayer(String playerString) {
+    public Player createPlayerFromDocData(String playerString) {
         String hand = playerString.split("hand=")[1];
         hand = hand.substring(0, hand.indexOf("]"));//todo check if correct
         String role = playerString.split("role=")[1];
