@@ -68,12 +68,13 @@ public class GameController {
 
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
+        // ik ook niet man
 
         if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
-            gameBoardController.handleInfectionCardDraw();  // Doe de infections
-            getCurrentPlayer().endTurn();  // Reset
-            changeTurn();  // end
+            gameBoardController.handleInfectionCardDraw();
+            getCurrentPlayer().endTurn();
+            changeTurn();
         }
     }
 

@@ -117,7 +117,6 @@ public class TestGameBoard {
     public void Should_SayThatWashingTonIsConnectedToAtlanta() {
         boolean isConnected = false;
 
-
         try {
             City atlanta = gameboard.getCity("Atlanta");
             isConnected = gameboard.getCity("Washington").checkCityForAdjacency(atlanta);
