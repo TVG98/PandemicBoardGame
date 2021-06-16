@@ -4,8 +4,8 @@ import Controller.GameController;
 import Model.City;
 import Model.Connection;
 import Observers.GameBoardObservable;
-import Observers.PlayerObservable;
-import Observers.PlayerObserver;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import Observers.GameBoardObserver;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
-public class GameView implements PlayerObserver, GameBoardObserver {
+public class GameView implements GameObserver, GameBoardObserver {
     private Stage primaryStage;
     private final String pathToImage = "src/main/media/GameBoardResized.jpg";
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
@@ -50,7 +50,7 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         this.primaryStage.setResizable(false);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
-        gameController.notifyObservers();
+        gameController.notifyGameBoardObserver();
     }
 
     private void createGameViewBorderPane() {
@@ -648,13 +648,13 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         }
     }
 
-    private void createUpdatedGameViewBorderPane(PlayerObservable playerObservable) {
+    private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
 
     }
 
     @Override
-    public void update(PlayerObservable playerObservable) {
-        createUpdatedGameViewBorderPane(playerObservable);
+    public void update(GameObservable gameObservable) {
+        createUpdatedGameViewBorderPane(gameObservable);
     }
 
     @Override

@@ -1,8 +1,12 @@
 package Model;
 
+import Observers.GameObservable;
+import Observers.GameObserver;
+
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements GameObservable {
+    private final ArrayList<GameObserver> observers = new ArrayList<>();
 
     private final Player[] players;
     private int currentPlayerIndex = 0;
@@ -16,8 +20,11 @@ public class Game {
     }
 
     public void nextTurn() {
-        currentPlayerIndex++;
-        currentPlayer = players[currentPlayerIndex % players.length];
+        currentPlayer = null;
+        while (currentPlayer == null) {
+            currentPlayerIndex++;
+            currentPlayer = players[currentPlayerIndex % players.length];
+        }
     }
 
     public void setLost() {
@@ -44,19 +51,40 @@ public class Game {
         return this.players.length;
     }
 
+    @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    @Override
     public Player[] getPlayers() {
         return players;
     }
 
+    @Override
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    @Override
     public boolean getLost() {
         return lost;
     }
 
+    @Override
     public boolean getWon() {
         return won;
+    }
+
+    @Override
+    public void register(GameObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyAllObservers() {
+        for (GameObserver observer : observers) {
+            observer.update(this);
+        }
     }
 }

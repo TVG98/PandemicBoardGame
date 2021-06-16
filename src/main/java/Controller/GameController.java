@@ -4,7 +4,7 @@ import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
-import Observers.PlayerObserver;
+import Observers.GameObserver;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,7 +32,6 @@ public class GameController {
         if (gameController == null) {
             gameController = new GameController();
         }
-
         return gameController;
     }
 
@@ -236,24 +235,19 @@ public class GameController {
         return game.getCurrentPlayer();
     }
 
-    public void registerPlayerObserver(PlayerObserver observer) {
-        for (Player p : game.getPlayers()) {
-            if (p != null) {
-                p.register(observer);
-            }
-        }
+    public void registerPlayerObserver(GameObserver observer) {
+        game.register(observer);
     }
 
     public void registerGameBoardObserver(GameBoardObserver observer) {
         gameBoardController.registerObserver(observer);
     }
 
-    public void notifyObservers() {
+    public void notifyGameBoardObserver() {
         gameBoardController.notifyGameBoardObserver();
-        for (Player p : game.getPlayers()) {
-            if (p != null) {
-                p.notifyAllObservers();
-            }
-        }
+    }
+
+    public void notifyGameObserver() {
+        game.notifyAllObservers();
     }
 }

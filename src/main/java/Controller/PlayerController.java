@@ -89,10 +89,12 @@ public class PlayerController {
 
     public void addCard(PlayerCard card, Player player) {
         player.addCardToHand(card);
+        notifyGameObserver();
     }
 
     public void removeCard(PlayerCard card, Player player) {
         player.removeCardFromHand(card);
+        notifyGameObserver();
     }
 
     public City getPlayerCurrentCity(Player player) {
@@ -124,9 +126,15 @@ public class PlayerController {
 
     public void setCurrentCity(Player player, City city) {
         player.setCurrentCity(city);
+        notifyGameObserver();
     }
 
     public void decrementActions(Player player) {
         player.decrementActions();
+        notifyGameObserver();
+    }
+
+    private void notifyGameObserver() {
+        GameController.getInstance().notifyGameObserver();
     }
 }

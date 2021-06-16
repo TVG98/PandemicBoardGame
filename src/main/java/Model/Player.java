@@ -1,14 +1,8 @@
 package Model;
 
-import Observers.PlayerObservable;
-import Observers.PlayerObserver;
-
 import java.util.ArrayList;
-import java.util.List;
 
-public class Player implements PlayerObservable {
-    private final List<PlayerObserver> observers = new ArrayList<>();
-
+public class Player {
     private ArrayList<PlayerCard> hand = new ArrayList<>();
     private Role role;
     private City currentCity;
@@ -31,17 +25,14 @@ public class Player implements PlayerObservable {
 
     public void endTurn() {
         resetActions();
-        notifyAllObservers();
     }
 
     public void addCardToHand(PlayerCard card) {
         hand.add(card);
-        notifyAllObservers();
     }
 
     public void removeCardFromHand(PlayerCard card) {
         hand.removeIf(playerCard -> playerCard == card);
-        notifyAllObservers();
     }
 
     public ArrayList<PlayerCard> getHand() {
@@ -63,7 +54,6 @@ public class Player implements PlayerObservable {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -73,17 +63,14 @@ public class Player implements PlayerObservable {
 
     public void setRole(Role role) {
         this.role = role;
-        notifyAllObservers();
     }
 
-    @Override
     public City getCurrentCity() {
         return currentCity;
     }
 
     public void setCurrentCity(City city) {
         currentCity = city;
-        notifyAllObservers();
     }
 
     public boolean getReadyToStart() {
@@ -92,10 +79,8 @@ public class Player implements PlayerObservable {
 
     public void setReadyToStart(boolean readyToStart) {
         this.readyToStart = readyToStart;
-        notifyAllObservers();
     }
 
-    @Override
     public String getPlayerName() {
         return playerName;
     }
@@ -106,33 +91,14 @@ public class Player implements PlayerObservable {
 
     public void resetActions() {
         actions = 4;
-        notifyAllObservers();
     }
 
-    @Override
+
     public int getActions() {
         return actions;
     }
 
     public void decrementActions() {
         actions--;
-        notifyAllObservers();
-    }
-
-    @Override
-    public void register(PlayerObserver observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void notifyAllObservers() {
-        for (PlayerObserver observer : observers) {
-            observer.update(this);
-        }
-    }
-
-    @Override
-    public String getRoleAsString() {
-        return role.toString();
     }
 }
