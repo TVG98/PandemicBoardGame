@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Model.City;
 import Model.Connection;
+import Model.Player;
 import Observers.GameBoardObservable;
 import Observers.GameObservable;
 import Observers.GameObserver;
@@ -51,6 +52,7 @@ public class GameView implements GameObserver, GameBoardObserver {
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
         gameController.notifyGameBoardObserver();
+        gameController.notifyGameObserver();
     }
 
     private void createGameViewBorderPane() {
@@ -151,7 +153,6 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         VBox vboxPlayerList = new VBox();
         vboxPlayerList.getChildren().addAll(playerOverviews);
-
 
         VBox vboxPlayers = new VBox();
         vboxPlayers.setSpacing(10);
@@ -650,6 +651,39 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
+        Player[] players = gameObservable.getPlayers();
+
+        int index = 1;
+
+        for (Player player : players)
+        {
+            System.out.println("a");
+            if (player != null)
+            {
+                System.out.println("b");
+                switch (index)
+                {
+                    case 1: {
+                        playerOneOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                    case 2: {
+                        playerTwoOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                    case 3: {
+                        playerThreeOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                    case 4: {
+                        playerFourOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                }
+            }
+            index++;
+        }
+
 
     }
 
