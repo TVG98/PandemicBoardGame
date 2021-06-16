@@ -32,24 +32,30 @@ public class PlayerController {
         playerName = playerName.substring(0, playerName.indexOf(","));
         Player player = new Player(new ArrayList<>(), null, null, readyToStart.equals("true"), playerName);
 
+        System.out.println(0);
         if (!hand.equals("[")) {
             //todo update hand
         }
+        System.out.println(1);
         if (!role.equals("null")) {
+            System.out.println("new role");
             player.setRole(Role.valueOf(role));
         }
+        System.out.println(2);
         gameBoardController = GameBoardController.getInstance();
-        if (!playerString.contains("currentCity=null")) {
-            try {
-                String currentCity = playerString.split("currentCity=")[1];
-                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
-                currentCity = currentCity.split("name=")[1];
-                currentCity = currentCity.substring(0, currentCity.indexOf(","));
-                player.setCurrentCity(gameBoardController.getCity(currentCity));
-            } catch (CityNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+        System.out.println(3);
+//        if (!playerString.contains("currentCity=null")) {
+//            try {
+//                String currentCity = playerString.split("currentCity=")[1];
+//                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
+//                currentCity = currentCity.split("name=")[1];
+//                currentCity = currentCity.substring(0, currentCity.indexOf(","));
+//                player.setCurrentCity(gameBoardController.getCity(currentCity));
+//            } catch (CityNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        System.out.println(4);
         return player;
     }
 

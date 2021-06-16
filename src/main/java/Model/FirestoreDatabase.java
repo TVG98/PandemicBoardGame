@@ -102,6 +102,7 @@ public class FirestoreDatabase {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("Joinable", true);
+        hashMap.put("GameStarted", false);
         hashMap.put("Player1", null);
         hashMap.put("Player2", null);
         hashMap.put("Player3", null);
@@ -121,6 +122,10 @@ public class FirestoreDatabase {
         hashMap.put("viruses", null);
 
         return hashMap;
+    }
+
+    public void updateGameStarted(boolean gameStarted) {
+        docRef.update("GameStarted", gameStarted);
     }
 
     public void updateCities(List<City> cities) {

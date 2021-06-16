@@ -657,10 +657,8 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (Player player : players)
         {
-            System.out.println("a");
             if (player != null)
             {
-                System.out.println("b");
                 switch (index)
                 {
                     case 1: {

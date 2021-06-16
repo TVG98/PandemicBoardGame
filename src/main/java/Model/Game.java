@@ -52,6 +52,11 @@ public class Game implements GameObservable {
         return this.players.length;
     }
 
+    public void updatePlayer(int loc, Player player) {
+        players[loc] = player;
+        notifyAllObservers();
+    }
+
     @Override
     public Player getCurrentPlayer() {
         return currentPlayer;

@@ -43,13 +43,26 @@ public class DatabaseController {
         database.updateJoinable(lobbyCode, joinable);
     }
 
+    public void updateGameStarted(boolean gameStarted) {
+        database.updateGameStarted(gameStarted);
+    }
+
     public void removePlayer(Player player) {
         database.removePlayerFromLobby(player);
     }
 
     public void update(DocumentSnapshot snapshot) {
-        LobbyController.getInstance().update(snapshot);
-        GameBoardController.getInstance().update(snapshot);
+        System.out.println(snapshot.getBoolean("Joinable"));
+        if (!snapshot.getBoolean("GameStarted")) {
+            LobbyController.getInstance().update(snapshot);
+        }
+        System.out.println("na de lobby controller" + snapshot.getBoolean("Joinable"));
+        //GameBoardController.getInstance().update(snapshot);
+        System.out.println("joinable dus? " + snapshot.getBoolean("Joinable"));
+        if (!snapshot.getBoolean("Joinable")) {
+            System.out.println("Kom ik hier");
+            GameController.getInstance().updatePlayersInGame(snapshot);
+        }
     }
 
     public DocumentSnapshot getLobbyDocument(String lobbyCode) {

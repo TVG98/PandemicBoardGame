@@ -5,6 +5,7 @@ import Exceptions.CityNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
+import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,6 +23,7 @@ public class GameController {
         lobbyController = LobbyController.getInstance();
         lobbyController.setServerLobbyNotJoinable();
         databaseController = DatabaseController.getInstance();
+        databaseController.updateGameStarted(true);
         game = new Game(lobbyController.getLobby().getPlayers());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
@@ -242,6 +244,32 @@ public class GameController {
 
     public Player getCurrentPlayer() {
         return game.getCurrentPlayer();
+    }
+
+    public synchronized void updatePlayersInGame(DocumentSnapshot snapshot) {
+        System.out.println(snapshot.getData().get("Player1").toString());
+        System.out.println(snapshot.getData().get("Player2").toString());
+        System.out.println(snapshot.getData().get("Player3").toString());
+        for (int i = 0; i < 4; i++) {
+            tryToUpdatePlayerInGame(snapshot, i);
+        }
+    }
+
+    private void tryToUpdatePlayerInGame(DocumentSnapshot snapshot, int i) {
+        Object object = snapshot.get("Player" + (i + 1));
+
+        if (object != null) {
+            System.out.println("niet null");
+            updatePlayerInGame(object, i);
+        }
+
+    }
+
+    private void updatePlayerInGame(Object object, int i) {
+        String playerString = object.toString();
+        System.out.println(playerString);
+        Player player = playerController.createPlayerFromDocData(playerString);
+        game.updatePlayer(i, player);
     }
 
     public void registerPlayerObserver(GameObserver observer) {

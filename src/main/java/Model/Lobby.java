@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lobby implements LobbyObservable {
-    private final List<LobbyObserver> observers = new ArrayList<>();
+    private List<LobbyObserver> observers = new ArrayList<>();
 
     private boolean joinable;
     private final Player[] players;
@@ -80,6 +80,10 @@ public class Lobby implements LobbyObservable {
     public void updatePlayer(int loc, Player player) {
         players[loc] = player;
         notifyAllObservers();
+    }
+
+    public void unregister() {
+        observers = new ArrayList<>();
     }
 
     @Override

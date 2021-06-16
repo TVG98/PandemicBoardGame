@@ -190,4 +190,8 @@ public class LobbyController {
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {
         lobby.register(lobbyObserver);
     }
+
+    public void unregisterLobbyObserver() {
+        lobby.unregister();
+    }
 }
