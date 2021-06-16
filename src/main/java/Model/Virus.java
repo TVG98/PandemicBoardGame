@@ -1,15 +1,17 @@
 package Model;
 
 public class Virus {
-    private final VirusType type;
+    private final VirusType VIRUS_TYPE;
+    private final int MAX_CUBE_AMOUNT = 24;
+
     private int cubeAmount = 24;
 
-    public Virus(VirusType type) {
-        this.type = type;
+    public Virus(VirusType virusType) {
+        this.VIRUS_TYPE = virusType;
     }
 
     public VirusType getType() {
-        return type;
+        return VIRUS_TYPE;
     }
 
     public int getCubeAmount() {
@@ -17,7 +19,7 @@ public class Virus {
     }
 
     public void increaseCubeAmount(int amount) {
-        cubeAmount = Math.min(cubeAmount + amount, 24);
+        cubeAmount = Math.min(cubeAmount + amount, MAX_CUBE_AMOUNT);
     }
 
     public void decreaseCubeAmount(int amount) {

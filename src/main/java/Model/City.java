@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class City {
     private final String name;
     private final ArrayList<Cube> cubes = new ArrayList<>();
-    private final VirusType virusType;
+    private final VirusType VIRUS_TYPE;
     private final ArrayList<String> nearCities = new ArrayList<>();
 
     public City(String name, VirusType virusType) {
         this.name = name;
-        this.virusType = virusType;
+        this.VIRUS_TYPE = virusType;
     }
 
     public String getName() {
@@ -18,15 +18,15 @@ public class City {
     }
 
     public int getCubeAmount() {
-        return this.cubes.size();
+        return cubes.size();
     }
 
     public VirusType getVirusType() {
-        return virusType;
+        return VIRUS_TYPE;
     }
 
     public boolean checkCityForAdjacency(City city) {
-        return nearCities.contains(city);
+        return nearCities.contains(city.getName());
     }
 
     public void addNeighbour(String cityName) {
@@ -38,7 +38,7 @@ public class City {
     }
 
     public void addCube(VirusType type) {
-        cubes.add(new Cube(type));  // We moeten wel nog ergens de algemene cubeAmount bijhouden, wat 24 is.
+        cubes.add(new Cube(type));
     }
 
     public void removeAllCubes() {
