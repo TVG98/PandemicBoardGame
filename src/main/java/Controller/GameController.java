@@ -25,7 +25,10 @@ public class GameController {
         game = new Game(lobbyController.getLobby().getPlayers());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
-        startGame();
+
+        if (localPlayerIsPlayerOne()) {
+            startGame();
+        }
     }
 
     public static GameController getInstance() {
@@ -36,7 +39,15 @@ public class GameController {
         return gameController;
     }
 
+    private boolean localPlayerIsPlayerOne() {
+        String localPlayerName = playerController.getCurrentPlayerName();
+        String firstPlayerName = game.getPlayers()[0].getPlayerName();
+        return localPlayerName.equals(firstPlayerName);
+    }
+
     public void startGame() {
+        gameBoardController.makeGameBoard();
+
         for (Player p : game.getPlayers()) {
             if (p != null) {
                 if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
