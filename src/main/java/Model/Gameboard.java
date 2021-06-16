@@ -109,8 +109,8 @@ public class Gameboard implements GameBoardObservable {
         City CityOne = getCity(line.split(";")[0]);
         City CityTwo = getCity(line.split(";")[1]);
 
-        CityOne.addNeighbour(CityTwo);
-        CityTwo.addNeighbour(CityOne);
+        CityOne.addNeighbour(CityTwo.getName());
+        CityTwo.addNeighbour(CityOne.getName());
     }
 
     private BufferedReader makeBufferedReader() throws FileNotFoundException {
@@ -396,13 +396,30 @@ public class Gameboard implements GameBoardObservable {
         increaseOutbreakCounter();
         addCityThatHadOutbreak(infectedCity);
 
-        for (City city : infectedCity.getNearCities()) {
+        ArrayList<City> nearCities = getNearCities(infectedCity);
+
+        for (City city : nearCities) {
             if (infectedCity.getCubeAmount() >= 3 && !cityHadOutbreak(city)) {  // Hier moet de quarantine specialist nog toegevoegd worden
                 handleOutbreak(city);
             } else {
                 addCubes(city, infectedCity.getVirusType(), 1);
             }
         }
+    }
+
+    private ArrayList<City> getNearCities(City city) {
+        ArrayList<City> nearCities = new ArrayList<>();
+        ArrayList<String> nearCitiesNames = city.getNearCities();
+
+        for (String name : nearCitiesNames) {
+            try {
+                nearCities.add(getCity(name));
+            } catch (CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
+            }
+        }
+
+        return nearCities;
     }
 
     public void addCityThatHadOutbreak(City city) {

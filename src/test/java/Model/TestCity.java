@@ -19,8 +19,8 @@ public class TestCity {
     }
 
     private void makeAtlantaCity() {
-        atlanta.addNeighbour(newYork);
-        atlanta.addNeighbour(miami);
+        atlanta.addNeighbour(newYork.getName());
+        atlanta.addNeighbour(miami.getName());
     }
 
     @Test
