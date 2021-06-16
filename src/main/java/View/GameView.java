@@ -130,6 +130,10 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         // Setup BorderPane Center //
 
         makeGameBoard();
+        drawPlayerOneOnCity("Washington");
+        drawPlayerTwoOnCity("Washington");
+        drawPlayerThreeOnCity("Washington");
+        drawPlayerFourOnCity("Washington");
 
         // Setup BorderPane Bottom //
 
@@ -508,6 +512,73 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void drawPlayerOneOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.RED);
+                playerOne.setStroke(Color.DARKRED);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] - 27);
+                playerOne.setY(entry.getValue()[1] - 7);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+    }
+
+    private void drawPlayerTwoOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.BLUE);
+                playerOne.setStroke(Color.DARKBLUE);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] - 18);
+                playerOne.setY(entry.getValue()[1] + 12);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+
+    }
+
+    private void drawPlayerThreeOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.ORANGE);
+                playerOne.setStroke(Color.DARKORANGE);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] + 4);
+                playerOne.setY(entry.getValue()[1] + 12);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+
+    }
+
+    private void drawPlayerFourOnCity(String cityName)
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            if (entry.getKey().equals(cityName))
+            {
+                Rectangle playerOne = new Rectangle(15, 15, Color.GREEN);
+                playerOne.setStroke(Color.DARKGREEN);
+                playerOne.setStrokeWidth(2);
+                playerOne.setX(entry.getValue()[0] + 12);
+                playerOne.setY(entry.getValue()[1] - 7);
+                this.borderPane.getChildren().add(playerOne);
+            }
+        }
+
     }
 
     private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
