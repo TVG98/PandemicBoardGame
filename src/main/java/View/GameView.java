@@ -49,13 +49,11 @@ public class GameView implements GameObserver, GameBoardObserver {
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
-        gameController.registerPlayerObserver(this);
-        gameController.registerGameBoardObserver(this);
         this.primaryStage.setResizable(false);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
-        gameController.notifyGameBoardObserver();
-        gameController.notifyGameObserver();
+        gameController.registerPlayerObserver(this);
+        gameController.registerGameBoardObserver(this);
     }
 
     private void createGameViewBorderPane() {
