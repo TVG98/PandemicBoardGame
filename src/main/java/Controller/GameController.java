@@ -34,9 +34,9 @@ public class GameController {
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
         } else {
-            System.out.println("waiting for 1 second...");
+            System.out.println("waiting for 3 seconds...");
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }

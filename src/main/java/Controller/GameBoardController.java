@@ -48,11 +48,7 @@ public class GameBoardController {
 
     public void makeWholeGameBoard() {
         gameBoard.makeCompleteGameBoard();
-        initializeStartingCubes();
-
-        List<City> cities = gameBoard.getCities();
-
-        databaseController.updateCitiesInDatabase(cities);
+        databaseController.updateCitiesInDatabase(gameBoard.getCities());
         databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
     }
 
@@ -325,6 +321,6 @@ public class GameBoardController {
     }
 
     private void updateCitiesWithResearchStationInGameBoard(String researchString) {
-
+        System.out.println(researchString);
     }
 }
