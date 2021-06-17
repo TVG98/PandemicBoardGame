@@ -1,6 +1,5 @@
 package Controller;
 
-import Exceptions.CityNotFoundException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -56,22 +55,14 @@ public class PlayerController {
     public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player) {
 
         HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<>();
-        ArrayList<PlayerCard> playerHand = player.getHand();
-        ArrayList<CityCard> cityCards = getCityCardFromPlayer(playerHand);
+        //ArrayList<PlayerCard> playerHand = player.getHand();
+        ArrayList<CityCard> cityCards = getCityCardFromPlayer(player);
 
         return getCountedVirusTypeInHand(cityCards, virusTypeHashMap);
     }
 
-    private ArrayList<CityCard> getCityCardFromPlayer(ArrayList<PlayerCard> playerHand) {
-        ArrayList<CityCard> cityCards = new ArrayList<>();
-
-        for (PlayerCard card : playerHand) {
-            if (card instanceof CityCard) {
-                cityCards.add((CityCard) card);
-            }
-        }
-
-        return cityCards;
+    private ArrayList<CityCard> getCityCardFromPlayer(Player player) {
+        return player.getCityCardsFromPlayer();
     }
 
     private HashMap<VirusType, Integer> getCountedVirusTypeInHand(
