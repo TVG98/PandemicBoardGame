@@ -32,7 +32,9 @@ public class DriveView implements GameObserver {
     final double height = 900;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    ArrayList<Button> cityButtons;
     Text statusText = new Text("error huh");
+
     GameController gameController = GameController.getInstance();
 
 
@@ -94,7 +96,12 @@ public class DriveView implements GameObserver {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(20);
 
-        ArrayList<Button> cityButtons = getCitiesButtons();
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        for (int i=0; i<7; i++) {
+            buttons.add(new Button());
+        }
+
+        cityButtons = buttons;
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -170,17 +177,33 @@ public class DriveView implements GameObserver {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesButtons()
+    private void getCitiesButtons(ArrayList<String> nearCities)
     {
-        ArrayList<String> cityNames = gameController.getCurrentPlayer().getCurrentCity().getNearCities();
-
-        ArrayList<Button> buttons = new ArrayList<Button>();
-
-
-        // TODO: Moet alle steden verbonden aan de huidige stad van de speler ophalen
+        int index = 0;
         //ArrayList<Button> buttons = new ArrayList<Button>();
 
-        Button b1 = new Button(cityNames.get(0));
+        for (String cityName : nearCities) {
+            //Button button = new Button(cityName);\
+            Button button = cityButtons.get(index);
+            button.setText(cityName);
+
+            button.setOnAction(e -> getCitiesButtonHandler(button));
+            //buttons.add(button);
+            index++;
+        }
+
+        for (int i = index; i < cityButtons.size(); i++) {
+            cityButtons.get(i).setPrefHeight(0);
+            cityButtons.get(i).setPrefWidth(0);
+            cityButtons.get(i).setStyle("-fx-background-color:transparent");
+
+        }
+        //return buttons;
+
+
+
+
+        /*Button b1 = new Button(cityNames.get(0));
         b1.setOnAction(e -> getCitiesButtonHandler(b1));
 
         Button b2 = new Button(cityNames.get(1));
@@ -196,10 +219,10 @@ public class DriveView implements GameObserver {
         b5.setOnAction(e -> getCitiesButtonHandler(b5));
 
         Button b6 = new Button("temp");
-        b6.setOnAction(e -> getCitiesButtonHandler(b6));
+        b6.setOnAction(e -> getCitiesButtonHandler(b6));*/
 
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;
+        //Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
+       // return buttons;
     }
 
     private void backButtonHandler() {
@@ -219,6 +242,8 @@ public class DriveView implements GameObserver {
 
     private void createUpdatedBorderPane(GameObservable observable) {
         statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+        ArrayList<String> nearCities = observable.getCurrentPlayer().getCurrentCity().getNearCities();
+        getCitiesButtons(nearCities);
     }
 
     @Override
