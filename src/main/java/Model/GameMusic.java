@@ -52,8 +52,8 @@ public class GameMusic implements GameSounds {
 
     @Override
     public void setVolume(float volume) {
-        this.volume = volume;
-        gainControl.setValue(volume);
+        this.volume = volume * 0.8f;
+        gainControl.setValue(this.volume);
         System.out.println(this.volume);
     }
 }
