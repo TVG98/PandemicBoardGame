@@ -33,7 +33,6 @@ public class GameController {
         startGame();
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
-            initializeStartingCubes();
         } else {
             System.out.println("waiting for 1 second...");
             try {
@@ -79,10 +78,6 @@ public class GameController {
 
     private Role getRandomRole() {
         return Role.values()[new Random().nextInt(Role.values().length)];
-    }
-
-    private void initializeStartingCubes() {
-        gameBoardController.initializeStartingCubes();
     }
 
     public void turn() {

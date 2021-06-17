@@ -48,8 +48,11 @@ public class GameBoardController {
 
     public void makeWholeGameBoard() {
         gameBoard.makeCompleteGameBoard();
+        initializeStartingCubes();
 
-        databaseController.updateCitiesInDatabase(gameBoard.getCities());
+        List<City> cities = gameBoard.getCities();
+
+        databaseController.updateCitiesInDatabase(cities);
         databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
     }
 
