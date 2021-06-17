@@ -8,6 +8,7 @@ import Observers.GameBoardObservable;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import Observers.GameBoardObserver;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -132,10 +133,10 @@ public class GameView implements GameObserver, GameBoardObserver {
         // Setup BorderPane Center //
 
         makeGameBoard();
-        drawPlayerOneOnCity("Washington");
-        drawPlayerTwoOnCity("Washington");
-        drawPlayerThreeOnCity("Washington");
-        drawPlayerFourOnCity("Washington");
+        drawPlayerOneOnCity("Atlanta");
+        drawPlayerTwoOnCity("Atlanta");
+        drawPlayerThreeOnCity("Atlanta");
+        drawPlayerFourOnCity("Atlanta");
 
         // Setup BorderPane Bottom //
 
@@ -631,21 +632,16 @@ public class GameView implements GameObserver, GameBoardObserver {
         outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
         List<City> cityList = gameBoardObservable.getCities();
-        City[] cities = cityList.toArray(new City[cityList.size()]);
 
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet() )
-        {
-            for (City city : cities)
-            {
-                if (city.getName().equals(entry.getKey()))
-                {
-                    Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
-                    cubeAmountText.setX(entry.getValue()[0] - 5);
-                    cubeAmountText.setY(entry.getValue()[1] + 8);
-                    cubeAmountText.setFont(Font.font("Arial", 20));
-                    this.borderPane.getChildren().add(cubeAmountText);
-                }
-            }
+        for (City city : cityList) {
+            Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
+            cubeAmountText.setX(cities.get(city.getName())[0] - 5);
+            cubeAmountText.setY(cities.get(city.getName())[1] + 8);
+            cubeAmountText.setFont(Font.font("Arial", 20));
+
+            Platform.runLater(
+                () -> this.borderPane.getChildren().add(cubeAmountText)
+            );
         }
     }
 
@@ -680,8 +676,6 @@ public class GameView implements GameObserver, GameBoardObserver {
             }
             index++;
         }
-
-
     }
 
     @Override

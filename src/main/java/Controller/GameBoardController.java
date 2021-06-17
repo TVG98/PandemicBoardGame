@@ -47,12 +47,7 @@ public class GameBoardController {
     }
 
     public void makeWholeGameBoard() {
-        System.out.println("aangeroepen");
         gameBoard.makeCompleteGameBoard();
-        for (int i = 0; i < 48; i++) {
-            System.out.print(gameBoard.getCities().get(i).getCubeAmount());
-            System.out.print(", ");
-        }
 
         databaseController.updateCitiesInDatabase(gameBoard.getCities());
         databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
@@ -255,45 +250,39 @@ public class GameBoardController {
     }
 
     private void updateGameBoardLocal(DocumentSnapshot snapshot) {
-        System.out.println("updating gameboard");
         Map<String, Object> data = snapshot.getData();
         updateCitiesInGameBoard(data.get("cities").toString());
-        System.out.println("cities updated");
         updateCitiesWithResearchStationInGameBoard(data.get("citiesWithResearchStations").toString());
     }
 
     private void updateCitiesInGameBoard(String citiesString) {
         citiesString = getCityStringWithoutFirstAndLastChar(citiesString);
-        String[] citiesArray = getSplittedCityStringsAsArray(citiesString);
-        citiesArray = getCitiesWithoutCurlyBrackets(citiesArray);
-        gameBoard.setCities(createAllCitiesFromDoc(citiesArray));
-        System.out.println(citiesString + "cities set");
+        String[] citiesArray = getSplittedCityStringsAsArrayWithoutCurlyBrackets(citiesString);
+        List<City> cities = createAllCitiesFromDoc(citiesArray);
+        gameBoard.setCities(cities);
     }
 
     private String getCityStringWithoutFirstAndLastChar(String cities) {
         return cities.substring(1, cities.length() - 1);
     }
 
-    private String[] getSplittedCityStringsAsArray(String cities) {
-        return cities.split("}, ");
-    }
+    private String[] getSplittedCityStringsAsArrayWithoutCurlyBrackets(String cities) {
+        String[] separateCities = cities.split("}, ");
 
-    private String[] getCitiesWithoutCurlyBrackets(String[] citiesArray) {
-        for (int i = 0; i < citiesArray.length; i++) {
-            citiesArray[i] = citiesArray[i].substring(1);
+        for (int i = 0; i < separateCities.length; i++) {
+            separateCities[i] = separateCities[i].replaceAll("[{}]", "");
         }
 
-        return citiesArray;
+        return separateCities;
     }
 
     private List<City> createAllCitiesFromDoc(String[] citiesArray) {
         ArrayList<City> cities = new ArrayList<>();
 
         for (String city : citiesArray) {
-            cities.add(createCityFromDoc(city));
-            System.out.println(city);
+            City newCity = createCityFromDoc(city);
+            cities.add(newCity);
         }
-
         return cities;
     }
 
@@ -303,7 +292,6 @@ public class GameBoardController {
         VirusType virusType = getCityVirusTypeFromString(cityString);
         ArrayList<Cube> cubeAmount = getCityCubeAmountFromString(cityString, virusType);
         ArrayList<String> nearCities = getCityNearCitiesFromString(cityString);
-
         return new City(name, cubeAmount, virusType, nearCities);
     }
 
@@ -334,6 +322,6 @@ public class GameBoardController {
     }
 
     private void updateCitiesWithResearchStationInGameBoard(String researchString) {
-        System.out.println(researchString);
+
     }
 }
