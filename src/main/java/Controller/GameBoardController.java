@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Behavior.*;
+import Exceptions.CardNotFoundException;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Model.*;
@@ -273,7 +274,7 @@ public class GameBoardController {
         updateInfectionStackInGameBoard(data.get("infectionStack").toString());
         updateOutbreakCounterInGameBoard(data.get("outbreakCounter").toString());
 //        updatePlayerDiscardStackInGameBoard(data.get("playerDiscardStack").toString());
-//        updatePlayerStackInGameBoard(data.get("playerStack").toString());
+        updatePlayerStackInGameBoard(data.get("playerStack").toString());
 //        updateTopSixInfectionStackInGameBoard(data.get("topSixInfectionStack").toString());
 //        updateVirusesInGameBoard(data.get("viruses").toString());
     }
@@ -418,12 +419,22 @@ public class GameBoardController {
         return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
     }
 
-//    private ArrayList<PlayerCard> getPlayerCards(String string) {
-//        string = getStringWithoutFirstAndLastChar(string);
-//        String[] playerCardStackArray = getSplittedStringAsArray(string);
-//        playerCardStackArray = getArrayWithoutCityEqualsString(playerCardStackArray);
-//        return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
-//    }
+    private ArrayList<PlayerCard> getPlayerCards(String string) {
+        ArrayList<PlayerCard> playerCards = new ArrayList<>();
+
+        string =  string.substring(1, string.length()-1);
+        String[] cardNames =  string.split(", ");
+
+        try {
+            for (String cardName : cardNames) {
+                playerCards.add(gameBoard.getPlayerCard(cardName));
+            }
+        } catch (CardNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
+
+        return playerCards;
+    }
 
     private ArrayList<InfectionCard> getInfectionDiscardStackFromArray(String[] infectionDiscardStackArray) {
         ArrayList<InfectionCard> infectionCards = new ArrayList<>();
@@ -456,8 +467,6 @@ public class GameBoardController {
 
         return new City(name, cubes, virusType, nearCities);
     }
-
-
 
     private String[] getSplittedStringAsArray(String string) {
         return string.split("}, ");
@@ -494,7 +503,8 @@ public class GameBoardController {
     }
 
     private void updatePlayerStackInGameBoard(String playerStackString) {
-        System.out.println("PLAYER STACK: " + playerStackString);
+        System.out.println("PLAYER STACK: " + getPlayerCards(playerStackString));
+        gameBoard.setPlayerStack(getPlayerCards(playerStackString));
     }
 
     private void updateTopSixInfectionStackInGameBoard(String topSixInfectionStackString) {

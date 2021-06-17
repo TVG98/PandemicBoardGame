@@ -220,8 +220,14 @@ public class FirestoreDatabase {
     }
 
     public void updatePlayerStack(ArrayList<PlayerCard> playerStack) {
+
+        ArrayList<String> playerCardNames = new ArrayList<>();
+        for(PlayerCard card : playerStack) {
+            playerCardNames.add(card.getName());
+        }
+
         try {
-            docRef.update("playerStack", playerStack);
+            docRef.update("playerStack", playerCardNames);
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause().printStackTrace();

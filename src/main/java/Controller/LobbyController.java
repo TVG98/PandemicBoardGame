@@ -96,6 +96,7 @@ public class LobbyController {
 
     private boolean canJoinLobby() throws LobbyNotFoundException {
         try {
+            System.out.println(lobbyCode);
             return databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable");
         } catch (NullPointerException npe) {
             throw new LobbyNotFoundException("Lobby not found");

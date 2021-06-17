@@ -2,12 +2,10 @@ package Model;
 
 public class CityCard implements PlayerCard {
 
-    private final String name;
     private final City city;
 
     public CityCard(City city) {
         this.city = city;
-        this.name = city.getName();
     }
 
     public City getCity() {
@@ -20,6 +18,6 @@ public class CityCard implements PlayerCard {
 
     @Override
     public String getName() {
-        return name;
+        return city.getName();
     }
 }
