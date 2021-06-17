@@ -20,7 +20,7 @@ public class SoundController {
     public static SoundController getInstance() {
         if (soundController == null) {
             soundController = new SoundController();
-            soundController.playMusic();
+            //soundController.playMusic();
         }
 
         return soundController;
