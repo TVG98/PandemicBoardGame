@@ -81,6 +81,7 @@ public class GameController {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
         // ik ook niet man
         // nice xD
+        // helemaal mooi
 
         if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten

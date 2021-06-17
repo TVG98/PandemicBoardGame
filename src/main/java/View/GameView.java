@@ -8,6 +8,7 @@ import Observers.GameBoardObservable;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import Observers.GameBoardObserver;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -31,8 +32,10 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final double width = 1600;
     private final double height = 900;
     private final HashMap<String, int[]> cities = new HashMap<>();
+    private HashMap<String, Text> citiesWithAmountCubes = new HashMap<>();
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
+    Text cubeAmountText = new Text();
 
     Text playerOneOverview = new Text();
     Text playerTwoOverview = new Text();
@@ -335,6 +338,22 @@ public class GameView implements GameObserver, GameBoardObserver {
         placeCitiesWithColorOnBp(makeGreenCityCoordinates(), Color.GREEN, borderPane);
         placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, borderPane);
         placeCitiesWithColorOnBp(makeYellowCityCoordinates(), Color.YELLOW, borderPane);
+        makeCityCubes();
+    }
+
+    private void makeCityCubes()
+    {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
+        {
+            Text text = new Text(Integer.toString(0));
+            text.setX(entry.getValue()[0] - 5);
+            text.setY(entry.getValue()[1] + 8);
+            text.setFont(Font.font("Arial", 20));
+            this.citiesWithAmountCubes.put(entry.getKey(), text);
+            Platform.runLater(
+                    () -> this.borderPane.getChildren().add(text)
+            );
+        }
     }
 
     private void placeLinesOnBoard() {
@@ -525,6 +544,7 @@ public class GameView implements GameObserver, GameBoardObserver {
             int xCoord = coordinates[0];
             int yCoord = coordinates[1];
 
+
             Circle c1 = new Circle(10);
             c1.setFill(color);
             c1.setCenterX(xCoord);
@@ -533,7 +553,6 @@ public class GameView implements GameObserver, GameBoardObserver {
             c1.setOnMouseExited(event -> c1.setFill(color));
 
             cities.put(entry.getKey(), c1);
-
         }
 
         for (Map.Entry<String, Circle> entry : cities.entrySet()) {
@@ -631,21 +650,10 @@ public class GameView implements GameObserver, GameBoardObserver {
         outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
         List<City> cityList = gameBoardObservable.getCities();
-        City[] cities = cityList.toArray(new City[cityList.size()]);
 
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet() )
-        {
-            for (City city : cities)
-            {
-                if (city.getName().equals(entry.getKey()))
-                {
-                    Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
-                    cubeAmountText.setX(entry.getValue()[0] - 5);
-                    cubeAmountText.setY(entry.getValue()[1] + 8);
-                    cubeAmountText.setFont(Font.font("Arial", 20));
-                    this.borderPane.getChildren().add(cubeAmountText);
-                }
-            }
+        for (City city : cityList) {
+            //Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
+            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubeAmount()));
         }
     }
 
