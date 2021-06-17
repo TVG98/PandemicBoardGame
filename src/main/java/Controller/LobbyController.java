@@ -144,7 +144,7 @@ public class LobbyController {
 
     private void updatePlayerInLobby(Object object, int i) {
         String playerString = object.toString();
-        Player player = playerController.createPlayer(playerString);
+        Player player = playerController.createPlayerFromDocData(playerString);
         lobby.updatePlayer(i, player);
     }
 
@@ -189,5 +189,9 @@ public class LobbyController {
 
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {
         lobby.register(lobbyObserver);
+    }
+
+    public void unregisterLobbyObserver() {
+        lobby.unregister();
     }
 }

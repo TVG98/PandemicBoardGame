@@ -21,7 +21,7 @@ public class PlayerController {
         return playerController;
     }
 
-    public Player createPlayer(String playerString) {
+    public Player createPlayerFromDocData(String playerString) {
         String hand = playerString.split("hand=")[1];
         hand = hand.substring(0, hand.indexOf("]"));//todo check if correct
         String role = playerString.split("role=")[1];
@@ -39,17 +39,17 @@ public class PlayerController {
             player.setRole(Role.valueOf(role));
         }
         gameBoardController = GameBoardController.getInstance();
-        if (!playerString.contains("currentCity=null")) {
-            try {
-                String currentCity = playerString.split("currentCity=")[1];
-                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
-                currentCity = currentCity.split("name=")[1];
-                currentCity = currentCity.substring(0, currentCity.indexOf(","));
-                player.setCurrentCity(gameBoardController.getCity(currentCity));
-            } catch (CityNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (!playerString.contains("currentCity=null")) {
+//            try {
+//                String currentCity = playerString.split("currentCity=")[1];
+//                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
+//                currentCity = currentCity.split("name=")[1];
+//                currentCity = currentCity.substring(0, currentCity.indexOf(","));
+//                player.setCurrentCity(gameBoardController.getCity(currentCity));
+//            } catch (CityNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
         return player;
     }
 
@@ -89,10 +89,12 @@ public class PlayerController {
 
     public void addCard(PlayerCard card, Player player) {
         player.addCardToHand(card);
+        notifyGameObserver();
     }
 
     public void removeCard(PlayerCard card, Player player) {
         player.removeCardFromHand(card);
+        notifyGameObserver();
     }
 
     public City getPlayerCurrentCity(Player player) {
@@ -124,9 +126,15 @@ public class PlayerController {
 
     public void setCurrentCity(Player player, City city) {
         player.setCurrentCity(city);
+        notifyGameObserver();
     }
 
     public void decrementActions(Player player) {
         player.decrementActions();
+        notifyGameObserver();
+    }
+
+    private void notifyGameObserver() {
+        GameController.getInstance().notifyGameObserver();
     }
 }

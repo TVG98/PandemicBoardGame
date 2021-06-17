@@ -3,11 +3,12 @@ package Observers;
 import Model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GameBoardObservable {
-    City[] getCities();
-    Cure[] getCures();
-    Virus[] getViruses();
+    List<City> getCities();
+    List<Cure> getCures();
+    List<Virus> getViruses();
     ArrayList<InfectionCard> getInfectionStack();
     ArrayList<InfectionCard> getInfectionDiscardStack();
     ArrayList<PlayerCard> getPlayerStack();

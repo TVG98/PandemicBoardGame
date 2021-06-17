@@ -3,9 +3,10 @@ package View;
 import Controller.GameController;
 import Model.City;
 import Model.Connection;
+import Model.Player;
 import Observers.GameBoardObservable;
-import Observers.PlayerObservable;
-import Observers.PlayerObserver;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import Observers.GameBoardObserver;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +24,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
-public class GameView implements PlayerObserver, GameBoardObserver {
+public class GameView implements GameObserver, GameBoardObserver {
     private Stage primaryStage;
     private final String pathToImage = "src/main/media/GameBoardResized.jpg";
     private final String pathToConnectedCities = "src/main/connectedCities.txt";
@@ -50,7 +51,8 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         this.primaryStage.setResizable(false);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
-        gameController.notifyObservers();
+        gameController.notifyGameBoardObserver();
+        gameController.notifyGameObserver();
     }
 
     private void createGameViewBorderPane() {
@@ -151,7 +153,6 @@ public class GameView implements PlayerObserver, GameBoardObserver {
 
         VBox vboxPlayerList = new VBox();
         vboxPlayerList.getChildren().addAll(playerOverviews);
-
 
         VBox vboxPlayers = new VBox();
         vboxPlayers.setSpacing(10);
@@ -312,7 +313,6 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         placeholder.add("Washington");
         placeholder.add("New York");
         //              //
-
         TakeShareView view = new TakeShareView(primaryStage, placeholder);
     }
 
@@ -630,7 +630,8 @@ public class GameView implements PlayerObserver, GameBoardObserver {
     private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
         outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
-        City[] cities = gameBoardObservable.getCities();
+        List<City> cityList = gameBoardObservable.getCities();
+        City[] cities = cityList.toArray(new City[cityList.size()]);
 
         for (Map.Entry<String, int[]> entry : this.cities.entrySet() )
         {
@@ -648,13 +649,44 @@ public class GameView implements PlayerObserver, GameBoardObserver {
         }
     }
 
-    private void createUpdatedGameViewBorderPane(PlayerObservable playerObservable) {
+    private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
+        Player[] players = gameObservable.getPlayers();
+
+        int index = 1;
+
+        for (Player player : players)
+        {
+            if (player != null)
+            {
+                switch (index)
+                {
+                    case 1: {
+                        playerOneOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                    case 2: {
+                        playerTwoOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                    case 3: {
+                        playerThreeOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                    case 4: {
+                        playerFourOverview.setText(player.getPlayerName() + " - " + player.getRole());
+                        break;
+                    }
+                }
+            }
+            index++;
+        }
+
 
     }
 
     @Override
-    public void update(PlayerObservable playerObservable) {
-        createUpdatedGameViewBorderPane(playerObservable);
+    public void update(GameObservable gameObservable) {
+        createUpdatedGameViewBorderPane(gameObservable);
     }
 
     @Override

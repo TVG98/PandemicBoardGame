@@ -10,8 +10,9 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class FirestoreDatabase {
@@ -90,22 +91,68 @@ public class FirestoreDatabase {
     }
 
     public String makeLobby() {
-        HashMap<String, Object> quote = createLobbyData();
+        HashMap<String, Object> serverData = getServerData();
         String lobbyCode = generateLobbyCode();
         docRef = lobbyRef.document(lobbyCode);
-        docRef.set(quote);
+        docRef.set(serverData);
         return lobbyCode;
     }
 
-    public HashMap<String, Object> createLobbyData() {
+    public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("Joinable", true);
+        hashMap.put("GameStarted", false);
         hashMap.put("Player1", null);
         hashMap.put("Player2", null);
         hashMap.put("Player3", null);
         hashMap.put("Player4", null);
+        hashMap.put("cities", null);
+        hashMap.put("citiesWithResearchStations", null);
+        hashMap.put("curedDiseases", null);
+        hashMap.put("cures", null);
+        hashMap.put("drawnEpidemicCards", 0);
+        hashMap.put("infectionDiscardStack", null);
+        hashMap.put("infectionRate", 2);
+        hashMap.put("infectionStack", null);
+        hashMap.put("outbreakCounter", 0);
+        hashMap.put("playerDiscardStack", null);
+        hashMap.put("playerStack", null);
+        hashMap.put("topSixInfectionStack", null);
+        hashMap.put("viruses", null);
+
         return hashMap;
+    }
+
+    public void updateGameStarted(boolean gameStarted) {
+        docRef.update("GameStarted", gameStarted);
+    }
+
+    public void updateCities(List<City> cities) {
+        try {
+            docRef.update("cities", cities);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateCitiesWithResearchStations(List<City> cities) {
+        try {
+            docRef.update("citiesWithResearchStations", cities);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateCuredDiseases(List<Cure> curedDiseases) {
+        try {
+            docRef.update("curedDiseases", curedDiseases);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
     }
 
     public String getServerPlayerId(String obj) throws LobbyFullException {

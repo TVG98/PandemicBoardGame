@@ -13,40 +13,54 @@ public class Gameboard implements GameBoardObservable {
     private List<GameBoardObserver> observers = new ArrayList<>();
     private final String PATH_TO_CONNECTED_CITIES = "src/main/connectedCities.txt";
 
-    private final City[] cities = new City[48];
-    private final Cure[] CURES = new Cure[]{new Cure(VirusType.BLUE),
-                                            new Cure(VirusType.YELLOW),
-                                            new Cure(VirusType.BLACK),
-                                            new Cure(VirusType.RED)};
+    private List<City> cities; // can change
+    private final List<Cure> CURES = Arrays.asList(new Cure(VirusType.BLUE),
+            new Cure(VirusType.YELLOW),
+            new Cure(VirusType.BLACK),
+            new Cure(VirusType.RED));
 
-    private final Virus[] VIRUSES = new Virus[]{new Virus(VirusType.BLUE),
-                                                 new Virus(VirusType.YELLOW),
-                                                 new Virus(VirusType.BLACK),
-                                                 new Virus(VirusType.RED)};
+    private final List<Virus> VIRUSES = Arrays.asList(new Virus(VirusType.BLUE),
+            new Virus(VirusType.YELLOW),
+            new Virus(VirusType.BLACK),
+            new Virus(VirusType.RED));
 
-    private final ArrayList<InfectionCard> infectionStack;
-    private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
-    private final ArrayList<PlayerCard> playerStack;
-    private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
+    private ArrayList<InfectionCard> infectionStack; // can change
+    private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>(); // can change
+    private ArrayList<PlayerCard> playerStack; // can change
+    private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>(); // can change
 
-    private int outbreakCounter = 0;
-    private int infectionRate = 1;
-    private int drawnEpidemicCards = 0;
+    private int outbreakCounter = 0; // can change
+    private int infectionRate = 1; // can change
+    private int drawnEpidemicCards = 0; // can change
 
-    private final ArrayList<City> citiesWithResearchStations;
-    private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
-    private final int[] INFECTION_RATES = new int[]{2, 2, 2, 3, 3, 4, 4};
+    private ArrayList<City> citiesWithResearchStations; // can change
+    private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>(); // can change
+    private final List<Integer> INFECTION_RATES = Arrays.asList(2, 2, 2, 3, 3, 4, 4);
 
     public Gameboard() {
+        cities = Arrays.asList(new City[48]);
         initializeCities();
+    }
+
+    public void makeCompleteGameBoard() {
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
         initializeGameBoard();
     }
 
+
     private void initializeGameBoard() {
         shuffleAllStacks();
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+        notifyAllObservers();
+    }
+
+    public void setCitiesWithResearchStations(ArrayList<City> citiesWithResearchStations) {
+        this.citiesWithResearchStations = citiesWithResearchStations;
     }
 
     private void initializeCities() {
@@ -82,12 +96,12 @@ public class Gameboard implements GameBoardObservable {
         int virusIndex = 0;
 
         for (int i = 0; i < cityNames.length; i++) {
-            if (i % (cityNames.length/ VIRUSES.length) == 0) {
+            if (i % (cityNames.length/ VIRUSES.size()) == 0) {
                 virusIndex++;
             }
 
-            VirusType virusType = VIRUSES[virusIndex-1].getType();
-            cities[i] = new City(cityNames[i], virusType);
+            VirusType virusType = VIRUSES.get(virusIndex-1).getType();
+            cities.set(i, new City(cityNames[i], virusType));
         }
     }
 
@@ -150,9 +164,9 @@ public class Gameboard implements GameBoardObservable {
         EventCard[] eventCards = new EventCard[5];
         eventCards[0] = new OneQuietNight("One quiet night", "Skip the next Infect Cities step.");
         eventCards[1] = new GovernmentGrant("Government grant", "Add 1 research station to any city.");
-        eventCards[2] = new OneQuietNight("Airlift", "Move any 1 pawn to any city.");
-        eventCards[3] = new OneQuietNight("Forecast", "Draw, look at and rearrange the top 6 cards of the Infection Deck, put them back on top.");
-        eventCards[4] = new OneQuietNight("Resilient population", "Remove any 1 card in the Infection Discard Pile from the game.");
+        eventCards[2] = new Airlift("Airlift", "Move any 1 pawn to any city.");
+        eventCards[3] = new Forecast("Forecast", "Draw, look at and rearrange the top 6 cards of the Infection Deck, put them back on top.");
+        eventCards[4] = new ResilientPopulation("Resilient population", "Remove any 1 card in the Infection Discard Pile from the game.");
 
         return eventCards;
     }
@@ -295,17 +309,17 @@ public class Gameboard implements GameBoardObservable {
     }
 
     @Override
-    public City[] getCities() {
+    public List<City> getCities() {
         return cities;
     }
 
     @Override
-    public Cure[] getCures() {
+    public List<Cure> getCures() {
         return CURES;
     }
 
     @Override
-    public Virus[] getViruses() {
+    public List<Virus> getViruses() {
         return VIRUSES;
     }
 
@@ -336,7 +350,7 @@ public class Gameboard implements GameBoardObservable {
 
     @Override
     public int getInfectionRate() {
-        return INFECTION_RATES[infectionRate];
+        return INFECTION_RATES.get(infectionRate);
     }
 
     @Override
@@ -370,7 +384,7 @@ public class Gameboard implements GameBoardObservable {
 
     public void handleEpidemicCard() {
         addDrawnEpidemicCard();
-        increaseInfectionRate(INFECTION_RATES[drawnEpidemicCards]);
+        increaseInfectionRate(INFECTION_RATES.get(drawnEpidemicCards));
         handleInfectionCardsInEpidemic();
     }
 
@@ -502,9 +516,13 @@ public class Gameboard implements GameBoardObservable {
     }
 
     public ArrayList<InfectionCard> getTopSixInfectionStack() {
-        ArrayList<InfectionCard> topSix = (ArrayList<InfectionCard>) infectionStack.subList(0, 6);  // Ik weet niet zeker of dit werkt, kan errors geven
+        ArrayList<InfectionCard> topSix = new ArrayList<>();
 
-        for(int i = 0; i < topSix.size(); i++) {
+        for (int i = 0; i < 6; i++) {
+            topSix.add(infectionStack.get(i));
+        }
+
+        for (int i = 0; i < topSix.size(); i++) {
             infectionStack.remove(0);
         }
 

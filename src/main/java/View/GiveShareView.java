@@ -1,5 +1,6 @@
 package View;
 
+import Controller.GameController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,10 +27,12 @@ public class GiveShareView {
     String selectedCity = "None";
     Text selectedPlayerText = new Text("You have no player selected");
     String selectedPlayer = "None";
+    GameController gameController;
 
     public GiveShareView(Stage primaryStage, ArrayList<String> availableCardsToGive) {
         this.primaryStage = primaryStage;
         this.availableCardsToGive = availableCardsToGive;
+        gameController = GameController.getInstance();
         loadStageWithBorderPane(createDoShareViewBorderPane());
     }
 
@@ -218,6 +221,7 @@ public class GiveShareView {
     {
         selectedPlayerText.setText("You selected " + button.getText() + " to give a card to");
         selectedPlayer = button.getText();
+        gameController.handleShareKnowledge(selectedPlayer, true);
     }
 
     private void getCitiesButtonHandler(Button button)

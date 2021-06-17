@@ -2,9 +2,11 @@ package Controller;
 
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
+import Exceptions.PlayerNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
-import Observers.PlayerObserver;
+import Observers.GameObserver;
+import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,18 +24,29 @@ public class GameController {
         lobbyController = LobbyController.getInstance();
         lobbyController.setServerLobbyNotJoinable();
         databaseController = DatabaseController.getInstance();
+        databaseController.updateGameStarted(true);
         game = new Game(lobbyController.getLobby().getPlayers());
         playerController = PlayerController.getInstance();
         gameBoardController = GameBoardController.getInstance();
+        gameBoardController.makeGameBoard();
         startGame();
+        if (localPlayerIsPlayerOne()) {
+            gameBoardController.makeWholeGameBoard();
+            initializeStartingCubes();
+        }
     }
 
     public static GameController getInstance() {
         if (gameController == null) {
             gameController = new GameController();
         }
-
         return gameController;
+    }
+
+    private boolean localPlayerIsPlayerOne() {
+        String localPlayerName = playerController.getCurrentPlayerName();
+        String firstPlayerName = game.getPlayers()[0].getPlayerName();
+        return localPlayerName.equals(firstPlayerName);
     }
 
     public void startGame() {
@@ -44,8 +57,6 @@ public class GameController {
                 }
             }
         }
-
-        initializeStartingCubes();
     }
 
     private void setPlayer(Player player) {
@@ -68,13 +79,16 @@ public class GameController {
 
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
+        // ik ook niet man
+        // nice xD
 
         if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
-            gameBoardController.handleInfectionCardDraw();  // Doe de infections
-            getCurrentPlayer().endTurn();  // Reset
-            changeTurn();  // end
+            gameBoardController.handleInfectionCardDraw();
+            getCurrentPlayer().endTurn();
+            changeTurn();
         }
+
     }
 
     public void changeTurn(){
@@ -145,7 +159,7 @@ public class GameController {
         try {
             City city = gameBoardController.getCity(cityName);
             Player currentPlayer = getCurrentPlayer();
-            setBuildResearchBehavior(currentPlayer);
+            setShuttleFlightBehavior(currentPlayer);
             gameBoardController.handleShuttleFlight(currentPlayer, city);
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,18 +191,41 @@ public class GameController {
         }
     }
 
-    public void handleShareKnowledge(Player chosenPlayer, PlayerCard card) {
-        Player currentPlayer = getCurrentPlayer();
-        City city = playerController.getPlayerCurrentCity(getCurrentPlayer());
-        ArrayList<Player> playersInCity = game.getPlayersInCity(city);
+    public void handleShareKnowledge(String playerName, boolean giveCard) {
+        Player givingPlayer = null;
+        Player receivingPlayer = null;
 
-        setDriveBehavior();
-
-        gameBoardController.handleShareKnowledge(currentPlayer, chosenPlayer, city);
+        try {
+            if (giveCard) {
+                givingPlayer = getCurrentPlayer();
+                receivingPlayer = getPlayerByName(playerName);
+            } else {
+                givingPlayer = getPlayerByName(playerName);
+                receivingPlayer = getCurrentPlayer();
+            }
+            setShareKnowledgeBehavior(givingPlayer, receivingPlayer);
+            gameBoardController.handleShareKnowledge(givingPlayer, receivingPlayer);
+        } catch (PlayerNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        }
     }
 
-    private void setShareKnowledgeBehavior() {
+    private Player getPlayerByName(String playerName) throws PlayerNotFoundException {
+        for(Player player : game.getPlayers()) {
+            if(player.getPlayerName().equals(playerName)) {
+                return player;
+            }
+        }
 
+        throw new PlayerNotFoundException("Player with " + playerName + " does not exist");
+    }
+
+    private void setShareKnowledgeBehavior(Player givingPlayer, Player receivingPlayer) {
+        if(gameBoardController.canShareAnyCard(givingPlayer, receivingPlayer)) {
+            gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnAnyCityBehavior());
+        } else {
+            gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnSameCityBehavior());
+        }
     }
 
     public void handleTreatDisease() {
@@ -236,20 +273,40 @@ public class GameController {
         return game.getCurrentPlayer();
     }
 
-    public void registerPlayerObserver(PlayerObserver observer) {
-        for (Player p : game.getPlayers()) {
-            if (p != null) {
-                p.register(observer);
-            }
+    public synchronized void updatePlayersInGame(DocumentSnapshot snapshot) {
+        for (int i = 0; i < 4; i++) {
+            tryToUpdatePlayerInGame(snapshot, i);
         }
+    }
+
+    private void tryToUpdatePlayerInGame(DocumentSnapshot snapshot, int i) {
+        Object object = snapshot.get("Player" + (i + 1));
+
+        if (object != null) {
+            updatePlayerInGame(object, i);
+        }
+
+    }
+
+    private void updatePlayerInGame(Object object, int i) {
+        String playerString = object.toString();
+        Player player = playerController.createPlayerFromDocData(playerString);
+        game.updatePlayer(i, player);
+    }
+
+    public void registerPlayerObserver(GameObserver observer) {
+        game.register(observer);
     }
 
     public void registerGameBoardObserver(GameBoardObserver observer) {
         gameBoardController.registerObserver(observer);
     }
 
-    public void notifyObservers() {
+    public void notifyGameBoardObserver() {
         gameBoardController.notifyGameBoardObserver();
-        //todo notify playerObserver
+    }
+
+    public void notifyGameObserver() {
+        game.notifyAllObservers();
     }
 }
