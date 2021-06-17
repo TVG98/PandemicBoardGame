@@ -286,7 +286,12 @@ public class GameBoardController {
     }
 
     private String getStringWithoutFirstAndLastChar(String string) {
-        return string.substring(1, string.length() - 1);
+        try {
+            return string.substring(1, string.length() - 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     private String[] getSplittedStringAsArrayWithoutCurlyBrackets(String string) {
@@ -348,9 +353,13 @@ public class GameBoardController {
     private void updateCuredDiseasesInGameBoard(String curedDiseasesString) {
         System.out.println("CURED DISEASES: " + curedDiseasesString);
         curedDiseasesString = getStringWithoutFirstAndLastChar(curedDiseasesString);
-        String[] curedDiseasesArray = getSplittedStringAsArrayWithoutCurlyBrackets(curedDiseasesString);
-        ArrayList<Cure> curesDiseases = getCuredDiseasesFromString(curedDiseasesArray);
-        gameBoard.setCuredDiseases(curesDiseases);
+        if (curedDiseasesString.equals("")) {
+            gameBoard.setCuredDiseases(new ArrayList<>());
+        } else {
+            String[] curedDiseasesArray = getSplittedStringAsArrayWithoutCurlyBrackets(curedDiseasesString);
+            ArrayList<Cure> curesDiseases = getCuredDiseasesFromString(curedDiseasesArray);
+            gameBoard.setCuredDiseases(curesDiseases);
+        }
     }
 
     private ArrayList<Cure> getCuredDiseasesFromString(String[] curedDiseasesStringArray) {
@@ -409,18 +418,18 @@ public class GameBoardController {
         return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
     }
 
-    private ArrayList<PlayerCard> getPlayerCards(String string) {
-        string = getStringWithoutFirstAndLastChar(string);
-        String[] playerCardStackArray = getSplittedStringAsArray(string);
-        playerCardStackArray = getArrayWithoutCityEqualsString(playerCardStackArray);
-        return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
-    }
+//    private ArrayList<PlayerCard> getPlayerCards(String string) {
+//        string = getStringWithoutFirstAndLastChar(string);
+//        String[] playerCardStackArray = getSplittedStringAsArray(string);
+//        playerCardStackArray = getArrayWithoutCityEqualsString(playerCardStackArray);
+//        return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
+//    }
 
     private ArrayList<InfectionCard> getInfectionDiscardStackFromArray(String[] infectionDiscardStackArray) {
         ArrayList<InfectionCard> infectionCards = new ArrayList<>();
 
         for (String card : infectionDiscardStackArray) {
-            infectionCards.add(getCardFromString(card));
+            infectionCards.add(new InfectionCard(getCityForCardFromString(card)));
         }
 
         return infectionCards;
@@ -431,7 +440,7 @@ public class GameBoardController {
 
         for (String card : playerStackArray) {
             City city = getCityForCardFromString(card);
-            infectionCards.add(new CityCard(getCityForCardFromString(card));
+            infectionCards.add(new CityCard(getCityForCardFromString(card)));
         }
 
         return infectionCards;
@@ -460,7 +469,6 @@ public class GameBoardController {
         for (int i = 0; i < array.length; i++) {
             String without = array[i].replace("{city={", "");
             withoutCityString[i] =  without.substring(0, (i != (array.length - 1)) ? without.length() - 1 : without.length() - 2) + ",";
-            System.out.println(withoutCityString[i]);
         }
 
         return withoutCityString;
