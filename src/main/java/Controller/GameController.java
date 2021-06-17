@@ -31,16 +31,7 @@ public class GameController {
         gameBoardController = GameBoardController.getInstance();
         gameBoardController.makeGameBoard();
         startGame();
-        if (localPlayerIsPlayerOne()) {
-            gameBoardController.makeWholeGameBoard();
-        } else {
-            System.out.println("waiting for 3 seconds...");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
-            }
-        }
+
     }
 
     public static GameController getInstance() {
@@ -57,12 +48,33 @@ public class GameController {
     }
 
     public void startGame() {
+        setPlayers();
+        makeGameBoard();
+    }
+
+    private void setPlayers() {
         for (Player p : game.getPlayers()) {
             if (p != null) {
                 if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
                     setPlayer(p);
                 }
             }
+        }
+    }
+
+    private void makeGameBoard() {
+        if (localPlayerIsPlayerOne()) {
+            gameBoardController.makeWholeGameBoard();
+        } else {
+            sleep(3000);
+        }
+    }
+
+    private void sleep(int milliSeconds) {
+        try {
+            Thread.sleep(milliSeconds);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
         }
     }
 

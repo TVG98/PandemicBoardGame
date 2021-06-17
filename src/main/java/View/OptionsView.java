@@ -1,5 +1,8 @@
 package View;
 
+import Controller.SoundController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -26,6 +29,7 @@ public class OptionsView {
     final String pathToImage = "src/main/media/PandemicMenuBackground.jpg";
     final double width = 1280;
     final double height = 960;
+    SoundController soundController = SoundController.getInstance();
 
     public OptionsView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -68,6 +72,7 @@ public class OptionsView {
         Slider masterVolumeSlider = new Slider();
         Slider SFXVolumeSlider = new Slider();
         Slider musicVolumeSlider = new Slider();
+        musicSliderHandler(musicVolumeSlider);
         Slider UIVolumeSlider = new Slider();
         ArrayList<Slider> volumeSliders = new ArrayList<Slider>();
         Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider, UIVolumeSlider);
@@ -75,7 +80,7 @@ public class OptionsView {
         for (Slider slider : volumeSliders) {
             slider.setMin(0);
             slider.setMax(100);
-            slider.setValue(50);
+            slider.setValue(100);  // Moet nog geupdate worden met de SoundController
             slider.setShowTickLabels(true);
             slider.setShowTickMarks(true);
             slider.setMajorTickUnit(25);
@@ -149,4 +154,14 @@ public class OptionsView {
     private void backToMainMenuButtonHandler() {
         MenuView view = new MenuView(primaryStage);
     }
+
+    private void musicSliderHandler(Slider musicSlider) {
+        musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                soundController.setMusicVolume(newValue.floatValue());
+            }
+        });
+    }
+
 }

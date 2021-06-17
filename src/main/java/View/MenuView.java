@@ -1,5 +1,6 @@
 package View;
 
+import Controller.SoundController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -22,9 +23,11 @@ public class MenuView {
     final String pathToImage = "src/main/media/PandemicMenuBackground.jpg";
     final double width = 1280;
     final double height = 960;
+    SoundController soundController;
 
     public MenuView(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        soundController = SoundController.getInstance();
         loadStageWithBorderPane(createMainMenuBorderPane());
     }
 
