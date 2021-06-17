@@ -11,6 +11,7 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -149,6 +150,96 @@ public class FirestoreDatabase {
     public void updateCuredDiseases(List<Cure> curedDiseases) {
         try {
             docRef.update("curedDiseases", curedDiseases);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateCures(List<Cure> CURES) {
+        try {
+            docRef.update("cures", CURES);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateDrawnEpidemicCards(int drawnEpidemicCards) {
+        try {
+            docRef.update("drawnEpidemicCards", drawnEpidemicCards);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
+        try {
+            docRef.update("infectionDiscardStack", infectionDiscardStack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateInfectionRate(int infectionRate) {
+        try {
+            docRef.update("infectionRate", infectionRate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateInfectionStack(ArrayList<InfectionCard> infectionStack) {
+        try {
+            docRef.update("infectionStack", infectionStack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateOutbreakCounter(int outbreakCounter) {
+        try {
+            docRef.update("outbreakCounter", outbreakCounter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updatePlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
+        try {
+            docRef.update("playerDiscardStack", playerDiscardStack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updatePlayerStack(ArrayList<PlayerCard> playerStack) {
+        try {
+            docRef.update("playerStack", playerStack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateTopSixInfectionStack(ArrayList<InfectionCard> topSixInfectionStack) {
+        try {
+            docRef.update("topSixInfectionStack", topSixInfectionStack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public void updateViruses(List<Virus> viruses) {
+        try {
+            docRef.update("viruses", viruses);
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause().printStackTrace();

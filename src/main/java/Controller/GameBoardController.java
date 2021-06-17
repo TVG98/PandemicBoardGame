@@ -251,7 +251,8 @@ public class GameBoardController {
     private void updateGameBoardLocal(DocumentSnapshot snapshot) {
         Map<String, Object> data = snapshot.getData();
         updateCitiesInGameBoard(data.get("cities").toString());
-        updateCitiesWithResearchStationInGameBoard(data.get("citiesWithResearchStations").toString());
+        updateCitiesInGameBoard(data.get("citiesWithResearchStations").toString());
+        updateCuredDiseasesInGameBoard(data.get("curedDiseases").toString());
     }
 
     private void updateCitiesInGameBoard(String citiesString) {
@@ -320,7 +321,7 @@ public class GameBoardController {
         return new ArrayList<>(Arrays.asList(nearCities));
     }
 
-    private void updateCitiesWithResearchStationInGameBoard(String researchString) {
-        System.out.println(researchString);
+    private void updateCuredDiseasesInGameBoard(String curedDiseasesString) {
+        System.out.println(curedDiseasesString);
     }
 }
