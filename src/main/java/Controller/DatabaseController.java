@@ -3,11 +3,9 @@ package Controller;
 import Exceptions.LobbyFullException;
 import Model.City;
 import Model.FirestoreDatabase;
-import Model.Gameboard;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseController {
@@ -28,10 +26,6 @@ public class DatabaseController {
 
     public void updatePlayerInServer(Player player) {
         database.updatePlayerInServer(player);
-    }
-
-    public void updateGameBoard(Gameboard gameboard) {
-        database.updateCities(gameboard.getCities());
     }
 
     public String makeLobby() {

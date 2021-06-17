@@ -47,7 +47,13 @@ public class GameBoardController {
     }
 
     public void makeWholeGameBoard() {
+        System.out.println("aangeroepen");
         gameBoard.makeCompleteGameBoard();
+        for (int i = 0; i < 48; i++) {
+            System.out.print(gameBoard.getCities().get(i).getCubeAmount());
+            System.out.print(", ");
+        }
+
         databaseController.updateCitiesInDatabase(gameBoard.getCities());
         databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
     }
@@ -90,7 +96,6 @@ public class GameBoardController {
 
     public void handleFindCure(Player currentPlayer, City chosenCity) {
         findCureBehavior.findCure(currentPlayer, chosenCity);
-        updateGameBoardInServer();
     }
 
     public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
@@ -101,7 +106,6 @@ public class GameBoardController {
         try {
             Cure cure = gameBoard.getCureWithVirusType(virusType);
             gameBoard.flipCurePawn(cure);
-            updateGameBoardInServer();
         } catch (CureNotFoundException e) {
             e.printStackTrace();
         }
@@ -251,8 +255,10 @@ public class GameBoardController {
     }
 
     private void updateGameBoardLocal(DocumentSnapshot snapshot) {
+        System.out.println("updating gameboard");
         Map<String, Object> data = snapshot.getData();
         updateCitiesInGameBoard(data.get("cities").toString());
+        System.out.println("cities updated");
         updateCitiesWithResearchStationInGameBoard(data.get("citiesWithResearchStations").toString());
     }
 
@@ -261,6 +267,7 @@ public class GameBoardController {
         String[] citiesArray = getSplittedCityStringsAsArray(citiesString);
         citiesArray = getCitiesWithoutCurlyBrackets(citiesArray);
         gameBoard.setCities(createAllCitiesFromDoc(citiesArray));
+        System.out.println(citiesString + "cities set");
     }
 
     private String getCityStringWithoutFirstAndLastChar(String cities) {
@@ -284,6 +291,7 @@ public class GameBoardController {
 
         for (String city : citiesArray) {
             cities.add(createCityFromDoc(city));
+            System.out.println(city);
         }
 
         return cities;
