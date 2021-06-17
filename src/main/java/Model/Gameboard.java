@@ -14,20 +14,20 @@ public class Gameboard implements GameBoardObservable {
     private final String PATH_TO_CONNECTED_CITIES = "src/main/connectedCities.txt";
 
     private List<City> cities; // can change
-    private final List<Cure> CURES = Arrays.asList(new Cure(VirusType.BLUE),
+    private List<Cure> CURES = Arrays.asList(new Cure(VirusType.BLUE),
             new Cure(VirusType.YELLOW),
             new Cure(VirusType.BLACK),
             new Cure(VirusType.RED));
 
-    private final List<Virus> VIRUSES = Arrays.asList(new Virus(VirusType.BLUE),
+    private List<Virus> VIRUSES = Arrays.asList(new Virus(VirusType.BLUE),
             new Virus(VirusType.YELLOW),
             new Virus(VirusType.BLACK),
             new Virus(VirusType.RED));
 
     private ArrayList<InfectionCard> infectionStack; // can change
-    private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>(); // can change
+    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>(); // can change
     private ArrayList<PlayerCard> playerStack; // can change
-    private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>(); // can change
+    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>(); // can change
 
     private int outbreakCounter = 0; // can change
     private int infectionRate = 1; // can change
@@ -61,6 +61,10 @@ public class Gameboard implements GameBoardObservable {
 
     public void setCitiesWithResearchStations(ArrayList<City> citiesWithResearchStations) {
         this.citiesWithResearchStations = citiesWithResearchStations;
+    }
+
+    public void setCURES(List<Cure> CURES) {
+        this.CURES = CURES;
     }
 
     private void initializeCities() {
