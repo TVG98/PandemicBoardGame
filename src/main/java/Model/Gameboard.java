@@ -43,11 +43,11 @@ public class Gameboard implements GameBoardObservable {
     }
 
     public void makeCompleteGameBoard() {
-
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
         initializeGameBoard();
+        initializeStartingCubes();
     }
 
     private void initializeGameBoard() {
