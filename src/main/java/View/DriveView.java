@@ -32,7 +32,7 @@ public class DriveView implements GameObserver {
     final double height = 900;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
-    Text statusText;
+    Text statusText = new Text("error huh");
     GameController gameController = GameController.getInstance();
 
 
@@ -76,7 +76,7 @@ public class DriveView implements GameObserver {
         Text actionTitle = new Text("Drive / Ferry");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        statusText = new Text("You are currently in: " );
+
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
         Text infoText = new Text("You are able to move to the cities connected to your current city");
