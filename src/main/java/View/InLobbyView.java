@@ -20,11 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/** BELANGRIJK
- * Er mist een manier om naar GameView te gaan wanneer alle spelers ready zijn
- *
- */
-
 public class InLobbyView implements LobbyObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";

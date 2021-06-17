@@ -35,6 +35,7 @@ public class GameController {
             gameBoardController.makeWholeGameBoard();
             initializeStartingCubes();
         } else {
+            System.out.println("waiting for 1 second...");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ie) {
