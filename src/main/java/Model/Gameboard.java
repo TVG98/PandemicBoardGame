@@ -67,6 +67,38 @@ public class Gameboard implements GameBoardObservable {
         this.CURES = CURES;
     }
 
+    public void setDrawnEpidemicCards(int drawnEpidemicCards) {
+        this.drawnEpidemicCards = drawnEpidemicCards;
+    }
+
+    public void setInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
+        this.infectionDiscardStack = infectionDiscardStack;
+    }
+
+    public void setInfectionRate(int infectionRate) {
+        this.infectionRate = infectionRate;
+    }
+
+    public void setInfectionStack(ArrayList<InfectionCard> infectionStack) {
+        this.infectionStack = infectionStack;
+    }
+
+    public void setOutbreakCounter(int outbreakCounter) {
+        this.outbreakCounter = outbreakCounter;
+    }
+
+    public void setPlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
+        this.playerDiscardStack = playerDiscardStack;
+    }
+
+    public void setPlayerStack(ArrayList<PlayerCard> playerStack) {
+        this.playerStack = playerStack;
+    }
+
+    public void setVIRUSES(List<Virus> viruses) {
+        this.VIRUSES = viruses;
+    }
+
     private void initializeCities() {
         String[] cityNames = getCityNames();
         assignVirusToCities(cityNames);
@@ -479,6 +511,16 @@ public class Gameboard implements GameBoardObservable {
         }
 
         return curedDiseases;
+    }
+
+    public void setCuredDiseases(ArrayList<Cure> curedDiseases) {
+        for (Cure curedDisease : curedDiseases) {
+            for (Cure cure : CURES) {
+                if (cure.getType().equals(curedDisease.getType())) {
+                    cure.setCureState(CureState.CURED);
+                }
+            }
+        }
     }
 
     public int getDrawnEpidemicCards() {
