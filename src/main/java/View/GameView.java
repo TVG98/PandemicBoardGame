@@ -41,6 +41,9 @@ public class GameView implements GameObserver, GameBoardObserver {
     Text outbreakCounter = new Text();
     Text infectionRate = new Text();
 
+    // Contains offsetX, offsetY and color for each Player
+    ArrayList<String[]> playerPawns = initializePlayerPawns();
+
     private final GameController gameController;
 
     public GameView(Stage primaryStage) {
@@ -58,6 +61,8 @@ public class GameView implements GameObserver, GameBoardObserver {
         Image image = new Image(new File(pathToImage).toURI().toString());
         BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         borderPane.setBackground(new Background(bgImage));
+
+
 
         // Setup BorderPane Top //
         Text title = new Text("Pandemic");
@@ -130,10 +135,15 @@ public class GameView implements GameObserver, GameBoardObserver {
         // Setup BorderPane Center //
 
         makeGameBoard();
-        drawPlayerOneOnCity("Atlanta");
-        drawPlayerTwoOnCity("Atlanta");
-        drawPlayerThreeOnCity("Atlanta");
-        drawPlayerFourOnCity("Atlanta");
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            drawPlayerOnCity(
+                    "Atlanta",
+                    Color.valueOf(playerPawns.get(i)[2]),
+                    new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
+        }
 
         // Setup BorderPane Bottom //
 
@@ -272,6 +282,16 @@ public class GameView implements GameObserver, GameBoardObserver {
         // BorderPane Layout //
         borderPane.setTop(hboxTop);
         borderPane.setBottom(vboxBottom);
+    }
+
+    private ArrayList<String[]> initializePlayerPawns()
+    {
+        ArrayList<String[]> playerPawns = new ArrayList<String[]>();
+        playerPawns.add(new String[]{"-27", "-7", "RED"});
+        playerPawns.add(new String[]{"-18", "+12", "BLUE"});
+        playerPawns.add(new String[]{"+4", "+12", "ORANGE"});
+        playerPawns.add(new String[]{"+12", "-7", "GREEN"});
+        return playerPawns;
     }
 
     private void openMenuButtonHandler() {
@@ -580,71 +600,20 @@ public class GameView implements GameObserver, GameBoardObserver {
         }
     }
 
-    private void drawPlayerOneOnCity(String cityName)
+    private void drawPlayerOnCity(String cityName, Color color, int[] offset)
     {
         for (Map.Entry<String, int[]> entry : this.cities.entrySet())
         {
             if (entry.getKey().equals(cityName))
             {
-                Rectangle playerOne = new Rectangle(15, 15, Color.RED);
-                playerOne.setStroke(Color.DARKRED);
-                playerOne.setStrokeWidth(2);
-                playerOne.setX(entry.getValue()[0] - 27);
-                playerOne.setY(entry.getValue()[1] - 7);
-                this.borderPane.getChildren().add(playerOne);
+                Rectangle player = new Rectangle(15, 15, color);
+                player.setStroke(color.darker());
+                player.setStrokeWidth(2);
+                player.setX(entry.getValue()[0] + offset[0]);
+                player.setY(entry.getValue()[1] + offset[1]);
+                this.borderPane.getChildren().add(player);
             }
         }
-    }
-
-    private void drawPlayerTwoOnCity(String cityName)
-    {
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
-        {
-            if (entry.getKey().equals(cityName))
-            {
-                Rectangle playerOne = new Rectangle(15, 15, Color.BLUE);
-                playerOne.setStroke(Color.DARKBLUE);
-                playerOne.setStrokeWidth(2);
-                playerOne.setX(entry.getValue()[0] - 18);
-                playerOne.setY(entry.getValue()[1] + 12);
-                this.borderPane.getChildren().add(playerOne);
-            }
-        }
-
-    }
-
-    private void drawPlayerThreeOnCity(String cityName)
-    {
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
-        {
-            if (entry.getKey().equals(cityName))
-            {
-                Rectangle playerOne = new Rectangle(15, 15, Color.ORANGE);
-                playerOne.setStroke(Color.DARKORANGE);
-                playerOne.setStrokeWidth(2);
-                playerOne.setX(entry.getValue()[0] + 4);
-                playerOne.setY(entry.getValue()[1] + 12);
-                this.borderPane.getChildren().add(playerOne);
-            }
-        }
-
-    }
-
-    private void drawPlayerFourOnCity(String cityName)
-    {
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
-        {
-            if (entry.getKey().equals(cityName))
-            {
-                Rectangle playerOne = new Rectangle(15, 15, Color.GREEN);
-                playerOne.setStroke(Color.DARKGREEN);
-                playerOne.setStrokeWidth(2);
-                playerOne.setX(entry.getValue()[0] + 12);
-                playerOne.setY(entry.getValue()[1] - 7);
-                this.borderPane.getChildren().add(playerOne);
-            }
-        }
-
     }
 
     private void createUpdatedGameViewBorderPane(GameBoardObservable gameBoardObservable) {
@@ -661,41 +630,27 @@ public class GameView implements GameObserver, GameBoardObserver {
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
         Player[] players = gameObservable.getPlayers();
 
-        int index = 1;
+        int index = 0;
 
-        for (Player player : players)
+        for (int i = index; i < 4; i++)
         {
-            if (player != null)
+            if (players[i] != null)
             {
-                this.playerOverviews.get(index).setText(player.getPlayerName() + " - " + player.getRole());
+                this.playerOverviews.get(i).setText(players[i].getPlayerName() + " - " + players[i].getRole());
 
-
-//                switch (index)
-//                {
-//                    case 1: {
-//                        playerOneOverview.setText();
-//                        System.out.println(player.getCurrentCity().getName());
-//                        break;
-//                    }
-//                    case 2: {
-//                        playerTwoOverview.setText(player.getPlayerName() + " - " + player.getRole());
-//                        System.out.println(player.getCurrentCity().getName());
-//                        //drawPlayerTwoOnCity(player.getCurrentCity().getName());
-//                        break;
-//                    }
-//                    case 3: {
-//                        playerThreeOverview.setText(player.getPlayerName() + " - " + player.getRole());
-//                        System.out.println(player.getCurrentCity().getName());
-//                        //drawPlayerThreeOnCity(player.getCurrentCity().getName());
-//                        break;
-//                    }
-//                    case 4: {
-//                        playerFourOverview.setText(player.getPlayerName() + " - " + player.getRole());
-//                        System.out.println(player.getCurrentCity().getName());
-//                        //drawPlayerFourOnCity(player.getCurrentCity().getName());
-//                        break;
-//                    }
-//                }
+                // Can't be tested yet, so commented it out
+                /*
+                if (players[i].getCurrentCity() != null)
+                {
+                    drawPlayerOnCity(
+                            players[i].getCurrentCity().getName(),
+                            Color.valueOf(playerPawns.get(i)[2]),
+                            new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
+                }
+                else{
+                    System.out.println("oewfaguh");
+                }
+                 */
             }
             index++;
         }
