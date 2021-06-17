@@ -10,6 +10,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
 
 public class GameController {
     static GameController gameController;
@@ -32,7 +33,13 @@ public class GameController {
         startGame();
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
-            initializeStartingCubes();
+        } else {
+            System.out.println("waiting for 3 seconds...");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
         }
     }
 
@@ -73,14 +80,11 @@ public class GameController {
         return Role.values()[new Random().nextInt(Role.values().length)];
     }
 
-    private void initializeStartingCubes() {
-        gameBoardController.initializeStartingCubes();
-    }
-
     public void turn() {
         // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
         // ik ook niet man
         // nice xD
+        // helemaal mooi
 
         if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
             gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
