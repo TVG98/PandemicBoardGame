@@ -56,6 +56,18 @@ public class Player {
         }
         return false;
     }
+    public ArrayList<CityCard> getCityCardsFromPlayer() {
+        ArrayList<CityCard> cityCards = new ArrayList<>();
+
+        for (PlayerCard card : hand) {
+            if (card instanceof CityCard) {
+                cityCards.add((CityCard) card);
+            }
+        }
+
+        return cityCards;
+    }
+
 
     public Role getRole() {
         return role;

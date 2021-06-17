@@ -8,10 +8,7 @@ import Observers.GameBoardObserver;
 import com.google.cloud.firestore.DocumentSnapshot;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameBoardController {
     static GameBoardController gameBoardController;
@@ -48,8 +45,23 @@ public class GameBoardController {
 
     public void makeWholeGameBoard() {
         gameBoard.makeCompleteGameBoard();
+        writeWholeGameBoardToServer();
+    }
+
+    public void writeWholeGameBoardToServer() {
         databaseController.updateCitiesInDatabase(gameBoard.getCities());
         databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
+        databaseController.updateCuredDiseases(gameBoard.getCuredDiseases());
+        databaseController.updateCures(gameBoard.getCures());
+        databaseController.updateDrawnEpidemicCards(gameBoard.getDrawnEpidemicCards());
+        databaseController.updateInfectionDiscardStack(gameBoard.getInfectionDiscardStack());
+        databaseController.updateInfectionRate(gameBoard.getInfectionRate());
+        databaseController.updateInfectionStack(gameBoard.getInfectionStack());
+        databaseController.updateOutbreakCounter(gameBoard.getOutbreakCounter());
+        databaseController.updatePlayerDiscardStack(gameBoard.getPlayerDiscardStack());
+        databaseController.updatePlayerStack(gameBoard.getPlayerStack());
+        databaseController.updateTopSixInfectionStack(gameBoard.getTopSixInfectionStack());
+        databaseController.updateViruses(gameBoard.getViruses());
     }
 
     public void handleDrive(Player currentPlayer, City chosenCity) {
@@ -250,29 +262,46 @@ public class GameBoardController {
 
     private void updateGameBoardLocal(DocumentSnapshot snapshot) {
         Map<String, Object> data = snapshot.getData();
+
         updateCitiesInGameBoard(data.get("cities").toString());
-        updateCitiesWithResearchStationInGameBoard(data.get("citiesWithResearchStations").toString());
+        updateCitiesInGameBoard(data.get("citiesWithResearchStations").toString());
+        updateCuredDiseasesInGameBoard(data.get("curedDiseases").toString());
+        updateCuresInGameBoard(data.get("cures").toString());
+        updateDrawnEpidemicCardsInGameBoard(data.get("drawnEpidemicCards").toString());
+        updateInfectionDiscardStackInGameBoard(data.get("infectionDiscardStack").toString());
+        updateInfectionRateInGameBoard(data.get("infectionRate").toString());
+        updateInfectionStackInGameBoard(data.get("infectionStack").toString());
+        updateOutbreakCounterInGameBoard(data.get("outbreakCounter").toString());
+//        updatePlayerDiscardStackInGameBoard(data.get("playerDiscardStack").toString());
+//        updatePlayerStackInGameBoard(data.get("playerStack").toString());
+//        updateTopSixInfectionStackInGameBoard(data.get("topSixInfectionStack").toString());
+//        updateVirusesInGameBoard(data.get("viruses").toString());
     }
 
     private void updateCitiesInGameBoard(String citiesString) {
-        citiesString = getCityStringWithoutFirstAndLastChar(citiesString);
-        String[] citiesArray = getSplittedCityStringsAsArrayWithoutCurlyBrackets(citiesString);
+        citiesString = getStringWithoutFirstAndLastChar(citiesString);
+        String[] citiesArray = getSplittedStringAsArrayWithoutCurlyBrackets(citiesString);
         List<City> cities = createAllCitiesFromDoc(citiesArray);
         gameBoard.setCities(cities);
     }
 
-    private String getCityStringWithoutFirstAndLastChar(String cities) {
-        return cities.substring(1, cities.length() - 1);
+    private String getStringWithoutFirstAndLastChar(String string) {
+        try {
+            return string.substring(1, string.length() - 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
-    private String[] getSplittedCityStringsAsArrayWithoutCurlyBrackets(String cities) {
-        String[] separateCities = cities.split("}, ");
+    private String[] getSplittedStringAsArrayWithoutCurlyBrackets(String string) {
+        String[] separateString = string.split("}, ");
 
-        for (int i = 0; i < separateCities.length; i++) {
-            separateCities[i] = separateCities[i].replaceAll("[{}]", "");
+        for (int i = 0; i < separateString.length; i++) {
+            separateString[i] = separateString[i].replaceAll("[{}]", "");
         }
 
-        return separateCities;
+        return separateString;
     }
 
     private List<City> createAllCitiesFromDoc(String[] citiesArray) {
@@ -282,6 +311,7 @@ public class GameBoardController {
             City newCity = createCityFromDoc(city);
             cities.add(newCity);
         }
+
         return cities;
     }
 
@@ -320,7 +350,158 @@ public class GameBoardController {
         return new ArrayList<>(Arrays.asList(nearCities));
     }
 
-    private void updateCitiesWithResearchStationInGameBoard(String researchString) {
-        System.out.println(researchString);
+    private void updateCuredDiseasesInGameBoard(String curedDiseasesString) {
+        System.out.println("CURED DISEASES: " + curedDiseasesString);
+        curedDiseasesString = getStringWithoutFirstAndLastChar(curedDiseasesString);
+        if (curedDiseasesString.equals("")) {
+            gameBoard.setCuredDiseases(new ArrayList<>());
+        } else {
+            String[] curedDiseasesArray = getSplittedStringAsArrayWithoutCurlyBrackets(curedDiseasesString);
+            ArrayList<Cure> curesDiseases = getCuredDiseasesFromString(curedDiseasesArray);
+            gameBoard.setCuredDiseases(curesDiseases);
+        }
+    }
+
+    private ArrayList<Cure> getCuredDiseasesFromString(String[] curedDiseasesStringArray) {
+        ArrayList<Cure> curedDiseases = new ArrayList<>();
+
+        for (String curedDisease : curedDiseasesStringArray) {
+            curedDiseases.add(getCureFromString(curedDisease));
+        }
+
+        return curedDiseases;
+    }
+
+    private Cure getCureFromString(String curedDisease) {
+        curedDisease = curedDisease + ",";
+        String cureState = curedDisease.split("cureState=")[1].split(",")[0];
+        String cureType = curedDisease.split("type=")[1].split(",")[0];
+        Cure cure = new Cure(VirusType.valueOf(cureType));
+        cure.setCureState(CureState.valueOf(cureState));
+
+        return cure;
+    }
+
+    private void updateCuresInGameBoard(String curesString) {
+        System.out.println("CURES: " + curesString);
+        curesString = getStringWithoutFirstAndLastChar(curesString);
+        String[] curesArray = getSplittedStringAsArrayWithoutCurlyBrackets(curesString);
+        ArrayList<Cure> cures = getCuresFromString(curesArray);
+        gameBoard.setCURES(cures);
+    }
+
+    private ArrayList<Cure> getCuresFromString(String[] curesArray) {
+        ArrayList<Cure> cures = new ArrayList<>();
+
+        for (String cure : curesArray) {
+            cures.add(getCureFromString(cure));
+        }
+
+        return cures;
+    }
+
+    private void updateDrawnEpidemicCardsInGameBoard(String drawnEpidemicCardsString) {
+        System.out.println("DRAWN EPIDEMIC CARDS: " + drawnEpidemicCardsString);
+        gameBoard.setDrawnEpidemicCards(Integer.parseInt(drawnEpidemicCardsString));
+    }
+
+    private void updateInfectionDiscardStackInGameBoard(String infectionDiscardStackString) {
+        System.out.println("INFECTION DISCARD STACK: " + infectionDiscardStackString);
+
+        gameBoard.setInfectionDiscardStack(getInfectionCards(infectionDiscardStackString));
+    }
+
+    private ArrayList<InfectionCard> getInfectionCards(String string) {
+        string = getStringWithoutFirstAndLastChar(string);
+        String[] infectionDiscardStackArray = getSplittedStringAsArray(string);
+        infectionDiscardStackArray = getArrayWithoutCityEqualsString(infectionDiscardStackArray);
+        return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
+    }
+
+//    private ArrayList<PlayerCard> getPlayerCards(String string) {
+//        string = getStringWithoutFirstAndLastChar(string);
+//        String[] playerCardStackArray = getSplittedStringAsArray(string);
+//        playerCardStackArray = getArrayWithoutCityEqualsString(playerCardStackArray);
+//        return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
+//    }
+
+    private ArrayList<InfectionCard> getInfectionDiscardStackFromArray(String[] infectionDiscardStackArray) {
+        ArrayList<InfectionCard> infectionCards = new ArrayList<>();
+
+        for (String card : infectionDiscardStackArray) {
+            infectionCards.add(new InfectionCard(getCityForCardFromString(card)));
+        }
+
+        return infectionCards;
+    }
+
+    private ArrayList<PlayerCard> getPlayerCardStackFromArray(String[] playerStackArray) {
+        ArrayList<PlayerCard> infectionCards = new ArrayList<>();
+
+        for (String card : playerStackArray) {
+            City city = getCityForCardFromString(card);
+            infectionCards.add(new CityCard(getCityForCardFromString(card)));
+        }
+
+        return infectionCards;
+    }
+
+    private City getCityForCardFromString(String cardString) {
+        VirusType virusType = VirusType.valueOf(cardString.split("virusType=")[1].split(",")[0]);
+        String name = getCityNameFromString(cardString);
+        String[] nearCitiesArray = cardString.split("nearCities=\\[")[1].split("]")[0].split(",");
+
+        ArrayList<Cube> cubes = getCityCubeAmountFromString(cardString, virusType);
+        ArrayList<String> nearCities = new ArrayList<>(Arrays.asList(nearCitiesArray));
+
+        return new City(name, cubes, virusType, nearCities);
+    }
+
+
+
+    private String[] getSplittedStringAsArray(String string) {
+        return string.split("}, ");
+    }
+
+    private String[] getArrayWithoutCityEqualsString(String[] array) {
+        String[] withoutCityString = new String[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            String without = array[i].replace("{city={", "");
+            withoutCityString[i] =  without.substring(0, (i != (array.length - 1)) ? without.length() - 1 : without.length() - 2) + ",";
+        }
+
+        return withoutCityString;
+    }
+
+    private void updateInfectionRateInGameBoard(String infectionRate) {
+        System.out.println("INFECTION RATE:" + infectionRate);
+        gameBoard.setInfectionRate(Integer.parseInt(infectionRate));
+    }
+
+    private void updateInfectionStackInGameBoard(String infectionStackString) {
+        System.out.println("INFECTION STACK: " + infectionStackString);
+        gameBoard.setInfectionStack(getInfectionCards(infectionStackString));
+    }
+
+    private void updateOutbreakCounterInGameBoard(String outbreakCounterString) {
+        System.out.println("OUTBREAK COUNTER: " + outbreakCounterString);
+        gameBoard.setOutbreakCounter(Integer.parseInt(outbreakCounterString));
+    }
+
+    private void updatePlayerDiscardStackInGameBoard(String playerDiscardStackString) {
+        System.out.println("PLAYER DISCARD STACK: " + playerDiscardStackString);
+    }
+
+    private void updatePlayerStackInGameBoard(String playerStackString) {
+        System.out.println("PLAYER STACK: " + playerStackString);
+    }
+
+    private void updateTopSixInfectionStackInGameBoard(String topSixInfectionStackString) {
+        System.out.println("TOP SIX INFECTION STACK:" + topSixInfectionStackString);
+    }
+
+    private void updateVirusesInGameBoard(String virusesString) {
+        System.out.println("VIRUSES:" + virusesString);
     }
 }

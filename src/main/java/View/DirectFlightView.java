@@ -1,6 +1,9 @@
 package View;
 
 import Controller.GameController;
+import Model.CityCard;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,14 +24,19 @@ import java.util.Collections;
  * @created June 11 2021 - 1:34 PM
  * @project testGame
  */
-public class DirectFlightView {
+public class DirectFlightView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    ArrayList<Button> cityButtons;
+    Text statusText = new Text("error?? look away :(");
+
     GameController gameController = GameController.getInstance();
+
+
 
 
     public DirectFlightView(Stage primaryStage) {
@@ -65,11 +73,14 @@ public class DirectFlightView {
         menuBackground.setX((width / 2) - (1400 / 2f));
         menuBackground.setY((height / 2) - (800 / 2f));
 
+
+
+
         // Setup BorderPane Center //
         Text actionTitle = new Text("Direct Flight");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        Text statusText = new Text("You are currently in: " + "New York");
+        //Text statusText = new Text("You are currently in: " + gameController.getCurrentPlayer().getCurrentCity().getName());
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
         Text infoText = new Text(
@@ -89,7 +100,12 @@ public class DirectFlightView {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(20);
 
-        ArrayList<Button> cityButtons = getCitiesButtons();
+        ArrayList<Button> buttons = new ArrayList<>();
+        for (int i=0; i<7; i++) {
+            buttons.add(new Button());
+        }
+
+        cityButtons = buttons;
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -165,10 +181,26 @@ public class DirectFlightView {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesButtons()
+    private void getCitiesButtons(ArrayList<String> cityCardsInHandNames)
     {
+
+        int index = 0;
+        for (String cityName : cityCardsInHandNames) {
+            Button button = cityButtons.get(index);
+            button.setText(cityName);
+            button.setOnAction(e -> getCityButtonHandler(button));
+            index++;
+        }
+
+        for (int i = index; i < cityButtons.size(); i++) {
+            cityButtons.get(i).setPrefHeight(0);
+            cityButtons.get(i).setPrefWidth(0);
+            cityButtons.get(i).setStyle("-fx-background-color:transparent");
+        }
+
+
         // TODO: Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        /*ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
         b1.setOnAction(e -> getCityButtonHandler(b1));
@@ -189,7 +221,7 @@ public class DirectFlightView {
         b6.setOnAction(e -> getCityButtonHandler(b6));
 
         Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;
+        return buttons;*/
     }
 
     private void backButtonHandler()
@@ -207,6 +239,22 @@ public class DirectFlightView {
     {
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
+    }
+
+    private void createUpdatedBorderPane(GameObservable observable) {
+        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+
+        ArrayList<CityCard> cityCardsInHand = observable.getCurrentPlayer().getCityCardsFromPlayer();
+        ArrayList<String> cityCardsInHandNames = new ArrayList<String>();
+        for (CityCard cityCard : cityCardsInHand) {
+            cityCardsInHandNames.add(cityCard.getName());
+        }
+        getCitiesButtons(cityCardsInHandNames);
+    }
+
+    @Override
+    public void update(GameObservable observable) {
+        createUpdatedBorderPane(observable);
     }
 
 }
