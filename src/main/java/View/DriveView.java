@@ -1,6 +1,9 @@
 package View;
 
 import Controller.GameController;
+import Model.City;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,24 +19,32 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Observable;
 
 /**
  * @created June 12 2021 - 2:08 PM
  * @project testGame
  */
-public class DriveView {
+public class DriveView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    ArrayList<Button> cityButtons;
+    Text statusText = new Text("error huh");
+
     GameController gameController = GameController.getInstance();
+
+
 
     public DriveView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDriveViewBorderPane());
+
+        gameController.registerPlayerObserver(this);
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -67,7 +78,7 @@ public class DriveView {
         Text actionTitle = new Text("Drive / Ferry");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        Text statusText = new Text("You are currently in: " + "Washington");
+
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
         Text infoText = new Text("You are able to move to the cities connected to your current city");
@@ -85,7 +96,12 @@ public class DriveView {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(20);
 
-        ArrayList<Button> cityButtons = getCitiesButtons();
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        for (int i=0; i<7; i++) {
+            buttons.add(new Button());
+        }
+
+        cityButtons = buttons;
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -161,31 +177,52 @@ public class DriveView {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesButtons()
+    private void getCitiesButtons(ArrayList<String> nearCities)
     {
-        // TODO: Moet alle steden verbonden aan de huidige stad van de speler ophalen
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        int index = 0;
+        //ArrayList<Button> buttons = new ArrayList<Button>();
 
-        Button b1 = new Button("Ho Chi Minh");
+        for (String cityName : nearCities) {
+            //Button button = new Button(cityName);\
+            Button button = cityButtons.get(index);
+            button.setText(cityName);
+
+            button.setOnAction(e -> getCitiesButtonHandler(button));
+            //buttons.add(button);
+            index++;
+        }
+
+        for (int i = index; i < cityButtons.size(); i++) {
+            cityButtons.get(i).setPrefHeight(0);
+            cityButtons.get(i).setPrefWidth(0);
+            cityButtons.get(i).setStyle("-fx-background-color:transparent");
+
+        }
+        //return buttons;
+
+
+
+
+        /*Button b1 = new Button(cityNames.get(0));
         b1.setOnAction(e -> getCitiesButtonHandler(b1));
 
-        Button b2 = new Button("Jakarta");
+        Button b2 = new Button(cityNames.get(1));
         b2.setOnAction(e -> getCitiesButtonHandler(b2));
 
-        Button b3 = new Button("St. Petersburg");
+        Button b3 = new Button(cityNames.get(1));
         b3.setOnAction(e -> getCitiesButtonHandler(b3));
 
-        Button b4 = new Button("Chennai");
+        Button b4 = new Button("temp");
         b4.setOnAction(e -> getCitiesButtonHandler(b4));
 
-        Button b5 = new Button("Istanbul");
+        Button b5 = new Button("temp");
         b5.setOnAction(e -> getCitiesButtonHandler(b5));
 
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getCitiesButtonHandler(b6));
+        Button b6 = new Button("temp");
+        b6.setOnAction(e -> getCitiesButtonHandler(b6));*/
 
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;
+        //Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
+       // return buttons;
     }
 
     private void backButtonHandler() {
@@ -201,6 +238,18 @@ public class DriveView {
     {
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
+    }
+
+    private void createUpdatedBorderPane(GameObservable observable) {
+        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+        ArrayList<String> nearCities = observable.getCurrentPlayer().getCurrentCity().getNearCities();
+        getCitiesButtons(nearCities);
+    }
+
+    @Override
+    public void update(GameObservable observable) {
+        createUpdatedBorderPane(observable);
+
     }
 }
 
