@@ -10,6 +10,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
 
 public class GameController {
     static GameController gameController;
@@ -33,6 +34,12 @@ public class GameController {
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
             initializeStartingCubes();
+        } else {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
         }
     }
 

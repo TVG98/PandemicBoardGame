@@ -49,7 +49,6 @@ public class Gameboard implements GameBoardObservable {
         initializeGameBoard();
     }
 
-
     private void initializeGameBoard() {
         shuffleAllStacks();
     }

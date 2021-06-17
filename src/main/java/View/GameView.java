@@ -135,10 +135,10 @@ public class GameView implements GameObserver, GameBoardObserver {
         // Setup BorderPane Center //
 
         makeGameBoard();
-        drawPlayerOneOnCity("Washington");
-        drawPlayerTwoOnCity("Washington");
-        drawPlayerThreeOnCity("Washington");
-        drawPlayerFourOnCity("Washington");
+        drawPlayerOneOnCity("Atlanta");
+        drawPlayerTwoOnCity("Atlanta");
+        drawPlayerThreeOnCity("Atlanta");
+        drawPlayerFourOnCity("Atlanta");
 
         // Setup BorderPane Bottom //
 
@@ -553,6 +553,7 @@ public class GameView implements GameObserver, GameBoardObserver {
             c1.setOnMouseExited(event -> c1.setFill(color));
 
             cities.put(entry.getKey(), c1);
+
         }
 
         for (Map.Entry<String, Circle> entry : cities.entrySet()) {
@@ -688,8 +689,6 @@ public class GameView implements GameObserver, GameBoardObserver {
             }
             index++;
         }
-
-
     }
 
     @Override
