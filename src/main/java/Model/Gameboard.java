@@ -24,27 +24,31 @@ public class Gameboard implements GameBoardObservable {
             new Virus(VirusType.BLACK),
             new Virus(VirusType.RED));
 
-    private final ArrayList<InfectionCard> infectionStack; // can change
+    private ArrayList<InfectionCard> infectionStack; // can change
     private final ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>(); // can change
-    private final ArrayList<PlayerCard> playerStack; // can change
+    private ArrayList<PlayerCard> playerStack; // can change
     private final ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>(); // can change
 
     private int outbreakCounter = 0; // can change
     private int infectionRate = 1; // can change
     private int drawnEpidemicCards = 0; // can change
 
-    private final ArrayList<City> citiesWithResearchStations; // can change
+    private ArrayList<City> citiesWithResearchStations; // can change
     private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>(); // can change
     private final List<Integer> INFECTION_RATES = Arrays.asList(2, 2, 2, 3, 3, 4, 4);
 
     public Gameboard() {
         cities = Arrays.asList(new City[48]);
         initializeCities();
+    }
+
+    public void makeCompleteGameBoard() {
         infectionStack = initializeInfectionCardStack();
         playerStack = initializePlayerCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
         initializeGameBoard();
     }
+
 
     private void initializeGameBoard() {
         shuffleAllStacks();
@@ -53,6 +57,10 @@ public class Gameboard implements GameBoardObservable {
     public void setCities(List<City> cities) {
         this.cities = cities;
         notifyAllObservers();
+    }
+
+    public void setCitiesWithResearchStations(ArrayList<City> citiesWithResearchStations) {
+        this.citiesWithResearchStations = citiesWithResearchStations;
     }
 
     private void initializeCities() {

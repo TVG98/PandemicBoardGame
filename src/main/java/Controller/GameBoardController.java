@@ -46,6 +46,12 @@ public class GameBoardController {
         gameBoard = new Gameboard();
     }
 
+    public void makeWholeGameBoard() {
+        gameBoard.makeCompleteGameBoard();
+        databaseController.updateCitiesInDatabase(gameBoard.getCities());
+        databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
+    }
+
     public void handleDrive(Player currentPlayer, City chosenCity) {
         driveBehavior.drive(currentPlayer, chosenCity);
     }
@@ -105,45 +111,37 @@ public class GameBoardController {
         for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
         }
-
-        updateGameBoardInServer();
     }
 
     public void handleEpidemicCard() {
         gameBoard.handleEpidemicCard();
-        updateGameBoardInServer();
     }
 
     // Override
     public void handleInfectionCardDraw() {
         gameBoard.handleInfectionCardDraw(1);
-        updateGameBoardInServer();
     }
 
     public void handleInfectionCardDraw(int cubeAmount) {
         gameBoard.handleInfectionCardDraw(cubeAmount);
-        updateGameBoardInServer();
     }
 
     public void initializeStartingCubes() {
         gameBoard.initializeStartingCubes();
-        updateGameBoardInServer();
     }
 
     public void handleOutbreak(City infectedCity) {
         gameBoard.handleOutbreak(infectedCity);
-        updateGameBoardInServer();
+        databaseController.updateCitiesInDatabase(gameBoard.getCities());
     }
 
     public ArrayList<InfectionCard> getTopSixCards() {
         ArrayList<InfectionCard> infectionCards = gameBoard.getTopSixInfectionStack();
-        updateGameBoardInServer();
         return infectionCards;
     }
 
     public void addTopSixCards(ArrayList<InfectionCard> cards) {
         gameBoard.addInfectionStack(cards);
-        updateGameBoardInServer();
     }
 
     public void handlePlayerPawnMovement(Player player) {
@@ -156,7 +154,6 @@ public class GameBoardController {
 
     public void handleBuildResearchStation(Player currentPlayer, City currentCity) {
         buildResearchStationBehavior.buildResearchStation(currentPlayer, currentCity);
-        updateGameBoardInServer();
     }
 
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
@@ -165,7 +162,6 @@ public class GameBoardController {
 
     public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
         shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
-        updateGameBoardInServer();
     }
 
     public void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
@@ -174,7 +170,7 @@ public class GameBoardController {
 
     public void addResearchStationToCity(City city) {
         gameBoard.addResearchStationToCity(city);
-        updateGameBoardInServer();
+        databaseController.updateCitiesWithResearchStationsInDatabase(gameBoard.getCitiesWithResearchStations());
     }
 
     public void setTreatDiseaseBehavior(TreatDiseaseBehavior treatDiseaseBehavior) {
@@ -183,7 +179,7 @@ public class GameBoardController {
 
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
         treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
-        updateGameBoardInServer();
+        databaseController.updateCitiesInDatabase(gameBoard.getCities());
     }
 
     public boolean cityHasResearchStation(City city) {
@@ -248,10 +244,6 @@ public class GameBoardController {
         gameBoard.register(observer);
     }
 
-    public void updateGameBoardInServer() {
-        databaseController.updateGameBoard(gameBoard);
-    }
-
     public void update(DocumentSnapshot snapshot) {
         if (gameBoard != null) {
             updateGameBoardLocal(snapshot);
@@ -261,6 +253,7 @@ public class GameBoardController {
     private void updateGameBoardLocal(DocumentSnapshot snapshot) {
         Map<String, Object> data = snapshot.getData();
         updateCitiesInGameBoard(data.get("cities").toString());
+        updateCitiesWithResearchStationInGameBoard(data.get("citiesWithResearchStations").toString());
     }
 
     private void updateCitiesInGameBoard(String citiesString) {
@@ -330,5 +323,9 @@ public class GameBoardController {
     private ArrayList<String> getCityNearCitiesFromString(String cityString) {
         String[] nearCities = cityString.split("\\[")[1].split("]")[0].split(", ");
         return new ArrayList<>(Arrays.asList(nearCities));
+    }
+
+    private void updateCitiesWithResearchStationInGameBoard(String researchString) {
+        System.out.println(researchString);
     }
 }

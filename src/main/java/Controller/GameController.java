@@ -31,6 +31,7 @@ public class GameController {
         gameBoardController.makeGameBoard();
         startGame();
         if (localPlayerIsPlayerOne()) {
+            gameBoardController.makeWholeGameBoard();
             initializeStartingCubes();
         }
     }
@@ -273,9 +274,6 @@ public class GameController {
     }
 
     public synchronized void updatePlayersInGame(DocumentSnapshot snapshot) {
-        System.out.println(snapshot.getData().get("Player1").toString());
-        System.out.println(snapshot.getData().get("Player2").toString());
-        System.out.println(snapshot.getData().get("Player3").toString());
         for (int i = 0; i < 4; i++) {
             tryToUpdatePlayerInGame(snapshot, i);
         }
@@ -285,7 +283,6 @@ public class GameController {
         Object object = snapshot.get("Player" + (i + 1));
 
         if (object != null) {
-            System.out.println("niet null");
             updatePlayerInGame(object, i);
         }
 
@@ -293,7 +290,6 @@ public class GameController {
 
     private void updatePlayerInGame(Object object, int i) {
         String playerString = object.toString();
-        System.out.println(playerString);
         Player player = playerController.createPlayerFromDocData(playerString);
         game.updatePlayer(i, player);
     }

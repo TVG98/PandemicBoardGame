@@ -1,10 +1,14 @@
 package Controller;
 
 import Exceptions.LobbyFullException;
+import Model.City;
 import Model.FirestoreDatabase;
 import Model.Gameboard;
 import Model.Player;
 import com.google.cloud.firestore.DocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseController {
     FirestoreDatabase database;
@@ -52,17 +56,23 @@ public class DatabaseController {
     }
 
     public void update(DocumentSnapshot snapshot) {
-        System.out.println(snapshot.getBoolean("Joinable"));
         if (!snapshot.getBoolean("GameStarted")) {
             LobbyController.getInstance().update(snapshot);
         }
-        System.out.println("na de lobby controller" + snapshot.getBoolean("Joinable"));
-        //GameBoardController.getInstance().update(snapshot);
-        System.out.println("joinable dus? " + snapshot.getBoolean("Joinable"));
+
+        GameBoardController.getInstance().update(snapshot);
+
         if (!snapshot.getBoolean("Joinable")) {
-            System.out.println("Kom ik hier");
             GameController.getInstance().updatePlayersInGame(snapshot);
         }
+    }
+
+    public void updateCitiesInDatabase(List<City> cities) {
+        database.updateCities(cities);
+    }
+
+    public void updateCitiesWithResearchStationsInDatabase(List<City> cities) {
+        database.updateCitiesWithResearchStations(cities);
     }
 
     public DocumentSnapshot getLobbyDocument(String lobbyCode) {
