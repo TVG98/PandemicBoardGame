@@ -37,10 +37,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
 
-    Text playerOneOverview = new Text();
-    Text playerTwoOverview = new Text();
-    Text playerThreeOverview = new Text();
-    Text playerFourOverview = new Text();
+    ArrayList<Text> playerOverviews = new ArrayList<>();
     Text outbreakCounter = new Text();
     Text infectionRate = new Text();
 
@@ -142,18 +139,23 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         // Player overview //
 
+        Text playerOneOverview = new Text();
+        Text playerTwoOverview = new Text();
+        Text playerThreeOverview = new Text();
+        Text playerFourOverview = new Text();
+
+        Collections.addAll(this.playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
+
         Text playerText = new Text("Players");
         playerText.setFont(new Font("Castellar", 20));
 
-        ArrayList<Text> playerOverviews = new ArrayList<>();
-        Collections.addAll(playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
 
-        for (Text playerOverview : playerOverviews) {
+        for (Text playerOverview : this.playerOverviews) {
             playerOverview.setFont(new Font("Arial", 15));
         }
 
         VBox vboxPlayerList = new VBox();
-        vboxPlayerList.getChildren().addAll(playerOverviews);
+        vboxPlayerList.getChildren().addAll(this.playerOverviews);
 
         VBox vboxPlayers = new VBox();
         vboxPlayers.setSpacing(10);
@@ -665,25 +667,35 @@ public class GameView implements GameObserver, GameBoardObserver {
         {
             if (player != null)
             {
-                switch (index)
-                {
-                    case 1: {
-                        playerOneOverview.setText(player.getPlayerName() + " - " + player.getRole());
-                        break;
-                    }
-                    case 2: {
-                        playerTwoOverview.setText(player.getPlayerName() + " - " + player.getRole());
-                        break;
-                    }
-                    case 3: {
-                        playerThreeOverview.setText(player.getPlayerName() + " - " + player.getRole());
-                        break;
-                    }
-                    case 4: {
-                        playerFourOverview.setText(player.getPlayerName() + " - " + player.getRole());
-                        break;
-                    }
-                }
+                this.playerOverviews.get(index).setText(player.getPlayerName() + " - " + player.getRole());
+
+
+//                switch (index)
+//                {
+//                    case 1: {
+//                        playerOneOverview.setText();
+//                        System.out.println(player.getCurrentCity().getName());
+//                        break;
+//                    }
+//                    case 2: {
+//                        playerTwoOverview.setText(player.getPlayerName() + " - " + player.getRole());
+//                        System.out.println(player.getCurrentCity().getName());
+//                        //drawPlayerTwoOnCity(player.getCurrentCity().getName());
+//                        break;
+//                    }
+//                    case 3: {
+//                        playerThreeOverview.setText(player.getPlayerName() + " - " + player.getRole());
+//                        System.out.println(player.getCurrentCity().getName());
+//                        //drawPlayerThreeOnCity(player.getCurrentCity().getName());
+//                        break;
+//                    }
+//                    case 4: {
+//                        playerFourOverview.setText(player.getPlayerName() + " - " + player.getRole());
+//                        System.out.println(player.getCurrentCity().getName());
+//                        //drawPlayerFourOnCity(player.getCurrentCity().getName());
+//                        break;
+//                    }
+//                }
             }
             index++;
         }
