@@ -31,6 +31,7 @@ public class DirectFlightView {
     GameController gameController = GameController.getInstance();
 
 
+
     public DirectFlightView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
@@ -65,11 +66,14 @@ public class DirectFlightView {
         menuBackground.setX((width / 2) - (1400 / 2f));
         menuBackground.setY((height / 2) - (800 / 2f));
 
+
+
+
         // Setup BorderPane Center //
         Text actionTitle = new Text("Direct Flight");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        Text statusText = new Text("You are currently in: " + "New York");
+        Text statusText = new Text("You are currently in: " + gameController.getCurrentPlayer().getCurrentCity().getName());
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
         Text infoText = new Text(
@@ -167,6 +171,9 @@ public class DirectFlightView {
 
     private ArrayList<Button> getCitiesButtons()
     {
+
+
+
         // TODO: Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
