@@ -85,6 +85,7 @@ public class Game implements GameObservable {
     @Override
     public void register(GameObserver observer) {
         observers.add(observer);
+        notifyAllObservers();
     }
 
     @Override

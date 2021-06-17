@@ -538,6 +538,7 @@ public class Gameboard implements GameBoardObservable {
     public void register(GameBoardObserver gameBoardObserver) {
         unregisterAllObservers();
         observers.add(gameBoardObserver);
+        notifyAllObservers();
     }
 
     @Override
