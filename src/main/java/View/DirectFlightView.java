@@ -43,6 +43,8 @@ public class DirectFlightView implements GameObserver {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDirectFlightViewBorderPane());
+
+        gameController.registerPlayerObserver(this);
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -199,7 +201,7 @@ public class DirectFlightView implements GameObserver {
         }
 
 
-        // TODO: Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
+        // : Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
         /*ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");

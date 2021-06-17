@@ -1,6 +1,11 @@
 package View;
 
 import Controller.GameController;
+import Model.City;
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,7 +27,7 @@ import java.util.Collections;
  * @project testGame
  */
 
-public class ShuttleFlightView {
+public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
@@ -30,12 +35,18 @@ public class ShuttleFlightView {
     Text cityHasResearchStationText = new Text("Your current city has a research station");
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
+    ArrayList<Button> cityButtons;
+    Text statusText = new Text ("temp");
+
     GameController gameController = GameController.getInstance();
 
     public ShuttleFlightView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDriveViewBorderPane());
+
+        gameController.registerPlayerObserver(this);
+        gameController.registerGameBoardObserver(this);
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -68,7 +79,7 @@ public class ShuttleFlightView {
         Text actionTitle = new Text("Shuttle Flight");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        Text statusText = new Text("You are currently in: " + "Washington");
+        //Text statusText = new Text("You are currently in: " + "Washington");
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
         Text infoText = new Text("You are able to move from a city with a research station to another city with a research station");
@@ -90,7 +101,12 @@ public class ShuttleFlightView {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(20);
 
-        ArrayList<Button> cityButtons = getCitiesWithResearchStationButtons();
+        ArrayList<Button> buttons = new ArrayList<>();
+        for (int i=0; i<7; i++) {
+            buttons.add(new Button());
+        }
+
+        cityButtons = buttons;
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -162,9 +178,24 @@ public class ShuttleFlightView {
         return bp;
     }
 
-    private ArrayList<Button> getCitiesWithResearchStationButtons()
+    private void getCitiesWithResearchStationButtons(ArrayList<String> citiesWithResearchStationsNames)
     {
-        // TODO: Moet alle steden met een research station ophalen
+
+        int index = 0;
+        for (String cityName : citiesWithResearchStationsNames) {
+            Button button = cityButtons.get(index);
+            button.setText(cityName);
+            button.setOnAction(e -> getCitiesWithResearchStationButtonHandler(button));
+            index++;
+        }
+
+        for (int i = index; i < cityButtons.size(); i++) {
+            cityButtons.get(i).setPrefHeight(0);
+            cityButtons.get(i).setPrefWidth(0);
+            cityButtons.get(i).setStyle("-fx-background-color:transparent");
+        }
+
+        /*// : Moet alle steden met een research station ophalen
         ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
@@ -186,7 +217,7 @@ public class ShuttleFlightView {
         b6.setOnAction(e -> getCitiesWithResearchStationButtonHandler(b6));
 
         Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;
+        return buttons;*/
     }
 
     private void backButtonHandler() {
@@ -202,6 +233,29 @@ public class ShuttleFlightView {
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
 
+    }
+
+    private void createUpdatedBorderPane(GameObservable observable) {
+        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+    }
+
+    private void createUpdatedBorderPane(GameBoardObservable gameBoardObservable) {
+        ArrayList<City> citiesWithResearchStations = gameBoardObservable.getCitiesWithResearchStations();
+        ArrayList<String> citiesWithResearchStationsNames = new ArrayList<String>();
+        for (City city : citiesWithResearchStations) {
+            citiesWithResearchStationsNames.add(city.getName());
+        }
+        getCitiesWithResearchStationButtons(citiesWithResearchStationsNames);
+    }
+
+    @Override
+    public void update(GameObservable gameObservable ) {
+        createUpdatedBorderPane(gameObservable);
+    }
+
+    @Override
+    public void update(GameBoardObservable gameBoardObservable) {
+        createUpdatedBorderPane(gameBoardObservable);
     }
 }
 
