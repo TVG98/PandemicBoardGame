@@ -159,6 +159,10 @@ public class GameBoardController {
 
     }
 
+    public List<City> getCities() {
+        return gameBoard.getCities();
+    }
+
     public void setBuildResearchStationBehavior(BuildResearchStationBehavior buildResearchStationBehavior) {
         this.buildResearchStationBehavior = buildResearchStationBehavior;
     }
