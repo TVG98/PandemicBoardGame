@@ -55,7 +55,7 @@ public class DatabaseController {
             GameController.getInstance().updatePlayersInGame(snapshot);
         }
 
-        //GameBoardController.getInstance().update(snapshot);
+        GameBoardController.getInstance().update(snapshot);
     }
 
     public void updateCitiesInDatabase(List<City> cities) {

@@ -23,10 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * @created June 15 2021 - 4:10 PM
- * @project testGame
- */
 public class TakeSharePlayerView implements GameObserver{
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";

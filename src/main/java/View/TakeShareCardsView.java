@@ -186,7 +186,6 @@ public class TakeShareCardsView implements GameObserver {
         return buttons;
     }
 
-
     private void backButtonHandler() {
         GameView view = GameView.getInstance(primaryStage);
     }
