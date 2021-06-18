@@ -20,6 +20,7 @@ public class GameController {
     private final GameBoardController gameBoardController;
     private final LobbyController lobbyController;
     private final DatabaseController databaseController;
+    private boolean playersUpdated = false;
 
     private GameController() {
         lobbyController = LobbyController.getInstance();
@@ -31,6 +32,7 @@ public class GameController {
         gameBoardController = GameBoardController.getInstance();
         gameBoardController.makeGameBoard();
         startGame();
+        game.notifyAllObservers();
     }
 
     public static GameController getInstance() {
@@ -52,10 +54,13 @@ public class GameController {
     }
 
     private void setPlayers() {
-        for (Player p : game.getPlayers()) {
-            if (p != null) {
-                if (p.getPlayerName().equals(playerController.getCurrentPlayerName())) {
-                    setPlayer(p);
+        if (localPlayerIsPlayerOne()) {
+            if (!playersUpdated) {
+                playersUpdated = true;
+                for (Player p : game.getPlayers()) {
+                    if (p != null) {
+                        setPlayer(p);
+                    }
                 }
             }
         }
@@ -132,6 +137,7 @@ public class GameController {
             City city = gameBoardController.getCity(cityName);
             setDriveBehavior();
             gameBoardController.handleDrive(currentPlayer, city);
+            databaseController.updatePlayerInServer(currentPlayer);
         } catch (Exception e) {
             e.printStackTrace();
         }

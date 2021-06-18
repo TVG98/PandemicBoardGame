@@ -1,5 +1,6 @@
 package Controller;
 
+import Exceptions.CityNotFoundException;
 import Model.*;
 
 import java.util.ArrayList;
@@ -38,17 +39,18 @@ public class PlayerController {
             player.setRole(Role.valueOf(role));
         }
         gameBoardController = GameBoardController.getInstance();
-//        if (!playerString.contains("currentCity=null")) {
-//            try {
-//                String currentCity = playerString.split("currentCity=")[1];
-//                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
-//                currentCity = currentCity.split("name=")[1];
-//                currentCity = currentCity.substring(0, currentCity.indexOf(","));
-//                player.setCurrentCity(gameBoardController.getCity(currentCity));
-//            } catch (CityNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (!playerString.contains("currentCity=null")) {
+            try {
+                String currentCity = playerString.split("currentCity=")[1];
+                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
+                currentCity = currentCity.split("name=")[1];
+                currentCity += ",";
+                currentCity = currentCity.substring(0, currentCity.indexOf(","));
+                player.setCurrentCity(gameBoardController.getCity(currentCity));
+            } catch (CityNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         return player;
     }
 
