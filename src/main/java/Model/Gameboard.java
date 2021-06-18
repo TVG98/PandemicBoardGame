@@ -41,12 +41,12 @@ public class Gameboard implements GameBoardObservable {
     public Gameboard() {
         cities = Arrays.asList(new City[48]);
         initializeCities();
+        infectionStack = initializeInfectionCardStack();
+        citiesWithResearchStations = createCitiesWithResearchStation();
+        playerStack = initializePlayerCardStack();
     }
 
     public void makeCompleteGameBoard() {
-        infectionStack = initializeInfectionCardStack();
-        playerStack = initializePlayerCardStack();
-        citiesWithResearchStations = createCitiesWithResearchStation();
         initializeGameBoard();
         initializeStartingCubes();
     }
