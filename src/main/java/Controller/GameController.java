@@ -31,7 +31,6 @@ public class GameController {
         gameBoardController = GameBoardController.getInstance();
         gameBoardController.makeGameBoard();
         startGame();
-
     }
 
     public static GameController getInstance() {
@@ -65,8 +64,6 @@ public class GameController {
     private void makeGameBoard() {
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
-            sleep(3000);
-            databaseController.updateCitiesInDatabase(gameBoardController.getCities());
         }
 
         sleep(3000);
