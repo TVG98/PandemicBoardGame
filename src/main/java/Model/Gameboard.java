@@ -41,12 +41,12 @@ public class Gameboard implements GameBoardObservable {
     public Gameboard() {
         cities = Arrays.asList(new City[48]);
         initializeCities();
+        infectionStack = initializeInfectionCardStack();
+        citiesWithResearchStations = createCitiesWithResearchStation();
+        playerStack = initializePlayerCardStack();
     }
 
     public void makeCompleteGameBoard() {
-        infectionStack = initializeInfectionCardStack();
-        playerStack = initializePlayerCardStack();
-        citiesWithResearchStations = createCitiesWithResearchStation();
         initializeGameBoard();
         initializeStartingCubes();
     }
@@ -199,12 +199,14 @@ public class Gameboard implements GameBoardObservable {
 
     public PlayerCard getPlayerCard(String cardName) throws CardNotFoundException {
         for (PlayerCard card : playerStack) {
+            System.out.println(card.getName() + " : " + cardName);
             if (card.getName().equals(cardName)) {
                 return card;
             }
         }
 
         for (PlayerCard card : playerDiscardStack) {
+            System.out.println(card.getName() + " : " + cardName);
             if (card.getName().equals(cardName)) {
                 return card;
             }
