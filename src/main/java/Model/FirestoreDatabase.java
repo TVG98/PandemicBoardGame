@@ -26,7 +26,7 @@ public class FirestoreDatabase {
 
     private final String CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final int passwordLength = 8;
-    private final String fireBaseJsonPath = "src/main/Firebasejson/gametest-3a5f7-firebase-adminsdk-lfjkr-3d3c163166.json";
+    private final String fireBaseJsonPath = "src/main/Firebasejson/iipsene-pandemic-firebase-adminsdk-bz9da-2236dabc43.json";
 
     static FirestoreDatabase firestoreDatabase;
 
