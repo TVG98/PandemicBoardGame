@@ -37,6 +37,8 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
 
+    static GameView gameView;
+
     ArrayList<Text> playerOverviews = new ArrayList<>();
     Text outbreakCounter = new Text();
     Text infectionRate = new Text();
@@ -46,7 +48,7 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     private final GameController gameController;
 
-    public GameView(Stage primaryStage) {
+    private GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
         this.primaryStage.setResizable(false);
@@ -54,6 +56,14 @@ public class GameView implements GameObserver, GameBoardObserver {
         loadStageWithBorderPane(borderPane);
         gameController.registerPlayerObserver(this);
         gameController.registerGameBoardObserver(this);
+    }
+
+    public static GameView getInstance(Stage primaryStage) {
+        if (gameView == null) {
+            gameView = new GameView(primaryStage);
+        }
+
+        return gameView;
     }
 
     private void createGameViewBorderPane() {

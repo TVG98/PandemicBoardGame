@@ -209,12 +209,12 @@ public class GiveShareView {
     }
 
     private void backButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void giveCardButtonHandler() {
         // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void getPlayerButtonHandler(Button button)

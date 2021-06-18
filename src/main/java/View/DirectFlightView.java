@@ -226,19 +226,16 @@ public class DirectFlightView implements GameObserver {
         return buttons;*/
     }
 
-    private void backButtonHandler()
-    {
-        GameView view = new GameView(primaryStage);
+    private void backButtonHandler() {
+        GameView view = GameView.getInstance(primaryStage);
     }
 
-    private void moveButtonHandler()
-    {
+    private void moveButtonHandler() {
         gameController.handleDirectFlight(selectedCity);
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
-    private void getCityButtonHandler(Button button)
-    {
+    private void getCityButtonHandler(Button button) {
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }

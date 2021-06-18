@@ -22,11 +22,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created June 12 2021 - 6:44 PM
- * @project testGame
- */
-
 public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -107,8 +102,7 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
         }
 
         cityButtons = buttons;
-        for (Button cityButton : cityButtons)
-        {
+        for (Button cityButton : cityButtons) {
             cityButton.setTextFill(Color.WHITE);
             cityButton.setPrefHeight(80);
             cityButton.setPrefWidth(200);
@@ -122,22 +116,21 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
         HBox hboxCityRowTwo = new HBox();
         hboxCityRowTwo.setAlignment(Pos.CENTER);
 
-        for (Button cityButton : cityButtons)
-        {
+        for (Button cityButton : cityButtons) {
+
             if (index < 3) {
               hboxCityRowOne.getChildren().add(cityButton);
-            }
-            else {
+            } else {
               hboxCityRowTwo.getChildren().add(cityButton);
             }
+
             index++;
         }
 
         ArrayList<HBox> cityRows = new ArrayList<HBox>();
         Collections.addAll(cityRows, hboxCityRowOne, hboxCityRowTwo);
 
-        for (HBox hboxCityRow : cityRows)
-        {
+        for (HBox hboxCityRow : cityRows) {
             hboxCityRow.setSpacing(30);
         }
 
@@ -221,12 +214,12 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleShuttleFlight(selectedCity);
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void getCitiesWithResearchStationButtonHandler(Button button) {

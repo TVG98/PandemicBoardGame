@@ -214,23 +214,21 @@ public class TakeShareView {
     }
 
     private void backButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void takeCardButtonHandler() {
         // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
-    private void getPlayerButtonHandler(Button button)
-    {
+    private void getPlayerButtonHandler(Button button) {
         selectedPlayerText.setText("You selected " + button.getText() + " to take a card from");
         selectedPlayer = button.getText();
         gameController.handleShareKnowledge(selectedPlayer, false);
     }
 
-    private void getCitiesButtonHandler(Button button)
-    {
+    private void getCitiesButtonHandler(Button button) {
         selectedCityText.setText("You selected the city card of " + button.getText() + " to take away");
         selectedCity = button.getText();
     }

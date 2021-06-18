@@ -98,7 +98,7 @@ public class InGameMenuView {
     }
 
     private void closeMenuButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void backToMainMenuButtonHandler() {

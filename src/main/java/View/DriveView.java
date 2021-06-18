@@ -226,16 +226,15 @@ public class DriveView implements GameObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleDrive(selectedCity);
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
-    private void getCitiesButtonHandler(Button button)
-    {
+    private void getCitiesButtonHandler(Button button) {
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }
