@@ -59,7 +59,11 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     public static GameView getInstance(Stage primaryStage) {
-        return new GameView(primaryStage);
+        if (gameView == null) {
+            gameView = new GameView(primaryStage);
+        }
+
+        return gameView;
     }
 
     private void createGameViewBorderPane() {

@@ -46,7 +46,7 @@ public class GameBoardController {
 
     public void makeWholeGameBoard() {
         gameBoard.makeCompleteGameBoard();
-        //writeWholeGameBoardToServer();
+        writeWholeGameBoardToServer();
     }
 
     public void writeWholeGameBoardToServer() {

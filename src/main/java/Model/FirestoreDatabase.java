@@ -130,6 +130,7 @@ public class FirestoreDatabase {
     }
 
     public void updateCities(List<City> cities) {
+        System.out.println("updating cities!" + cities.get(0).getName() + " : " + cities.get(0).getCubeAmount());
         try {
             docRef.update("cities", cities);
         } catch (Exception e) {
