@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.CardNotFoundException;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Exceptions.VirusNotFoundException;
@@ -194,6 +195,19 @@ public class Gameboard implements GameBoardObservable {
         playerCardStack.addAll(Arrays.asList(initializeEpidemicCards(6)));
 
         return playerCardStack;
+    }
+
+    public PlayerCard getPlayerCard(String cardName) throws CardNotFoundException {
+        ArrayList<PlayerCard> cards = playerStack;
+        cards.addAll(playerDiscardStack);
+
+        for (PlayerCard card : cards) {
+            if (card.getName().equals(cardName)) {
+                return card;
+            }
+        }
+
+        throw new CardNotFoundException("card not found: " + cardName);
     }
 
     private EventCard[] initializeEventCards() {
