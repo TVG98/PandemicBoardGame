@@ -51,13 +51,11 @@ public class DatabaseController {
     public void update(DocumentSnapshot snapshot) {
         if (!snapshot.getBoolean("GameStarted")) {
             LobbyController.getInstance().update(snapshot);
-        }
-
-        GameBoardController.getInstance().update(snapshot);
-
-        if (!snapshot.getBoolean("Joinable")) {
+        } else {
             GameController.getInstance().updatePlayersInGame(snapshot);
         }
+
+        //GameBoardController.getInstance().update(snapshot);
     }
 
     public void updateCitiesInDatabase(List<City> cities) {
