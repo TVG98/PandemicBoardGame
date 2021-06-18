@@ -268,6 +268,7 @@ public class GameBoardController {
     private void updateGameBoardLocal(DocumentSnapshot snapshot) {
         Map<String, Object> data = snapshot.getData();
 
+        System.out.println("updating gameboard....");
         updateCitiesInGameBoard(data.get("cities").toString());
         updateCitiesInGameBoard(data.get("citiesWithResearchStations").toString());
         updateCuredDiseasesInGameBoard(data.get("curedDiseases").toString());
