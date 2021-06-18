@@ -10,6 +10,10 @@ public class Virus {
         this.VIRUS_TYPE = virusType;
     }
 
+    public void setCubeAmount(int cubeAmount) {
+        this.cubeAmount = cubeAmount;
+    }
+
     public VirusType getType() {
         return VIRUS_TYPE;
     }

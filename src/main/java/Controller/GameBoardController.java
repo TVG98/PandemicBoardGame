@@ -273,10 +273,10 @@ public class GameBoardController {
         updateInfectionRateInGameBoard(data.get("infectionRate").toString());
         updateInfectionStackInGameBoard(data.get("infectionStack").toString());
         updateOutbreakCounterInGameBoard(data.get("outbreakCounter").toString());
-//        updatePlayerDiscardStackInGameBoard(data.get("playerDiscardStack").toString());
+        updatePlayerDiscardStackInGameBoard(data.get("playerDiscardStack").toString());
         updatePlayerStackInGameBoard(data.get("playerStack").toString());
-//        updateTopSixInfectionStackInGameBoard(data.get("topSixInfectionStack").toString());
-//        updateVirusesInGameBoard(data.get("viruses").toString());
+        updateVirusesInGameBoard(data.get("viruses").toString());
+        System.out.println("============================gameBoard is fully updated==========================");
     }
 
     private void updateCitiesInGameBoard(String citiesString) {
@@ -352,9 +352,8 @@ public class GameBoardController {
     }
 
     private void updateCuredDiseasesInGameBoard(String curedDiseasesString) {
-        System.out.println("CURED DISEASES: " + curedDiseasesString);
         curedDiseasesString = getStringWithoutFirstAndLastChar(curedDiseasesString);
-        if (curedDiseasesString.equals("")) {
+        if (curedDiseasesString.length() == 0) {
             gameBoard.setCuredDiseases(new ArrayList<>());
         } else {
             String[] curedDiseasesArray = getSplittedStringAsArrayWithoutCurlyBrackets(curedDiseasesString);
@@ -384,7 +383,6 @@ public class GameBoardController {
     }
 
     private void updateCuresInGameBoard(String curesString) {
-        System.out.println("CURES: " + curesString);
         curesString = getStringWithoutFirstAndLastChar(curesString);
         String[] curesArray = getSplittedStringAsArrayWithoutCurlyBrackets(curesString);
         ArrayList<Cure> cures = getCuresFromString(curesArray);
@@ -402,18 +400,22 @@ public class GameBoardController {
     }
 
     private void updateDrawnEpidemicCardsInGameBoard(String drawnEpidemicCardsString) {
-        System.out.println("DRAWN EPIDEMIC CARDS: " + drawnEpidemicCardsString);
         gameBoard.setDrawnEpidemicCards(Integer.parseInt(drawnEpidemicCardsString));
     }
 
     private void updateInfectionDiscardStackInGameBoard(String infectionDiscardStackString) {
-        System.out.println("INFECTION DISCARD STACK: " + infectionDiscardStackString);
 
         gameBoard.setInfectionDiscardStack(getInfectionCards(infectionDiscardStackString));
     }
 
     private ArrayList<InfectionCard> getInfectionCards(String string) {
+        ArrayList<InfectionCard> infectionCards = new ArrayList<>();
         string = getStringWithoutFirstAndLastChar(string);
+
+        if (string.length() == 0) {
+            return infectionCards;
+        }
+
         String[] infectionDiscardStackArray = getSplittedStringAsArray(string);
         infectionDiscardStackArray = getArrayWithoutCityEqualsString(infectionDiscardStackArray);
         return getInfectionDiscardStackFromArray(infectionDiscardStackArray);
@@ -422,7 +424,12 @@ public class GameBoardController {
     private ArrayList<PlayerCard> getPlayerCards(String string) {
         ArrayList<PlayerCard> playerCards = new ArrayList<>();
 
-        string =  string.substring(1, string.length()-1);
+        string = getStringWithoutFirstAndLastChar(string);
+
+        if (string.length() == 0) {
+            return playerCards;
+        }
+
         String[] cardNames =  string.split(", ");
 
         try {
@@ -441,17 +448,6 @@ public class GameBoardController {
 
         for (String card : infectionDiscardStackArray) {
             infectionCards.add(new InfectionCard(getCityForCardFromString(card)));
-        }
-
-        return infectionCards;
-    }
-
-    private ArrayList<PlayerCard> getPlayerCardStackFromArray(String[] playerStackArray) {
-        ArrayList<PlayerCard> infectionCards = new ArrayList<>();
-
-        for (String card : playerStackArray) {
-            City city = getCityForCardFromString(card);
-            infectionCards.add(new CityCard(getCityForCardFromString(card)));
         }
 
         return infectionCards;
@@ -484,34 +480,53 @@ public class GameBoardController {
     }
 
     private void updateInfectionRateInGameBoard(String infectionRate) {
-        System.out.println("INFECTION RATE:" + infectionRate);
         gameBoard.setInfectionRate(Integer.parseInt(infectionRate));
     }
 
     private void updateInfectionStackInGameBoard(String infectionStackString) {
-        System.out.println("INFECTION STACK: " + infectionStackString);
         gameBoard.setInfectionStack(getInfectionCards(infectionStackString));
     }
 
     private void updateOutbreakCounterInGameBoard(String outbreakCounterString) {
-        System.out.println("OUTBREAK COUNTER: " + outbreakCounterString);
         gameBoard.setOutbreakCounter(Integer.parseInt(outbreakCounterString));
     }
 
     private void updatePlayerDiscardStackInGameBoard(String playerDiscardStackString) {
-        System.out.println("PLAYER DISCARD STACK: " + playerDiscardStackString);
+        gameBoard.setPlayerDiscardStack(getPlayerCards(playerDiscardStackString));
     }
 
     private void updatePlayerStackInGameBoard(String playerStackString) {
-        System.out.println("PLAYER STACK: " + getPlayerCards(playerStackString));
         gameBoard.setPlayerStack(getPlayerCards(playerStackString));
     }
 
-    private void updateTopSixInfectionStackInGameBoard(String topSixInfectionStackString) {
-        System.out.println("TOP SIX INFECTION STACK:" + topSixInfectionStackString);
+    private void updateVirusesInGameBoard(String virusesString) {
+        gameBoard.setVIRUSES(getVirusesFromString(virusesString));
     }
 
-    private void updateVirusesInGameBoard(String virusesString) {
-        System.out.println("VIRUSES:" + virusesString);
+    private List<Virus> getVirusesFromString(String virusesString) {
+        String string = getStringWithoutFirstAndLastChar(virusesString);
+        String[] viruses = getSplittedStringAsArrayWithoutCurlyBrackets(string);
+        return getVirusListFromArray(viruses);
+    }
+
+    private List<Virus> getVirusListFromArray(String[] viruses) {
+        List<Virus> virusList = new ArrayList<>();
+
+        for (String virus : viruses) {
+            virusList.add(getVirusFromString(virus + ","));
+        }
+
+        return virusList;
+    }
+
+    private Virus getVirusFromString(String virusString) {
+        int cubeAmount = Integer.parseInt(virusString.split("cubeAmount=")[1].split(",")[0]);
+        String virusTypeString = virusString.split("type=")[1].split(",")[0];
+        VirusType virusType = VirusType.valueOf(virusTypeString);
+
+        Virus virus = new Virus(virusType);
+        virus.setCubeAmount(cubeAmount);
+
+        return virus;
     }
 }
