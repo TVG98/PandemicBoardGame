@@ -1,6 +1,10 @@
 package View;
 
 import Controller.GameController;
+import Model.Player;
+import Model.PlayerCard;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,21 +21,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GiveShareView {
+public class GiveShareView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    ArrayList<String> availableCardsToGive;
+    ArrayList<Button> availableCardsToGive = createInitialCardsToGive();
+    ArrayList<Button> playerButtons = createInitialPlayerButtons();
     Text selectedCityText = new Text("You currently have no city card selected to give away");
     String selectedCity = "None";
     Text selectedPlayerText = new Text("You have no player selected");
     String selectedPlayer = "None";
     GameController gameController;
 
-    public GiveShareView(Stage primaryStage, ArrayList<String> availableCardsToGive) {
+    public GiveShareView(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.availableCardsToGive = availableCardsToGive;
         gameController = GameController.getInstance();
         loadStageWithBorderPane(createDoShareViewBorderPane());
     }
@@ -87,7 +91,7 @@ public class GiveShareView {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(10);
 
-        ArrayList<Button> playerButtons = getPlayerButtons();
+
         for (Button playerButton : playerButtons)
         {
             playerButton.setTextFill(Color.WHITE);
@@ -102,8 +106,7 @@ public class GiveShareView {
         hboxPlayers.getChildren().addAll(playerButtons);
         hboxPlayers.setSpacing(30);
 
-        ArrayList<Button> cityButtons = getAvailableCityCardsButtons();
-        for (Button cityButton : cityButtons)
+        for (Button cityButton : availableCardsToGive)
         {
             cityButton.setTextFill(Color.WHITE);
             cityButton.setPrefHeight(50);
@@ -118,7 +121,7 @@ public class GiveShareView {
         HBox hboxCityRowTwo = new HBox();
         hboxCityRowTwo.setAlignment(Pos.CENTER);
 
-        for (Button cityButton : cityButtons)
+        for (Button cityButton : availableCardsToGive)
         {
             if (index < 3)
             {
@@ -177,21 +180,7 @@ public class GiveShareView {
         return bp;
     }
 
-    private ArrayList<Button> getAvailableCityCardsButtons()
-    {
-        ArrayList<Button> buttons = new ArrayList<Button>();
-
-        for (String availableCard : availableCardsToGive) {
-            Button button = new Button(availableCard);
-            button.setOnAction(e -> getCitiesButtonHandler(button));
-            buttons.add(button);
-        }
-
-        return buttons;
-    }
-
-
-    private ArrayList<Button> getPlayerButtons()
+    private ArrayList<Button> createInitialPlayerButtons()
     {
         // TODO: get initial player
         ArrayList<Button> buttons = new ArrayList<Button>();
@@ -204,17 +193,20 @@ public class GiveShareView {
         Button b3 = new Button("playerName3");
         b3.setOnAction(e -> getPlayerButtonHandler(b3));
 
-        Collections.addAll(buttons, b1, b2, b3);
+        Button b4 = new Button("playerName3");
+        b4.setOnAction(e -> getPlayerButtonHandler(b3));
+
+        Collections.addAll(buttons, b1, b2, b3, b4);
         return buttons;
     }
 
     private void backButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void giveCardButtonHandler() {
         // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void getPlayerButtonHandler(Button button)
@@ -228,5 +220,64 @@ public class GiveShareView {
     {
         selectedCityText.setText("You selected the city card of " + button.getText() + " to give away");
         selectedCity = button.getText();
+    }
+
+    private ArrayList<Button> createInitialCardsToGive()
+    {
+        ArrayList<Button> playerButtons = new ArrayList<Button>();
+
+        for(int i = 0; i < 7; i++)
+        {
+            Button button = new Button();
+        }
+
+        return playerButtons;
+    }
+
+    @Override
+    public void update(GameObservable observable) {
+        Player[] playersArr = observable.getPlayers();
+
+        int index = 0;
+
+        for (Player player : playersArr)
+        {
+            if (player != null)
+            {
+                playerButtons.get(index).setText(player.getPlayerName());
+                index++;
+            }
+        }
+
+        for (int i = index; i < 4; i++)
+        {
+            playerButtons.get(i).setText("");
+            playerButtons.get(i).setStyle("-fx-background-color:transparent");
+        }
+
+        for (Player player : playersArr)
+        {
+            if (player.getPlayerName().equals(this.selectedPlayer))
+            {
+                displaySelectedPlayerCards(player.getHand());
+            }
+        }
+    }
+
+    private void displaySelectedPlayerCards(ArrayList<PlayerCard> playerCards)
+    {
+        int index = 0;
+
+        for (PlayerCard playerCard : playerCards)
+        {
+            this.availableCardsToGive.get(index).setText(playerCard.getName());
+            index++;
+        }
+
+        for (int i = index; index < 7; index++)
+        {
+            this.availableCardsToGive.get(index).setText("");
+            this.availableCardsToGive.get(index).setStyle("-fx-background-color:transparent");
+        }
     }
 }

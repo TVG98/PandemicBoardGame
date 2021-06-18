@@ -371,6 +371,6 @@ public class GameInstructionsView {
     }
 
     private void backToGameButtonHandler(){
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 }

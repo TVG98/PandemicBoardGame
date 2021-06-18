@@ -1,7 +1,10 @@
 package View;
 
 import Controller.GameController;
-import Model.CityCard;
+import Model.Player;
+import Model.PlayerCard;
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import javafx.geometry.Pos;
@@ -21,30 +24,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @created June 11 2021 - 1:34 PM
- * @project testGame
+ * @created June 18 2021 - 11:00 AM
+ * @project PandemicBoardGame
  */
-public class DirectFlightView implements GameObserver {
+public class TakeShareCardsView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text selectedCityText = new Text("You currently have no city selected");
+    ArrayList<Button> availableCardsToTake = createInitialCityCardsButtons();
+    String selectedPlayer;
+    Text selectedPlayerText = new Text();
+    Text selectedCityText = new Text("You currently have no city card selected to take away");
     String selectedCity = "None";
-    ArrayList<Button> cityButtons;
-    Text statusText = new Text("error?? look away :(");
+    GameController gameController;
 
-    GameController gameController = GameController.getInstance();
-
-
-
-
-    public DirectFlightView(Stage primaryStage) {
+    public TakeShareCardsView(Stage primaryStage, String selectedPlayer) {
         this.primaryStage = primaryStage;
-        //this.primaryStage.setResizable(true);
-        loadStageWithBorderPane(createDirectFlightViewBorderPane());
-
-        gameController.registerPlayerObserver(this);
+        this.selectedPlayer = selectedPlayer;
+        this.selectedPlayerText.setText("You have selected " + this.selectedPlayer + " to take a card from");
+        gameController = GameController.getInstance();
+        loadStageWithBorderPane(createTakeShareCardsViewBorderPane());
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -57,8 +57,7 @@ public class DirectFlightView implements GameObserver {
         }
     }
 
-    private BorderPane createDirectFlightViewBorderPane()
-    {
+    private BorderPane createTakeShareCardsViewBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -75,48 +74,40 @@ public class DirectFlightView implements GameObserver {
         menuBackground.setX((width / 2) - (1400 / 2f));
         menuBackground.setY((height / 2) - (800 / 2f));
 
-
-
-
         // Setup BorderPane Center //
-        Text actionTitle = new Text("Direct Flight");
+        Text actionTitle = new Text("Take knowledge");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        //Text statusText = new Text("You are currently in: " + gameController.getCurrentPlayer().getCurrentCity().getName());
+        Text statusText = new Text("You are currently in: " + "Washington");
         statusText.setFill(Color.WHITE);
-        statusText.setFont(Font.font("Arial", 30));
-        Text infoText = new Text(
-                "By handing over a city card from your hand you can move to the matching city\n" +
-                "Click on the city that you want to move to and then press 'Move'");
+        statusText.setFont(Font.font("Arial", 20));
+        selectedPlayerText.setFill(Color.WHITE);
+        selectedPlayerText.setFont(Font.font("Arial", 20));
+        Text infoText = new Text("Select a card to give to another player");
         selectedCityText.setFill(Color.WHITE);
-        selectedCityText.setFont(Font.font("Arial", 30));
+        selectedCityText.setFont(Font.font("Arial", 20));
         infoText.setFill(Color.WHITE);
         infoText.setFont(Font.font("Arial", 20));
         infoText.setTextAlignment(TextAlignment.CENTER);
 
         ArrayList<Text> texts = new ArrayList<Text>();
-        Collections.addAll(texts, actionTitle, statusText, infoText, selectedCityText);
+        Collections.addAll(texts, actionTitle, statusText, infoText, selectedPlayerText, selectedCityText);
 
         VBox vboxTexts = new VBox();
         vboxTexts.getChildren().addAll(texts);
         vboxTexts.setAlignment(Pos.CENTER);
-        vboxTexts.setSpacing(20);
+        vboxTexts.setSpacing(10);
 
-        ArrayList<Button> buttons = new ArrayList<>();
-        for (int i=0; i<7; i++) {
-            buttons.add(new Button());
-        }
-
-        cityButtons = buttons;
+        ArrayList<Button> cityButtons = createInitialCityCardsButtons();
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
-            cityButton.setPrefHeight(80);
+            cityButton.setPrefHeight(50);
             cityButton.setPrefWidth(200);
             cityButton.setStyle("-fx-background-color: Gray;");
             cityButton.setFont(Font.font("Arial", 20));
         }
-        
+
         int index = 0;
         HBox hboxCityRowOne = new HBox();
         hboxCityRowOne.setAlignment(Pos.CENTER);
@@ -149,12 +140,12 @@ public class DirectFlightView implements GameObserver {
         vboxCityRows.setSpacing(30);
 
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> {backButtonHandler();});
-        Button moveButton = new Button("Move");
-        moveButton.setOnAction(e -> {moveButtonHandler();});
+        backButton.setOnAction(e -> backButtonHandler());
+        Button takeCardButton = new Button("Take card");
+        takeCardButton.setOnAction(e -> takeCardButtonHandler());
 
         ArrayList<Button> menuButtons = new ArrayList<Button>();
-        Collections.addAll(menuButtons, backButton, moveButton);
+        Collections.addAll(menuButtons, backButton, takeCardButton);
 
         for (Button menuButton : menuButtons)
         {
@@ -172,88 +163,74 @@ public class DirectFlightView implements GameObserver {
 
         VBox vboxCenter = new VBox();
         vboxCenter.getChildren().addAll(vboxTexts, vboxCityRows, hboxBottomButtons);
-        vboxCenter.setSpacing(100);
+        vboxCenter.setSpacing(20);
         vboxCenter.setAlignment(Pos.CENTER);
 
         // BorderPane Layout //
         bp.getChildren().addAll(backgroundDrop, menuBackground);
         bp.setCenter(vboxCenter);
 
-
         return bp;
     }
 
-    private void getCitiesButtons(ArrayList<String> cityCardsInHandNames)
+    private ArrayList<Button> createInitialCityCardsButtons()
     {
+        ArrayList<Button> buttons = new ArrayList<Button>();
 
-        int index = 0;
-        for (String cityName : cityCardsInHandNames) {
-            Button button = cityButtons.get(index);
-            button.setText(cityName);
-            button.setOnAction(e -> getCityButtonHandler(button));
-            index++;
+        for (int i = 0; i < 7; i++) {
+            Button button = new Button("");
+            button.setOnAction(e -> getCitiesButtonHandler(button));
+            buttons.add(button);
         }
 
-        for (int i = index; i < cityButtons.size(); i++) {
-            cityButtons.get(i).setPrefHeight(0);
-            cityButtons.get(i).setPrefWidth(0);
-            cityButtons.get(i).setStyle("-fx-background-color:transparent");
-        }
-
-
-        // : Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
-        /*ArrayList<Button> buttons = new ArrayList<Button>();
-
-        Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> getCityButtonHandler(b1));
-
-        Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> getCityButtonHandler(b2)
-        );
-        Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> getCityButtonHandler(b3));
-
-        Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> getCityButtonHandler(b4));
-
-        Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> getCityButtonHandler(b5));
-
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getCityButtonHandler(b6));
-
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;*/
+        return buttons;
     }
+
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
-    private void moveButtonHandler() {
-        gameController.handleDirectFlight(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+    private void takeCardButtonHandler() {
+        // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
+        TakeSharePlayerView view = new TakeSharePlayerView(primaryStage);
     }
 
-    private void getCityButtonHandler(Button button) {
-        selectedCityText.setText("You selected: " + button.getText());
+
+    private void getCitiesButtonHandler(Button button)
+    {
+        selectedCityText.setText("You selected the city card of " + button.getText() + " to take away");
         selectedCity = button.getText();
-    }
-
-    private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
-
-        ArrayList<CityCard> cityCardsInHand = observable.getCurrentPlayer().getCityCardsFromPlayer();
-        ArrayList<String> cityCardsInHandNames = new ArrayList<String>();
-        for (CityCard cityCard : cityCardsInHand) {
-            cityCardsInHandNames.add(cityCard.getName());
-        }
-        getCitiesButtons(cityCardsInHandNames);
     }
 
     @Override
     public void update(GameObservable observable) {
-        createUpdatedBorderPane(observable);
+        Player[] playersArr = observable.getPlayers();
+
+        for (Player player : playersArr)
+        {
+            if (player.getPlayerName().equals(this.selectedPlayer))
+            {
+                displaySelectedPlayerCards(player.getHand());
+            }
+        }
+
     }
 
+    private void displaySelectedPlayerCards(ArrayList<PlayerCard> playerCards)
+    {
+        int index = 0;
+
+        for (PlayerCard playerCard : playerCards)
+        {
+            this.availableCardsToTake.get(index).setText(playerCard.getName());
+            index++;
+        }
+
+        for (int i = index; index < 7; index++)
+        {
+            this.availableCardsToTake.get(index).setText("");
+            this.availableCardsToTake.get(index).setStyle("-fx-background-color:transparent");
+        }
+    }
 }

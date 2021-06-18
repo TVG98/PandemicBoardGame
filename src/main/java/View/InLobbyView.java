@@ -214,7 +214,7 @@ public class InLobbyView implements LobbyObserver {
         ArrayList<Boolean> playersReady = observable.getPlayerReadyToStart();
         if (allItemsInArraylistTrue(playersReady)) {
             Platform.runLater(() -> {
-                GameView view = new GameView(primaryStage);
+                GameView view = GameView.getInstance(primaryStage);
             });
         }
     }

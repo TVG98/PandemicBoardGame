@@ -20,11 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * @created June 12 2021 - 2:22 PM
- * @project testGame
- */
-
 public class CharterFlightView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -214,15 +209,13 @@ public class CharterFlightView implements GameObserver {
         return cityNames;
     }
 
-    private void backButtonHandler()
-    {
-        GameView view = new GameView(primaryStage);
+    private void backButtonHandler() {
+        GameView view = GameView.getInstance(primaryStage);
     }
 
-    private void moveButtonHandler()
-    {
+    private void moveButtonHandler() {
         gameController.handleCharterFlight(selectedCity);
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void citiesToMoveToDropboxHandler(ComboBox comboBox) {

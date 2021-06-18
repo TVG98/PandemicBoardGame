@@ -242,16 +242,15 @@ public class CureView {
 
 
     private void backButtonHandler() {
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
     private void cureButtonHandler() {
         // TODO: behaviour implementeren
-        GameView view = new GameView(primaryStage);
+        GameView view = GameView.getInstance(primaryStage);
     }
 
-    private void resetButtonHandler()
-    {
+    private void resetButtonHandler() {
         selectedCities.clear();
         selectedCityText.setText("You haven't selected any city card to discard");
     }
