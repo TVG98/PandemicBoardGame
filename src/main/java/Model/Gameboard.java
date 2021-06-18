@@ -25,28 +25,28 @@ public class Gameboard implements GameBoardObservable {
             new Virus(VirusType.BLACK),
             new Virus(VirusType.RED));
 
-    private ArrayList<InfectionCard> infectionStack; // can change
-    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>(); // can change
-    private ArrayList<PlayerCard> playerStack; // can change
-    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>(); // can change
+    private ArrayList<InfectionCard> infectionStack;
+    private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
+    private ArrayList<PlayerCard> playerStack;
+    private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
 
-    private int outbreakCounter = 0; // can change
-    private int infectionRate = 1; // can change
-    private int drawnEpidemicCards = 0; // can change
+    private int outbreakCounter = 0;
+    private int infectionRate = 1;
+    private int drawnEpidemicCards = 0;
 
-    private ArrayList<City> citiesWithResearchStations; // can change
-    private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>(); // can change
+    private ArrayList<City> citiesWithResearchStations;
+    private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
     private final List<Integer> INFECTION_RATES = Arrays.asList(2, 2, 2, 3, 3, 4, 4);
 
     public Gameboard() {
         cities = Arrays.asList(new City[48]);
         initializeCities();
+        infectionStack = initializeInfectionCardStack();
+        citiesWithResearchStations = createCitiesWithResearchStation();
+        playerStack = initializePlayerCardStack();
     }
 
     public void makeCompleteGameBoard() {
-        infectionStack = initializeInfectionCardStack();
-        playerStack = initializePlayerCardStack();
-        citiesWithResearchStations = createCitiesWithResearchStation();
         initializeGameBoard();
         initializeStartingCubes();
     }
@@ -198,10 +198,13 @@ public class Gameboard implements GameBoardObservable {
     }
 
     public PlayerCard getPlayerCard(String cardName) throws CardNotFoundException {
-        ArrayList<PlayerCard> cards = playerStack;
-        cards.addAll(playerDiscardStack);
+        for (PlayerCard card : playerStack) {
+            if (card.getName().equals(cardName)) {
+                return card;
+            }
+        }
 
-        for (PlayerCard card : cards) {
+        for (PlayerCard card : playerDiscardStack) {
             if (card.getName().equals(cardName)) {
                 return card;
             }

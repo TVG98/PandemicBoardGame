@@ -1,6 +1,8 @@
 package View;
 
 import Controller.GameController;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,12 +25,13 @@ import java.util.Collections;
  * @project testGame
  */
 
-public class CharterFlightView {
+public class CharterFlightView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
     String currentCity = "Washington";
+    Text currentCityText = new Text ("temp");
     String selectedCity = "None";
     GameController gameController = GameController.getInstance();
 
@@ -36,6 +39,8 @@ public class CharterFlightView {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDriveViewBorderPane());
+
+        gameController.registerPlayerObserver(this);
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -84,7 +89,7 @@ public class CharterFlightView {
 
         VBox vboxCurrentCity = new VBox();
         vboxCurrentCity.setSpacing(50);
-        Text currentCityText = new Text("You are currently in:\n\n" + currentCity);
+        //Text currentCityText = new Text("You are currently in:\n\n" + currentCity);
         currentCityText.setFill(Color.WHITE);
         currentCityText.setFont(Font.font("Arial", 20));
         currentCityText.setTextAlignment(TextAlignment.CENTER);
@@ -223,5 +228,15 @@ public class CharterFlightView {
     private void citiesToMoveToDropboxHandler(ComboBox comboBox) {
         selectedCity = (String) comboBox.getValue();
     }
+
+    private void createUpdatedBorderPane(GameObservable gameObservable) {
+        currentCityText.setText("You are currently in: " + gameObservable.getCurrentPlayer().getCurrentCity().getName());
+    }
+    @Override
+    public void update(GameObservable gameObservable) {
+        createUpdatedBorderPane(gameObservable);
+    }
+
+
 }
 
