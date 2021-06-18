@@ -1,6 +1,11 @@
 package View;
 
 import Controller.GameController;
+import Model.Player;
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,30 +20,31 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**
  * @created June 15 2021 - 4:10 PM
  * @project testGame
  */
-public class TakeShareView {
+public class TakeSharePlayerView implements GameObserver{
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    ArrayList<String> availableCardsToTake;
-    Text selectedCityText = new Text("You currently have no city card selected to take away");
-    String selectedCity = "None";
+    //ArrayList<String> availableCardsToTake;
     Text selectedPlayerText = new Text("You have no player selected");
     String selectedPlayer = "None";
     GameController gameController;
+    ArrayList<Button> playerButtons = createInitialPlayerButtons();
 
-    public TakeShareView(Stage primaryStage, ArrayList<String> availableCardsToTake) {
+    public TakeSharePlayerView(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.availableCardsToTake = availableCardsToTake;
+        //this.availableCardsToTake = availableCardsToTake;
         gameController = GameController.getInstance();
+        loadStageWithBorderPane(createTakeSharePlayerViewBorderPane());
 
-        loadStageWithBorderPane(createDoShareViewBorderPane());
+        gameController.registerPlayerObserver(this);
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -51,7 +57,7 @@ public class TakeShareView {
         }
     }
 
-    private BorderPane createDoShareViewBorderPane() {
+    private BorderPane createTakeSharePlayerViewBorderPane() {
         BorderPane bp = new BorderPane();
 
         // Setup Background Image //
@@ -76,8 +82,6 @@ public class TakeShareView {
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 20));
         Text infoText = new Text("Select a card to give to another player");
-        selectedCityText.setFill(Color.WHITE);
-        selectedCityText.setFont(Font.font("Arial", 20));
         selectedPlayerText.setFill(Color.WHITE);
         selectedPlayerText.setFont(Font.font("Arial", 20));
         infoText.setFill(Color.WHITE);
@@ -85,14 +89,13 @@ public class TakeShareView {
         infoText.setTextAlignment(TextAlignment.CENTER);
 
         ArrayList<Text> texts = new ArrayList<Text>();
-        Collections.addAll(texts, actionTitle, statusText, infoText, selectedCityText, selectedPlayerText);
+        Collections.addAll(texts, actionTitle, statusText, infoText, selectedPlayerText);
 
         VBox vboxTexts = new VBox();
         vboxTexts.getChildren().addAll(texts);
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(10);
 
-        ArrayList<Button> playerButtons = getPlayerButtons();
         for (Button playerButton : playerButtons)
         {
             playerButton.setTextFill(Color.WHITE);
@@ -106,47 +109,6 @@ public class TakeShareView {
         hboxPlayers.setAlignment(Pos.CENTER);
         hboxPlayers.getChildren().addAll(playerButtons);
         hboxPlayers.setSpacing(30);
-
-        ArrayList<Button> cityButtons = getAvailableCityCardsButtons();
-        for (Button cityButton : cityButtons)
-        {
-            cityButton.setTextFill(Color.WHITE);
-            cityButton.setPrefHeight(50);
-            cityButton.setPrefWidth(200);
-            cityButton.setStyle("-fx-background-color: Gray;");
-            cityButton.setFont(Font.font("Arial", 20));
-        }
-
-        int index = 0;
-        HBox hboxCityRowOne = new HBox();
-        hboxCityRowOne.setAlignment(Pos.CENTER);
-        HBox hboxCityRowTwo = new HBox();
-        hboxCityRowTwo.setAlignment(Pos.CENTER);
-
-        for (Button cityButton : cityButtons)
-        {
-            if (index < 3)
-            {
-                hboxCityRowOne.getChildren().add(cityButton);
-            }
-            else
-            {
-                hboxCityRowTwo.getChildren().add(cityButton);
-            }
-            index++;
-        }
-
-        ArrayList<HBox> cityRows = new ArrayList<HBox>();
-        Collections.addAll(cityRows, hboxCityRowOne, hboxCityRowTwo);
-
-        for (HBox hboxCityRow : cityRows)
-        {
-            hboxCityRow.setSpacing(30);
-        }
-
-        VBox vboxCityRows = new VBox();
-        vboxCityRows.getChildren().addAll(cityRows);
-        vboxCityRows.setSpacing(30);
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> backButtonHandler());
@@ -171,7 +133,7 @@ public class TakeShareView {
         hboxBottomButtons.setSpacing(width / 2);
 
         VBox vboxCenter = new VBox();
-        vboxCenter.getChildren().addAll(vboxTexts, hboxPlayers, vboxCityRows, hboxBottomButtons);
+        vboxCenter.getChildren().addAll(vboxTexts, hboxPlayers, hboxBottomButtons);
         vboxCenter.setSpacing(20);
         vboxCenter.setAlignment(Pos.CENTER);
 
@@ -182,24 +144,12 @@ public class TakeShareView {
         return bp;
     }
 
-    private ArrayList<Button> getAvailableCityCardsButtons()
+
+
+    private ArrayList<Button> createInitialPlayerButtons()
     {
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        ArrayList<Button> playerButtons = new ArrayList<Button>();
 
-        for (String availableCard : availableCardsToTake) {
-            Button button = new Button(availableCard);
-            button.setOnAction(e -> getCitiesButtonHandler(button));
-            buttons.add(button);
-        }
-
-        return buttons;
-    }
-
-
-    private ArrayList<Button> getPlayerButtons()
-    {
-        // TODO: get initial player
-        ArrayList<Button> buttons = new ArrayList<Button>();
         Button b1 = new Button("playerName1");
         b1.setOnAction(e -> getPlayerButtonHandler(b1));
 
@@ -209,17 +159,22 @@ public class TakeShareView {
         Button b3 = new Button("playerName3");
         b3.setOnAction(e -> getPlayerButtonHandler(b3));
 
-        Collections.addAll(buttons, b1, b2, b3);
-        return buttons;
+        Button b4 = new Button("playerName3");
+        b4.setOnAction(e -> getPlayerButtonHandler(b3));
+
+        Collections.addAll(playerButtons, b1, b2, b3, b4);
+        return playerButtons;
     }
+
 
     private void backButtonHandler() {
         GameView view = new GameView(primaryStage);
     }
 
     private void takeCardButtonHandler() {
-        // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
-        GameView view = new GameView(primaryStage);
+        if (!selectedPlayer.equals("None")) {
+            TakeShareCardsView view = new TakeShareCardsView(primaryStage, selectedPlayer);
+        }
     }
 
     private void getPlayerButtonHandler(Button button)
@@ -229,9 +184,25 @@ public class TakeShareView {
         gameController.handleShareKnowledge(selectedPlayer, false);
     }
 
-    private void getCitiesButtonHandler(Button button)
-    {
-        selectedCityText.setText("You selected the city card of " + button.getText() + " to take away");
-        selectedCity = button.getText();
+    @Override
+    public void update(GameObservable observable) {
+        Player[] playersArr = observable.getPlayers();
+
+        int index = 0;
+
+        for (Player player : playersArr)
+        {
+            if (player != null)
+            {
+                playerButtons.get(index).setText(player.getPlayerName());
+                index++;
+            }
+        }
+
+        for (int i = index; i < 4; i++)
+        {
+            playerButtons.get(i).setText("");
+            playerButtons.get(i).setStyle("-fx-background-color:transparent");
+        }
     }
 }

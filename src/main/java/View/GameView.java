@@ -331,21 +331,11 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     private void takeShareButtonHandler(){
-        // Replace this //
-        ArrayList<String> placeholder = new ArrayList<String>();
-        placeholder.add("Washington");
-        placeholder.add("New York");
-        //              //
-        TakeShareView view = new TakeShareView(primaryStage, placeholder);
+        TakeSharePlayerView view = new TakeSharePlayerView(primaryStage);
     }
 
     private void giveShareButtonHandler() {
-        // Replace this //
-        ArrayList<String> placeholder = new ArrayList<String>();
-        placeholder.add("Washington");
-        placeholder.add("Sydney");
-        //              //
-        GiveShareView view = new GiveShareView(primaryStage, placeholder);
+        GiveShareView view = new GiveShareView(primaryStage);
     }
 
     private void endTurnButtonHandler() {
