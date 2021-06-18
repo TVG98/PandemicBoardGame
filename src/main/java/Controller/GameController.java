@@ -65,9 +65,11 @@ public class GameController {
     private void makeGameBoard() {
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
-        } else {
             sleep(3000);
+            databaseController.updateCitiesInDatabase(gameBoardController.getCities());
         }
+
+        sleep(3000);
     }
 
     private void sleep(int milliSeconds) {
