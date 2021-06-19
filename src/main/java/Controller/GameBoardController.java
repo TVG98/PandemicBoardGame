@@ -147,11 +147,6 @@ public class GameBoardController {
 //        databaseController.updateCitiesInDatabase(gameBoard.getCities());
     }
 
-    public ArrayList<InfectionCard> getTopSixCards() {
-        ArrayList<InfectionCard> infectionCards = gameBoard.getTopSixInfectionStack();
-        return infectionCards;
-    }
-
     public void addTopSixCards(ArrayList<InfectionCard> cards) {
         gameBoard.addInfectionStack(cards);
     }
