@@ -207,7 +207,7 @@ public class GiveShareView implements GameObserver {
 
     private void giveCardButtonHandler() {
         gameController.finishShareKnowledge(selectedPlayer, selectedCity, true);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void getPlayerButtonHandler(Button button)

@@ -262,6 +262,7 @@ public class GameController {
             } catch (PlayerNotFoundException pnfe) {
                 pnfe.printStackTrace();
             }
+        }
     }
 
     private Player getPlayerByName(String playerName) throws PlayerNotFoundException {

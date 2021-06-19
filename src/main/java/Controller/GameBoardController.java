@@ -156,8 +156,8 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
-    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
-        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
+    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, boolean giveCard) {
+        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, giveCard);
         updateServer();
     }
 
