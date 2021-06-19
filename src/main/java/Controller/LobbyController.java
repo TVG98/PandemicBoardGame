@@ -124,7 +124,6 @@ public class LobbyController {
         for (int i = 0; i < 4; i++) {
             if (playerSlotInFirebaseIsTaken(i)) {
                 String playerString = databaseController.getDatabaseData().getPlayer(i).getPlayerName();
-//                String playerString = databaseController.getLobbyDocument(lobbyCode).get(playerId).toString();
                 playerName = checkPlayerName(playerString, playerName);
             }
         }

@@ -76,13 +76,9 @@ public class Lobby implements LobbyObservable {
         return MAX_LOBBY_SIZE;
     }
 
-//    public void updatePlayer(int loc, Player player) {
-//        players[loc] = player;
-//        notifyAllObservers();
-//    }
-
     public void setPlayers(List<Player> players) {
         this.players = players;
+        notifyAllObservers();
     }
 
     public void unregister() {
