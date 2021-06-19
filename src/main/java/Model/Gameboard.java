@@ -324,6 +324,7 @@ public class Gameboard implements GameBoardObservable {
         if (outbreakCounter >= 8) {
             throw new GameLostException("U lost: The outbreak counter is 8!");
         }
+
         notifyAllObservers();
     }
 

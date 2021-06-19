@@ -96,7 +96,7 @@ public class GameController {
     }
 
     public void turn() {
-        if (!playerController.hasActionsLeft(getCurrentPlayer()) && itIsYourTurn()) {
+        if (itIsYourTurn()) {
             try {
                 gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
                 gameBoardController.handleInfectionCardDraw();
@@ -106,7 +106,6 @@ public class GameController {
             } catch (GameLostException gle) {
                 game.setLost();
             }
-
         }
     }
 
@@ -134,7 +133,7 @@ public class GameController {
     }
 
     public void handleDrive(String cityName) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             try {
                 Player currentPlayer = getCurrentPlayer();
                 City city = gameBoardController.getCity(cityName);
@@ -147,14 +146,18 @@ public class GameController {
         }
     }
 
+    private boolean actionsLeft() {
+        return playerController.hasActionsLeft(getCurrentPlayer());
+    }
+
     private void setDriveBehavior() {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             gameBoardController.setDriveBehavior(new DriveBehaviorNormal());
         }
     }
 
     public void handleDirectFlight(String cityName) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             try {
                 City city = gameBoardController.getCity(cityName);
                 Player currentPlayer = getCurrentPlayer();
@@ -166,13 +169,13 @@ public class GameController {
     }
 
     private void setDirectFlightBehavior() {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
         }
     }
 
     public void handleCharterFlight(String cityName) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             try {
                 City city = gameBoardController.getCity(cityName);
                 Player currentPlayer = getCurrentPlayer();
@@ -185,13 +188,13 @@ public class GameController {
     }
 
     private void setCharterFlightBehavior() {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             gameBoardController.setCharterFlightBehavior(new CharterFlightBehaviorNormal());
         }
     }
 
     public void handleShuttleFlight(String cityName) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             try {
                 City city = gameBoardController.getCity(cityName);
                 Player currentPlayer = getCurrentPlayer();
@@ -204,7 +207,7 @@ public class GameController {
     }
 
     private void setShuttleFlightBehavior(Player currentPlayer) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
                 gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
             } else {
@@ -214,7 +217,7 @@ public class GameController {
     }
 
     public void handleBuildResearchStation() {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             Player currentPlayer = getCurrentPlayer();
             City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
             setBuildResearchBehavior(currentPlayer);
@@ -225,7 +228,7 @@ public class GameController {
     }
 
     private void setBuildResearchBehavior(Player currentPlayer) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
                 gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
             } else {
@@ -235,7 +238,7 @@ public class GameController {
     }
 
     public void handleShareKnowledge(String playerName, boolean giveCard) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             Player givingPlayer = null;
             Player receivingPlayer = null;
 
@@ -266,7 +269,7 @@ public class GameController {
     }
 
     private void setShareKnowledgeBehavior(Player givingPlayer, Player receivingPlayer) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             if(gameBoardController.canShareAnyCard(givingPlayer, receivingPlayer)) {
                 gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnAnyCityBehavior());
             } else {
@@ -276,7 +279,7 @@ public class GameController {
     }
 
     public void handleTreatDisease() {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             Player currentPlayer = getCurrentPlayer();
             City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
             setTreatDiseaseBehavior(currentPlayer, currentCity);
@@ -285,7 +288,7 @@ public class GameController {
     }
 
     private void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
                 gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
             } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
@@ -297,7 +300,7 @@ public class GameController {
     }
 
     public void handleFindCure() {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             Player currentPlayer = getCurrentPlayer();
             City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
             setFindCureBehavior(currentPlayer);
@@ -306,7 +309,7 @@ public class GameController {
     }
 
     private void setFindCureBehavior(Player currentPLayer) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
                 gameBoardController.setFindCureBehavior(new FindCureWithFourCardsBehavior());
             } else {
@@ -320,7 +323,7 @@ public class GameController {
     }
 
     public void handleGiveCard(PlayerCard card, Player player1, Player player2) {
-        if (itIsYourTurn()) {
+        if (itIsYourTurn() && actionsLeft()) {
             playerController.removeCard(card, player1);
             playerController.addCard(card, player2);
         }
