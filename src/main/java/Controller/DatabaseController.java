@@ -20,7 +20,7 @@ public class DatabaseController {
     }
 
     public void updatePlayerInServer(Player player) {
-        database.updatePlayerInServer(player);
+        database.makePlayerInServer(player);
     }
 
     public void makeLobby(String lobbyCode) {

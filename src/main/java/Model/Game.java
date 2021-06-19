@@ -29,7 +29,9 @@ public class Game implements GameObservable {
     }
 
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        System.out.println("updating index: " + currentPlayerIndex);
         this.currentPlayerIndex = currentPlayerIndex;
+        notifyAllObservers();
     }
 
     public void setLost() {

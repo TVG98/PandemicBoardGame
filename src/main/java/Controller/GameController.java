@@ -106,7 +106,12 @@ public class GameController {
                 changeTurn();
             } catch (GameLostException gle) {
                 game.setLost();
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause().printStackTrace();
             }
+        } else {
+            System.out.println("it is not your turn!");
         }
     }
 
@@ -122,8 +127,11 @@ public class GameController {
     }
 
     public void changeTurn() {
+        System.out.println("going to change turn!");
         game.nextTurn();
+        System.out.println("i game the turn to the next player");
         int currentPlayerIndex = game.getCurrentPlayerIndex();
+        System.out.println("new player index = " + currentPlayerIndex);
         updateServer(currentPlayerIndex);
     }
 
