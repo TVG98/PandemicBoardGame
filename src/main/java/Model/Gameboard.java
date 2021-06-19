@@ -27,7 +27,7 @@ public class Gameboard implements GameBoardObservable {
 
     private ArrayList<InfectionCard> infectionStack;
     private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
-    private ArrayList<PlayerCard> playerStack;
+    private ArrayList<PlayerCard> playerStack = new ArrayList<>();
     private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
 
     private int outbreakCounter = 0;
@@ -205,7 +205,7 @@ public class Gameboard implements GameBoardObservable {
         return playerCardStack;
     }
 
-    public PlayerCard getPlayerCard(String cardName) throws CardNotFoundException {
+    public PlayerCard returnPlayerCard(String cardName) throws CardNotFoundException {
         for (PlayerCard card : playerStack) {
             if (card.getName().equals(cardName)) {
                 return card;
@@ -253,7 +253,7 @@ public class Gameboard implements GameBoardObservable {
 
     public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
         for(Cure cure : cures) {
-            if(cure.getType() == virusType) {
+            if(cure.getVirusType() == virusType) {
                 return cure;
             }
         }
@@ -457,7 +457,7 @@ public class Gameboard implements GameBoardObservable {
 
     public boolean cureIsFound(VirusType virus) {
         for (Cure cure : getCuredDiseases()) {
-            if (cure.getType().equals(virus)) {
+            if (cure.getVirusType().equals(virus)) {
                 return true;
             }
         }
@@ -541,7 +541,7 @@ public class Gameboard implements GameBoardObservable {
     public void setCuredDiseases(ArrayList<Cure> curedDiseases) {
         for (Cure curedDisease : curedDiseases) {
             for (Cure cure : cures) {
-                if (cure.getType().equals(curedDisease.getType())) {
+                if (cure.getVirusType().equals(curedDisease.getVirusType())) {
                     cure.setCureState(CureState.CURED);
                 }
             }
@@ -576,28 +576,14 @@ public class Gameboard implements GameBoardObservable {
             return new ArrayList<>(Collections.singletonList(getCity("Atlanta")));
         } catch (CityNotFoundException cnfe) {
             cnfe.printStackTrace();
-            return getNewAtlantaCity();
+            return createNewAtlantaCity();
         }
     }
 
-    public ArrayList<City> getNewAtlantaCity() {
+    public ArrayList<City> createNewAtlantaCity() {
         ArrayList<City> cities = new ArrayList<>();
         cities.add(new City("Atlanta", VirusType.BLUE));
         return cities;
-    }
-
-    public ArrayList<InfectionCard> getTopSixInfectionStack() {
-        ArrayList<InfectionCard> topSix = new ArrayList<>();
-
-        for (int i = 0; i < 6; i++) {
-            topSix.add(infectionStack.get(i));
-        }
-
-        for (int i = 0; i < topSix.size(); i++) {
-            infectionStack.remove(0);
-        }
-
-        return topSix;
     }
 
     public void addInfectionStack(ArrayList<InfectionCard> infectionCards) {
