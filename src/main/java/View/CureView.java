@@ -1,5 +1,9 @@
 package View;
 
+import Observers.GameBoardObservable;
+import Observers.GameBoardObserver;
+import Observers.GameObservable;
+import Observers.GameObserver;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +25,7 @@ import java.util.Collections;
  * @project testGame
  */
 
-public class CureView {
+public class CureView implements GameObserver, GameBoardObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
@@ -272,4 +276,21 @@ public class CureView {
         selectedVirusToCure = button.getText();
         selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
     }
+
+    private void createUpdatedBorderPane(GameObservable gameObservable) {
+
+    }
+
+    @Override
+    public void update(GameObservable gameObservable) {
+        createUpdatedBorderPane(gameObservable);
+    }
+
+
+
+    @Override
+    public void update(GameBoardObservable gameBoardObservable) {
+
+    }
+
 }
