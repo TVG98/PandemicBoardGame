@@ -1,8 +1,10 @@
 package Model;
 
-public abstract class PlayerCard {
+public class PlayerCard {
 
     public PlayerCard() { }
 
-    public abstract String getName();
+    public String getName() {
+        return null;
+    }
 }
