@@ -36,7 +36,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
-    Text actionsLeft = new Text("Actions left\n\t" + "2" + "/4");
+    Text actionsLeft = new Text();
 
     ArrayList<Rectangle> playersCharacter = new ArrayList<>();
 
@@ -645,7 +645,6 @@ public class GameView implements GameObserver, GameBoardObserver {
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
                 }
             }
-
             index++;
         }
     }
