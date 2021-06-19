@@ -1,25 +1,31 @@
 package Model;
 
 public class Virus {
-    private final VirusType VIRUS_TYPE;
+    private VirusType virusType;
     private final int MAX_CUBE_AMOUNT = 24;
 
     private int cubeAmount = 24;
 
+    public Virus() {}
+
     public Virus(VirusType virusType) {
-        this.VIRUS_TYPE = virusType;
+        this.virusType = virusType;
     }
 
-    public void setCubeAmount(int cubeAmount) {
-        this.cubeAmount = cubeAmount;
+    public void setVirusType(VirusType virusType) {
+        this.virusType = virusType;
     }
 
-    public VirusType getType() {
-        return VIRUS_TYPE;
+    public VirusType getVirusType() {
+        return virusType;
     }
 
     public int getCubeAmount() {
         return cubeAmount;
+    }
+
+    public void setCubeAmount(int cubeAmount) {
+        this.cubeAmount = cubeAmount;
     }
 
     public void increaseCubeAmount(int amount) {

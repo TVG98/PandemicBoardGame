@@ -1,10 +1,20 @@
 package Model;
 
 public class Cure {
-    private final VirusType virusType;
+    private VirusType virusType;
     private CureState cureState = CureState.ACTIVE;
 
+    public Cure() {}
+
     public Cure(VirusType virusType) {
+        this.virusType = virusType;
+    }
+
+    public VirusType getVirusType() {
+        return virusType;
+    }
+
+    public void setVirusType(VirusType virusType) {
         this.virusType = virusType;
     }
 
