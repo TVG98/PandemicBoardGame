@@ -628,18 +628,16 @@ public class GameView implements GameObserver, GameBoardObserver {
                 this.playerOverviews.get(i).setText(players.get(i).getPlayerName() + " - " + players.get(i).getRole());
 
                 // Can't be tested yet, so commented it out
-                /*
-                if (players[i].getCurrentCity() != null)
+                if (players.get(i).getCurrentCity() != null)
                 {
                     drawPlayerOnCity(
-                            players[i].getCurrentCity().getName(),
+                            players.get(i).getCurrentCity().getName(),
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
                 }
                 else{
-                    System.out.println("oewfaguh");
+                    System.out.println("Drawing failed");
                 }
-                 */
             }
             index++;
         }
@@ -647,12 +645,16 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     @Override
     public void update(GameObservable gameObservable) {
-        createUpdatedGameViewBorderPane(gameObservable);
+        Platform.runLater(() -> {
+            createUpdatedGameViewBorderPane(gameObservable);
+        });
     }
 
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
-        createUpdatedGameViewBorderPane(gameBoardObservable);
+        Platform.runLater(() -> {
+            createUpdatedGameViewBorderPane(gameBoardObservable);
+        });
     }
 }
 
