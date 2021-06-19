@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class EventCard implements PlayerCard {
+public abstract class EventCard extends PlayerCard {
     private final String name;
     private String effectText;
     private boolean played;

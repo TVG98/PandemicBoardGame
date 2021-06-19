@@ -1,6 +1,6 @@
 package Model;
 
-public class EpidemicCard implements PlayerCard {
+public class EpidemicCard extends PlayerCard {
     private final String name = "EpidemicCard";
 
     @Override
