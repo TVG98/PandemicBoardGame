@@ -36,6 +36,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final ArrayList<Connection> connectedCities = new ArrayList<>();
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
+    Text actionsLeft = new Text("Actions left\n\t" + "2" + "/4");
 
     ArrayList<Rectangle> playersCharacter = new ArrayList<>();
 
@@ -264,7 +265,6 @@ public class GameView implements GameObserver, GameBoardObserver {
         vboxActions.setSpacing(20);
 
         // Bottom Right Elements //
-        Text actionsLeft = new Text("Actions left\n\t" + "2" + "/4");
         actionsLeft.setFont(new Font("Castellar", 20));
         Button endTurnButton = new Button("End turn");
         endTurnButton.setOpacity(0.95f);
@@ -629,6 +629,8 @@ public class GameView implements GameObserver, GameBoardObserver {
         makeViewIfGameEnded(gameObservable);
         List<Player> players = gameObservable.getPlayers();
 
+        actionsLeft.setText("Actions left\n\t" + gameObservable.getCurrentPlayer().getActions() + "/4");
+
         int index = 0;
 
         for (int i = index; i < 4; i++) {
@@ -641,9 +643,6 @@ public class GameView implements GameObserver, GameBoardObserver {
                             players.get(i).getCurrentCity().getName(),
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
-                    System.out.println("Draw successfull");
-                } else {
-                    System.out.println("Drawing failed");
                 }
             }
 
