@@ -214,12 +214,12 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleShuttleFlight(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void getCitiesWithResearchStationButtonHandler(Button button) {

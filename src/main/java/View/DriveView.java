@@ -37,8 +37,6 @@ public class DriveView implements GameObserver {
 
     GameController gameController = GameController.getInstance();
 
-
-
     public DriveView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
@@ -226,12 +224,12 @@ public class DriveView implements GameObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleDrive(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void getCitiesButtonHandler(Button button) {

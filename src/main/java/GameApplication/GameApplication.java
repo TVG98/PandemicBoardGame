@@ -23,7 +23,7 @@ public class GameApplication extends Application {
         //OptionsView d = new OptionsView(primaryStage);
         //InLobbyView e = new InLobbyView(primaryStage);
         //JoinLobbyView f = new JoinLobbyView(primaryStage);
-        //GameView g = GameView.getInstance(primaryStage);
+        //GameView g = new GameView(primaryStage);
         //LobbyServersView h = new LobbyServersView(primaryStage);
         //LossView l = new LossView(primaryStage);
         //GameInstructionsView i = new GameInstructionsView(primaryStage);
