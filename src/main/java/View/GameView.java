@@ -265,7 +265,6 @@ public class GameView implements GameObserver, GameBoardObserver {
         vboxActions.setSpacing(20);
 
         // Bottom Right Elements //
-        Text actionsLeft = new Text("Actions left\n\t" + "2" + "/4");
         actionsLeft.setFont(new Font("Castellar", 20));
         Button endTurnButton = new Button("End turn");
         endTurnButton.setOpacity(0.95f);
