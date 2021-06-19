@@ -243,7 +243,7 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
             citiesWithResearchStationsNames.add(city.getName());
         }
         getCitiesWithResearchStationButtons(citiesWithResearchStationsNames);
-        cityHasResearchStation = gameBoardObservable.getCitiesWithResearchStations().contains(currentCity);
+        cityHasResearchStation = citiesWithResearchStations.contains(currentCity);
         if (cityHasResearchStation) {
             cityHasResearchStationText.setText("The city you are in has a research station.");
         } else {

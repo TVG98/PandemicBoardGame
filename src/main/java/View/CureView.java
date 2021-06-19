@@ -1,5 +1,8 @@
 package View;
 
+import Controller.GameController;
+import Model.City;
+import Model.CityCard;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObservable;
@@ -17,6 +20,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,16 +34,25 @@ public class CureView implements GameObserver, GameBoardObserver {
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text cityHasResearchStationText = new Text("Your current city has a research station");
+    Text cityHasResearchStationText = new Text("city has research station text temp. error");
     String selectedVirusToCure = "None";
     Text selectedVirusToCureText = new Text("You selected no virus to find a cure for");
-    ArrayList<String> selectedCities = new ArrayList<String>();
+    ArrayList<String> selectedCities = new ArrayList<>();
     Text selectedCityText = new Text("You haven't selected any city card to discard");
+
+    City currentCity;
+    Text statusText = new Text("temp");
+    ArrayList<Button> cityButtons;
+    //boolean cityHasResearchStation;
+    GameController gameController = GameController.getInstance();
 
     public CureView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createCureViewBorderPane());
+
+        gameController.registerGameBoardObserver(this);
+        gameController.registerPlayerObserver(this);
     }
 
     private void loadStageWithBorderPane(BorderPane bp) {
@@ -73,7 +86,7 @@ public class CureView implements GameObserver, GameBoardObserver {
         Text actionTitle = new Text("Create a cure");
         actionTitle.setFill(Color.WHITE);
         actionTitle.setFont(Font.font("Castellar", 80));
-        Text statusText = new Text("You are currently in: " + "Washington");
+        //Text statusText = new Text("You are currently in: " + "Washington");
         statusText.setFill(Color.WHITE);
         statusText.setFont(Font.font("Arial", 30));
         Text infoText = new Text("Select the virus you want to cure and 5 citycards matching its colour");
@@ -113,7 +126,14 @@ public class CureView implements GameObserver, GameBoardObserver {
         hboxVirusesButtons.setSpacing(30);
         hboxVirusesButtons.getChildren().addAll(virusButtons);
 
-        ArrayList<Button> cityButtons = getPlayerCityCards();
+
+
+        ArrayList<Button> buttons = new ArrayList<>();
+        for (int i=0; i<7; i++) {
+            buttons.add(new Button());
+        }
+
+        cityButtons = buttons;
         for (Button cityButton : cityButtons)
         {
             cityButton.setTextFill(Color.WHITE);
@@ -218,10 +238,27 @@ public class CureView implements GameObserver, GameBoardObserver {
     }
 
 
-    private ArrayList<Button> getPlayerCityCards()
+    private void getPlayerCityCards(ArrayList<String> cityCardsInHandNames)
     {
+        //ArrayList<Button> cityButtons = new ArrayList<>();
+
+        int index = 0;
+        for (String cityName : cityCardsInHandNames) {
+            Button button = cityButtons.get(index);
+            button.setText(cityName);
+            button.setOnAction(e -> getPlayerCityCardsButtonHandler(button));
+            index++;
+        }
+
+        for (int i = index; i < cityButtons.size(); i++) {
+            cityButtons.get(i).setPrefHeight(0);
+            cityButtons.get(i).setPrefWidth(0);
+            cityButtons.get(i).setStyle("-fx-background-color:transparent");
+        }
+
+
         // TODO: Moet alle city cards van een speler ophalen
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        /*ArrayList<Button> buttons = new ArrayList<Button>();
 
         Button b1 = new Button("Ho Chi Minh");
         b1.setOnAction(e -> getPlayerCityCardsButtonHandler(b1));
@@ -241,7 +278,7 @@ public class CureView implements GameObserver, GameBoardObserver {
         Button b6 = new Button("Johannesburg");
         b6.setOnAction(e -> getPlayerCityCardsButtonHandler(b6));
         Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;
+        return buttons;*/
     }
 
 
@@ -278,7 +315,24 @@ public class CureView implements GameObserver, GameBoardObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
+        currentCity = gameObservable.getCurrentPlayer().getCurrentCity();
+        statusText.setText("You are currently in: " + currentCity.getName());
 
+        ArrayList<CityCard> cityCardsInHand = gameObservable.getCurrentPlayer().createCityCardsFromPlayer();
+        ArrayList<String> cityCardsInHandNames = new ArrayList<>();
+        for (CityCard cityCard : cityCardsInHand) {
+            cityCardsInHandNames.add(cityCard.getName());
+        }
+        getPlayerCityCards(cityCardsInHandNames);
+    }
+
+    private void createUpdatedBorderPane(GameBoardObservable gameBoardObservable) {
+        ArrayList<City> citiesWithResearchStations = gameBoardObservable.getCitiesWithResearchStations();
+        if (citiesWithResearchStations.contains(currentCity)) {
+            cityHasResearchStationText.setText("The city you are in has a research station.");
+        } else {
+            cityHasResearchStationText.setText("The city you are in does not have a research station.");
+        }
     }
 
     @Override
@@ -290,7 +344,7 @@ public class CureView implements GameObserver, GameBoardObserver {
 
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
-
+        createUpdatedBorderPane(gameBoardObservable);
     }
 
 }
