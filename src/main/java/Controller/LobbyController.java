@@ -8,7 +8,6 @@ import Model.DatabaseData;
 import Model.Lobby;
 import Model.Player;
 import Observers.LobbyObserver;
-import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -34,8 +33,9 @@ public class LobbyController {
         return lobbyController;
     }
 
-    public void makeLobby(String playerName)  {
-        lobbyCode = databaseController.makeLobby();
+    public void makeLobby(String playerName) {
+        lobbyCode = databaseController.createLobbyCode();
+        databaseController.makeLobby(lobbyCode);
         tryToAddPlayerToServer(playerName);
     }
 
@@ -81,7 +81,7 @@ public class LobbyController {
     }
 
     public void setServerLobbyNotJoinable() {
-        databaseController.updateJoinable(lobbyCode, false);
+        databaseController.updateJoinable(false);
     }
 
     public void addPlayerToServer(String lobbyCode, String playerName)
@@ -108,7 +108,6 @@ public class LobbyController {
 
     private boolean playerSlotInFirebaseIsTaken(int i) {
         return databaseController.getDatabaseData().getPlayer(i) != null;
-//        return databaseController.getLobbyDocument(lobbyCode).get(playerId) != null;
     }
 
     private void tryToAddPlayerToDatabase(Player player, String playerName) {
@@ -131,30 +130,11 @@ public class LobbyController {
         return playerName;
     }
 
-    public synchronized void updatePlayersFromLobbyDoc(DatabaseData data) {
-        lobby.setJoinable(data.isJoinable());
-        lobby.setPlayers(data.getPlayers());
-    }
-
-//    private void tryToUpdatePlayerInLobby(DocumentSnapshot snapshot, int i) {
-//        Object object = snapshot.get("Player" + (i + 1));
-//
-//        if (object != null) {
-//            updatePlayerInLobby(object, i);
-//        }
-//    }
-//
-//    private void updatePlayerInLobby(Object object, int i) {
-//        String playerString = object.toString();
-//        Player player = playerController.createPlayerFromDocData(playerString);
-//        lobby.updatePlayer(i, player);
-//    }
-
     public Player getCurrentPlayer() throws PlayerNotFoundException {
         List<Player> players = lobby.getPlayers();
 
         for (Player player : players) {
-            if (player != null && player.getPlayerName().equals(playerController.getCurrentPlayerName())) {
+            if (player != null && player.getPlayerName().equals(playerController.getYourPlayerName())) {
                 return player;
             }
         }
@@ -185,8 +165,9 @@ public class LobbyController {
         return lobby;
     }
 
-    public void update(DatabaseData data) {
-        updatePlayersFromLobbyDoc(data);
+    public synchronized void update(DatabaseData data) {
+        lobby.setJoinable(data.isJoinable());
+        lobby.setPlayers(data.getPlayers());
     }
 
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {

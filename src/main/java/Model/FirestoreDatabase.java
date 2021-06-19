@@ -11,7 +11,6 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -63,10 +62,7 @@ public class FirestoreDatabase {
         FirebaseApp.initializeApp(options);
     }
 
-    public void updateJoinable(String lobbyCode, boolean joinable) {
-        if (docRef == null) {
-            docRef = lobbyRef.document(lobbyCode);
-        }
+    public void updateJoinable(boolean joinable) {
 
         data.setJoinable(joinable);
         docRef.update("Joinable", data.isJoinable());
@@ -85,8 +81,8 @@ public class FirestoreDatabase {
             int index = getServerPlayerIndex(player.getPlayerName());
             data.setPlayer(index, null);
             docRef.update("players", data.getPlayers());
-        } catch (LobbyFullException e) {
-            e.printStackTrace();
+        } catch (LobbyFullException lbe) {
+            lbe.printStackTrace();
         }
     }
 
@@ -94,51 +90,32 @@ public class FirestoreDatabase {
         try {
             int index = getServerPlayerIndex(player.getPlayerName());
             data.setPlayer(index, player);
-            System.out.println("updating player " + index);
             docRef.update("players", data.getPlayers());
         } catch (LobbyFullException e) {
             e.printStackTrace();
+            e.getCause().printStackTrace();
         }
     }
 
-    public String makeLobby() {
+    public void makeLobby(String lobbyCode) {
         HashMap<String, Object> serverData = getServerData();
-        String lobbyCode = generateLobbyCode();
         docRef = lobbyRef.document(lobbyCode);
         docRef.set(serverData);
-        return lobbyCode;
     }
 
     public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        data.setJoinable(true);
-        data.setGameStarted(false);
+        hashMap.put("currentPlayerIndex", data.getCurrentPlayerIndex());
         hashMap.put("GameStarted", data.isGameStarted());
         hashMap.put("Joinable", data.isJoinable());
         hashMap.put("players", data.getPlayers());
         hashMap.put("gameboard", data.getGameboard());
 
-//        hashMap.put("Joinable", true);
-//        hashMap.put("GameStarted", false);
-//        hashMap.put("Player1", null);
-//        hashMap.put("Player2", null);
-//        hashMap.put("Player3", null);
-//        hashMap.put("Player4", null);
-//        hashMap.put("cities", null);
-//        hashMap.put("citiesWithResearchStations", null);
-//        hashMap.put("curedDiseases", null);
-//        hashMap.put("cures", null);
-//        hashMap.put("drawnEpidemicCards", 0);
-//        hashMap.put("infectionDiscardStack", null);
-//        hashMap.put("infectionRate", 2);
-//        hashMap.put("infectionStack", null);
-//        hashMap.put("outbreakCounter", 0);
-//        hashMap.put("playerDiscardStack", null);
-//        hashMap.put("playerStack", null);
-//        hashMap.put("topSixInfectionStack", null);
-//        hashMap.put("viruses", null);
-
         return hashMap;
+    }
+
+    public void updateIndex(int index) {
+        docRef.update("currentPlayerIndex", index);
     }
 
     public void updateGameStarted(boolean gameStarted) {
@@ -149,178 +126,31 @@ public class FirestoreDatabase {
         docRef.update("gameboard", gameboard);
     }
 
+    public int getServerPlayerIndex(String name) throws LobbyFullException {
+        try {
+            data = docRef.get().get().toObject(DatabaseData.class);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
 
-//    public void updateCities(List<City> cities) {
-//        System.out.println("updating cities!" + cities.get(0).getName() + " : " + cities.get(0).getCubeAmount());
-//        try {
-//            docRef.update("cities", cities);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateCitiesWithResearchStations(List<City> cities) {
-//        try {
-//            docRef.update("citiesWithResearchStations", cities);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateCuredDiseases(List<Cure> curedDiseases) {
-//        try {
-//            docRef.update("curedDiseases", curedDiseases);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateCures(List<Cure> CURES) {
-//        try {
-//            docRef.update("cures", CURES);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateDrawnEpidemicCards(int drawnEpidemicCards) {
-//        try {
-//            docRef.update("drawnEpidemicCards", drawnEpidemicCards);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
-//        try {
-//            docRef.update("infectionDiscardStack", infectionDiscardStack);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateInfectionRate(int infectionRate) {
-//        try {
-//            docRef.update("infectionRate", infectionRate);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateInfectionStack(ArrayList<InfectionCard> infectionStack) {
-//        try {
-//            docRef.update("infectionStack", infectionStack);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateOutbreakCounter(int outbreakCounter) {
-//        try {
-//            docRef.update("outbreakCounter", outbreakCounter);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updatePlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
-//
-//        ArrayList<String> playerCardNames = new ArrayList<>();
-//
-//        for(PlayerCard card : playerDiscardStack) {
-//            playerCardNames.add(card.getName());
-//        }
-//
-//        try {
-//            docRef.update("playerDiscardStack", playerCardNames);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updatePlayerStack(ArrayList<PlayerCard> playerStack) {
-//
-//        ArrayList<String> playerCardNames = new ArrayList<>();
-//
-//        for(PlayerCard card : playerStack) {
-//            playerCardNames.add(card.getName());
-//        }
-//
-//        try {
-//            docRef.update("playerStack", playerCardNames);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateTopSixInfectionStack(ArrayList<InfectionCard> topSixInfectionStack) {
-//        try {
-//            docRef.update("topSixInfectionStack", topSixInfectionStack);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
-//
-//    public void updateViruses(List<Virus> viruses) {
-//        try {
-//            docRef.update("viruses", viruses);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            e.getCause().printStackTrace();
-//        }
-//    }
+        List<Player> players = data.getPlayers();
 
-    public int getServerPlayerIndex(String obj) throws LobbyFullException {
-        for (int i = 0; i < 4; i++) {
-            try {
-                data = docRef.get().get().toObject(DatabaseData.class);
-                if (obj == null) {
-                    if (data.getPlayer(i) == null) {
-                        return i;
-                    }
-                } else if (data.getPlayer(i).getPlayerName().equals(obj)) {
-                    return i;
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+        return getIndex(players, name);
+    }
+
+    private int getIndex(List<Player> players, String name) throws LobbyFullException {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i) == null) {
+                return i;
+            } else if (players.get(i).getPlayerName().equals(name)) {
+                return i;
             }
         }
 
         throw new LobbyFullException("Lobby is full.");
     }
 
-    public DocumentSnapshot getLobbyByDocumentId(String lobbyCode) {
-
-        ApiFuture<DocumentSnapshot> future = lobbyRef.document(lobbyCode).get();
-        DocumentSnapshot document;
-
-        try {
-            document = future.get();
-
-            if (document.exists()) {
-                return document;
-            }
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private String generateLobbyCode() {
+    public String generateLobbyCode() {
         StringBuilder password = new StringBuilder();
 
         for (int i = 0; i < passwordLength; i++) {
@@ -350,7 +180,7 @@ public class FirestoreDatabase {
         return (snapshot, e) -> {
             if (snapshot != null && snapshot.exists()) {
                 try {
-                    System.out.println("updating games");
+                    System.out.println("new update from FireStore!");
                     data = snapshot.toObject(DatabaseData.class);
                     controller.update(data);
                 } catch (Exception ex) {

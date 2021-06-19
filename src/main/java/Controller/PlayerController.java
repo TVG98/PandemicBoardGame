@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class PlayerController {
     static PlayerController playerController;
     private GameBoardController gameBoardController;
-    private String currentPlayerName;
+    private String yourPlayerName;
 
     private PlayerController() {}
 
@@ -80,6 +80,14 @@ public class PlayerController {
         return virusTypeHashMap;
     }
 
+    public boolean hasActionsLeft(Player player) {
+        return player.hasActionsLeft();
+    }
+
+    public void endTurn(Player player) {
+        player.endTurn();
+    }
+
     public void addCard(PlayerCard card, Player player) {
         player.addCardToHand(card);
         notifyGameObserver();
@@ -105,12 +113,12 @@ public class PlayerController {
         return player.getPlayerName();
     }
 
-    public String getCurrentPlayerName() {
-        return currentPlayerName;
+    public String getYourPlayerName() {
+        return yourPlayerName;
     }
 
     public void setPlayer(String currentPlayerName) {
-        this.currentPlayerName = currentPlayerName;
+        this.yourPlayerName = currentPlayerName;
     }
 
     public boolean hasRole(Player player, Role role) {

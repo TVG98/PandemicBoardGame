@@ -111,8 +111,8 @@ public class Player {
         return cardsToShare;
     }
 
-    public boolean actionsPlayed() {
-        return actions <= 0;
+    public boolean hasActionsLeft() {
+        return actions > 0;
     }
 
     public void resetActions() {

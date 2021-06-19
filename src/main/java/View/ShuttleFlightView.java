@@ -214,12 +214,12 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleShuttleFlight(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void getCitiesWithResearchStationButtonHandler(Button button) {
@@ -229,7 +229,7 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
     }
 
     private void createUpdatedBorderPane(GameBoardObservable gameBoardObservable) {

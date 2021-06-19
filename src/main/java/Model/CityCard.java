@@ -1,6 +1,6 @@
 package Model;
 
-public class CityCard implements PlayerCard {
+public class CityCard extends PlayerCard {
 
     private final City city;
 
@@ -13,10 +13,9 @@ public class CityCard implements PlayerCard {
     }
 
     public VirusType getVirusType() {
-        return city.getVirusType();
+        return city.getVIRUS_TYPE();
     }
 
-    @Override
     public String getName() {
         return city.getName();
     }

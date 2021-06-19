@@ -1,10 +1,8 @@
 package Model;
 
-public class EpidemicCard implements PlayerCard {
-    private final String name = "EpidemicCard";
+public class EpidemicCard extends PlayerCard {
 
-    @Override
-    public String getName() {
-        return name;
+    public EpidemicCard() {
+        setName("EpidemicCard");
     }
 }

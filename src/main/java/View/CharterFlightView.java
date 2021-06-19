@@ -211,12 +211,12 @@ public class CharterFlightView implements GameObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleCharterFlight(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void citiesToMoveToDropboxHandler(ComboBox comboBox) {
@@ -224,7 +224,7 @@ public class CharterFlightView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
-        currentCityText.setText("You are currently in: " + gameObservable.getCurrentPlayer().getCurrentCity().getName());
+        currentCityText.setText("You are currently in: " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).getCurrentCity().getName());
     }
     @Override
     public void update(GameObservable gameObservable) {

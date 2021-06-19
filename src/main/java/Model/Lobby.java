@@ -51,8 +51,6 @@ public class Lobby implements LobbyObservable {
         for (Player player : players) {
             if (player != null) {
                 playerReadyToStart.add(player.getReadyToStart());
-            } else {
-                playerReadyToStart.add(null);
             }
         }
 

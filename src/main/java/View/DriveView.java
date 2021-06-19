@@ -37,13 +37,10 @@ public class DriveView implements GameObserver {
 
     GameController gameController = GameController.getInstance();
 
-
-
     public DriveView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDriveViewBorderPane());
-
         gameController.registerPlayerObserver(this);
     }
 
@@ -226,12 +223,12 @@ public class DriveView implements GameObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleDrive(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void getCitiesButtonHandler(Button button) {
@@ -240,8 +237,8 @@ public class DriveView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
-        ArrayList<String> nearCities = observable.getCurrentPlayer().getCurrentCity().getNearCities();
+        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
+        ArrayList<String> nearCities = observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getNearCities();
         getCitiesButtons(nearCities);
     }
 

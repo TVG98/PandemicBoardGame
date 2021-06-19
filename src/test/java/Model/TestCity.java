@@ -29,7 +29,7 @@ public class TestCity {
         atlanta.addCube(VirusType.BLUE);
 
         int expectedCubeAmount = 2;
-        int cubeAmount = atlanta.getCubeAmount();
+        int cubeAmount = atlanta.getCubes().size();
 
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
@@ -37,7 +37,7 @@ public class TestCity {
     @Test
     public void Should_SayCubeAmountIsEqualToZeroOnStart() {
         int expectedCubeAmount = 0;
-        int cubeAmount = atlanta.getCubeAmount();
+        int cubeAmount = atlanta.getCubes().size();
 
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
@@ -59,7 +59,7 @@ public class TestCity {
     @Test
     public void Should_returnFalseWhenVirusTypeIsNotBlueForAtlanta() {
         VirusType red = VirusType.RED;
-        boolean atlantaHasRedVirus = atlanta.getVirusType().equals(red);
+        boolean atlantaHasRedVirus = atlanta.getVIRUS_TYPE().equals(red);
 
         assertThat(atlantaHasRedVirus, is(false));
     }
@@ -73,7 +73,7 @@ public class TestCity {
         atlanta.removeCube();
 
         int expectedCubeAmount = 1;
-        int cubeAmount = atlanta.getCubeAmount();
+        int cubeAmount = atlanta.getCubes().size();
 
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
@@ -86,7 +86,7 @@ public class TestCity {
         atlanta.removeAllCubes();
 
         int expectedCubeAmount = 0;
-        int cubeAmount = atlanta.getCubeAmount();
+        int cubeAmount = atlanta.getCubes().size();
 
         assertThat(cubeAmount, is(expectedCubeAmount));
     }

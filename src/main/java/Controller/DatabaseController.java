@@ -2,10 +2,6 @@ package Controller;
 
 import Exceptions.LobbyFullException;
 import Model.*;
-import com.google.cloud.firestore.DocumentSnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseController {
     FirestoreDatabase database;
@@ -27,8 +23,12 @@ public class DatabaseController {
         database.updatePlayerInServer(player);
     }
 
-    public String makeLobby() {
-        return database.makeLobby();
+    public void makeLobby(String lobbyCode) {
+        database.makeLobby(lobbyCode);
+    }
+
+    public String createLobbyCode() {
+        return database.generateLobbyCode();
     }
 
     public void addPlayer(String lobbyCode, Player player) throws LobbyFullException {
@@ -36,8 +36,8 @@ public class DatabaseController {
         database.addPlayerToLobby(lobbyCode, player);
     }
 
-    public void updateJoinable(String lobbyCode, boolean joinable) {
-        database.updateJoinable(lobbyCode, joinable);
+    public void updateJoinable(boolean joinable) {
+        database.updateJoinable(joinable);
     }
 
     public void updateGameStarted(boolean gameStarted) {
@@ -52,70 +52,18 @@ public class DatabaseController {
         if (!data.isGameStarted()) {
             LobbyController.getInstance().update(data);
         } else {
-            GameController.getInstance().updatePlayersInGame(data);
+            GameController.getInstance().update(data);
         }
 
         GameBoardController.getInstance().update(data);
     }
 
-    public void updateGameBoardInDatabase(Gameboard gameboard) {
-        database.updateGameBoard(gameboard);
+    public void updateIndexInDatabase(int index) {
+        database.updateIndex(index);
     }
 
-//    public void updateCitiesInDatabase(List<City> cities) {
-//        database.updateCities(cities);
-//    }
-//
-//    public void updateCitiesWithResearchStationsInDatabase(List<City> cities) {
-//        database.updateCitiesWithResearchStations(cities);
-//    }
-//
-//    public void updateCuredDiseases(List<Cure> curedDiseases) {
-//        database.updateCuredDiseases(curedDiseases);
-//    }
-//
-//    public void updateCures(List<Cure> CURES) {
-//        database.updateCures(CURES);
-//    }
-//
-//    public void updateDrawnEpidemicCards(int drawnEpidemicCards) {
-//        database.updateDrawnEpidemicCards(drawnEpidemicCards);
-//    }
-//
-//    public void updateInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
-//        database.updateInfectionDiscardStack(infectionDiscardStack);
-//    }
-//
-//    public void updateInfectionRate(int infectionRate) {
-//        database.updateInfectionRate(infectionRate);
-//    }
-//
-//    public void updateInfectionStack(ArrayList<InfectionCard> infectionStack) {
-//        database.updateInfectionStack(infectionStack);
-//    }
-//
-//    public void updateOutbreakCounter(int outbreakCounter) {
-//        database.updateOutbreakCounter(outbreakCounter);
-//    }
-//
-//    public void updatePlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
-//        database.updatePlayerDiscardStack(playerDiscardStack);
-//    }
-//
-//    public void updatePlayerStack(ArrayList<PlayerCard> playerStack) {
-//        database.updatePlayerStack(playerStack);
-//    }
-//
-//    public void updateTopSixInfectionStack(ArrayList<InfectionCard> topSixInfectionStack) {
-//        database.updateTopSixInfectionStack(topSixInfectionStack);
-//    }
-//
-//    public void updateViruses(List<Virus> viruses) {
-//        database.updateViruses(viruses);
-//    }
-
-    public DocumentSnapshot getLobbyDocument(String lobbyCode) {
-        return database.getLobbyByDocumentId(lobbyCode);
+    public void updateGameBoardInDatabase(Gameboard gameboard) {
+        database.updateGameBoard(gameboard);
     }
 
     public DatabaseData getDatabaseData() {

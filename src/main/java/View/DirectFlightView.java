@@ -227,12 +227,12 @@ public class DirectFlightView implements GameObserver {
     }
 
     private void backButtonHandler() {
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.handleDirectFlight(selectedCity);
-        GameView view = GameView.getInstance(primaryStage);
+        GameView view = new GameView(primaryStage);
     }
 
     private void getCityButtonHandler(Button button) {
@@ -241,9 +241,9 @@ public class DirectFlightView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
 
-        ArrayList<CityCard> cityCardsInHand = observable.getCurrentPlayer().createCityCardsFromPlayer();
+        ArrayList<CityCard> cityCardsInHand = observable.getPlayers().get(observable.getCurrentPlayerIndex()).createCityCardsFromPlayer();
         ArrayList<String> cityCardsInHandNames = new ArrayList<>();
         for (CityCard cityCard : cityCardsInHand) {
             cityCardsInHandNames.add(cityCard.getName());

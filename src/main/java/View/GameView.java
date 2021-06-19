@@ -37,6 +37,8 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
 
+    ArrayList<Rectangle> playersCharacter = new ArrayList<>();
+
     static GameView gameView;
 
     ArrayList<Text> playerOverviews = new ArrayList<>();
@@ -46,9 +48,9 @@ public class GameView implements GameObserver, GameBoardObserver {
     // Contains offsetX, offsetY and color for each Player
     ArrayList<String[]> playerPawns = initializePlayerPawns();
 
-    private final GameController gameController;
+    private GameController gameController;
 
-    private GameView(Stage primaryStage) {
+    public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
         this.primaryStage.setResizable(false);
@@ -58,21 +60,11 @@ public class GameView implements GameObserver, GameBoardObserver {
         gameController.registerGameBoardObserver(this);
     }
 
-    public static GameView getInstance(Stage primaryStage) {
-        if (gameView == null) {
-            gameView = new GameView(primaryStage);
-        }
-
-        return gameView;
-    }
-
     private void createGameViewBorderPane() {
         // Setup Background Image //
         Image image = new Image(new File(pathToImage).toURI().toString());
         BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         borderPane.setBackground(new Background(bgImage));
-
-
 
         // Setup BorderPane Top //
         Text title = new Text("Pandemic");
@@ -146,10 +138,18 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         makeGameBoard();
 
+        Rectangle playerOne = new Rectangle(15, 15, Color.RED);
+        Rectangle playerTwo = new Rectangle(15, 15, Color.BLUE);
+        Rectangle playerThree = new Rectangle(15, 15, Color.ORANGE);
+        Rectangle playerFour = new Rectangle(15, 15, Color.GREEN);
+
+        Collections.addAll(playersCharacter, playerOne, playerTwo, playerThree, playerFour);
 
         for (int i = 0; i < 4; i++)
         {
+            this.borderPane.getChildren().addAll(playersCharacter.get(i));
             drawPlayerOnCity(
+                    playersCharacter.get(i),
                     "Atlanta",
                     Color.valueOf(playerPawns.get(i)[2]),
                     new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
@@ -349,7 +349,8 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     private void endTurnButtonHandler() {
-
+        System.out.println("ending turn!");
+        gameController.turn();
     }
 
     private void makeGameBoard() {
@@ -361,10 +362,8 @@ public class GameView implements GameObserver, GameBoardObserver {
         makeCityCubes();
     }
 
-    private void makeCityCubes()
-    {
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
-        {
+    private void makeCityCubes() {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet()) {
             Text text = new Text(Integer.toString(0));
             text.setX(entry.getValue()[0] - 5);
             text.setY(entry.getValue()[1] + 8);
@@ -600,18 +599,16 @@ public class GameView implements GameObserver, GameBoardObserver {
         }
     }
 
-    private void drawPlayerOnCity(String cityName, Color color, int[] offset)
+    private void drawPlayerOnCity(Rectangle player, String cityName, Color color, int[] offset)
     {
         for (Map.Entry<String, int[]> entry : this.cities.entrySet())
         {
             if (entry.getKey().equals(cityName))
             {
-                Rectangle player = new Rectangle(15, 15, color);
                 player.setStroke(color.darker());
                 player.setStrokeWidth(2);
                 player.setX(entry.getValue()[0] + offset[0]);
                 player.setY(entry.getValue()[1] + offset[1]);
-                this.borderPane.getChildren().add(player);
             }
         }
     }
@@ -623,46 +620,54 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (City city : cityList) {
             //Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
-            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubeAmount()));
+            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubes().size()));
         }
     }
 
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
+        makeViewIfGameEnded(gameObservable);
         List<Player> players = gameObservable.getPlayers();
 
         int index = 0;
 
         for (int i = index; i < 4; i++) {
-            if (players.get(i) != null)
-            {
+            if (players.get(i) != null) {
                 this.playerOverviews.get(i).setText(players.get(i).getPlayerName() + " - " + players.get(i).getRole());
 
-                // Can't be tested yet, so commented it out
-                /*
-                if (players[i].getCurrentCity() != null)
-                {
+                if (players.get(i).getCurrentCity() != null) {
                     drawPlayerOnCity(
-                            players[i].getCurrentCity().getName(),
+                            playersCharacter.get(i),
+                            players.get(i).getCurrentCity().getName(),
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
+                    System.out.println("Draw successful");
+                } else {
+                    System.out.println("Drawing failed");
                 }
-                else{
-                    System.out.println("oewfaguh");
-                }
-                 */
             }
+
             index++;
+        }
+    }
+
+    private void makeViewIfGameEnded(GameObservable gameObservable) {
+        if (gameObservable.getLost()) {
+            Platform.runLater(() -> new LossView(primaryStage));
+        }
+
+        if (gameObservable.getWon()) {
+            Platform.runLater(() -> new WinView(primaryStage));
         }
     }
 
     @Override
     public void update(GameObservable gameObservable) {
-        createUpdatedGameViewBorderPane(gameObservable);
+        Platform.runLater(() -> createUpdatedGameViewBorderPane(gameObservable));
     }
 
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
-        createUpdatedGameViewBorderPane(gameBoardObservable);
+        Platform.runLater(() -> createUpdatedGameViewBorderPane(gameBoardObservable));
     }
 }
 
