@@ -16,7 +16,6 @@ public class CityCard extends PlayerCard {
         return city.getVIRUS_TYPE();
     }
 
-    @Override
     public String getName() {
         return city.getName();
     }

@@ -1,17 +1,18 @@
 package Model;
 
-public abstract class EventCard extends PlayerCard {
-    private final String name;
+public class EventCard extends PlayerCard {
     private String effectText;
     private boolean played;
 
+    public EventCard() {}
+
     public EventCard(String name, String effectText) {
-        this.name = name;
+        setName(name);
         this.effectText = effectText;
         played = false;
     }
 
-    public abstract void play();
+    public void play() {}
 
     public String getEffectText() {
         return effectText;
@@ -19,11 +20,6 @@ public abstract class EventCard extends PlayerCard {
 
     public boolean getPlayed() {
         return played;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public void setPlayed() {

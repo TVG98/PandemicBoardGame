@@ -1,7 +1,9 @@
 package Model;
 
 public class InfectionCard {
-    private final City city;
+    private City city;
+
+    public InfectionCard() {}
 
     public InfectionCard(City city) {
         this.city = city;
@@ -9,5 +11,9 @@ public class InfectionCard {
 
     public City getCity() {
         return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

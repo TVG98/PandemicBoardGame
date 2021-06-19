@@ -1,8 +1,16 @@
 package Model;
 
-public abstract class PlayerCard {
+public class PlayerCard {
 
-    public PlayerCard() { }
+    private String name;
 
-    public abstract String getName();
+    public PlayerCard() {}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
