@@ -8,7 +8,6 @@ import Model.DatabaseData;
 import Model.Lobby;
 import Model.Player;
 import Observers.LobbyObserver;
-import com.google.cloud.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -34,8 +33,9 @@ public class LobbyController {
         return lobbyController;
     }
 
-    public void makeLobby(String playerName)  {
-        lobbyCode = databaseController.makeLobby();
+    public void makeLobby(String playerName) {
+        lobbyCode = databaseController.createLobbyCode();
+        databaseController.makeLobby(lobbyCode);
         tryToAddPlayerToServer(playerName);
     }
 
@@ -81,7 +81,7 @@ public class LobbyController {
     }
 
     public void setServerLobbyNotJoinable() {
-        databaseController.updateJoinable(lobbyCode, false);
+        databaseController.updateJoinable(false);
     }
 
     public void addPlayerToServer(String lobbyCode, String playerName)
