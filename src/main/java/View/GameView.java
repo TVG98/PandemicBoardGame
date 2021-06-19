@@ -37,6 +37,8 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
 
+    ArrayList<Rectangle> playersCharacter = new ArrayList<Rectangle>();
+
     static GameView gameView;
 
     ArrayList<Text> playerOverviews = new ArrayList<>();
@@ -136,10 +138,17 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         makeGameBoard();
 
+        Rectangle playerOne = new Rectangle(15, 15, Color.RED);
+        Rectangle playerTwo = new Rectangle(15, 15, Color.BLUE);
+        Rectangle playerThree = new Rectangle(15, 15, Color.ORANGE);
+        Rectangle playerFour = new Rectangle(15, 15, Color.GREEN);
+
+        Collections.addAll(playersCharacter, playerOne, playerTwo, playerThree, playerFour);
 
         for (int i = 0; i < 4; i++)
         {
             drawPlayerOnCity(
+                    playersCharacter.get(i),
                     "Atlanta",
                     Color.valueOf(playerPawns.get(i)[2]),
                     new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
@@ -590,18 +599,17 @@ public class GameView implements GameObserver, GameBoardObserver {
         }
     }
 
-    private void drawPlayerOnCity(String cityName, Color color, int[] offset)
+    private void drawPlayerOnCity(Rectangle player, String cityName, Color color, int[] offset)
     {
         for (Map.Entry<String, int[]> entry : this.cities.entrySet())
         {
             if (entry.getKey().equals(cityName))
             {
-                Rectangle player = new Rectangle(15, 15, color);
                 player.setStroke(color.darker());
                 player.setStrokeWidth(2);
                 player.setX(entry.getValue()[0] + offset[0]);
                 player.setY(entry.getValue()[1] + offset[1]);
-                this.borderPane.getChildren().add(player);
+                this.borderPane.getChildren().addAll(player);
             }
         }
     }
@@ -631,9 +639,11 @@ public class GameView implements GameObserver, GameBoardObserver {
                 if (players.get(i).getCurrentCity() != null)
                 {
                     drawPlayerOnCity(
+                            playersCharacter.get(i),
                             players.get(i).getCurrentCity().getName(),
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
+                    System.out.println("Draw successfull");
                 }
                 else{
                     System.out.println("Drawing failed");
