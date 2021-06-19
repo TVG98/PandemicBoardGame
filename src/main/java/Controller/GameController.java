@@ -365,10 +365,6 @@ public class GameController {
         soundController.playSound(sound);
     }
 
-    public void playMusic(Sound music) {
-        soundController.playSound(music);
-    }
-
     public Player getCurrentPlayer() {
         return game.getCurrentPlayer();
     }

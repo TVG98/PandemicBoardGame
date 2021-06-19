@@ -48,19 +48,16 @@ public class OptionsView {
 
         // Setup Backgound Shapes (textBoxes) //
         Rectangle masterVolumeTextBox = new Rectangle(400, 100);
-        masterVolumeTextBox.setY(100);
+        masterVolumeTextBox.setY(190);
         masterVolumeTextBox.setX(140);
         Rectangle SFXVolumeTextBox = new Rectangle(400, 100);
-        SFXVolumeTextBox.setY(285);
+        SFXVolumeTextBox.setY(375);
         SFXVolumeTextBox.setX(140);
         Rectangle musicVolumeTextBox = new Rectangle(400, 100);
-        musicVolumeTextBox.setY(470);
+        musicVolumeTextBox.setY(560);
         musicVolumeTextBox.setX(140);
-        Rectangle UIVolumeTextBox = new Rectangle(400, 100);
-        UIVolumeTextBox.setY(655);
-        UIVolumeTextBox.setX(140);
         ArrayList<Rectangle> textBoxes = new ArrayList<Rectangle>();
-        Collections.addAll(textBoxes, masterVolumeTextBox, SFXVolumeTextBox, musicVolumeTextBox, UIVolumeTextBox);
+        Collections.addAll(textBoxes, masterVolumeTextBox, SFXVolumeTextBox, musicVolumeTextBox);
 
         for (Rectangle textBox : textBoxes) {
             textBox.setArcHeight(30d);
@@ -77,10 +74,8 @@ public class OptionsView {
         SFXSliderHandler(SFXVolumeSlider);
         Slider musicVolumeSlider = new Slider();
         musicSliderHandler(musicVolumeSlider);
-        Slider UIVolumeSlider = new Slider();
-        UISliderHandler(UIVolumeSlider);
         ArrayList<Slider> volumeSliders = new ArrayList<Slider>();
-        Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider, UIVolumeSlider);
+        Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider);
         System.out.println(Arrays.toString(soundController.getVolumes()));
 
         for (int i = 0; i < volumeSliders.size(); i++) {
@@ -102,9 +97,8 @@ public class OptionsView {
         Text masterVolumeText = new Text("Master volume");
         Text SFXVolumeText = new Text("SFX volume");
         Text musicVolumeText = new Text("Music volume");
-        Text UIVolumeText = new Text("UI volume");
         ArrayList<Text> volumeText = new ArrayList<Text>();
-        Collections.addAll(volumeText, masterVolumeText, SFXVolumeText, musicVolumeText, UIVolumeText);
+        Collections.addAll(volumeText, masterVolumeText, SFXVolumeText, musicVolumeText);
 
         for (Text text : volumeText) {
             text.setFont(new Font("Arial", 50));
@@ -162,11 +156,12 @@ public class OptionsView {
         MenuView view = new MenuView(primaryStage);
     }
 
-    private void musicSliderHandler(Slider musicSlider) {
+    private void masterSliderHandler(Slider musicSlider) {
         musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                soundController.setMusicVolume(newValue.floatValue());
+                soundController.setMasterVolume(newValue.floatValue());
+                soundController.playSound(Sound.SLIDER);
             }
         });
     }
@@ -176,26 +171,18 @@ public class OptionsView {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 soundController.setSfxVolume(newValue.floatValue());
+                soundController.playSound(Sound.SLIDER);
             }
         });
     }
 
-    private void masterSliderHandler(Slider musicSlider) {
+    private void musicSliderHandler(Slider musicSlider) {
         musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                soundController.setMasterVolume(newValue.floatValue());
+                soundController.setMusicVolume(newValue.floatValue());
+                soundController.playSound(Sound.SLIDER);
             }
         });
     }
-
-    private void UISliderHandler(Slider musicSlider) {
-        musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                soundController.setUiVolume(newValue.floatValue());
-            }
-        });
-    }
-
 }

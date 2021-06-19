@@ -7,6 +7,7 @@ import Exceptions.PlayerNotFoundException;
 import Model.DatabaseData;
 import Model.Lobby;
 import Model.Player;
+import Model.Sound;
 import Observers.LobbyObserver;
 
 import java.util.List;
@@ -17,12 +18,14 @@ public class LobbyController {
     private Lobby lobby;
     private final DatabaseController databaseController;
     private final PlayerController playerController;
+    private final SoundController soundController;
 
     private String lobbyCode;
 
     private LobbyController() {
         databaseController = DatabaseController.getInstance();
         playerController = PlayerController.getInstance();
+        soundController = SoundController.getInstance();
     }
 
     public static LobbyController getInstance() {
@@ -49,6 +52,7 @@ public class LobbyController {
     }
 
     public void tryToSetPlayerReady() {
+        playSoundEffect(Sound.TREATDISEASE);
         try {
             setCorrectPlayerReady();
         } catch (PlayerNotFoundException e) {
@@ -157,12 +161,12 @@ public class LobbyController {
         databaseController.removePlayer(player.getPlayerName());
     }
 
-    public void startGame() {
-
-    }
-
     public Lobby getLobby() {
         return lobby;
+    }
+
+    public void playSoundEffect(Sound sound) {
+        soundController.playSound(sound);
     }
 
     public synchronized void update(DatabaseData data) {

@@ -12,11 +12,10 @@ public class SoundController {
     private final int MAXVOLUME = 100;
     private final float TRANSLATION = 2f;
 
-    private float masterVolume = translateVolume(100);
+    private float masterVolume = translateVolume(30);
     private float sfxVolume = masterVolume;
     private float musicVolume = masterVolume;
-    private float uiVolume = masterVolume;
-    private float[] volumes = new float[] {100, 100, 100, 100};
+    private float[] volumes = new float[] {100, 100, 100};
 
 
     SoundEffects sfx = new SoundEffects(sfxVolume);
@@ -55,21 +54,16 @@ public class SoundController {
         }
     }
 
-    private float setVolumes(float volume) {
-        volume = (volume * TRANSLATION) + MAXVOLUME;
-        return volume;
-    }
-
     public void setMasterVolume(float volume) {
         this.masterVolume = translateVolume(volume);
         setSfxVolume(volumes[1]);
         setMusicVolume(volumes[2]);
-        setUiVolume(volumes[3]);
         volumes[0] = volume;
     }
 
     public void setSfxVolume(float volume) {
         this.sfxVolume = translateVolumeWithMasterVolume(volume);
+        sfx.setVolume(sfxVolume);
         volumes[1] = volume;
     }
 
@@ -77,11 +71,6 @@ public class SoundController {
         this.musicVolume = translateVolumeWithMasterVolume(volume);
         music.setVolume(musicVolume);
         volumes[2] = volume;
-    }
-
-    public void setUiVolume(float volume) {
-        this.uiVolume = translateVolumeWithMasterVolume(volume);
-        volumes[3] = volume;
     }
 
     public float[] getVolumes() {
