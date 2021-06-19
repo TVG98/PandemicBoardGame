@@ -35,7 +35,7 @@ public class GameController {
         game.notifyAllObservers();
     }
 
-    public static GameController getInstance() {
+    public synchronized static GameController getInstance() {
         if (gameController == null) {
             gameController = new GameController();
         }
@@ -44,7 +44,7 @@ public class GameController {
 
     private boolean localPlayerIsPlayerOne() {
         String localPlayerName = playerController.getCurrentPlayerName();
-        String firstPlayerName = game.getPlayers()[0].getPlayerName();
+        String firstPlayerName = game.getPlayers().get(0).getPlayerName();
         return localPlayerName.equals(firstPlayerName);
     }
 
@@ -294,26 +294,27 @@ public class GameController {
         return game.getCurrentPlayer();
     }
 
-    public synchronized void updatePlayersInGame(DocumentSnapshot snapshot) {
-        for (int i = 0; i < 4; i++) {
-            tryToUpdatePlayerInGame(snapshot, i);
-        }
+    public synchronized void updatePlayersInGame(DatabaseData data) {
+        game.updatePlayers(data.getPlayers());
+//        for (int i = 0; i < 4; i++) {
+//            tryToUpdatePlayerInGame(data);
+//        }
     }
 
-    private void tryToUpdatePlayerInGame(DocumentSnapshot snapshot, int i) {
-        Object object = snapshot.get("Player" + (i + 1));
+//    private void tryToUpdatePlayerInGame(DatabaseData data, int i) {
+//        Object object = snapshot.get("Player" + (i + 1));
+//
+//        if (object != null) {
+//            updatePlayerInGame(object, i);
+//        }
+//
+//    }
 
-        if (object != null) {
-            updatePlayerInGame(object, i);
-        }
-
-    }
-
-    private void updatePlayerInGame(Object object, int i) {
-        String playerString = object.toString();
-        Player player = playerController.createPlayerFromDocData(playerString);
-        game.updatePlayer(i, player);
-    }
+//    private void updatePlayerInGame(Object object, int i) {
+//        String playerString = object.toString();
+//        Player player = playerController.createPlayerFromDocData(playerString);
+//        game.updatePlayer(i, player);
+//    }
 
     public void registerPlayerObserver(GameObserver observer) {
         game.register(observer);

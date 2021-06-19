@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @created June 18 2021 - 11:00 AM
@@ -195,39 +196,31 @@ public class TakeShareCardsView implements GameObserver {
         TakeSharePlayerView view = new TakeSharePlayerView(primaryStage);
     }
 
-
-    private void getCitiesButtonHandler(Button button)
-    {
+    private void getCitiesButtonHandler(Button button) {
         selectedCityText.setText("You selected the city card of " + button.getText() + " to take away");
         selectedCity = button.getText();
     }
 
     @Override
     public void update(GameObservable observable) {
-        Player[] playersArr = observable.getPlayers();
+        List<Player> players = observable.getPlayers();
 
-        for (Player player : playersArr)
-        {
-            if (player.getPlayerName().equals(this.selectedPlayer))
-            {
+        for (Player player : players) {
+            if (player.getPlayerName().equals(this.selectedPlayer)) {
                 displaySelectedPlayerCards(player.getHand());
             }
         }
-
     }
 
-    private void displaySelectedPlayerCards(ArrayList<PlayerCard> playerCards)
-    {
+    private void displaySelectedPlayerCards(ArrayList<PlayerCard> playerCards) {
         int index = 0;
 
-        for (PlayerCard playerCard : playerCards)
-        {
+        for (PlayerCard playerCard : playerCards) {
             this.availableCardsToTake.get(index).setText(playerCard.getName());
             index++;
         }
 
-        for (int i = index; index < 7; index++)
-        {
+        for (int i = index; index < 7; index++) {
             this.availableCardsToTake.get(index).setText("");
             this.availableCardsToTake.get(index).setStyle("-fx-background-color:transparent");
         }

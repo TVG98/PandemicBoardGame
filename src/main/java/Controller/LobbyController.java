@@ -4,10 +4,13 @@ import Exceptions.LobbyFullException;
 import Exceptions.LobbyNotFoundException;
 import Exceptions.LobbyNotJoinableException;
 import Exceptions.PlayerNotFoundException;
+import Model.DatabaseData;
 import Model.Lobby;
 import Model.Player;
 import Observers.LobbyObserver;
 import com.google.cloud.firestore.DocumentSnapshot;
+
+import java.util.List;
 
 public class LobbyController {
     static LobbyController lobbyController;
@@ -54,7 +57,7 @@ public class LobbyController {
     }
 
     private void setCorrectPlayerReady() throws PlayerNotFoundException {
-        Player[] players = lobby.getPlayers();
+        List<Player> players = lobby.getPlayers();
 
         for (Player player : players) {
             if (!playerSpotIsEmpty(player) && isCurrentPlayer(player)) {
@@ -97,14 +100,15 @@ public class LobbyController {
     private boolean canJoinLobby() throws LobbyNotFoundException {
         try {
             System.out.println(lobbyCode);
-            return databaseController.getLobbyDocument(lobbyCode).getBoolean("Joinable");
+            return databaseController.getDatabaseData().isJoinable();
         } catch (NullPointerException npe) {
             throw new LobbyNotFoundException("Lobby not found");
         }
     }
 
-    private boolean playerSlotInFirebaseIsTaken(String playerId) {
-        return databaseController.getLobbyDocument(lobbyCode).get(playerId) != null;
+    private boolean playerSlotInFirebaseIsTaken(int i) {
+        return databaseController.getDatabaseData().getPlayer(i) != null;
+//        return databaseController.getLobbyDocument(lobbyCode).get(playerId) != null;
     }
 
     private void tryToAddPlayerToDatabase(Player player, String playerName) {
@@ -118,9 +122,9 @@ public class LobbyController {
 
     private String getPlayerName(String playerName) {
         for (int i = 0; i < 4; i++) {
-            String playerId = "Player" + (i + 1);
-            if (playerSlotInFirebaseIsTaken(playerId)) {
-                String playerString = databaseController.getLobbyDocument(lobbyCode).get(playerId).toString();
+            if (playerSlotInFirebaseIsTaken(i)) {
+                String playerString = databaseController.getDatabaseData().getPlayer(i).getPlayerName();
+//                String playerString = databaseController.getLobbyDocument(lobbyCode).get(playerId).toString();
                 playerName = checkPlayerName(playerString, playerName);
             }
         }
@@ -128,29 +132,27 @@ public class LobbyController {
         return playerName;
     }
 
-    public synchronized void updatePlayersFromLobbyDoc(DocumentSnapshot snapshot) {
-        lobby.setJoinable(snapshot.getBoolean("Joinable"));
-        for (int i = 0; i < 4; i++) {
-            tryToUpdatePlayerInLobby(snapshot, i);
-        }
+    public synchronized void updatePlayersFromLobbyDoc(DatabaseData data) {
+        lobby.setJoinable(data.isJoinable());
+        lobby.setPlayers(data.getPlayers());
     }
 
-    private void tryToUpdatePlayerInLobby(DocumentSnapshot snapshot, int i) {
-        Object object = snapshot.get("Player" + (i + 1));
-
-        if (object != null) {
-            updatePlayerInLobby(object, i);
-        }
-    }
-
-    private void updatePlayerInLobby(Object object, int i) {
-        String playerString = object.toString();
-        Player player = playerController.createPlayerFromDocData(playerString);
-        lobby.updatePlayer(i, player);
-    }
+//    private void tryToUpdatePlayerInLobby(DocumentSnapshot snapshot, int i) {
+//        Object object = snapshot.get("Player" + (i + 1));
+//
+//        if (object != null) {
+//            updatePlayerInLobby(object, i);
+//        }
+//    }
+//
+//    private void updatePlayerInLobby(Object object, int i) {
+//        String playerString = object.toString();
+//        Player player = playerController.createPlayerFromDocData(playerString);
+//        lobby.updatePlayer(i, player);
+//    }
 
     public Player getCurrentPlayer() throws PlayerNotFoundException {
-        Player[] players = lobby.getPlayers();
+        List<Player> players = lobby.getPlayers();
 
         for (Player player : players) {
             if (player != null && player.getPlayerName().equals(playerController.getCurrentPlayerName())) {
@@ -184,8 +186,8 @@ public class LobbyController {
         return lobby;
     }
 
-    public void update(DocumentSnapshot snapshot) {
-        updatePlayersFromLobbyDoc(snapshot);
+    public void update(DatabaseData data) {
+        updatePlayersFromLobbyDoc(data);
     }
 
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {

@@ -3,10 +3,12 @@ package Model;
 import java.util.ArrayList;
 
 public class City {
-    private final String name;
-    private final ArrayList<Cube> cubes;
-    private final VirusType VIRUS_TYPE;
-    private final ArrayList<String> nearCities;
+    private String name;
+    private ArrayList<Cube> cubes;
+    private VirusType VIRUS_TYPE;
+    private ArrayList<String> nearCities;
+
+    public City() {}
 
     public City(String name, VirusType virusType) {
         this.name = name;

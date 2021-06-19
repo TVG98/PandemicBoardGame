@@ -4,26 +4,27 @@ import Observers.GameObservable;
 import Observers.GameObserver;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Game implements GameObservable {
     private final ArrayList<GameObserver> observers = new ArrayList<>();
 
-    private final Player[] players;
+    private List<Player> players;
     private int currentPlayerIndex = 0;
     private boolean lost = false;
     private boolean won = false;
     private Player currentPlayer;
 
-    public Game(Player[] players) {
+    public Game(List<Player> players) {
         this.players = players;
-        currentPlayer = this.players[this.currentPlayerIndex];
+        currentPlayer = this.players.get(currentPlayerIndex);
     }
 
     public void nextTurn() {
         currentPlayer = null;
         while (currentPlayer == null) {
             currentPlayerIndex++;
-            currentPlayer = players[currentPlayerIndex % players.length];
+            currentPlayer = players.get(currentPlayerIndex % players.size());
         }
         //todo update currentplayerindex && to server
     }
@@ -49,11 +50,11 @@ public class Game implements GameObservable {
     }
 
     public int getPlayerAmount() {
-        return this.players.length;
+        return players.size();
     }
 
-    public void updatePlayer(int loc, Player player) {
-        players[loc] = player;
+    public void updatePlayers(List<Player> players) {
+        this.players = players;
         notifyAllObservers();
     }
 
@@ -63,7 +64,7 @@ public class Game implements GameObservable {
     }
 
     @Override
-    public Player[] getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 

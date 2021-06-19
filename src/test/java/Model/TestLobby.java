@@ -40,28 +40,28 @@ public class TestLobby {
         assertThat(matchingCode, is(false));
     }
 
-    @Test
-    public void Should_ReturnCorrectNamesWhenAskedAllNamesFromLobby() {
-        ArrayList<String> expectedPlayerNames = new ArrayList<>(Arrays.asList("Thimo", "", "Tom", ""));
-
-        lobby.updatePlayer(0, new Player("Thimo", true));
-        lobby.updatePlayer(2, new Player("Tom", true));
-        ArrayList<String> playerNames = lobby.getPlayerNames();
-
-        assertThat(playerNames, is(expectedPlayerNames));
-    }
-
-    @Test
-    public void Should_ReturnCorrectNamesWhenAskedAllPlayersThatAreReadyToStart() {
-        ArrayList<Boolean> expectedBooleans = new ArrayList<>(Arrays.asList(true, false, false, true));
-
-        lobby.updatePlayer(0, new Player("Thimo", true));
-        lobby.updatePlayer(1, new Player("Tom", false));
-        lobby.updatePlayer(2, new Player("Romano", false));
-        lobby.updatePlayer(3, new Player("Daniel", true));
-
-        ArrayList<Boolean> booleans = lobby.getPlayerReadyToStart();
-
-        assertThat(booleans, is(expectedBooleans));
-    }
+//    @Test
+//    public void Should_ReturnCorrectNamesWhenAskedAllNamesFromLobby() {
+//        ArrayList<String> expectedPlayerNames = new ArrayList<>(Arrays.asList("Thimo", "", "Tom", ""));
+//
+//        lobby.updatePlayer(0, new Player("Thimo", true));
+//        lobby.updatePlayer(2, new Player("Tom", true));
+//        ArrayList<String> playerNames = lobby.getPlayerNames();
+//
+//        assertThat(playerNames, is(expectedPlayerNames));
+//    }
+//
+//    @Test
+//    public void Should_ReturnCorrectNamesWhenAskedAllPlayersThatAreReadyToStart() {
+//        ArrayList<Boolean> expectedBooleans = new ArrayList<>(Arrays.asList(true, false, false, true));
+//
+//        lobby.updatePlayer(0, new Player("Thimo", true));
+//        lobby.updatePlayer(1, new Player("Tom", false));
+//        lobby.updatePlayer(2, new Player("Romano", false));
+//        lobby.updatePlayer(3, new Player("Daniel", true));
+//
+//        ArrayList<Boolean> booleans = lobby.getPlayerReadyToStart();
+//
+//        assertThat(booleans, is(expectedBooleans));
+//    }
 }

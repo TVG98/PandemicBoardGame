@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class GiveShareView implements GameObserver {
     Stage primaryStage;
@@ -236,11 +237,11 @@ public class GiveShareView implements GameObserver {
 
     @Override
     public void update(GameObservable observable) {
-        Player[] playersArr = observable.getPlayers();
+        List<Player> players = observable.getPlayers();
 
         int index = 0;
 
-        for (Player player : playersArr)
+        for (Player player : players)
         {
             if (player != null)
             {
@@ -255,7 +256,7 @@ public class GiveShareView implements GameObserver {
             playerButtons.get(i).setStyle("-fx-background-color:transparent");
         }
 
-        for (Player player : playersArr)
+        for (Player player : players)
         {
             if (player.getPlayerName().equals(this.selectedPlayer))
             {
