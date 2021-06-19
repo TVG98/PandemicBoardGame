@@ -14,13 +14,13 @@ public class Gameboard implements GameBoardObservable {
     private List<GameBoardObserver> observers = new ArrayList<>();
     private final String PATH_TO_CONNECTED_CITIES = "src/main/connectedCities.txt";
 
-    private List<City> cities; // can change
-    private List<Cure> CURES = Arrays.asList(new Cure(VirusType.BLUE),
+    private List<City> cities;
+    private List<Cure> cures = Arrays.asList(new Cure(VirusType.BLUE),
             new Cure(VirusType.YELLOW),
             new Cure(VirusType.BLACK),
             new Cure(VirusType.RED));
 
-    private List<Virus> VIRUSES = Arrays.asList(new Virus(VirusType.BLUE),
+    private List<Virus> viruses = Arrays.asList(new Virus(VirusType.BLUE),
             new Virus(VirusType.YELLOW),
             new Virus(VirusType.BLACK),
             new Virus(VirusType.RED));
@@ -35,7 +35,7 @@ public class Gameboard implements GameBoardObservable {
     private int drawnEpidemicCards = 0;
 
     private ArrayList<City> citiesWithResearchStations;
-    private final ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
+    private ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
     private final List<Integer> INFECTION_RATES = Arrays.asList(2, 2, 2, 3, 3, 4, 4);
 
     public Gameboard() {
@@ -44,6 +44,14 @@ public class Gameboard implements GameBoardObservable {
         infectionStack = initializeInfectionCardStack();
         citiesWithResearchStations = createCitiesWithResearchStation();
         playerStack = initializePlayerCardStack();
+    }
+
+    public ArrayList<City> getCitiesThatHadOutbreak() {
+        return citiesThatHadOutbreak;
+    }
+
+    public void setCitiesThatHadOutbreak(ArrayList<City> citiesThatHadOutbreak) {
+        this.citiesThatHadOutbreak = citiesThatHadOutbreak;
     }
 
     public void makeCompleteGameBoard() {
@@ -64,8 +72,8 @@ public class Gameboard implements GameBoardObservable {
         this.citiesWithResearchStations = citiesWithResearchStations;
     }
 
-    public void setCURES(List<Cure> CURES) {
-        this.CURES = CURES;
+    public void setCures(List<Cure> cures) {
+        this.cures = cures;
     }
 
     public void setDrawnEpidemicCards(int drawnEpidemicCards) {
@@ -96,8 +104,8 @@ public class Gameboard implements GameBoardObservable {
         this.playerStack = playerStack;
     }
 
-    public void setVIRUSES(List<Virus> viruses) {
-        this.VIRUSES = viruses;
+    public void setViruses(List<Virus> viruses) {
+        this.viruses = viruses;
     }
 
     private void initializeCities() {
@@ -133,11 +141,11 @@ public class Gameboard implements GameBoardObservable {
         int virusIndex = 0;
 
         for (int i = 0; i < cityNames.length; i++) {
-            if (i % (cityNames.length/ VIRUSES.size()) == 0) {
+            if (i % (cityNames.length/ viruses.size()) == 0) {
                 virusIndex++;
             }
 
-            VirusType virusType = VIRUSES.get(virusIndex-1).getType();
+            VirusType virusType = viruses.get(virusIndex-1).getVirusType();
             cities.set(i, new City(cityNames[i], virusType));
         }
     }
@@ -244,7 +252,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
-        for(Cure cure : CURES) {
+        for(Cure cure : cures) {
             if(cure.getType() == virusType) {
                 return cure;
             }
@@ -352,8 +360,8 @@ public class Gameboard implements GameBoardObservable {
     }
 
     public Virus getVirusByType(VirusType type) throws VirusNotFoundException {
-        for (Virus virus : VIRUSES) {
-            if (virus.getType().equals(type)) {
+        for (Virus virus : viruses) {
+            if (virus.getVirusType().equals(type)) {
                 return virus;
             }
         }
@@ -368,12 +376,12 @@ public class Gameboard implements GameBoardObservable {
 
     @Override
     public List<Cure> getCures() {
-        return CURES;
+        return cures;
     }
 
     @Override
     public List<Virus> getViruses() {
-        return VIRUSES;
+        return viruses;
     }
 
     @Override
@@ -521,7 +529,7 @@ public class Gameboard implements GameBoardObservable {
     public ArrayList<Cure> getCuredDiseases() {
         ArrayList<Cure> curedDiseases = new ArrayList<>();
 
-        for (Cure cure : CURES) {
+        for (Cure cure : cures) {
             if (cure.getCureState().equals(CureState.CURED)) {
                 curedDiseases.add(cure);
             }
@@ -532,7 +540,7 @@ public class Gameboard implements GameBoardObservable {
 
     public void setCuredDiseases(ArrayList<Cure> curedDiseases) {
         for (Cure curedDisease : curedDiseases) {
-            for (Cure cure : CURES) {
+            for (Cure cure : cures) {
                 if (cure.getType().equals(curedDisease.getType())) {
                     cure.setCureState(CureState.CURED);
                 }
@@ -554,7 +562,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     public boolean lossByCubeAmount() {
-        for (Virus virus : VIRUSES) {
+        for (Virus virus : viruses) {
             if (virus.getCubeAmount() < 0) {
                 return true;
             }
