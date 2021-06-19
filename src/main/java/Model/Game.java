@@ -26,7 +26,10 @@ public class Game implements GameObservable {
             currentPlayerIndex++;
             currentPlayer = players.get(currentPlayerIndex % players.size());
         }
-        //todo update currentplayerindex && to server
+    }
+
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
     }
 
     public void setLost() {

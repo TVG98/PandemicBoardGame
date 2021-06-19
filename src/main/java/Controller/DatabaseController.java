@@ -52,10 +52,14 @@ public class DatabaseController {
         if (!data.isGameStarted()) {
             LobbyController.getInstance().update(data);
         } else {
-            GameController.getInstance().updatePlayersInGame(data);
+            GameController.getInstance().update(data);
         }
 
         GameBoardController.getInstance().update(data);
+    }
+
+    public void updateIndexInDatabase(int index) {
+        database.updateIndex(index);
     }
 
     public void updateGameBoardInDatabase(Gameboard gameboard) {

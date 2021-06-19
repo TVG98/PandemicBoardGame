@@ -123,6 +123,8 @@ public class GameController {
 
     public void changeTurn() {
         game.nextTurn();
+        int currentPlayerIndex = game.getCurrentPlayerIndex();
+        updateServer(currentPlayerIndex);
     }
 
     public void checkWin() {
@@ -333,8 +335,9 @@ public class GameController {
         return playerController.getYourPlayerName().equals(currentPlayerName);
     }
 
-    public synchronized void updatePlayersInGame(DatabaseData data) {
+    public synchronized void update(DatabaseData data) {
         game.updatePlayers(data.getPlayers());
+        game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
     }
 
     public void registerPlayerObserver(GameObserver observer) {
@@ -351,5 +354,9 @@ public class GameController {
 
     public void notifyGameObserver() {
         game.notifyAllObservers();
+    }
+
+    public void updateServer(int index) {
+        databaseController.updateIndexInDatabase(index);
     }
 }
