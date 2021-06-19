@@ -1,5 +1,8 @@
 package Model;
 
-public interface PlayerCard {
-    String getName();
+public abstract class PlayerCard {
+
+    public PlayerCard() { }
+
+    public abstract String getName();
 }

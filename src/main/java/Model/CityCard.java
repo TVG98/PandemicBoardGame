@@ -1,6 +1,6 @@
 package Model;
 
-public class CityCard implements PlayerCard {
+public class CityCard extends PlayerCard {
 
     private final City city;
 
