@@ -32,6 +32,7 @@ public class CharterFlightView implements GameObserver {
 
     public CharterFlightView(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        System.out.println(GameController.getInstance());
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDriveViewBorderPane());
 

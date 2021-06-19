@@ -137,5 +137,6 @@ public class PlayerController {
 
     private void notifyGameObserver() {
         GameController.getInstance().notifyGameObserver();
+        System.out.println(GameController.getInstance());
     }
 }
