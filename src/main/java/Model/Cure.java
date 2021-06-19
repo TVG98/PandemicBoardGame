@@ -25,8 +25,4 @@ public class Cure {
     public void setCureState(CureState cureState) {
         this.cureState = cureState;
     }
-
-    public VirusType getType() {
-        return virusType;
-    }
 }
