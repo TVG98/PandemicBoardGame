@@ -130,25 +130,6 @@ public class LobbyController {
         return playerName;
     }
 
-    public synchronized void updatePlayersFromLobbyDoc(DatabaseData data) {
-        lobby.setJoinable(data.isJoinable());
-        lobby.setPlayers(data.getPlayers());
-    }
-
-//    private void tryToUpdatePlayerInLobby(DocumentSnapshot snapshot, int i) {
-//        Object object = snapshot.get("Player" + (i + 1));
-//
-//        if (object != null) {
-//            updatePlayerInLobby(object, i);
-//        }
-//    }
-//
-//    private void updatePlayerInLobby(Object object, int i) {
-//        String playerString = object.toString();
-//        Player player = playerController.createPlayerFromDocData(playerString);
-//        lobby.updatePlayer(i, player);
-//    }
-
     public Player getCurrentPlayer() throws PlayerNotFoundException {
         List<Player> players = lobby.getPlayers();
 
@@ -184,8 +165,9 @@ public class LobbyController {
         return lobby;
     }
 
-    public void update(DatabaseData data) {
-        updatePlayersFromLobbyDoc(data);
+    public synchronized void update(DatabaseData data) {
+        lobby.setJoinable(data.isJoinable());
+        lobby.setPlayers(data.getPlayers());
     }
 
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {
