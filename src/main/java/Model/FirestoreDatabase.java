@@ -86,7 +86,7 @@ public class FirestoreDatabase {
         }
     }
 
-    public void updatePlayerInServer(Player player) {
+    public void makePlayerInServer(Player player) {
         try {
             int index = getServerPlayerIndex(player.getPlayerName());
             data.setPlayer(index, player);
