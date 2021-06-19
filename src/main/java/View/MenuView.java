@@ -1,6 +1,7 @@
 package View;
 
 import Controller.SoundController;
+import Model.Sound;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -86,10 +87,12 @@ public class MenuView {
     }
 
     private void startButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         StartLobbyView view = new StartLobbyView(primaryStage);
     }
 
     private void optionsButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         OptionsView view = new OptionsView(primaryStage);
     }
 }

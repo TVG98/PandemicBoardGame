@@ -1,5 +1,7 @@
 package View;
 
+import Controller.SoundController;
+import Model.Sound;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +23,7 @@ public class InGameMenuView {
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
+    SoundController soundController = SoundController.getInstance();
 
     public InGameMenuView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -98,10 +101,12 @@ public class InGameMenuView {
     }
 
     private void closeMenuButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void backToMainMenuButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         MenuView view = new MenuView(primaryStage);
     }
 }

@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Model.City;
 import Model.CityCard;
+import Model.Sound;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObservable;
@@ -283,20 +284,24 @@ public class CureView implements GameObserver, GameBoardObserver {
 
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void cureButtonHandler() {
-        // TODO: behaviour implementeren
+        gameController.playSoundEffect(Sound.FINDCURE);
+        gameController.handleFindCure();
         GameView view = new GameView(primaryStage);
     }
 
     private void resetButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedCities.clear();
         selectedCityText.setText("You haven't selected any city card to discard");
     }
 
     private void getPlayerCityCardsButtonHandler(Button button) {
+        gameController.playSoundEffect(Sound.BUTTON);
         if (selectedCities.size() < 5) {
             String allSelectedCities = "";
             for (String selectedCity : selectedCities) {
@@ -310,6 +315,7 @@ public class CureView implements GameObserver, GameBoardObserver {
 
     private void getVirusButtonHandler(Button button)
     {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedVirusToCure = button.getText();
         selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
     }
@@ -339,8 +345,6 @@ public class CureView implements GameObserver, GameBoardObserver {
     public void update(GameObservable gameObservable) {
         createUpdatedBorderPane(gameObservable);
     }
-
-
 
     @Override
     public void update(GameBoardObservable gameBoardObservable) {

@@ -20,9 +20,11 @@ public class GameController {
     private final GameBoardController gameBoardController;
     private final LobbyController lobbyController;
     private final DatabaseController databaseController;
+    private final SoundController soundController;
     private boolean playersUpdated = false;
 
     private GameController() {
+        soundController = SoundController.getInstance();
         lobbyController = LobbyController.getInstance();
         lobbyController.setServerLobbyNotJoinable();
         databaseController = DatabaseController.getInstance();
@@ -357,6 +359,14 @@ public class GameController {
             playerController.removeCard(card, player1);
             playerController.addCard(card, player2);
         }
+    }
+
+    public void playSoundEffect(Sound sound) {
+        soundController.playSound(sound);
+    }
+
+    public void playMusic(Sound music) {
+        soundController.playSound(music);
     }
 
     public Player getCurrentPlayer() {

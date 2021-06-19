@@ -1,53 +1,90 @@
 package Controller;
 
 import Model.GameMusic;
+import Model.GameSounds;
+import Model.Sound;
 import Model.SoundEffects;
 
 public class SoundController {
 
     static SoundController soundController;
 
+    private final int MAXVOLUME = 100;
+    private final float TRANSLATION = 2f;
+
     private float masterVolume = translateVolume(100);
     private float sfxVolume = masterVolume;
     private float musicVolume = masterVolume;
     private float uiVolume = masterVolume;
+    private float[] volumes = new float[] {100, 100, 100, 100};
+
 
     SoundEffects sfx = new SoundEffects(sfxVolume);
     GameMusic music = new GameMusic(musicVolume);
 
-    private SoundController() {}
+    private SoundController() {
+        playMusic(Sound.MAINMUSIC);
+    }
 
     public static SoundController getInstance() {
         if (soundController == null) {
             soundController = new SoundController();
-            //soundController.playMusic();
         }
 
         return soundController;
     }
 
-    private void playMusic() {
-        music.playSound(0);
+    public void playSound(Sound sound) {
+        sfx.playSound(sound);
+    }
+
+    private void playMusic(Sound sound) {
+        music.playSound(sound);
     }
 
     private float translateVolume(float volumePercentage) {
-        return (100 - volumePercentage) * -1;
+        return ((MAXVOLUME - volumePercentage) * -1)/TRANSLATION;
+    }
+
+    private float translateVolumeWithMasterVolume(float volumePercentage) {
+        float volume = translateVolume(volumePercentage) + masterVolume;
+        if(volume < -80.0f) {
+            return -80.0f;
+        } else {
+            return volume;
+        }
+    }
+
+    private float setVolumes(float volume) {
+        volume = (volume * TRANSLATION) + MAXVOLUME;
+        return volume;
     }
 
     public void setMasterVolume(float volume) {
         this.masterVolume = translateVolume(volume);
+        setSfxVolume(volumes[1]);
+        setMusicVolume(volumes[2]);
+        setUiVolume(volumes[3]);
+        volumes[0] = volume;
     }
 
     public void setSfxVolume(float volume) {
-        this.sfxVolume = translateVolume(volume) + masterVolume;
+        this.sfxVolume = translateVolumeWithMasterVolume(volume);
+        volumes[1] = volume;
     }
 
     public void setMusicVolume(float volume) {
-        this.musicVolume = translateVolume(volume) + masterVolume;
+        this.musicVolume = translateVolumeWithMasterVolume(volume);
         music.setVolume(musicVolume);
+        volumes[2] = volume;
     }
 
     public void setUiVolume(float volume) {
-        this.uiVolume = translateVolume(volume) + masterVolume;
+        this.uiVolume = translateVolumeWithMasterVolume(volume);
+        volumes[3] = volume;
+    }
+
+    public float[] getVolumes() {
+        return volumes;
     }
 }

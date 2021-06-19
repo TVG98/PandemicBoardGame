@@ -4,6 +4,7 @@ import Controller.GameController;
 import Model.City;
 import Model.Connection;
 import Model.Player;
+import Model.Sound;
 import Observers.GameBoardObservable;
 import Observers.GameObservable;
 import Observers.GameObserver;
@@ -305,50 +306,62 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     private void openMenuButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         InGameMenuView view = new InGameMenuView(primaryStage);
     }
 
     private void howToPlayButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameInstructionsView view = new GameInstructionsView(primaryStage);
     }
 
     private void driveButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         DriveView view = new DriveView(primaryStage);
     }
 
     private void directFlightButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         DirectFlightView view = new DirectFlightView(primaryStage);
     }
 
     private void charterFlightButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         CharterFlightView view = new CharterFlightView(primaryStage);
     }
 
     private void shuttleFlightButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         ShuttleFlightView view = new ShuttleFlightView(primaryStage);
     }
 
     private void treatButtonHandler() {
-
+        gameController.playSoundEffect(Sound.TREATDISEASE);
+        gameController.handleTreatDisease();
     }
 
     private void cureButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         CureView view = new CureView(primaryStage);
     }
 
     private void buildButtonHandler() {
-
+        gameController.playSoundEffect(Sound.BUILD);
+        gameController.handleBuildResearchStation();
     }
 
     private void takeShareButtonHandler(){
+        gameController.playSoundEffect(Sound.BUTTON);
         TakeSharePlayerView view = new TakeSharePlayerView(primaryStage);
     }
 
     private void giveShareButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GiveShareView view = new GiveShareView(primaryStage);
     }
 
     private void endTurnButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         System.out.println("ending turn!");
         gameController.turn();
     }

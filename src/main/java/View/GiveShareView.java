@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Model.Player;
 import Model.PlayerCard;
+import Model.Sound;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import javafx.geometry.Pos;
@@ -212,6 +213,7 @@ public class GiveShareView implements GameObserver {
 
     private void getPlayerButtonHandler(Button button)
     {
+        gameController.playSoundEffect(Sound.CARDDRAW);
         selectedPlayerText.setText("You selected " + button.getText() + " to give a card to");
         selectedPlayer = button.getText();
         gameController.handleShareKnowledge(selectedPlayer, true);
@@ -219,6 +221,7 @@ public class GiveShareView implements GameObserver {
 
     private void getCitiesButtonHandler(Button button)
     {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedCityText.setText("You selected the city card of " + button.getText() + " to give away");
         selectedCity = button.getText();
     }

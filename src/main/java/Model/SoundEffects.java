@@ -6,37 +6,34 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.io.File;
+import java.util.Locale;
 
 public class SoundEffects implements GameSounds {
-    private float volume; // Reduce volume by 10 decibels.
+    private float volume;
 
     public SoundEffects(float volume) {
         this.volume = volume;
     }
 
-    @Override
-    public String getSoundEffectPath(int soundNumber) throws SoundNotFoundException {
-        String soundPath = "src/main/media/";
 
-        switch (soundNumber) {
-            case 0:
-                soundPath += "menusound.wav";
-                break;
-            case 1:
-                soundPath += "etc.";
-                break;
-            default:
-                throw new SoundNotFoundException("SoundEffect number does not exist");
+    private String getSoundEffectPath(Sound soundEffect) throws SoundNotFoundException {
+        String soundPath = "src/main/media/GameMusic/";
+
+        try {
+            soundPath += soundEffect.name().toLowerCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SoundNotFoundException("SoundEffect number does not exist");
         }
 
-        return soundPath;
+        return soundPath + ".wav";
     }
 
     @Override
-    public void playSound(int soundEffectNumber) {
+    public void playSound(Sound soundEffect) {
 
         try {
-            String soundPath = getSoundEffectPath(soundEffectNumber);
+            String soundPath = getSoundEffectPath(soundEffect);
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(soundPath)));
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);

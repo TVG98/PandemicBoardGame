@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Model.City;
+import Model.Sound;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObservable;
@@ -217,10 +218,12 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         gameController.handleShuttleFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }

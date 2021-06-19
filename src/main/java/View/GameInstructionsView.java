@@ -1,5 +1,7 @@
 package View;
 
+import Controller.SoundController;
+import Model.Sound;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ public class GameInstructionsView {
     final String pathToBackground = "src/main/media/InstructionsBackgroundResized.jpg";
     final double width = 1600;
     final double height = 900;
+    SoundController soundController = SoundController.getInstance();
 
     public GameInstructionsView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -129,6 +132,7 @@ public class GameInstructionsView {
     }
 
     private VBox makeObjectOfTheGameWindow() {
+        soundController.playSound(Sound.BUTTON);
         Text title = new Text("Object of the game");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -149,6 +153,7 @@ public class GameInstructionsView {
     }
 
     private VBox makeGameplayWindow() {
+        soundController.playSound(Sound.BUTTON);
         Text title = new Text("Gameplay");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -173,6 +178,7 @@ public class GameInstructionsView {
     }
 
     private VBox makeActionsWindow() {
+        soundController.playSound(Sound.BUTTON);
         Text title = new Text("Actions");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -196,6 +202,7 @@ public class GameInstructionsView {
     };
 
     private VBox makeWinWindow() {
+        soundController.playSound(Sound.BUTTON);
         Text title = new Text("How to win!");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -219,6 +226,7 @@ public class GameInstructionsView {
     }
 
     private VBox makeDefeatWindow() {
+        soundController.playSound(Sound.BUTTON);
         Text title = new Text("Defeat");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -244,6 +252,7 @@ public class GameInstructionsView {
     }
 
     private VBox makeRolesWindow() {
+        soundController.playSound(Sound.BUTTON);
         Text title = new Text("Roles");
         title.setFont(new Font("Castellar", 50));
         title.setFill(Color.WHITE);
@@ -371,6 +380,7 @@ public class GameInstructionsView {
     }
 
     private void backToGameButtonHandler(){
+        soundController.playSound(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 }

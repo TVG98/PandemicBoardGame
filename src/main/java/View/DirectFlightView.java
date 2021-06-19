@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Model.CityCard;
+import Model.Sound;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import javafx.geometry.Pos;
@@ -227,15 +228,18 @@ public class DirectFlightView implements GameObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
+        gameController.playSoundEffect(Sound.AIRPLANE);
         gameController.handleDirectFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 
     private void getCityButtonHandler(Button button) {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }

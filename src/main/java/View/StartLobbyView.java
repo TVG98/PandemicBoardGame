@@ -210,8 +210,7 @@ public class StartLobbyView {
         }
     }
 
-    private void createButtonHandler()
-    {
+    private void createButtonHandler() {
         lobbyController.makeLobby(inputName.getText());
         InLobbyView view = new InLobbyView(primaryStage);
     }
