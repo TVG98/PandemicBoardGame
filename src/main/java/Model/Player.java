@@ -100,8 +100,8 @@ public class Player {
         return playerName;
     }
 
-    public boolean actionsPlayed() {
-        return actions <= 0;
+    public boolean hasActionsLeft() {
+        return actions > 0;
     }
 
     public void resetActions() {

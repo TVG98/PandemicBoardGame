@@ -2,11 +2,13 @@ package Controller;
 
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
+import Exceptions.GameLostException;
 import Exceptions.PlayerNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
+import java.util.List;
 import java.util.Random;
 
 public class GameController {
@@ -94,33 +96,35 @@ public class GameController {
     }
 
     public void turn() {
-        // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
-        // ik ook niet man
-        // nice xD
-        // helemaal mooi
+        if (!playerController.hasActionsLeft(getCurrentPlayer()) && itIsYourTurn()) {
+            try {
+                gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
+                gameBoardController.handleInfectionCardDraw();
+                playerController.endTurn(getCurrentPlayer());
+                checkWin();
+                changeTurn();
+            } catch (GameLostException gle) {
+                game.setLost();
+            }
 
-        if (getCurrentPlayer().actionsPlayed() && itIsYourTurn()) {  // Zodra de acties gespeeld zijn
-            gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
-            gameBoardController.handleInfectionCardDraw();
-            getCurrentPlayer().endTurn();
-            changeTurn();
         }
+    }
+
+    private int getPlayerAmount() {
+        List<Player> players = game.getPlayers();
+        int size = 0;
+
+        for (Player player : players) {
+            size += (player == null) ? 0 : 1;
+        }
+
+        return size;
     }
 
     public void changeTurn() {
         game.nextTurn();
     }
 
-    public void checkLoss() {
-        if (gameBoardController.lossByCubeAmount()) {
-            game.setLost();
-        } else if (gameBoardController.lossByEmptyPlayerCardStack()) {
-            game.setLost();
-        } else if (gameBoardController.lossByOutbreakCounter()) {
-            game.setLost();
-        }
-    }
-    // Misschien dat we de checkLoss en de checkWin method kunnen samenvoegen
     public void checkWin() {
         if (gameBoardController.winByCures()) {
             game.setWon();

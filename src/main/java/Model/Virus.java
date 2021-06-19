@@ -1,5 +1,7 @@
 package Model;
 
+import Exceptions.GameLostException;
+
 public class Virus {
     private VirusType virusType;
     private final int MAX_CUBE_AMOUNT = 24;
@@ -32,7 +34,11 @@ public class Virus {
         cubeAmount = Math.min(cubeAmount + amount, MAX_CUBE_AMOUNT);
     }
 
-    public void decreaseCubeAmount(int amount) {
-        cubeAmount = Math.max(cubeAmount - amount, 0);
+    public void decreaseCubeAmount(int amount) throws GameLostException {
+        cubeAmount -= amount;
+
+        if (cubeAmount < 0) {
+            throw new GameLostException("U lost: All the cubes are on the board!");
+        }
     }
 }

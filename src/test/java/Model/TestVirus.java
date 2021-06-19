@@ -55,15 +55,4 @@ public class TestVirus {
 
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
-
-    @Test
-    public void Should_Return0CubesWhenCalledDecreaseCubesIsCalledWhen0CubesAreExisting() {
-        virus.decreaseCubeAmount(24);
-        virus.decreaseCubeAmount(1);
-
-        int expectedCubeAmount = 0;
-        int cubeAmount = virus.getCubeAmount();
-
-        assertThat(cubeAmount, is(expectedCubeAmount));
-    }
 }

@@ -45,15 +45,6 @@ public class TestGame {
     }
 
     @Test
-    public void Should_SayThatPlayerSizeIsFour() {
-        int expectedPlayerAmount = 4;
-
-        int playerAmount = game.getPlayerAmount();
-
-        assertThat(playerAmount, is(expectedPlayerAmount));
-    }
-
-    @Test
     public void Should_SayCurrentPlayerTurnIsPlayerOne() {
         String playerNameOne = "Thimo";
 

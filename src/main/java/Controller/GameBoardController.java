@@ -3,6 +3,7 @@ package Controller;
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
+import Exceptions.GameLostException;
 import Model.*;
 import Observers.GameBoardObserver;
 
@@ -83,8 +84,8 @@ public class GameBoardController {
         updateServer();
     }
 
-    public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
-        return playerController.hasRole(currrentPlayer, Role.OPERATIONSEXPERT);
+    public boolean canShuttleFlightToAnyCity(Player currentPlayer) {
+        return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
     public void setShuttleFlightBehavior(ShuttleFlightBehavior shuttleFlightBehavior) {
@@ -110,7 +111,7 @@ public class GameBoardController {
         }
     }
 
-    public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) {
+    public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) throws GameLostException {
         for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
         }
@@ -123,17 +124,17 @@ public class GameBoardController {
         updateServer();
     }
 
-    public void handleInfectionCardDraw() {
+    public void handleInfectionCardDraw() throws GameLostException {
         gameBoard.handleInfectionCardDraw(1);
         updateServer();
     }
 
-    public void handleInfectionCardDraw(int cubeAmount) {
+    public void handleInfectionCardDraw(int cubeAmount) throws GameLostException {
         gameBoard.handleInfectionCardDraw(cubeAmount);
         updateServer();
     }
 
-    public void handleOutbreak(City infectedCity) {
+    public void handleOutbreak(City infectedCity) throws GameLostException {
         gameBoard.handleOutbreak(infectedCity);
         updateServer();
     }

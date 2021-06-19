@@ -49,10 +49,6 @@ public class Game implements GameObservable {
         return playersInCity;
     }
 
-    public int getPlayerAmount() {
-        return players.size();
-    }
-
     public void updatePlayers(List<Player> players) {
         this.players = players;
         notifyAllObservers();
