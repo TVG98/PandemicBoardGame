@@ -2,15 +2,14 @@ package Controller;
 
 import Controller.Behavior.*;
 import Exceptions.CityNotFoundException;
+import Exceptions.GameLostException;
 import Exceptions.PlayerNotFoundException;
 import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
-import com.google.cloud.firestore.DocumentSnapshot;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import java.util.Timer;
 
 public class GameController {
     static GameController gameController;
@@ -43,7 +42,7 @@ public class GameController {
     }
 
     private boolean localPlayerIsPlayerOne() {
-        String localPlayerName = playerController.getCurrentPlayerName();
+        String localPlayerName = playerController.getYourPlayerName();
         String firstPlayerName = game.getPlayers().get(0).getPlayerName();
         return localPlayerName.equals(firstPlayerName);
     }
@@ -97,34 +96,36 @@ public class GameController {
     }
 
     public void turn() {
-        // Ik weet niet zo goed hoe we de acties gaan vormgeven in een beurt.
-        // ik ook niet man
-        // nice xD
-        // helemaal mooi
-
-        if (getCurrentPlayer().actionsPlayed()) {  // Zodra de acties gespeeld zijn
-            gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), game.getPlayerAmount());  // Pak twee spelerkaarten
-            gameBoardController.handleInfectionCardDraw();
-            getCurrentPlayer().endTurn();
-            changeTurn();
+        if (itIsYourTurn()) {
+            try {
+                gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
+                gameBoardController.handleInfectionCardDraw();
+                playerController.endTurn(getCurrentPlayer());
+                checkWin();
+                changeTurn();
+            } catch (GameLostException gle) {
+                game.setLost();
+            }
         }
-
     }
 
-    public void changeTurn(){
+    private int getPlayerAmount() {
+        List<Player> players = game.getPlayers();
+        int size = 0;
+
+        for (Player player : players) {
+            size += (player == null) ? 0 : 1;
+        }
+
+        return size;
+    }
+
+    public void changeTurn() {
         game.nextTurn();
+        int currentPlayerIndex = game.getCurrentPlayerIndex();
+        updateServer(currentPlayerIndex);
     }
 
-    public void checkLoss() {
-        if (gameBoardController.lossByCubeAmount()) {
-            game.setLost();
-        } else if (gameBoardController.lossByEmptyPlayerCardStack()) {
-            game.setLost();
-        } else if (gameBoardController.lossByOutbreakCounter()) {
-            game.setLost();
-        }
-    }
-    // Misschien dat we de checkLoss en de checkWin method kunnen samenvoegen
     public void checkWin() {
         if (gameBoardController.winByCures()) {
             game.setWon();
@@ -132,102 +133,128 @@ public class GameController {
     }
 
     public void handleDrive(String cityName) {
-        try {
-            Player currentPlayer = getCurrentPlayer();
-            City city = gameBoardController.getCity(cityName);
-            setDriveBehavior();
-            gameBoardController.handleDrive(currentPlayer, city);
-            databaseController.updatePlayerInServer(currentPlayer);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (itIsYourTurn() && actionsLeft()) {
+            try {
+                Player currentPlayer = getCurrentPlayer();
+                City city = gameBoardController.getCity(cityName);
+                setDriveBehavior();
+                gameBoardController.handleDrive(currentPlayer, city);
+                databaseController.updatePlayerInServer(currentPlayer);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
+    private boolean actionsLeft() {
+        return playerController.hasActionsLeft(getCurrentPlayer());
+    }
+
     private void setDriveBehavior() {
-        gameBoardController.setDriveBehavior(new DriveBehaviorNormal());
+        if (itIsYourTurn() && actionsLeft()) {
+            gameBoardController.setDriveBehavior(new DriveBehaviorNormal());
+        }
     }
 
     public void handleDirectFlight(String cityName) {
-        try {
-            City city = gameBoardController.getCity(cityName);
-            Player currentPlayer = getCurrentPlayer();
-            gameBoardController.handleDirectFlight(currentPlayer, city);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (itIsYourTurn() && actionsLeft()) {
+            try {
+                City city = gameBoardController.getCity(cityName);
+                Player currentPlayer = getCurrentPlayer();
+                gameBoardController.handleDirectFlight(currentPlayer, city);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void setDirectFlightBehavior() {
-        gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
+        if (itIsYourTurn() && actionsLeft()) {
+            gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
+        }
     }
 
     public void handleCharterFlight(String cityName) {
-        try {
-            City city = gameBoardController.getCity(cityName);
-            Player currentPlayer = getCurrentPlayer();
-            setCharterFlightBehavior();
-            gameBoardController.handleCharterFlight(currentPlayer, city);
-        } catch(Exception e) {
-            e.printStackTrace();
+        if (itIsYourTurn() && actionsLeft()) {
+            try {
+                City city = gameBoardController.getCity(cityName);
+                Player currentPlayer = getCurrentPlayer();
+                setCharterFlightBehavior();
+                gameBoardController.handleCharterFlight(currentPlayer, city);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void setCharterFlightBehavior() {
-        gameBoardController.setCharterFlightBehavior(new CharterFlightBehaviorNormal());
+        if (itIsYourTurn() && actionsLeft()) {
+            gameBoardController.setCharterFlightBehavior(new CharterFlightBehaviorNormal());
+        }
     }
 
     public void handleShuttleFlight(String cityName) {
-        try {
-            City city = gameBoardController.getCity(cityName);
-            Player currentPlayer = getCurrentPlayer();
-            setShuttleFlightBehavior(currentPlayer);
-            gameBoardController.handleShuttleFlight(currentPlayer, city);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (itIsYourTurn() && actionsLeft()) {
+            try {
+                City city = gameBoardController.getCity(cityName);
+                Player currentPlayer = getCurrentPlayer();
+                setShuttleFlightBehavior(currentPlayer);
+                gameBoardController.handleShuttleFlight(currentPlayer, city);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void setShuttleFlightBehavior(Player currentPlayer) {
-        if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
-            gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
-        } else {
-            gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorNormal());
+        if (itIsYourTurn() && actionsLeft()) {
+            if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
+                gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorToAnyCity());
+            } else {
+                gameBoardController.setShuttleFlightBehavior(new ShuttleFlightBehaviorNormal());
+            }
         }
     }
 
     public void handleBuildResearchStation() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        setBuildResearchBehavior(currentPlayer);
-        if (gameBoardController.canAddResearchStation()) {
-            gameBoardController.handleBuildResearchStation(currentPlayer, currentCity);
+        if (itIsYourTurn() && actionsLeft()) {
+            Player currentPlayer = getCurrentPlayer();
+            City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+            setBuildResearchBehavior(currentPlayer);
+            if (gameBoardController.canAddResearchStation()) {
+                gameBoardController.handleBuildResearchStation(currentPlayer, currentCity);
+            }
         }
     }
 
     private void setBuildResearchBehavior(Player currentPlayer) {
-        if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
-            gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
-        } else {
-            gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationNormal());
+        if (itIsYourTurn() && actionsLeft()) {
+            if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
+                gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationWithoutCard());
+            } else {
+                gameBoardController.setBuildResearchStationBehavior(new BuildResearchStationNormal());
+            }
         }
     }
 
     public void handleShareKnowledge(String playerName, boolean giveCard) {
-        Player givingPlayer = null;
-        Player receivingPlayer = null;
+        if (itIsYourTurn() && actionsLeft()) {
+            Player givingPlayer = null;
+            Player receivingPlayer = null;
 
-        try {
-            if (giveCard) {
-                givingPlayer = getCurrentPlayer();
-                receivingPlayer = getPlayerByName(playerName);
-            } else {
-                givingPlayer = getPlayerByName(playerName);
-                receivingPlayer = getCurrentPlayer();
+            try {
+                if (giveCard) {
+                    givingPlayer = getCurrentPlayer();
+                    receivingPlayer = getPlayerByName(playerName);
+                } else {
+                    givingPlayer = getPlayerByName(playerName);
+                    receivingPlayer = getCurrentPlayer();
+                }
+                setShareKnowledgeBehavior(givingPlayer, receivingPlayer);
+                gameBoardController.handleShareKnowledge(givingPlayer, receivingPlayer);
+            } catch (PlayerNotFoundException pnfe) {
+                pnfe.printStackTrace();
             }
-            setShareKnowledgeBehavior(givingPlayer, receivingPlayer);
-            gameBoardController.handleShareKnowledge(givingPlayer, receivingPlayer);
-        } catch (PlayerNotFoundException pnfe) {
-            pnfe.printStackTrace();
         }
     }
 
@@ -242,42 +269,52 @@ public class GameController {
     }
 
     private void setShareKnowledgeBehavior(Player givingPlayer, Player receivingPlayer) {
-        if(gameBoardController.canShareAnyCard(givingPlayer, receivingPlayer)) {
-            gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnAnyCityBehavior());
-        } else {
-            gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnSameCityBehavior());
+        if (itIsYourTurn() && actionsLeft()) {
+            if(gameBoardController.canShareAnyCard(givingPlayer, receivingPlayer)) {
+                gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnAnyCityBehavior());
+            } else {
+                gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnSameCityBehavior());
+            }
         }
     }
 
     public void handleTreatDisease() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        setTreatDiseaseBehavior(currentPlayer, currentCity);
-        gameBoardController.handleTreatDisease(currentPlayer, currentCity);
+        if (itIsYourTurn() && actionsLeft()) {
+            Player currentPlayer = getCurrentPlayer();
+            City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+            setTreatDiseaseBehavior(currentPlayer, currentCity);
+            gameBoardController.handleTreatDisease(currentPlayer, currentCity);
+        }
     }
 
     private void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
-        if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
-            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
-        } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
-            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubes());
-        } else {
-            gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseOneCube());
+        if (itIsYourTurn() && actionsLeft()) {
+            if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
+                gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubesWithoutActionDecrement());
+            } else if (gameBoardController.canRemoveAllCubes(currentPlayer, currentCity)){
+                gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseThreeCubes());
+            } else {
+                gameBoardController.setTreatDiseaseBehavior(new TreatDiseaseOneCube());
+            }
         }
     }
 
     public void handleFindCure() {
-        Player currentPlayer = getCurrentPlayer();
-        City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
-        setFindCureBehavior(currentPlayer);
-        gameBoardController.handleFindCure(currentPlayer, currentCity);
+        if (itIsYourTurn() && actionsLeft()) {
+            Player currentPlayer = getCurrentPlayer();
+            City currentCity = playerController.getPlayerCurrentCity(currentPlayer);
+            setFindCureBehavior(currentPlayer);
+            gameBoardController.handleFindCure(currentPlayer, currentCity);
+        }
     }
 
     private void setFindCureBehavior(Player currentPLayer) {
-        if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
-            gameBoardController.setFindCureBehavior(new FindCureWithFourCardsBehavior());
-        } else {
-            gameBoardController.setFindCureBehavior(new FindCureWithFiveCardsBehavior());
+        if (itIsYourTurn() && actionsLeft()) {
+            if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
+                gameBoardController.setFindCureBehavior(new FindCureWithFourCardsBehavior());
+            } else {
+                gameBoardController.setFindCureBehavior(new FindCureWithFiveCardsBehavior());
+            }
         }
     }
 
@@ -286,35 +323,25 @@ public class GameController {
     }
 
     public void handleGiveCard(PlayerCard card, Player player1, Player player2) {
-        playerController.removeCard(card, player1);
-        playerController.addCard(card, player2);
+        if (itIsYourTurn() && actionsLeft()) {
+            playerController.removeCard(card, player1);
+            playerController.addCard(card, player2);
+        }
     }
 
     public Player getCurrentPlayer() {
         return game.getCurrentPlayer();
     }
 
-    public synchronized void updatePlayersInGame(DatabaseData data) {
-        game.updatePlayers(data.getPlayers());
-//        for (int i = 0; i < 4; i++) {
-//            tryToUpdatePlayerInGame(data);
-//        }
+    private boolean itIsYourTurn() {
+        String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex()).getPlayerName();
+        return playerController.getYourPlayerName().equals(currentPlayerName);
     }
 
-//    private void tryToUpdatePlayerInGame(DatabaseData data, int i) {
-//        Object object = snapshot.get("Player" + (i + 1));
-//
-//        if (object != null) {
-//            updatePlayerInGame(object, i);
-//        }
-//
-//    }
-
-//    private void updatePlayerInGame(Object object, int i) {
-//        String playerString = object.toString();
-//        Player player = playerController.createPlayerFromDocData(playerString);
-//        game.updatePlayer(i, player);
-//    }
+    public synchronized void update(DatabaseData data) {
+        game.updatePlayers(data.getPlayers());
+        game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
+    }
 
     public void registerPlayerObserver(GameObserver observer) {
         game.register(observer);
@@ -330,5 +357,9 @@ public class GameController {
 
     public void notifyGameObserver() {
         game.notifyAllObservers();
+    }
+
+    public void updateServer(int index) {
+        databaseController.updateIndexInDatabase(index);
     }
 }

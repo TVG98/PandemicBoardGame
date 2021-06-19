@@ -5,6 +5,7 @@ import java.util.List;
 
 public class DatabaseData {
 
+    private int currentPlayerIndex = 0;
     private boolean GameStarted = false;
     private boolean Joinable = true;
     private List<Player> players = Arrays.asList(new Player[4]);
@@ -14,6 +15,14 @@ public class DatabaseData {
 
     public boolean isGameStarted() {
         return GameStarted;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
     }
 
     public void setGameStarted(boolean gameStarted) {

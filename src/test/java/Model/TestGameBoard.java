@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.CityNotFoundException;
+import Exceptions.GameLostException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class TestGameBoard {
     }
 
     @Test
-    public void Should_DecreasePlayerStackSizeByTwoIfTwoPlayerCardsAreTakenFromDeck() {
+    public void Should_DecreasePlayerStackSizeByTwoIfTwoPlayerCardsAreTakenFromDeck() throws GameLostException {
         gameboard.drawPlayerCard();
         gameboard.drawPlayerCard();
 

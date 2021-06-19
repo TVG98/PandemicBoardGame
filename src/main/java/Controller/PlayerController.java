@@ -80,6 +80,14 @@ public class PlayerController {
         return virusTypeHashMap;
     }
 
+    public boolean hasActionsLeft(Player player) {
+        return player.hasActionsLeft();
+    }
+
+    public void endTurn(Player player) {
+        player.endTurn();
+    }
+
     public void addCard(PlayerCard card, Player player) {
         player.addCardToHand(card);
         notifyGameObserver();

@@ -41,7 +41,6 @@ public class DriveView implements GameObserver {
         this.primaryStage = primaryStage;
         //this.primaryStage.setResizable(true);
         loadStageWithBorderPane(createDriveViewBorderPane());
-
         gameController.registerPlayerObserver(this);
     }
 

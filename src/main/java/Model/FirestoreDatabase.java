@@ -105,12 +105,17 @@ public class FirestoreDatabase {
 
     public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("currentPlayerIndex", data.getCurrentPlayerIndex());
         hashMap.put("GameStarted", data.isGameStarted());
         hashMap.put("Joinable", data.isJoinable());
         hashMap.put("players", data.getPlayers());
         hashMap.put("gameboard", data.getGameboard());
 
         return hashMap;
+    }
+
+    public void updateIndex(int index) {
+        docRef.update("currentPlayerIndex", index);
     }
 
     public void updateGameStarted(boolean gameStarted) {
