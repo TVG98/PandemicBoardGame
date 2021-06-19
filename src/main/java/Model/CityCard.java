@@ -13,7 +13,7 @@ public class CityCard implements PlayerCard {
     }
 
     public VirusType getVirusType() {
-        return city.getVirusType();
+        return city.getVIRUS_TYPE();
     }
 
     @Override

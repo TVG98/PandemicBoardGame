@@ -108,7 +108,6 @@ public class LobbyController {
 
     private boolean playerSlotInFirebaseIsTaken(int i) {
         return databaseController.getDatabaseData().getPlayer(i) != null;
-//        return databaseController.getLobbyDocument(lobbyCode).get(playerId) != null;
     }
 
     private void tryToAddPlayerToDatabase(Player player, String playerName) {

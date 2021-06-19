@@ -623,7 +623,7 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (City city : cityList) {
             //Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
-            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubeAmount()));
+            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubes().size()));
         }
     }
 

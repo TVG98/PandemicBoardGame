@@ -221,7 +221,7 @@ public class GameBoardController {
     }
 
     public boolean cureIsFound(City currentCity) {
-        return gameBoard.cureIsFound(currentCity.getVirusType());
+        return gameBoard.cureIsFound(currentCity.getVIRUS_TYPE());
     }
 
     public boolean canFindCureWithFourCards(Player currentPlayer) {
@@ -245,7 +245,7 @@ public class GameBoardController {
     }
 
     public boolean cityHasCube(City city) {
-        return city.getCubeAmount() > 0;
+        return city.getCubes().size() > 0;
     }
 
     public City getCity(String cityName) throws CityNotFoundException {

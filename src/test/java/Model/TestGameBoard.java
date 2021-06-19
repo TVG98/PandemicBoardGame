@@ -62,8 +62,8 @@ public class TestGameBoard {
         try {
             algiers = gameboard.getCity("Algiers");
             chennai = gameboard.getCity("Chennai");
-            algiersHasBlackVirusType = algiers.getVirusType().equals(VirusType.BLACK);
-            chennaiHasBlackVirusType = chennai.getVirusType().equals(VirusType.BLACK);
+            algiersHasBlackVirusType = algiers.getVIRUS_TYPE().equals(VirusType.BLACK);
+            chennaiHasBlackVirusType = chennai.getVIRUS_TYPE().equals(VirusType.BLACK);
         } catch (CityNotFoundException cnfe) {
             cityNotFoundExceptionThrown = true;
         }

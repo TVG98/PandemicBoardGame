@@ -98,6 +98,7 @@ public class FirestoreDatabase {
             docRef.update("players", data.getPlayers());
         } catch (LobbyFullException e) {
             e.printStackTrace();
+            e.getCause().printStackTrace();
         }
     }
 

@@ -28,12 +28,28 @@ public class City {
         return name;
     }
 
-    public int getCubeAmount() {
-        return cubes.size();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public VirusType getVirusType() {
+    public ArrayList<Cube> getCubes() {
+        return cubes;
+    }
+
+    public void setCubes(ArrayList<Cube> cubes) {
+        this.cubes = cubes;
+    }
+
+    public VirusType getVIRUS_TYPE() {
         return VIRUS_TYPE;
+    }
+
+    public void setVIRUS_TYPE(VirusType VIRUS_TYPE) {
+        this.VIRUS_TYPE = VIRUS_TYPE;
+    }
+
+    public void setNearCities(ArrayList<String> nearCities) {
+        this.nearCities = nearCities;
     }
 
     public boolean checkCityForAdjacency(City city) {

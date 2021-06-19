@@ -1,13 +1,12 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DatabaseData {
 
-    private boolean GameStarted;
-    private boolean Joinable;
+    private boolean GameStarted = false;
+    private boolean Joinable = true;
     private List<Player> players = Arrays.asList(new Player[4]);
     private Gameboard gameboard;
 
