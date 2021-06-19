@@ -22,11 +22,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-/**
- * @created June 15 2021 - 4:10 PM
- * @project testGame
- */
 public class TakeSharePlayerView implements GameObserver{
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -186,11 +183,11 @@ public class TakeSharePlayerView implements GameObserver{
 
     @Override
     public void update(GameObservable observable) {
-        Player[] playersArr = observable.getPlayers();
+        List<Player> players = observable.getPlayers();
 
         int index = 0;
 
-        for (Player player : playersArr)
+        for (Player player : players)
         {
             if (player != null)
             {

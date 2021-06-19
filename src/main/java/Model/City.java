@@ -3,10 +3,12 @@ package Model;
 import java.util.ArrayList;
 
 public class City {
-    private final String name;
-    private final ArrayList<Cube> cubes;
-    private final VirusType VIRUS_TYPE;
-    private final ArrayList<String> nearCities;
+    private String name;
+    private ArrayList<Cube> cubes;
+    private VirusType VIRUS_TYPE;
+    private ArrayList<String> nearCities;
+
+    public City() {}
 
     public City(String name, VirusType virusType) {
         this.name = name;
@@ -26,12 +28,28 @@ public class City {
         return name;
     }
 
-    public int getCubeAmount() {
-        return cubes.size();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public VirusType getVirusType() {
+    public ArrayList<Cube> getCubes() {
+        return cubes;
+    }
+
+    public void setCubes(ArrayList<Cube> cubes) {
+        this.cubes = cubes;
+    }
+
+    public VirusType getVIRUS_TYPE() {
         return VIRUS_TYPE;
+    }
+
+    public void setVIRUS_TYPE(VirusType VIRUS_TYPE) {
+        this.VIRUS_TYPE = VIRUS_TYPE;
+    }
+
+    public void setNearCities(ArrayList<String> nearCities) {
+        this.nearCities = nearCities;
     }
 
     public boolean checkCityForAdjacency(City city) {

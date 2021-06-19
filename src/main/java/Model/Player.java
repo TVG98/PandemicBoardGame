@@ -10,6 +10,8 @@ public class Player {
     private String playerName;
     private int actions = 4;
 
+    public Player() {}
+
     public Player(String playerName, boolean readyToStart) {
         this.playerName = playerName;
         this.readyToStart = readyToStart;
@@ -54,9 +56,11 @@ public class Player {
                 return true;
             }
         }
+
         return false;
     }
-    public ArrayList<CityCard> getCityCardsFromPlayer() {
+
+    public ArrayList<CityCard> createCityCardsFromPlayer() {
         ArrayList<CityCard> cityCards = new ArrayList<>();
 
         for (PlayerCard card : hand) {
@@ -67,7 +71,6 @@ public class Player {
 
         return cityCards;
     }
-
 
     public Role getRole() {
         return role;

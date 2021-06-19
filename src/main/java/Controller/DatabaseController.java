@@ -48,69 +48,77 @@ public class DatabaseController {
         database.removePlayerFromLobby(player);
     }
 
-    public void update(DocumentSnapshot snapshot) {
-        if (!snapshot.getBoolean("GameStarted")) {
-            LobbyController.getInstance().update(snapshot);
+    public void update(DatabaseData data) {
+        if (!data.isGameStarted()) {
+            LobbyController.getInstance().update(data);
         } else {
-            GameController.getInstance().updatePlayersInGame(snapshot);
+            GameController.getInstance().updatePlayersInGame(data);
         }
 
-        //GameBoardController.getInstance().update(snapshot);
+        GameBoardController.getInstance().update(data);
     }
 
-    public void updateCitiesInDatabase(List<City> cities) {
-        database.updateCities(cities);
+    public void updateGameBoardInDatabase(Gameboard gameboard) {
+        database.updateGameBoard(gameboard);
     }
 
-    public void updateCitiesWithResearchStationsInDatabase(List<City> cities) {
-        database.updateCitiesWithResearchStations(cities);
-    }
-
-    public void updateCuredDiseases(List<Cure> curedDiseases) {
-        database.updateCuredDiseases(curedDiseases);
-    }
-
-    public void updateCures(List<Cure> CURES) {
-        database.updateCures(CURES);
-    }
-
-    public void updateDrawnEpidemicCards(int drawnEpidemicCards) {
-        database.updateDrawnEpidemicCards(drawnEpidemicCards);
-    }
-
-    public void updateInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
-        database.updateInfectionDiscardStack(infectionDiscardStack);
-    }
-
-    public void updateInfectionRate(int infectionRate) {
-        database.updateInfectionRate(infectionRate);
-    }
-
-    public void updateInfectionStack(ArrayList<InfectionCard> infectionStack) {
-        database.updateInfectionStack(infectionStack);
-    }
-
-    public void updateOutbreakCounter(int outbreakCounter) {
-        database.updateOutbreakCounter(outbreakCounter);
-    }
-
-    public void updatePlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
-        database.updatePlayerDiscardStack(playerDiscardStack);
-    }
-
-    public void updatePlayerStack(ArrayList<PlayerCard> playerStack) {
-        database.updatePlayerStack(playerStack);
-    }
-
-    public void updateTopSixInfectionStack(ArrayList<InfectionCard> topSixInfectionStack) {
-        database.updateTopSixInfectionStack(topSixInfectionStack);
-    }
-
-    public void updateViruses(List<Virus> viruses) {
-        database.updateViruses(viruses);
-    }
+//    public void updateCitiesInDatabase(List<City> cities) {
+//        database.updateCities(cities);
+//    }
+//
+//    public void updateCitiesWithResearchStationsInDatabase(List<City> cities) {
+//        database.updateCitiesWithResearchStations(cities);
+//    }
+//
+//    public void updateCuredDiseases(List<Cure> curedDiseases) {
+//        database.updateCuredDiseases(curedDiseases);
+//    }
+//
+//    public void updateCures(List<Cure> CURES) {
+//        database.updateCures(CURES);
+//    }
+//
+//    public void updateDrawnEpidemicCards(int drawnEpidemicCards) {
+//        database.updateDrawnEpidemicCards(drawnEpidemicCards);
+//    }
+//
+//    public void updateInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
+//        database.updateInfectionDiscardStack(infectionDiscardStack);
+//    }
+//
+//    public void updateInfectionRate(int infectionRate) {
+//        database.updateInfectionRate(infectionRate);
+//    }
+//
+//    public void updateInfectionStack(ArrayList<InfectionCard> infectionStack) {
+//        database.updateInfectionStack(infectionStack);
+//    }
+//
+//    public void updateOutbreakCounter(int outbreakCounter) {
+//        database.updateOutbreakCounter(outbreakCounter);
+//    }
+//
+//    public void updatePlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
+//        database.updatePlayerDiscardStack(playerDiscardStack);
+//    }
+//
+//    public void updatePlayerStack(ArrayList<PlayerCard> playerStack) {
+//        database.updatePlayerStack(playerStack);
+//    }
+//
+//    public void updateTopSixInfectionStack(ArrayList<InfectionCard> topSixInfectionStack) {
+//        database.updateTopSixInfectionStack(topSixInfectionStack);
+//    }
+//
+//    public void updateViruses(List<Virus> viruses) {
+//        database.updateViruses(viruses);
+//    }
 
     public DocumentSnapshot getLobbyDocument(String lobbyCode) {
         return database.getLobbyByDocumentId(lobbyCode);
+    }
+
+    public DatabaseData getDatabaseData() {
+        return database.getDatabaseData();
     }
 }

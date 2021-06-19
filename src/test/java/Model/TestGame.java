@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -11,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class TestGame {
 
     private Game game;
-    private Player[] players;
+    private List<Player> players;
 
     private final City atlanta = new City("Atlanta", VirusType.BLUE);
     private final City newYork = new City("New York", VirusType.BLUE);
@@ -23,17 +24,17 @@ public class TestGame {
 
     @Before
     public void setup() {
-        players = new Player[4];
+        players = new ArrayList<>();
         setPlayersToAtlanta();
         assignPlayersToPlayerArrayList();
         game = new Game(players);
     }
 
     private void assignPlayersToPlayerArrayList() {
-        players[0] = playerOne;
-        players[1] = playerTwo;
-        players[2] = playerThree;
-        players[3] = playerFour;
+        players.add(playerOne);
+        players.add(playerTwo);
+        players.add(playerThree);
+        players.add(playerFour);
     }
 
     private void setPlayersToAtlanta() {
@@ -114,10 +115,10 @@ public class TestGame {
 
     @Test
     public void Should_SayTwoPlayersAreInNewYork() {
-        Player[] allPlayers = game.getPlayers();
+        List<Player> allPlayers = game.getPlayers();
         int expectedPlayerSize = 2;
-        allPlayers[0].setCurrentCity(newYork);
-        allPlayers[2].setCurrentCity(newYork);
+        allPlayers.get(0).setCurrentCity(newYork);
+        allPlayers.get(2).setCurrentCity(newYork);
 
         ArrayList<Player> players = game.getPlayersInCity(newYork);
         int playerSize = players.size();

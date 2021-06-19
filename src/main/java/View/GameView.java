@@ -623,20 +623,19 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (City city : cityList) {
             //Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
-            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubeAmount()));
+            this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubes().size()));
         }
     }
 
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
-        Player[] players = gameObservable.getPlayers();
+        List<Player> players = gameObservable.getPlayers();
 
         int index = 0;
 
-        for (int i = index; i < 4; i++)
-        {
-            if (players[i] != null)
+        for (int i = index; i < 4; i++) {
+            if (players.get(i) != null)
             {
-                this.playerOverviews.get(i).setText(players[i].getPlayerName() + " - " + players[i].getRole());
+                this.playerOverviews.get(i).setText(players.get(i).getPlayerName() + " - " + players.get(i).getRole());
 
                 // Can't be tested yet, so commented it out
                 /*

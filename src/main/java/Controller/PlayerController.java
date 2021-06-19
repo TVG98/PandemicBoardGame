@@ -64,7 +64,7 @@ public class PlayerController {
     }
 
     private ArrayList<CityCard> getCityCardFromPlayer(Player player) {
-        return player.getCityCardsFromPlayer();
+        return player.createCityCardsFromPlayer();
     }
 
     private HashMap<VirusType, Integer> getCountedVirusTypeInHand(

@@ -243,8 +243,8 @@ public class DirectFlightView implements GameObserver {
     private void createUpdatedBorderPane(GameObservable observable) {
         statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
 
-        ArrayList<CityCard> cityCardsInHand = observable.getCurrentPlayer().getCityCardsFromPlayer();
-        ArrayList<String> cityCardsInHandNames = new ArrayList<String>();
+        ArrayList<CityCard> cityCardsInHand = observable.getCurrentPlayer().createCityCardsFromPlayer();
+        ArrayList<String> cityCardsInHandNames = new ArrayList<>();
         for (CityCard cityCard : cityCardsInHand) {
             cityCardsInHandNames.add(cityCard.getName());
         }

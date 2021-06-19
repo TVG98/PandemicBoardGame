@@ -4,24 +4,25 @@ import Observers.LobbyObservable;
 import Observers.LobbyObserver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Lobby implements LobbyObservable {
     private List<LobbyObserver> observers = new ArrayList<>();
 
     private boolean joinable;
-    private final Player[] players;
+    private List<Player> players;
     private final String password;
     private final int MAX_LOBBY_SIZE = 4;
 
     public Lobby(String password) {
         this.joinable = true;
-        this.players = new Player[4];
+        players = Arrays.asList(new Player[4]);
         this.password = password;
         notifyAllObservers();
     }
 
-    public Player[] getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -37,8 +38,6 @@ public class Lobby implements LobbyObservable {
         for (Player player : players) {
             if (player != null) {
                 playerNames.add(player.getPlayerName());
-            } else {
-                playerNames.add("");
             }
         }
 
@@ -52,8 +51,6 @@ public class Lobby implements LobbyObservable {
         for (Player player : players) {
             if (player != null) {
                 playerReadyToStart.add(player.getReadyToStart());
-            } else {
-                playerReadyToStart.add(null);
             }
         }
 
@@ -77,8 +74,8 @@ public class Lobby implements LobbyObservable {
         return MAX_LOBBY_SIZE;
     }
 
-    public void updatePlayer(int loc, Player player) {
-        players[loc] = player;
+    public void setPlayers(List<Player> players) {
+        this.players = players;
         notifyAllObservers();
     }
 
