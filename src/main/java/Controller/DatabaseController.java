@@ -20,7 +20,7 @@ public class DatabaseController {
     }
 
     public void updatePlayerInServer(Player player) {
-        database.makePlayerInServer(player);
+        database.updatePlayerInServer(player);
     }
 
     public void makeLobby(String lobbyCode) {
@@ -33,7 +33,7 @@ public class DatabaseController {
 
     public void addPlayer(String lobbyCode, Player player) throws LobbyFullException {
         database.listen(this, lobbyCode);
-        database.addPlayerToLobby(lobbyCode, player);
+        database.addPlayerToLobby(player);
     }
 
     public void updateJoinable(boolean joinable) {
@@ -44,8 +44,8 @@ public class DatabaseController {
         database.updateGameStarted(gameStarted);
     }
 
-    public void removePlayer(Player player) {
-        database.removePlayerFromLobby(player);
+    public void removePlayer(String name) {
+        database.removeMeFromLobby(name);
     }
 
     public void update(DatabaseData data) {

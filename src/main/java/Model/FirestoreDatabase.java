@@ -2,7 +2,7 @@ package Model;
 
 import Controller.DatabaseController;
 import Exceptions.LobbyFullException;
-import com.google.api.core.ApiFuture;
+import Exceptions.PlayerNotFoundException;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
@@ -10,7 +10,6 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 import java.io.FileInputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -62,41 +61,6 @@ public class FirestoreDatabase {
         FirebaseApp.initializeApp(options);
     }
 
-    public void updateJoinable(boolean joinable) {
-
-        data.setJoinable(joinable);
-        docRef.update("Joinable", data.isJoinable());
-    }
-
-    public void addPlayerToLobby(String lobbyCode, Player player) throws LobbyFullException {
-        docRef = lobbyRef.document(lobbyCode);
-        int index = getServerPlayerIndex(null);
-
-        data.setPlayer(index, player);
-        docRef.update("players", data.getPlayers());
-    }
-
-    public void removePlayerFromLobby(Player player) {
-        try {
-            int index = getServerPlayerIndex(player.getPlayerName());
-            data.setPlayer(index, null);
-            docRef.update("players", data.getPlayers());
-        } catch (LobbyFullException lbe) {
-            lbe.printStackTrace();
-        }
-    }
-
-    public void makePlayerInServer(Player player) {
-        try {
-            int index = getServerPlayerIndex(player.getPlayerName());
-            data.setPlayer(index, player);
-            docRef.update("players", data.getPlayers());
-        } catch (LobbyFullException e) {
-            e.printStackTrace();
-            e.getCause().printStackTrace();
-        }
-    }
-
     public void makeLobby(String lobbyCode) {
         HashMap<String, Object> serverData = getServerData();
         docRef = lobbyRef.document(lobbyCode);
@@ -126,7 +90,37 @@ public class FirestoreDatabase {
         docRef.update("gameboard", gameboard);
     }
 
-    public int getServerPlayerIndex(String name) throws LobbyFullException {
+    public void updateJoinable(boolean joinable) {
+        data.setJoinable(joinable);
+        docRef.update("Joinable", data.isJoinable());
+    }
+
+    public void addPlayerToLobby(Player player) throws LobbyFullException {
+        int index = getEmptySpot();
+        data.setPlayer(index, player);
+        docRef.update("players", data.getPlayers());
+    }
+
+    public void removeMeFromLobby(String name) {
+        try {
+            data.setPlayer(getIndexOfName(name), null);
+            docRef.update("players", data.getPlayers());
+        } catch (PlayerNotFoundException lbe) {
+            lbe.printStackTrace();
+        }
+    }
+
+    public void updatePlayerInServer(Player player) {
+        try {
+            data.setPlayer(getIndexOfName(player.getPlayerName()), player);
+            docRef.update("players", data.getPlayers());
+        } catch (PlayerNotFoundException e) {
+            e.printStackTrace();
+            e.getCause().printStackTrace();
+        }
+    }
+
+    public int getEmptySpot() throws LobbyFullException {
         try {
             data = docRef.get().get().toObject(DatabaseData.class);
         } catch (InterruptedException | ExecutionException e) {
@@ -135,19 +129,29 @@ public class FirestoreDatabase {
 
         List<Player> players = data.getPlayers();
 
-        return getIndex(players, name);
+        return getEmptyIndex(players);
     }
 
-    private int getIndex(List<Player> players, String name) throws LobbyFullException {
-        for (int i = 0; i < players.size(); i++) {
+    private int getEmptyIndex(List<Player> players) throws LobbyFullException {
+        for (int i = 0; i < 4; i++) {
             if (players.get(i) == null) {
-                return i;
-            } else if (players.get(i).getPlayerName().equals(name)) {
                 return i;
             }
         }
 
         throw new LobbyFullException("Lobby is full.");
+    }
+
+    private int getIndexOfName(String name) throws PlayerNotFoundException {
+        List<Player> players = data.getPlayers();
+
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getPlayerName().equals(name)) {
+                return i;
+            }
+        }
+
+        throw new PlayerNotFoundException("Player not found:" + name);
     }
 
     public String generateLobbyCode() {

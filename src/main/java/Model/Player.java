@@ -1,5 +1,7 @@
 package Model;
 
+import Exceptions.CardNotFoundException;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -9,6 +11,7 @@ public class Player {
     private boolean readyToStart;
     private String playerName;
     private int actions = 4;
+    private ArrayList<PlayerCard> cardsToShare = new ArrayList<>();
 
     public Player() {}
 
@@ -100,6 +103,14 @@ public class Player {
         return playerName;
     }
 
+    public void setCardsToShare(ArrayList<PlayerCard> cardsToShare) {
+        this.cardsToShare = cardsToShare;
+    }
+
+    public ArrayList<PlayerCard> getCardsToShare() {
+        return cardsToShare;
+    }
+
     public boolean hasActionsLeft() {
         return actions > 0;
     }
@@ -114,5 +125,18 @@ public class Player {
 
     public void decrementActions() {
         actions--;
+    }
+
+    public PlayerCard getCardFromHandByCity(City city) throws CardNotFoundException {
+        for(PlayerCard card : hand) {
+            if(card instanceof CityCard) {
+                String cardCityName = ((CityCard) card).getCity().getName();
+                if(cardCityName.equals(city.getName())) {
+                    return card;
+                }
+            }
+        }
+
+        throw new CardNotFoundException("Player does not have the cityCard of the current city he's in");
     }
 }

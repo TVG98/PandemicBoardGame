@@ -154,7 +154,7 @@ public class LobbyController {
     }
 
     public void removePlayerFromServer(Player player) {
-        databaseController.removePlayer(player);
+        databaseController.removePlayer(player.getPlayerName());
     }
 
     public void startGame() {

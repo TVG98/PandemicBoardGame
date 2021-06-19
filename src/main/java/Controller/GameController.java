@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Behavior.*;
+import Exceptions.CardNotFoundException;
 import Exceptions.CityNotFoundException;
 import Exceptions.GameLostException;
 import Exceptions.PlayerNotFoundException;
@@ -170,16 +171,14 @@ public class GameController {
                 City city = gameBoardController.getCity(cityName);
                 Player currentPlayer = getCurrentPlayer();
                 gameBoardController.handleDirectFlight(currentPlayer, city);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
             }
         }
     }
 
     private void setDirectFlightBehavior() {
-        if (itIsYourTurn() && actionsLeft()) {
-            gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
-        }
+        gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
     }
 
     public void handleCharterFlight(String cityName) {
@@ -189,8 +188,8 @@ public class GameController {
                 Player currentPlayer = getCurrentPlayer();
                 setCharterFlightBehavior();
                 gameBoardController.handleCharterFlight(currentPlayer, city);
-            } catch(Exception e) {
-                e.printStackTrace();
+            } catch(CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
             }
         }
     }
@@ -208,8 +207,8 @@ public class GameController {
                 Player currentPlayer = getCurrentPlayer();
                 setShuttleFlightBehavior(currentPlayer);
                 gameBoardController.handleShuttleFlight(currentPlayer, city);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch(CityNotFoundException cnfe) {
+                cnfe.printStackTrace();
             }
         }
     }
@@ -258,8 +257,8 @@ public class GameController {
                     givingPlayer = getPlayerByName(playerName);
                     receivingPlayer = getCurrentPlayer();
                 }
-                setShareKnowledgeBehavior(givingPlayer, receivingPlayer);
-                gameBoardController.handleShareKnowledge(givingPlayer, receivingPlayer);
+                setShareKnowledgeBehavior(givingPlayer);
+                gameBoardController.handleShareKnowledge(givingPlayer, receivingPlayer, giveCard);
             } catch (PlayerNotFoundException pnfe) {
                 pnfe.printStackTrace();
             }
@@ -273,16 +272,39 @@ public class GameController {
             }
         }
 
-        throw new PlayerNotFoundException("Player with " + playerName + " does not exist");
+        throw new PlayerNotFoundException("Player with name: " + playerName + " does not exist");
     }
 
-    private void setShareKnowledgeBehavior(Player givingPlayer, Player receivingPlayer) {
+    private void setShareKnowledgeBehavior(Player givingPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
-            if(gameBoardController.canShareAnyCard(givingPlayer, receivingPlayer)) {
+            if (gameBoardController.canShareAnyCard(givingPlayer)) {
                 gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnAnyCityBehavior());
             } else {
                 gameBoardController.setShareKnowledgeBehavior(new ShareKnowledgeOnSameCityBehavior());
             }
+        }
+    }
+
+    public void finishShareKnowledge(String chosenPlayerName, String cityName, boolean giveCard) {
+
+        try {
+            Player chosenPlayer = getPlayerByName(chosenPlayerName);
+            City city = gameBoardController.getCity(cityName);
+            PlayerCard chosenCard = chosenPlayer.getCardFromHandByCity(city);
+
+            if(giveCard) {
+                getCurrentPlayer().removeCardFromHand(chosenCard);
+                chosenPlayer.addCardToHand(chosenCard);
+            } else {
+                chosenPlayer.removeCardFromHand(chosenCard);
+                getCurrentPlayer().addCardToHand(chosenCard);
+            }
+        } catch (PlayerNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        } catch (CityNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        } catch (CardNotFoundException cardnfe) {
+            cardnfe.printStackTrace();
         }
     }
 
