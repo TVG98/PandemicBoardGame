@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
@@ -40,28 +41,35 @@ public class TestLobby {
         assertThat(matchingCode, is(false));
     }
 
-//    @Test
-//    public void Should_ReturnCorrectNamesWhenAskedAllNamesFromLobby() {
-//        ArrayList<String> expectedPlayerNames = new ArrayList<>(Arrays.asList("Thimo", "", "Tom", ""));
-//
-//        lobby.updatePlayer(0, new Player("Thimo", true));
-//        lobby.updatePlayer(2, new Player("Tom", true));
-//        ArrayList<String> playerNames = lobby.getPlayerNames();
-//
-//        assertThat(playerNames, is(expectedPlayerNames));
-//    }
-//
-//    @Test
-//    public void Should_ReturnCorrectNamesWhenAskedAllPlayersThatAreReadyToStart() {
-//        ArrayList<Boolean> expectedBooleans = new ArrayList<>(Arrays.asList(true, false, false, true));
-//
-//        lobby.updatePlayer(0, new Player("Thimo", true));
-//        lobby.updatePlayer(1, new Player("Tom", false));
-//        lobby.updatePlayer(2, new Player("Romano", false));
-//        lobby.updatePlayer(3, new Player("Daniel", true));
-//
-//        ArrayList<Boolean> booleans = lobby.getPlayerReadyToStart();
-//
-//        assertThat(booleans, is(expectedBooleans));
-//    }
+    @Test
+    public void Should_ReturnCorrectNamesWhenAskedAllNamesFromLobby() {
+        ArrayList<String> expectedPlayerNames = new ArrayList<>(Arrays.asList("Thimo", "Tom"));
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("Thimo", true));
+        players.add(null);
+        players.add(new Player("Tom", true));
+        players.add(null);
+
+        lobby.setPlayers(players);
+
+        ArrayList<String> playerNames = lobby.getPlayerNames();
+
+        assertThat(playerNames, is(expectedPlayerNames));
+    }
+
+    @Test
+    public void Should_ReturnCorrectNamesWhenAskedAllPlayersThatAreReadyToStart() {
+        ArrayList<Boolean> expectedBooleans = new ArrayList<>(Arrays.asList(true, false, false, true));
+
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("Thimo", true));
+        players.add(new Player("Tom", false));
+        players.add(new Player("Romano", false));
+        players.add(new Player("Daniel", true));
+
+        lobby.setPlayers(players);
+        ArrayList<Boolean> booleans = lobby.getPlayerReadyToStart();
+
+        assertThat(booleans, is(expectedBooleans));
+    }
 }

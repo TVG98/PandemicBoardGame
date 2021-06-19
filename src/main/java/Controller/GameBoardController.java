@@ -44,15 +44,16 @@ public class GameBoardController {
 
     public void makeWholeGameBoard() {
         gameBoard.makeCompleteGameBoard();
-        writeWholeGameBoardToServer();
+        updateServer();
     }
 
-    public void writeWholeGameBoardToServer() {
+    public void updateServer() {
         databaseController.updateGameBoardInDatabase(gameBoard);
     }
 
     public void handleDrive(Player currentPlayer, City chosenCity) {
         driveBehavior.drive(currentPlayer, chosenCity);
+        updateServer();
     }
 
     public void setDriveBehavior(DriveBehaviorNormal driveBehavior) {
@@ -61,6 +62,7 @@ public class GameBoardController {
 
     public void handleDirectFlight(Player currentPlayer, City chosenCity) {
         directFlightBehavior.directFlight(currentPlayer, chosenCity);
+        updateServer();
     }
 
     public void setDirectFlightBehavior(DirectFlightBehaviorNormal directFlightBehavior) {
@@ -69,6 +71,7 @@ public class GameBoardController {
 
     public void handleCharterFlight(Player currentPlayer, City chosenCity) {
         charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
+        updateServer();
     }
 
     public void setCharterFlightBehavior(CharterFlightBehaviorNormal charterFlightBehavior) {
@@ -77,6 +80,7 @@ public class GameBoardController {
 
     public void handleShuttleFlight(Player currentPlayer, City chosenCity) {
         shuttleFlightBehavior.shuttleFlight(currentPlayer, chosenCity);
+        updateServer();
     }
 
     public boolean canShuttleFlightToAnyCity(Player currrentPlayer) {
@@ -89,6 +93,7 @@ public class GameBoardController {
 
     public void handleFindCure(Player currentPlayer, City chosenCity) {
         findCureBehavior.findCure(currentPlayer, chosenCity);
+        updateServer();
     }
 
     public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
@@ -99,6 +104,7 @@ public class GameBoardController {
         try {
             Cure cure = gameBoard.getCureWithVirusType(virusType);
             gameBoard.flipCurePawn(cure);
+            updateServer();
         } catch (CureNotFoundException e) {
             e.printStackTrace();
         }
@@ -108,35 +114,28 @@ public class GameBoardController {
         for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
         }
+
+        updateServer();
     }
 
     public void handleEpidemicCard() {
         gameBoard.handleEpidemicCard();
+        updateServer();
     }
 
-    // Override
     public void handleInfectionCardDraw() {
         gameBoard.handleInfectionCardDraw(1);
+        updateServer();
     }
 
     public void handleInfectionCardDraw(int cubeAmount) {
         gameBoard.handleInfectionCardDraw(cubeAmount);
-    }
-
-    public void initializeStartingCubes() {
-        gameBoard.initializeStartingCubes();
+        updateServer();
     }
 
     public void handleOutbreak(City infectedCity) {
         gameBoard.handleOutbreak(infectedCity);
-    }
-
-    public void addTopSixCards(ArrayList<InfectionCard> cards) {
-        gameBoard.addInfectionStack(cards);
-    }
-
-    public void handlePlayerPawnMovement(Player player) {
-
+        updateServer();
     }
 
     public List<City> getCities() {
@@ -149,6 +148,7 @@ public class GameBoardController {
 
     public void handleBuildResearchStation(Player currentPlayer, City currentCity) {
         buildResearchStationBehavior.buildResearchStation(currentPlayer, currentCity);
+        updateServer();
     }
 
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
@@ -157,6 +157,7 @@ public class GameBoardController {
 
     public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
         shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
+        updateServer();
     }
 
     public void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
@@ -165,6 +166,7 @@ public class GameBoardController {
 
     public void addResearchStationToCity(City city) {
         gameBoard.addResearchStationToCity(city);
+        updateServer();
     }
 
     public void setTreatDiseaseBehavior(TreatDiseaseBehavior treatDiseaseBehavior) {
@@ -173,6 +175,7 @@ public class GameBoardController {
 
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
         treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
+        updateServer();
     }
 
     public boolean cityHasResearchStation(City city) {
@@ -238,12 +241,8 @@ public class GameBoardController {
     }
 
     public void update(DatabaseData data) {
-        if (data.getGameboard()!= null) {
-            updateGameBoardLocal(data);
+        if (data.getGameboard() != null) {
+            gameBoard = data.getGameboard();
         }
-    }
-
-    private void updateGameBoardLocal(DatabaseData data) {
-        gameBoard = data.getGameboard();
     }
 }

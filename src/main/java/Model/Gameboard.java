@@ -1,6 +1,5 @@
 package Model;
 
-import Exceptions.CardNotFoundException;
 import Exceptions.CityNotFoundException;
 import Exceptions.CureNotFoundException;
 import Exceptions.VirusNotFoundException;
@@ -27,7 +26,7 @@ public class Gameboard implements GameBoardObservable {
 
     private ArrayList<InfectionCard> infectionStack;
     private ArrayList<InfectionCard> infectionDiscardStack = new ArrayList<>();
-    private ArrayList<PlayerCard> playerStack = new ArrayList<>();
+    private ArrayList<PlayerCard> playerStack;
     private ArrayList<PlayerCard> playerDiscardStack = new ArrayList<>();
 
     private int outbreakCounter = 0;
@@ -70,42 +69,52 @@ public class Gameboard implements GameBoardObservable {
 
     public void setCitiesWithResearchStations(ArrayList<City> citiesWithResearchStations) {
         this.citiesWithResearchStations = citiesWithResearchStations;
+        notifyAllObservers();
     }
 
     public void setCures(List<Cure> cures) {
         this.cures = cures;
+        notifyAllObservers();
     }
 
     public void setDrawnEpidemicCards(int drawnEpidemicCards) {
         this.drawnEpidemicCards = drawnEpidemicCards;
+        notifyAllObservers();
     }
 
     public void setInfectionDiscardStack(ArrayList<InfectionCard> infectionDiscardStack) {
         this.infectionDiscardStack = infectionDiscardStack;
+        notifyAllObservers();
     }
 
     public void setInfectionRate(int infectionRate) {
         this.infectionRate = infectionRate;
+        notifyAllObservers();
     }
 
     public void setInfectionStack(ArrayList<InfectionCard> infectionStack) {
         this.infectionStack = infectionStack;
+        notifyAllObservers();
     }
 
     public void setOutbreakCounter(int outbreakCounter) {
         this.outbreakCounter = outbreakCounter;
+        notifyAllObservers();
     }
 
     public void setPlayerDiscardStack(ArrayList<PlayerCard> playerDiscardStack) {
         this.playerDiscardStack = playerDiscardStack;
+        notifyAllObservers();
     }
 
     public void setPlayerStack(ArrayList<PlayerCard> playerStack) {
         this.playerStack = playerStack;
+        notifyAllObservers();
     }
 
     public void setViruses(List<Virus> viruses) {
         this.viruses = viruses;
+        notifyAllObservers();
     }
 
     private void initializeCities() {
@@ -205,22 +214,6 @@ public class Gameboard implements GameBoardObservable {
         return playerCardStack;
     }
 
-    public PlayerCard returnPlayerCard(String cardName) throws CardNotFoundException {
-        for (PlayerCard card : playerStack) {
-            if (card.getName().equals(cardName)) {
-                return card;
-            }
-        }
-
-        for (PlayerCard card : playerDiscardStack) {
-            if (card.getName().equals(cardName)) {
-                return card;
-            }
-        }
-
-        throw new CardNotFoundException("card not found: " + cardName);
-    }
-
     private EventCard[] initializeEventCards() {
         EventCard[] eventCards = new EventCard[5];
         eventCards[0] = new OneQuietNight("One quiet night", "Skip the next Infect Cities step.");
@@ -248,6 +241,7 @@ public class Gameboard implements GameBoardObservable {
         } else if (cure.getCureState().equals(CureState.CURED)) {
             cure.setCureState(CureState.ERADICATED);
         }
+
         notifyAllObservers();
     }
 
@@ -257,12 +251,14 @@ public class Gameboard implements GameBoardObservable {
                 return cure;
             }
         }
+
         throw new CureNotFoundException("Cure is not found" + " : " + virusType);
     }
 
     public PlayerCard drawPlayerCard() {
         PlayerCard playerCard = playerStack.get(0);
         playerStack.remove(0);
+        notifyAllObservers();
         return playerCard;
     }
 
@@ -275,6 +271,7 @@ public class Gameboard implements GameBoardObservable {
         InfectionCard infectionCard = infectionStack.get(0);
         infectionStack.remove(0);
         infectionDiscardStack.add(infectionCard);
+        notifyAllObservers();
         return infectionCard;
     }
 
