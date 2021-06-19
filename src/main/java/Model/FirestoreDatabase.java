@@ -8,11 +8,9 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import com.sun.media.jfxmediaimpl.HostUtils;
 
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -64,10 +62,7 @@ public class FirestoreDatabase {
         FirebaseApp.initializeApp(options);
     }
 
-    public void updateJoinable(String lobbyCode, boolean joinable) {
-        if (docRef == null) {
-            docRef = lobbyRef.document(lobbyCode);
-        }
+    public void updateJoinable(boolean joinable) {
 
         data.setJoinable(joinable);
         docRef.update("Joinable", data.isJoinable());
@@ -86,8 +81,8 @@ public class FirestoreDatabase {
             int index = getServerPlayerIndex(player.getPlayerName());
             data.setPlayer(index, null);
             docRef.update("players", data.getPlayers());
-        } catch (LobbyFullException e) {
-            e.printStackTrace();
+        } catch (LobbyFullException lbe) {
+            lbe.printStackTrace();
         }
     }
 
@@ -95,7 +90,6 @@ public class FirestoreDatabase {
         try {
             int index = getServerPlayerIndex(player.getPlayerName());
             data.setPlayer(index, player);
-            System.out.println("updating player " + index);
             docRef.update("players", data.getPlayers());
         } catch (LobbyFullException e) {
             e.printStackTrace();
@@ -103,18 +97,14 @@ public class FirestoreDatabase {
         }
     }
 
-    public String makeLobby() {
+    public void makeLobby(String lobbyCode) {
         HashMap<String, Object> serverData = getServerData();
-        String lobbyCode = generateLobbyCode();
         docRef = lobbyRef.document(lobbyCode);
         docRef.set(serverData);
-        return lobbyCode;
     }
 
     public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
-        data.setJoinable(true);
-        data.setGameStarted(false);
         hashMap.put("GameStarted", data.isGameStarted());
         hashMap.put("Joinable", data.isJoinable());
         hashMap.put("players", data.getPlayers());
@@ -131,45 +121,31 @@ public class FirestoreDatabase {
         docRef.update("gameboard", gameboard);
     }
 
-    public int getServerPlayerIndex(String obj) throws LobbyFullException {
-        for (int i = 0; i < 4; i++) {
-            try {
-                data = docRef.get().get().toObject(DatabaseData.class);
-                if (obj == null) {
-                    if (data.getPlayer(i) == null) {
-                        return i;
-                    }
-                } else if (data.getPlayer(i).getPlayerName().equals(obj)) {
-                    return i;
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+    public int getServerPlayerIndex(String name) throws LobbyFullException {
+        try {
+            data = docRef.get().get().toObject(DatabaseData.class);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        List<Player> players = data.getPlayers();
+
+        return getIndex(players, name);
+    }
+
+    private int getIndex(List<Player> players, String name) throws LobbyFullException {
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i) == null) {
+                return i;
+            } else if (players.get(i).getPlayerName().equals(name)) {
+                return i;
             }
         }
 
         throw new LobbyFullException("Lobby is full.");
     }
 
-    public DocumentSnapshot getLobbyByDocumentId(String lobbyCode) {
-
-        ApiFuture<DocumentSnapshot> future = lobbyRef.document(lobbyCode).get();
-        DocumentSnapshot document;
-
-        try {
-            document = future.get();
-
-            if (document.exists()) {
-                return document;
-            }
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    private String generateLobbyCode() {
+    public String generateLobbyCode() {
         StringBuilder password = new StringBuilder();
 
         for (int i = 0; i < passwordLength; i++) {
@@ -199,7 +175,7 @@ public class FirestoreDatabase {
         return (snapshot, e) -> {
             if (snapshot != null && snapshot.exists()) {
                 try {
-                    System.out.println("updating games");
+                    System.out.println("new update from FireStore!");
                     data = snapshot.toObject(DatabaseData.class);
                     controller.update(data);
                 } catch (Exception ex) {
