@@ -1,12 +1,32 @@
 package Controller.Behavior;
 
+import Exceptions.CardNotFoundException;
 import Model.City;
+import Model.CityCard;
 import Model.Player;
+import Model.PlayerCard;
+
+import java.util.ArrayList;
 
 public class ShareKnowledgeOnSameCityBehavior implements ShareKnowledgeBehavior {
 
-    public void shareKnowledge(Player currentPlayer, Player chosenPlayer) {
+    @Override
+    public void shareKnowledge(Player currentPlayer, Player chosenPlayer, boolean giveCard) {
 
+        ArrayList<PlayerCard> cardToShare = new ArrayList<>();
+        try {
+            if(giveCard) {
+                cardToShare.add(currentPlayer.getCardFromHandByCity(currentPlayer.getCurrentCity()));
+            } else {
+                cardToShare.add(chosenPlayer.getCardFromHandByCity(chosenPlayer.getCurrentCity()));
+            }
+        } catch (CardNotFoundException cnfe) {
+            cnfe.printStackTrace();  // Deze exception moeten we nog anders afhandelen
+        }
+
+        currentPlayer.setCardsToShare(cardToShare);
         playerController.decrementActions(currentPlayer);
     }
+
+
 }

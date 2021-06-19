@@ -176,8 +176,8 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
-    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer) {
-        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer);
+    public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, boolean giveCard) {
+        shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, giveCard);
     }
 
     public void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
@@ -202,8 +202,8 @@ public class GameBoardController {
         return gameBoard.cityHasResearchStation(city);
     }
 
-    public boolean canShareAnyCard(Player givingPlayer, Player receivingPlayer) {
-        return givingPlayer.getRole() == Role.RESEARCHER || receivingPlayer.getRole() == Role.RESEARCHER;
+    public boolean canShareAnyCard(Player givingPlayer) {
+        return playerController.hasRole(givingPlayer, Role.RESEARCHER);
     }
 
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {

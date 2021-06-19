@@ -192,7 +192,7 @@ public class TakeShareCardsView implements GameObserver {
     }
 
     private void takeCardButtonHandler() {
-        // TODO: behaviour implementeren, selectedcity waarde uit class attribute halen
+        gameController.finishShareKnowledge(selectedPlayer, selectedCity, false);
         TakeSharePlayerView view = new TakeSharePlayerView(primaryStage);
     }
 
