@@ -46,9 +46,9 @@ public class GameView implements GameObserver, GameBoardObserver {
     // Contains offsetX, offsetY and color for each Player
     ArrayList<String[]> playerPawns = initializePlayerPawns();
 
-    private final GameController gameController;
+    private GameController gameController;
 
-    private GameView(Stage primaryStage) {
+    public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
         this.primaryStage.setResizable(false);
@@ -58,21 +58,11 @@ public class GameView implements GameObserver, GameBoardObserver {
         gameController.registerGameBoardObserver(this);
     }
 
-    public static GameView getInstance(Stage primaryStage) {
-        if (gameView == null) {
-            gameView = new GameView(primaryStage);
-        }
-
-        return gameView;
-    }
-
     private void createGameViewBorderPane() {
         // Setup Background Image //
         Image image = new Image(new File(pathToImage).toURI().toString());
         BackgroundImage bgImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         borderPane.setBackground(new Background(bgImage));
-
-
 
         // Setup BorderPane Top //
         Text title = new Text("Pandemic");
