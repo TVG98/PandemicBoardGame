@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.GameLostException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class TestVirus {
     }
 
     @Test
-    public void Should_Return22CubesWhenDecreaseCubesIsCalledTwice() {
+    public void Should_Return22CubesWhenDecreaseCubesIsCalledTwice() throws GameLostException {
         virus.decreaseCubeAmount(1);
         virus.decreaseCubeAmount(1);
 
@@ -35,7 +36,7 @@ public class TestVirus {
     }
 
     @Test
-    public void Should_Return23CubesWhenDecreaseCubesIsCalledTwiceAndIncreaseCubeIsCalledOnce() {
+    public void Should_Return23CubesWhenDecreaseCubesIsCalledTwiceAndIncreaseCubeIsCalledOnce() throws GameLostException {
         virus.decreaseCubeAmount(1);
         virus.decreaseCubeAmount(1);
         virus.increaseCubeAmount(1);

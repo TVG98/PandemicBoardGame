@@ -37,7 +37,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
 
-    ArrayList<Rectangle> playersCharacter = new ArrayList<Rectangle>();
+    ArrayList<Rectangle> playersCharacter = new ArrayList<>();
 
     static GameView gameView;
 
@@ -626,30 +626,42 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
+        makeViewIfGameEnded(gameObservable);
         List<Player> players = gameObservable.getPlayers();
 
         int index = 0;
 
         for (int i = index; i < 4; i++) {
-            if (players.get(i) != null)
-            {
+            if (players.get(i) != null) {
                 this.playerOverviews.get(i).setText(players.get(i).getPlayerName() + " - " + players.get(i).getRole());
 
-                // Can't be tested yet, so commented it out
-                if (players.get(i).getCurrentCity() != null)
-                {
+                if (players.get(i).getCurrentCity() != null) {
                     drawPlayerOnCity(
                             playersCharacter.get(i),
                             players.get(i).getCurrentCity().getName(),
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
                     System.out.println("Draw successfull");
-                }
-                else{
+                } else {
                     System.out.println("Drawing failed");
                 }
             }
+
             index++;
+        }
+    }
+
+    private void makeViewIfGameEnded(GameObservable gameObservable) {
+        if (gameObservable.getLost()) {
+            Platform.runLater(() -> {
+                LossView lossView = new LossView(primaryStage);
+            });
+        }
+
+        if (gameObservable.getWon()) {
+            Platform.runLater(() -> {
+                WinView winView = new WinView(primaryStage);
+            });
         }
     }
 
