@@ -147,6 +147,7 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (int i = 0; i < 4; i++)
         {
+            this.borderPane.getChildren().addAll(playersCharacter.get(i));
             drawPlayerOnCity(
                     playersCharacter.get(i),
                     "Atlanta",
@@ -609,7 +610,6 @@ public class GameView implements GameObserver, GameBoardObserver {
                 player.setStrokeWidth(2);
                 player.setX(entry.getValue()[0] + offset[0]);
                 player.setY(entry.getValue()[1] + offset[1]);
-                this.borderPane.getChildren().addAll(player);
             }
         }
     }
