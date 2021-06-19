@@ -96,7 +96,7 @@ public class GameController {
     }
 
     public void turn() {
-        if (!actionsLeft() && itIsYourTurn()) {
+        if (itIsYourTurn()) {
             try {
                 gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
                 gameBoardController.handleInfectionCardDraw();
@@ -106,7 +106,6 @@ public class GameController {
             } catch (GameLostException gle) {
                 game.setLost();
             }
-
         }
     }
 

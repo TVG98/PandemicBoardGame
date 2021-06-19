@@ -349,7 +349,8 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     private void endTurnButtonHandler() {
-
+        System.out.println("ending turn!");
+        gameController.turn();
     }
 
     private void makeGameBoard() {
@@ -361,10 +362,8 @@ public class GameView implements GameObserver, GameBoardObserver {
         makeCityCubes();
     }
 
-    private void makeCityCubes()
-    {
-        for (Map.Entry<String, int[]> entry : this.cities.entrySet())
-        {
+    private void makeCityCubes() {
+        for (Map.Entry<String, int[]> entry : this.cities.entrySet()) {
             Text text = new Text(Integer.toString(0));
             text.setX(entry.getValue()[0] - 5);
             text.setY(entry.getValue()[1] + 8);
@@ -641,7 +640,7 @@ public class GameView implements GameObserver, GameBoardObserver {
                             players.get(i).getCurrentCity().getName(),
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
-                    System.out.println("Draw successfull");
+                    System.out.println("Draw successful");
                 } else {
                     System.out.println("Drawing failed");
                 }
@@ -653,30 +652,22 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     private void makeViewIfGameEnded(GameObservable gameObservable) {
         if (gameObservable.getLost()) {
-            Platform.runLater(() -> {
-                LossView lossView = new LossView(primaryStage);
-            });
+            Platform.runLater(() -> new LossView(primaryStage));
         }
 
         if (gameObservable.getWon()) {
-            Platform.runLater(() -> {
-                WinView winView = new WinView(primaryStage);
-            });
+            Platform.runLater(() -> new WinView(primaryStage));
         }
     }
 
     @Override
     public void update(GameObservable gameObservable) {
-        Platform.runLater(() -> {
-            createUpdatedGameViewBorderPane(gameObservable);
-        });
+        Platform.runLater(() -> createUpdatedGameViewBorderPane(gameObservable));
     }
 
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
-        Platform.runLater(() -> {
-            createUpdatedGameViewBorderPane(gameBoardObservable);
-        });
+        Platform.runLater(() -> createUpdatedGameViewBorderPane(gameBoardObservable));
     }
 }
 
