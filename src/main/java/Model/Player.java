@@ -2,7 +2,11 @@ package Model;
 
 import Exceptions.CardNotFoundException;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
@@ -82,15 +86,35 @@ public class Player {
      * @return
      */
     public ArrayList<CityCard> createCityCardsFromPlayer() {
+
         ArrayList<CityCard> cityCards = new ArrayList<>();
 
+        List<String> notCityCards = Arrays.asList("EpidemicCard", "Airlift", "Forecast", "Resilient population", "Government grant", "One quiet night");
+
+        System.out.println(hand.size());
         for (PlayerCard card : hand) {
-            if (card instanceof CityCard) {
+            System.out.println(card);
+            System.out.println(card.getName());
+        }
+
+        for (PlayerCard card : hand) {
+            if (!notCityCards.contains(card.getName())) {
                 cityCards.add((CityCard) card);
             }
         }
 
         return cityCards;
+    }
+
+    public ArrayList<String> getCityCardNames() {
+        ArrayList<String> cityCardNames = new ArrayList<>();
+        List<String> notCityCards = Arrays.asList("EpidemicCard", "Airlift", "Forecast", "Resilient population", "Government grant", "One quiet night");
+        for (PlayerCard card : hand) {
+            if (!notCityCards.contains(card.getName())) {
+                cityCardNames.add(card.getName());
+            }
+        }
+        return cityCardNames;
     }
 
     /**
@@ -190,4 +214,5 @@ public class Player {
 
         throw new CardNotFoundException("Player does not have the cityCard of the current city he's in");
     }
+
 }
