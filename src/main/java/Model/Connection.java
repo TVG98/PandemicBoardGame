@@ -2,6 +2,10 @@ package Model;
 
 import javafx.scene.shape.Line;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Connection {
 
     private final int[] cityOne;

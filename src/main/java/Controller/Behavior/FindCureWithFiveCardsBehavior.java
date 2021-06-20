@@ -7,6 +7,10 @@ import Model.VirusType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class FindCureWithFiveCardsBehavior implements FindCureBehavior {
 
     public void findCure(Player currentPlayer, City currentCity) {

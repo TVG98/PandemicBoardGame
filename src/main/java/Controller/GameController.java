@@ -12,6 +12,10 @@ import Observers.GameObserver;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class GameController {
     static GameController gameController;
 

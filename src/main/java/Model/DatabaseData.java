@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class DatabaseData {
 
     private int currentPlayerIndex = 0;

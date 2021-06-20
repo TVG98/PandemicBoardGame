@@ -54,6 +54,9 @@ public class PlayerController {
         return player;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player) {
 
         HashMap<VirusType, Integer> virusTypeHashMap = new HashMap<>();
@@ -67,6 +70,9 @@ public class PlayerController {
         return player.createCityCardsFromPlayer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private HashMap<VirusType, Integer> getCountedVirusTypeInHand(
             ArrayList<CityCard> cityCards,
             HashMap<VirusType, Integer> virusTypeHashMap) {

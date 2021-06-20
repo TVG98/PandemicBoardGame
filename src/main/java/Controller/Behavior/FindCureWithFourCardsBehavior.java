@@ -6,6 +6,10 @@ import Model.VirusType;
 
 import java.util.Map;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class FindCureWithFourCardsBehavior implements FindCureBehavior {
 
     public void findCure(Player currentPlayer, City currentCity) {

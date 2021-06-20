@@ -1,8 +1,6 @@
 package Controller.Behavior;
 
 import Exceptions.CardNotFoundException;
-import Model.City;
-import Model.CityCard;
 import Model.Player;
 import Model.PlayerCard;
 

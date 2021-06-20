@@ -3,6 +3,10 @@ package Controller.Behavior;
 import Model.City;
 import Model.Player;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class ShuttleFlightBehaviorToAnyCity implements ShuttleFlightBehavior {
 
     @Override

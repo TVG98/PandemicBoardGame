@@ -11,6 +11,10 @@ import Observers.LobbyObserver;
 
 import java.util.List;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class LobbyController {
     static LobbyController lobbyController;
 

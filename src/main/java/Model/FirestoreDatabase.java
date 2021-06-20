@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * @author : Thimo van Velzen, Tom van Gogh
+ */
+
 public class FirestoreDatabase {
     ListenerRegistration listenerRegistration;
 
@@ -91,8 +95,7 @@ public class FirestoreDatabase {
     }
 
     public void updateJoinable(boolean joinable) {
-        data.setJoinable(joinable);
-        docRef.update("Joinable", data.isJoinable());
+        docRef.update("Joinable", joinable);
     }
 
     public void addPlayerToLobby(Player player) throws LobbyFullException {
@@ -105,8 +108,8 @@ public class FirestoreDatabase {
         try {
             data.setPlayer(getIndexOfName(name), null);
             docRef.update("players", data.getPlayers());
-        } catch (PlayerNotFoundException lbe) {
-            lbe.printStackTrace();
+        } catch (PlayerNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

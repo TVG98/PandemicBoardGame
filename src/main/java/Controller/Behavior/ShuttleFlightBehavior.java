@@ -5,6 +5,10 @@ import Controller.PlayerController;
 import Model.City;
 import Model.Player;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public interface ShuttleFlightBehavior {
     GameBoardController gameBoardController = GameBoardController.getInstance();
     PlayerController playerController = PlayerController.getInstance();

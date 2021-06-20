@@ -6,6 +6,10 @@ import Observers.GameObserver;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Game implements GameObservable {
     private final ArrayList<GameObserver> observers = new ArrayList<>();
 

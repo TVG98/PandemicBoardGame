@@ -10,6 +10,10 @@ import Observers.GameBoardObserver;
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Gameboard implements GameBoardObservable {
     private List<GameBoardObserver> observers = new ArrayList<>();
     private final String PATH_TO_CONNECTED_CITIES = "src/main/connectedCities.txt";

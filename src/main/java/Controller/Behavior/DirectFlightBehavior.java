@@ -4,6 +4,10 @@ import Controller.PlayerController;
 import Model.City;
 import Model.Player;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public interface DirectFlightBehavior {
     PlayerController playerController = PlayerController.getInstance();
 

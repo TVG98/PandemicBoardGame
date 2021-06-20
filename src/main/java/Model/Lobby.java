@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Lobby implements LobbyObservable {
     private List<LobbyObserver> observers = new ArrayList<>();
 

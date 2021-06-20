@@ -1,11 +1,10 @@
 package Controller.Behavior;
 
-import Model.City;
 import Model.Player;
-import Model.PlayerCard;
-import Model.Role;
 
-import java.util.ArrayList;
+/**
+ * @author : Thimo van Velzen, Daniel Paans
+ */
 
 public class ShareKnowledgeOnAnyCityBehavior implements ShareKnowledgeBehavior {
 

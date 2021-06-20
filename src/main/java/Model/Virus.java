@@ -2,6 +2,10 @@ package Model;
 
 import Exceptions.GameLostException;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Virus {
     private VirusType virusType;
     private final int MAX_CUBE_AMOUNT = 24;

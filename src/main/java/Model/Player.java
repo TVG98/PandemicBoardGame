@@ -4,6 +4,10 @@ import Exceptions.CardNotFoundException;
 
 import java.util.ArrayList;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Player {
     private ArrayList<PlayerCard> hand = new ArrayList<>();
     private Role role;

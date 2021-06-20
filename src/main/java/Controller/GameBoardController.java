@@ -10,6 +10,10 @@ import Observers.GameBoardObserver;
 
 import java.util.*;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class GameBoardController {
     static GameBoardController gameBoardController;
 

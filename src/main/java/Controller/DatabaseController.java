@@ -3,6 +3,10 @@ package Controller;
 import Exceptions.LobbyFullException;
 import Model.*;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class DatabaseController {
     FirestoreDatabase database;
     static DatabaseController databaseController;

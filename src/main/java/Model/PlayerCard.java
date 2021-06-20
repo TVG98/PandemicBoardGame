@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * @author : Thimo van Velzen, Daniel Paans
+ */
+
 public class PlayerCard {
 
     private String name;

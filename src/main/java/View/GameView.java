@@ -25,6 +25,10 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author : Thimo van Velzen, Romano Biertantie
+ */
+
 public class GameView implements GameObserver, GameBoardObserver {
     private Stage primaryStage;
     private final String pathToImage = "src/main/media/GameBoardResized.jpg";

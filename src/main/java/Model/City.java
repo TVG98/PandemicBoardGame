@@ -2,6 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class City {
     private String name;
     private ArrayList<Cube> cubes;

@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Cube {
     private VirusType type;
 

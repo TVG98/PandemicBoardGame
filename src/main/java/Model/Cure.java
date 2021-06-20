@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class Cure {
     private VirusType virusType;
     private CureState cureState = CureState.ACTIVE;
