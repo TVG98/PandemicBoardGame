@@ -21,12 +21,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Observable;
 
-/**
- * @created June 12 2021 - 2:08 PM
- * @project testGame
- */
 public class DriveView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -87,7 +82,7 @@ public class DriveView implements GameObserver {
         infoText.setFont(Font.font("Arial", 20));
         infoText.setTextAlignment(TextAlignment.CENTER);
 
-        ArrayList<Text> texts = new ArrayList<Text>();
+        ArrayList<Text> texts = new ArrayList<>();
         Collections.addAll(texts, actionTitle, statusText, infoText, selectedCityText);
 
         VBox vboxTexts = new VBox();
@@ -95,14 +90,14 @@ public class DriveView implements GameObserver {
         vboxTexts.setAlignment(Pos.CENTER);
         vboxTexts.setSpacing(20);
 
-        ArrayList<Button> buttons = new ArrayList<Button>();
+        ArrayList<Button> buttons = new ArrayList<>();
+
         for (int i=0; i<7; i++) {
             buttons.add(new Button());
         }
 
         cityButtons = buttons;
-        for (Button cityButton : cityButtons)
-        {
+        for (Button cityButton : cityButtons) {
             cityButton.setTextFill(Color.WHITE);
             cityButton.setPrefHeight(80);
             cityButton.setPrefWidth(200);
@@ -116,24 +111,20 @@ public class DriveView implements GameObserver {
         HBox hboxCityRowTwo = new HBox();
         hboxCityRowTwo.setAlignment(Pos.CENTER);
 
-        for (Button cityButton : cityButtons)
-        {
-            if (index < 3)
-            {
+        for (Button cityButton : cityButtons) {
+            if (index < 3) {
                 hboxCityRowOne.getChildren().add(cityButton);
-            }
-            else
-            {
+            } else {
                 hboxCityRowTwo.getChildren().add(cityButton);
             }
+
             index++;
         }
 
         ArrayList<HBox> cityRows = new ArrayList<HBox>();
         Collections.addAll(cityRows, hboxCityRowOne, hboxCityRowTwo);
 
-        for (HBox hboxCityRow : cityRows)
-        {
+        for (HBox hboxCityRow : cityRows) {
             hboxCityRow.setSpacing(30);
         }
 
@@ -149,8 +140,7 @@ public class DriveView implements GameObserver {
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, backButton, moveButton);
 
-        for (Button menuButton : menuButtons)
-        {
+        for (Button menuButton : menuButtons) {
             menuButton.setTextFill(Color.WHITE);
             menuButton.setPrefHeight(100);
             menuButton.setPrefWidth(200);
@@ -226,13 +216,13 @@ public class DriveView implements GameObserver {
 
     private void backButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        GameView view = new GameView(primaryStage);
+        new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.playSoundEffect(Sound.CARDRIVING);
         gameController.handleDrive(selectedCity);
-        GameView view = new GameView(primaryStage);
+        new GameView(primaryStage);
     }
 
     private void getCitiesButtonHandler(Button button) {
@@ -242,15 +232,13 @@ public class DriveView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
-        ArrayList<String> nearCities = observable.getCurrentPlayer().getCurrentCity().getNearCities();
+        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex() % 4).getCurrentCity().getName());
+        ArrayList<String> nearCities = observable.getPlayers().get(observable.getCurrentPlayerIndex() % 4).getCurrentCity().getNearCities();
         getCitiesButtons(nearCities);
     }
 
     @Override
     public void update(GameObservable observable) {
         createUpdatedBorderPane(observable);
-
     }
 }
-

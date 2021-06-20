@@ -85,7 +85,10 @@ public class FirestoreDatabase {
         hashMap.put("currentPlayerIndex", data.getCurrentPlayerIndex());
         hashMap.put("GameStarted", data.isGameStarted());
         hashMap.put("Joinable", data.isJoinable());
-        hashMap.put("players", data.getPlayers());
+        hashMap.put("player1", data.getPlayer1());
+        hashMap.put("player2", data.getPlayer2());
+        hashMap.put("player3", data.getPlayer3());
+        hashMap.put("player4", data.getPlayer4());
         hashMap.put("gameboard", data.getGameboard());
 
         return hashMap;
@@ -125,7 +128,7 @@ public class FirestoreDatabase {
     public void addPlayerToLobby(Player player) throws LobbyFullException {
         int index = getEmptySpot();
         data.setPlayer(index, player);
-        docRef.update("players", data.getPlayers());
+        docRef.update("player" + (index + 1), data.getPlayer(index));
     }
 
     /**
@@ -133,8 +136,9 @@ public class FirestoreDatabase {
      */
     public void removeMeFromLobby(String name) {
         try {
-            data.setPlayer(getIndexOfName(name), null);
-            docRef.update("players", data.getPlayers());
+            int index = getIndexOfName(name);
+            data.setPlayer(index, null);
+            docRef.update("player" + (index + 1), data.getPlayer(index));
         } catch (PlayerNotFoundException e) {
             e.printStackTrace();
         }
@@ -145,8 +149,9 @@ public class FirestoreDatabase {
      */
     public void updatePlayerInServer(Player player) {
         try {
-            data.setPlayer(getIndexOfName(player.getPlayerName()), player);
-            docRef.update("players", data.getPlayers());
+            int index = getIndexOfName(player.getPlayerName());
+            data.setPlayer(index, player);
+            docRef.update("player" + (index + 1), data.getPlayer(index));
         } catch (PlayerNotFoundException e) {
             e.printStackTrace();
             e.getCause().printStackTrace();
@@ -163,7 +168,7 @@ public class FirestoreDatabase {
             e.printStackTrace();
         }
 
-        List<Player> players = data.getPlayers();
+        List<Player> players = data.returnPlayers();
 
         return getEmptyIndex(players);
     }
@@ -185,7 +190,7 @@ public class FirestoreDatabase {
      * @author : Thimo van Velzen
      */
     private int getIndexOfName(String name) throws PlayerNotFoundException {
-        List<Player> players = data.getPlayers();
+        List<Player> players = data.returnPlayers();
 
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getPlayerName().equals(name)) {

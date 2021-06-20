@@ -101,6 +101,11 @@ public class PlayerController {
         return player.getRole().equals(role);
     }
 
+    public void resetActions(Player player) {
+        player.resetActions();
+        notifyGameObserver();
+    }
+
     public void setCurrentCity(Player player, City city) {
         player.setCurrentCity(city);
         notifyGameObserver();
@@ -111,8 +116,10 @@ public class PlayerController {
         notifyGameObserver();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     private void notifyGameObserver() {
         GameController.getInstance().notifyGameObserver();
-        System.out.println(GameController.getInstance());
     }
 }

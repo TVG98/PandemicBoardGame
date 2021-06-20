@@ -39,7 +39,6 @@ public class Game implements GameObservable {
      * @author : Thimo van Velzen
      */
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
-        System.out.println("updating index: " + currentPlayerIndex);
         this.currentPlayerIndex = currentPlayerIndex;
         notifyAllObservers();
     }
@@ -75,10 +74,10 @@ public class Game implements GameObservable {
 
     public void updatePlayers(List<Player> players) {
         this.players = players;
+        currentPlayer = getPlayers().get(currentPlayerIndex % 4);
         notifyAllObservers();
     }
 
-    @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }

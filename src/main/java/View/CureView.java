@@ -114,8 +114,7 @@ public class CureView implements GameObserver, GameBoardObserver {
         vboxTexts.setSpacing(10);
 
         ArrayList<Button> virusButtons = getVirusButtons();
-        for (Button virusButton : virusButtons)
-        {
+        for (Button virusButton : virusButtons) {
             virusButton.setTextFill(Color.WHITE);
             virusButton.setPrefHeight(80);
             virusButton.setPrefWidth(200);
@@ -135,8 +134,7 @@ public class CureView implements GameObserver, GameBoardObserver {
         }
 
         cityButtons = buttons;
-        for (Button cityButton : cityButtons)
-        {
+        for (Button cityButton : cityButtons) {
             cityButton.setTextFill(Color.WHITE);
             cityButton.setPrefHeight(80);
             cityButton.setPrefWidth(200);
@@ -150,24 +148,20 @@ public class CureView implements GameObserver, GameBoardObserver {
         HBox hboxCityRowTwo = new HBox();
         hboxCityRowTwo.setAlignment(Pos.CENTER);
 
-        for (Button cityButton : cityButtons)
-        {
-            if (index < 3)
-            {
+        for (Button cityButton : cityButtons) {
+            if (index < 3) {
                 hboxCityRowOne.getChildren().add(cityButton);
-            }
-            else
-            {
+            } else {
                 hboxCityRowTwo.getChildren().add(cityButton);
             }
+
             index++;
         }
 
         ArrayList<HBox> cityRows = new ArrayList<HBox>();
         Collections.addAll(cityRows, hboxCityRowOne, hboxCityRowTwo);
 
-        for (HBox hboxCityRow : cityRows)
-        {
+        for (HBox hboxCityRow : cityRows) {
             hboxCityRow.setSpacing(30);
         }
 
@@ -186,8 +180,7 @@ public class CureView implements GameObserver, GameBoardObserver {
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, backButton, resetButton, cureButton);
 
-        for (Button menuButton : menuButtons)
-        {
+        for (Button menuButton : menuButtons) {
             menuButton.setTextFill(Color.WHITE);
             menuButton.setPrefHeight(100);
             menuButton.setPrefWidth(200);
@@ -213,8 +206,7 @@ public class CureView implements GameObserver, GameBoardObserver {
         return bp;
     }
 
-    private ArrayList<Button> getVirusButtons()
-    {
+    private ArrayList<Button> getVirusButtons() {
         // TODO: Moet de status van het virus gebruiken om knop aan/uit te zetten
         ArrayList<Button> buttons = new ArrayList<Button>();
 
@@ -239,8 +231,7 @@ public class CureView implements GameObserver, GameBoardObserver {
     }
 
 
-    private void getPlayerCityCards(ArrayList<String> cityCardsInHandNames)
-    {
+    private void getPlayerCityCards(ArrayList<String> cityCardsInHandNames) {
         //ArrayList<Button> cityButtons = new ArrayList<>();
 
         int index = 0;
@@ -256,7 +247,6 @@ public class CureView implements GameObserver, GameBoardObserver {
             cityButtons.get(i).setPrefWidth(0);
             cityButtons.get(i).setStyle("-fx-background-color:transparent");
         }
-
 
         // TODO: Moet alle city cards van een speler ophalen
         /*ArrayList<Button> buttons = new ArrayList<Button>();
@@ -285,13 +275,13 @@ public class CureView implements GameObserver, GameBoardObserver {
 
     private void backButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        GameView view = new GameView(primaryStage);
+        new GameView(primaryStage);
     }
 
     private void cureButtonHandler() {
         gameController.playSoundEffect(Sound.FINDCURE);
         gameController.handleFindCure();
-        GameView view = new GameView(primaryStage);
+        new GameView(primaryStage);
     }
 
     private void resetButtonHandler() {
@@ -313,22 +303,23 @@ public class CureView implements GameObserver, GameBoardObserver {
         }
     }
 
-    private void getVirusButtonHandler(Button button)
-    {
+    private void getVirusButtonHandler(Button button) {
         gameController.playSoundEffect(Sound.BUTTON);
         selectedVirusToCure = button.getText();
         selectedVirusToCureText.setText("You selected the " + selectedVirusToCure + " virus to find a cure for");
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
-        currentCity = gameObservable.getCurrentPlayer().getCurrentCity();
+        currentCity = gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getCurrentCity();
         statusText.setText("You are currently in: " + currentCity.getName());
 
-        ArrayList<CityCard> cityCardsInHand = gameObservable.getCurrentPlayer().createCityCardsFromPlayer();
+        ArrayList<CityCard> cityCardsInHand = gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).createCityCardsFromPlayer();
         ArrayList<String> cityCardsInHandNames = new ArrayList<>();
+
         for (CityCard cityCard : cityCardsInHand) {
             cityCardsInHandNames.add(cityCard.getName());
         }
+
         getPlayerCityCards(cityCardsInHandNames);
     }
 
@@ -350,5 +341,4 @@ public class CureView implements GameObserver, GameBoardObserver {
     public void update(GameBoardObservable gameBoardObservable) {
         createUpdatedBorderPane(gameBoardObservable);
     }
-
 }

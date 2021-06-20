@@ -9,6 +9,8 @@ import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -70,14 +72,20 @@ public class GameController {
 
     private void setPlayers() {
         if (localPlayerIsPlayerOne()) {
+
+            ArrayList<Player> players = new ArrayList<>();
             if (!playersUpdated) {
                 playersUpdated = true;
-                for (Player p : game.getPlayers()) {
+
+                List<Player> playersFromGame = game.getPlayers();
+                for (Player p : playersFromGame) {
                     if (p != null) {
-                        setPlayer(p);
+                        players.add(setPlayer(p));
                     }
                 }
             }
+
+            players.forEach(databaseController::updatePlayerInServer);
         }
     }
 
@@ -103,14 +111,14 @@ public class GameController {
         }
     }
 
-    private void setPlayer(Player player) {
+    private Player setPlayer(Player player) {
         try {
             player.setRole(getRandomRole());
             player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-            databaseController.updatePlayerInServer(player);
         } catch(CityNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
+            return player;
     }
 
     private Role getRandomRole() {
@@ -123,13 +131,16 @@ public class GameController {
     public void turn() {
         if (itIsYourTurn()) {
             try {
+                System.out.println(getCurrentPlayer().getActions());
                 gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
                 gameBoardController.handleInfectionCardDraw();
                 playerController.endTurn(getCurrentPlayer());
+                databaseController.updatePlayerInServer(getCurrentPlayer());
                 checkWin();
                 changeTurn();
             } catch (GameLostException gle) {
                 game.setLost();
+                gle.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause().printStackTrace();
@@ -159,6 +170,7 @@ public class GameController {
     public void changeTurn() {
         System.out.println("going to change turn!");
         game.nextTurn();
+        playerController.resetActions(game.getCurrentPlayer());
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         updateServer(currentPlayerIndex);
     }
@@ -450,7 +462,7 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     private boolean itIsYourTurn() {
-        String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex()).getPlayerName();
+        String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex() % 4).getPlayerName();
         return playerController.getYourPlayerName().equals(currentPlayerName);
     }
 
@@ -458,8 +470,8 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     public synchronized void update(DatabaseData data) {
-        game.updatePlayers(data.getPlayers());
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
+        game.updatePlayers(data.returnPlayers());
     }
 
     public void registerPlayerObserver(GameObserver observer) {

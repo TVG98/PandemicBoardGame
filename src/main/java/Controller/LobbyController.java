@@ -211,7 +211,7 @@ public class LobbyController {
      */
     public synchronized void update(DatabaseData data) {
         lobby.setJoinable(data.isJoinable());
-        lobby.setPlayers(data.getPlayers());
+        lobby.setPlayers(data.returnPlayers());
     }
 
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {
