@@ -45,8 +45,6 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     ArrayList<Rectangle> playersCharacter = new ArrayList<>();
 
-    static GameView gameView;
-
     ArrayList<Text> playerOverviews = new ArrayList<>();
     Text outbreakCounter = new Text();
     Text infectionRate = new Text();
@@ -311,32 +309,32 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     private void openMenuButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        InGameMenuView view = new InGameMenuView(primaryStage);
+        new InGameMenuView(primaryStage);
     }
 
     private void howToPlayButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        GameInstructionsView view = new GameInstructionsView(primaryStage);
+        new GameInstructionsView(primaryStage);
     }
 
     private void driveButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        DriveView view = new DriveView(primaryStage);
+        new DriveView(primaryStage);
     }
 
     private void directFlightButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        DirectFlightView view = new DirectFlightView(primaryStage);
+        new DirectFlightView(primaryStage);
     }
 
     private void charterFlightButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        CharterFlightView view = new CharterFlightView(primaryStage);
+        new CharterFlightView(primaryStage);
     }
 
     private void shuttleFlightButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        ShuttleFlightView view = new ShuttleFlightView(primaryStage);
+        new ShuttleFlightView(primaryStage);
     }
 
     private void treatButtonHandler() {
@@ -346,7 +344,7 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     private void cureButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        CureView view = new CureView(primaryStage);
+        new CureView(primaryStage);
     }
 
     private void buildButtonHandler() {
@@ -356,17 +354,16 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     private void takeShareButtonHandler(){
         gameController.playSoundEffect(Sound.BUTTON);
-        TakeSharePlayerView view = new TakeSharePlayerView(primaryStage);
+        new TakeSharePlayerView(primaryStage);
     }
 
     private void giveShareButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        GiveShareView view = new GiveShareView(primaryStage);
+        new GiveShareView(primaryStage);
     }
 
     private void endTurnButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        System.out.println("ending turn!");
         gameController.turn();
     }
 

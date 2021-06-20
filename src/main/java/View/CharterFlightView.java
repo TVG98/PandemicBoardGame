@@ -76,7 +76,7 @@ public class CharterFlightView implements GameObserver {
         infoText.setFont(Font.font("Arial", 20));
         infoText.setTextAlignment(TextAlignment.CENTER);
 
-        ArrayList<Text> texts = new ArrayList<Text>();
+        ArrayList<Text> texts = new ArrayList<>();
         Collections.addAll(texts, actionTitle, infoText);
 
         VBox vboxTexts = new VBox();
@@ -128,8 +128,7 @@ public class CharterFlightView implements GameObserver {
         ArrayList<Button> menuButtons = new ArrayList<Button>();
         Collections.addAll(menuButtons, backButton, moveButton);
 
-        for (Button menuButton : menuButtons)
-        {
+        for (Button menuButton : menuButtons) {
             menuButton.setTextFill(Color.WHITE);
             menuButton.setPrefHeight(100);
             menuButton.setPrefWidth(200);
@@ -153,8 +152,7 @@ public class CharterFlightView implements GameObserver {
         return bp;
     }
 
-    private ArrayList<String> getAllCityNames()
-    {
+    private ArrayList<String> getAllCityNames() {
         ArrayList<String> cityNames = new ArrayList<>();
         // Blue cities
         cityNames.add("Chicago");
@@ -213,13 +211,13 @@ public class CharterFlightView implements GameObserver {
 
     private void backButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
-        GameView view = new GameView(primaryStage);
+        new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
         gameController.playSoundEffect(Sound.AIRPLANE);
         gameController.handleCharterFlight(selectedCity);
-        GameView view = new GameView(primaryStage);
+        new GameView(primaryStage);
     }
 
     private void citiesToMoveToDropboxHandler(ComboBox comboBox) {
