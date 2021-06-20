@@ -75,10 +75,10 @@ public class Game implements GameObservable {
 
     public void updatePlayers(List<Player> players) {
         this.players = players;
+        currentPlayer = getPlayers().get(currentPlayerIndex % 4);
         notifyAllObservers();
     }
 
-    @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
