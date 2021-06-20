@@ -78,7 +78,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -118,7 +118,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Tom van Gogh
      */
     public void updateJoinable(boolean joinable) {
         docRef.update("Joinable", joinable);
@@ -231,12 +231,15 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Tom van Gogh
      */
     public char getRandomChar() {
         return CHARSET.charAt((int) (CHARSET.length() * Math.random()));
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void listen(DatabaseController controller, String lobbyCode) {
         if (listenerRegistration == null) {
             EventListener<DocumentSnapshot> eventListener = makeEventListener(controller);
@@ -250,7 +253,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     private EventListener<DocumentSnapshot> makeEventListener(DatabaseController controller) {
         return (snapshot, e) -> {

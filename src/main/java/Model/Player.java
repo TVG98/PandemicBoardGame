@@ -5,7 +5,7 @@ import Exceptions.CardNotFoundException;
 import java.util.ArrayList;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
  */
 
 public class Player {
@@ -24,6 +24,9 @@ public class Player {
         this.readyToStart = readyToStart;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public Player(ArrayList<PlayerCard> hand, Role role, City currentCity, boolean readyToStart, String playerName) {
         this.hand = hand;
         this.role = role;
@@ -32,6 +35,9 @@ public class Player {
         this.playerName = playerName;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void endTurn() {
         resetActions();
     }
@@ -87,30 +93,51 @@ public class Player {
         return cityCards;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void setRole(Role role) {
         this.role = role;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public City getCurrentCity() {
         return currentCity;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void setCurrentCity(City city) {
         currentCity = city;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public boolean getReadyToStart() {
         return readyToStart;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void setReadyToStart(boolean readyToStart) {
         this.readyToStart = readyToStart;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public String getPlayerName() {
         return playerName;
     }
@@ -127,6 +154,9 @@ public class Player {
         return actions > 0;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void resetActions() {
         actions = 4;
     }
@@ -135,6 +165,9 @@ public class Player {
         return actions;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void decrementActions() {
         actions--;
     }
