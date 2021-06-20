@@ -10,7 +10,6 @@ import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author : Thimo van Velzen, Daniel Paans

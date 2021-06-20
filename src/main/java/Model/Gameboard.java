@@ -427,8 +427,9 @@ public class Gameboard implements GameBoardObservable {
 
         for (int i = 0; i < cubeAmount; i++) {
             currentCity.addCube(virusType);
-            tryToDecreaseCubeAmount(virusType, cubeAmount);
         }
+
+        tryToDecreaseCubeAmount(virusType, cubeAmount);
 
         notifyAllObservers();
     }
@@ -606,6 +607,7 @@ public class Gameboard implements GameBoardObservable {
         try {
             for (int drawAmount = 3; drawAmount > 0; drawAmount--) {
                 for (int i = 0; i < 3; i++) {
+                    System.out.println(drawAmount);
                     assignStartingCubeToRandomCity(drawAmount);
                 }
             }
@@ -614,7 +616,6 @@ public class Gameboard implements GameBoardObservable {
             gme.printStackTrace();
         }
     }
-
 
     private void assignStartingCubeToRandomCity(int cubeAmount) throws GameLostException {
         City randomCity = drawInfectionCard().getCity();

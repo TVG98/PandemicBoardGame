@@ -125,6 +125,20 @@ public class FirestoreDatabase {
     /**
      * @author : Thimo van Velzen
      */
+    public void updateGameWon(boolean gameWon) {
+        docRef.update("gameWon", gameWon);
+    }
+
+    /**
+     * @author : Thimo van Velzen
+     */
+    public void updateGameLost(boolean gameLost) {
+        docRef.update("gameLost", gameLost);
+    }
+
+    /**
+     * @author : Thimo van Velzen
+     */
     public void addPlayerToLobby(Player player) throws LobbyFullException {
         int index = getEmptySpot();
         data.setPlayer(index, player);

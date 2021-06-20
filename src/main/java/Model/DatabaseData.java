@@ -13,10 +13,14 @@ public class DatabaseData {
     private int currentPlayerIndex = 0;
     private boolean GameStarted = false;
     private boolean Joinable = true;
+    private boolean gameWon = false;
+    private boolean gameLost = false;
+
     private Player player1;
     private Player player2;
     private Player player3;
     private Player player4;
+
     private final List<Player> players = Arrays.asList(new Player[4]);
     private Gameboard gameboard;
 
