@@ -115,10 +115,10 @@ public class GameController {
         try {
             player.setRole(getRandomRole());
             player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-            return player;
         } catch(CityNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
+            return player;
     }
 
     private Role getRandomRole() {
@@ -170,6 +170,7 @@ public class GameController {
     public void changeTurn() {
         System.out.println("going to change turn!");
         game.nextTurn();
+        playerController.resetActions(game.getCurrentPlayer());
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         updateServer(currentPlayerIndex);
     }
