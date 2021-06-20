@@ -232,7 +232,7 @@ public class DriveView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
+        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex() % 4).getCurrentCity().getName());
         ArrayList<String> nearCities = observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getNearCities();
         getCitiesButtons(nearCities);
     }
