@@ -48,6 +48,10 @@ public class Player {
         return hand;
     }
 
+    public void setHand(ArrayList<PlayerCard> hand) {
+        this.hand = hand;
+    }
+
     public boolean checkCardInHandBasedOnCity(City city) {
         for (PlayerCard nextCard : hand) {
             if (nextCard.getName().equals(city.getName())) {

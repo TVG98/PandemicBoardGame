@@ -179,6 +179,10 @@ public class GameBoardController {
         updateServer();
     }
 
+    public PlayerCard drawPlayerCard() throws GameLostException {
+        return gameBoard.drawPlayerCard();
+    }
+
     /**
      * @author : Thimo van Velzen
      */

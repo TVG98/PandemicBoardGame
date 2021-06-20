@@ -116,7 +116,9 @@ public class GameController {
         try {
             player.setRole(getRandomRole());
             player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-        } catch(CityNotFoundException cnfe) {
+            player.addCardToHand(gameBoardController.drawPlayerCard());
+            player.addCardToHand(gameBoardController.drawPlayerCard());
+        } catch (CityNotFoundException | GameLostException cnfe) {
             cnfe.printStackTrace();
         }
 
