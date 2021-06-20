@@ -176,6 +176,7 @@ public class GameView implements GameObserver, GameBoardObserver {
         Collections.addAll(this.playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
 
         Text playerText = new Text("Players");
+        playerText.setFill(Color.PURPLE);
         playerText.setFont(new Font("Castellar", 20));
 
 
