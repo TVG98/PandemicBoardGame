@@ -398,9 +398,9 @@ public class GameView implements GameObserver, GameBoardObserver {
             button.setOpacity(0.95f);
             button.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
             button.setTextFill(Color.BLACK);
-            button.setFont(new Font("Arial", 15));
+            button.setFont(new Font("Arial", 10));
             button.setPrefHeight(50);
-            button.setPrefWidth(200);
+            button.setPrefWidth(100);
             buttons.add(button);
         }
 
@@ -685,26 +685,12 @@ public class GameView implements GameObserver, GameBoardObserver {
             this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubes().size()));
         }
 
-        int indexPlayerCards = 0;
-        for (PlayerCard playerCard : playerStack)
-        {
-            this.playerHand.get(indexPlayerCards).setText(playerCard.getName());
-            indexPlayerCards++;
-        }
-
-        for (int i = indexPlayerCards; i < 9; i++)
-        {
-            this.playerHand.get(i).setPrefHeight(0);
-            this.playerHand.get(i).setPrefWidth(0);
-            this.playerHand.get(i).setStyle("-fx-background-color:transparent");
-        }
-
     }
 
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {
         makeViewIfGameEnded(gameObservable);
         List<Player> players = gameObservable.getPlayers();
-
+        List<PlayerCard> playerStack = gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getHand();
         actionsLeft.setText("Actions left\n\t" + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getActions() + "/4");
         currentPlayerText.setText("It's " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getPlayerName() + "'s turn");
 
@@ -727,9 +713,29 @@ public class GameView implements GameObserver, GameBoardObserver {
             } else {
                 playersCharacter.get(i).setStroke(Color.TRANSPARENT);
             }
-
-            index++;
         }
+
+        int indexPlayerCards = 0;
+        for (PlayerCard playerCard : playerStack)
+        {
+            this.playerHand.get(indexPlayerCards).setText(playerCard.getName());
+            this.playerHand.get(indexPlayerCards).setOpacity(0.95f);
+            this.playerHand.get(indexPlayerCards).setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+            this.playerHand.get(indexPlayerCards).setTextFill(Color.BLACK);
+            this.playerHand.get(indexPlayerCards).setFont(new Font("Arial", 15));
+            this.playerHand.get(indexPlayerCards).setPrefHeight(50);
+            this.playerHand.get(indexPlayerCards).setPrefWidth(150);
+            indexPlayerCards++;
+        }
+
+        for (int i = indexPlayerCards; i < 9 ; i++)
+        {
+            this.playerHand.get(i).setPrefHeight(0);
+            this.playerHand.get(i).setPrefWidth(0);
+            this.playerHand.get(i).setStyle("-fx-background-color:transparent");
+            this.playerHand.get(i).setText("");
+        }
+
     }
 
     private void makeViewIfGameEnded(GameObservable gameObservable) {
