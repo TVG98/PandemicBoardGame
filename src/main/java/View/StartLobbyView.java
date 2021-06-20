@@ -144,7 +144,7 @@ public class StartLobbyView {
 
         for (Button button : buttonsArrayList) {
             button.setOpacity(0.85f);
-            button.setStyle("-fx-background-color: Grey; -fx-background-radius: 10px;");
+            button.setStyle("-fx-background-color: Grey; -fx-background-radius: 2px;");
             button.setTextFill(Color.RED);
             button.setFont(new Font("Arial", 30));
             button.setPrefHeight(100);
