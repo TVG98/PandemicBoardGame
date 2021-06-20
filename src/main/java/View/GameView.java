@@ -585,7 +585,6 @@ public class GameView implements GameObserver, GameBoardObserver {
             int xCoord = coordinates[0];
             int yCoord = coordinates[1];
 
-
             Circle c1 = new Circle(10);
             c1.setFill(color);
             c1.setCenterX(xCoord);
@@ -639,9 +638,27 @@ public class GameView implements GameObserver, GameBoardObserver {
         outbreakCounter.setText("Outbreak Counter: " + gameBoardObservable.getOutbreakCounter() + "/8");
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
         List<City> cityList = gameBoardObservable.getCities();
+        List<City> citiesWithResearchStation = gameBoardObservable.getCitiesWithResearchStations();
+
+        for (City city : citiesWithResearchStation)
+        {
+            if (this.citiesWithAmountCubes.containsKey(city.getName()))
+            {
+                System.out.println("city with research station found");
+                int[] cityWithResearchStationCoord = this.cities.get(city.getName());
+                Rectangle rect = new Rectangle(20,20);
+                rect.setFill(Color.TRANSPARENT);
+                rect.setStroke(Color.PINK);
+                rect.setStrokeWidth(3);
+                rect.setX(cityWithResearchStationCoord[0] - 20/2f);
+                rect.setY(cityWithResearchStationCoord[1] - 20/2f);
+                this.borderPane.getChildren().add(rect);
+            }
+        }
 
         for (City city : cityList) {
             //Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
+
             this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubes().size()));
         }
     }
