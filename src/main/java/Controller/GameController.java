@@ -140,6 +140,7 @@ public class GameController {
                 changeTurn();
             } catch (GameLostException gle) {
                 game.setLost();
+                databaseController.updateGameLost(true);
                 gle.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -174,6 +175,7 @@ public class GameController {
     public void checkWin() {
         if (gameBoardController.winByCures()) {
             game.setWon();
+            databaseController.updateGameWon(true);
         }
     }
 

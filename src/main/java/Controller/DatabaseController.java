@@ -69,6 +69,20 @@ public class DatabaseController {
     /**
      * @author : Thimo van Velzen
      */
+    public void updateGameWon(boolean gameWon) {
+        database.updateGameWon(gameWon);
+    }
+
+    /**
+     * @author : Thimo van Velzen
+     */
+    public void updateGameLost(boolean gameLost) {
+        database.updateGameLost(gameLost);
+    }
+
+    /**
+     * @author : Thimo van Velzen
+     */
     public void removePlayer(String name) {
         database.removeMeFromLobby(name);
     }
