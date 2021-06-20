@@ -123,11 +123,13 @@ public class GameController {
     public void turn() {
         if (itIsYourTurn()) {
             try {
+                playerController.resetActions(getCurrentPlayer());
                 gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
                 gameBoardController.handleInfectionCardDraw();
                 playerController.endTurn(getCurrentPlayer());
                 checkWin();
                 changeTurn();
+                databaseController.updatePlayerInServer(getCurrentPlayer());
             } catch (GameLostException gle) {
                 game.setLost();
                 gle.printStackTrace();

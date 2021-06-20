@@ -76,7 +76,6 @@ public class OptionsView {
         musicSliderHandler(musicVolumeSlider);
         ArrayList<Slider> volumeSliders = new ArrayList<Slider>();
         Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider);
-        System.out.println(Arrays.toString(soundController.getVolumes()));
 
         for (int i = 0; i < volumeSliders.size(); i++) {
             volumeSliders.get(i).setMin(0);
