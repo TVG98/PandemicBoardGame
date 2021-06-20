@@ -1,9 +1,6 @@
 package Model;
 
-import Exceptions.CityNotFoundException;
-import Exceptions.CureNotFoundException;
-import Exceptions.GameLostException;
-import Exceptions.VirusNotFoundException;
+import Exceptions.*;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 
@@ -66,8 +63,12 @@ public class Gameboard implements GameBoardObservable {
      * @author : Thimo van Velzen
      */
     public void makeCompleteGameBoard() {
-        initializeGameBoard();
-        initializeStartingCubes();
+        try {
+            initializeGameBoard();
+            initializeStartingCubes();
+        } catch (WrongInitializationException wie) {
+            wie.printStackTrace();
+        }
     }
 
     /**
@@ -603,7 +604,7 @@ public class Gameboard implements GameBoardObservable {
     /**
      * @author : Thimo van Velzen, Daniel Paans
      */
-    public void initializeStartingCubes() {
+    public void initializeStartingCubes() throws WrongInitializationException {
         try {
             for (int drawAmount = 3; drawAmount > 0; drawAmount--) {
                 for (int i = 0; i < 3; i++) {
@@ -612,8 +613,8 @@ public class Gameboard implements GameBoardObservable {
                 }
             }
         } catch (GameLostException gme) {
-            System.out.println("wrong cube amount: Game lost when initializing game!");
             gme.printStackTrace();
+            throw new WrongInitializationException("CubeAmount < 0");
         }
     }
 

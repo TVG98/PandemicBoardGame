@@ -93,9 +93,9 @@ public class GameController {
     private void makeGameBoard() {
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
+        } else {
+            sleep(3000);
         }
-
-        sleep(3000);
     }
 
     /**
