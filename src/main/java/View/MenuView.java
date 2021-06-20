@@ -19,6 +19,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author : Romano Biertantie
+ */
+
 public class MenuView {
     Stage primaryStage;
     final String pathToImage = "src/main/media/PandemicMenuBackground.jpg";

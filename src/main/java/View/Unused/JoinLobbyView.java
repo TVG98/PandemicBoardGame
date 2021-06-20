@@ -22,12 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @created May 25 2021 - 1:13 PM
- * @project testGame
- */
-
-/**
- * FireBase implementatie mist voor join button
+ * @author : Romano Biertantie
  */
 
 public class JoinLobbyView {

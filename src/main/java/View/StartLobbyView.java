@@ -27,6 +27,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author : Romano Biertantie
+ */
+
 public class StartLobbyView {
 
     Stage primaryStage;
@@ -207,9 +211,14 @@ public class StartLobbyView {
             lobbyController.playSoundEffect(Sound.BUTTON);
             lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText());
             InLobbyView view = new InLobbyView(primaryStage);
-        } catch (LobbyNotFoundException | LobbyNotJoinableException e) {
-            e.printStackTrace();
-            //Todo goto main menu view?
+        }
+        catch (LobbyNotFoundException e) {
+            //e.printStackTrace();
+            JoinFailedView view = new JoinFailedView(primaryStage, "Lobby not found");
+        }
+        catch (LobbyNotJoinableException e) {
+            //.printStackTrace();
+           JoinFailedView view = new JoinFailedView(primaryStage, "Lobby not joinable");
         }
     }
 

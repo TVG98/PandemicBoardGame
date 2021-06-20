@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * @author : Romano Biertantie
+ */
+
 public class OptionsView {
 
     Stage primaryStage;

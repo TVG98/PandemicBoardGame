@@ -18,6 +18,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * @author : Romano Biertantie
+ */
+
 public class GameInstructionsView {
     Stage primaryStage;
     final String pathToBackground = "src/main/media/InstructionsBackgroundResized.jpg";

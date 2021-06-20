@@ -38,7 +38,6 @@ public class InLobbyView implements LobbyObserver {
         loadStageWithBorderPane(createInLobbyBorderPane());
     }
 
-    // Observer als argument meegeven zorgt voor goede initial BorderPane
     private BorderPane createInLobbyBorderPane(){
         BorderPane bp = new BorderPane();
 

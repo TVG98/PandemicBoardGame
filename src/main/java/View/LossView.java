@@ -18,6 +18,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * @author : Romano Biertantie
+ */
+
 public class LossView {
 
     Stage primaryStage;

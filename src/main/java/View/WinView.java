@@ -17,6 +17,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.File;
 
+/**
+ * @author : Romano Biertantie
+ */
+
 public class WinView {
 
     Stage primaryStage;

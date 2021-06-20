@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @created May 27 2021 - 10:13 AM
- * @project testGame
+ * @author : Romano Biertantie
  */
+
 public class LobbyServersView
 {
     Stage primaryStage;
