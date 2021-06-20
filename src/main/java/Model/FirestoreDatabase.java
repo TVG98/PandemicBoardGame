@@ -37,6 +37,9 @@ public class FirestoreDatabase {
             initialize();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public static FirestoreDatabase getInstance() {
         if (firestoreDatabase == null) {
             firestoreDatabase = new FirestoreDatabase();
@@ -65,12 +68,18 @@ public class FirestoreDatabase {
         FirebaseApp.initializeApp(options);
     }
 
+    /**
+     * @author : Thimo van Velzen, Tom van Gogh
+     */
     public void makeLobby(String lobbyCode) {
         HashMap<String, Object> serverData = getServerData();
         docRef = lobbyRef.document(lobbyCode);
         docRef.set(serverData);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("currentPlayerIndex", data.getCurrentPlayerIndex());
@@ -82,28 +91,46 @@ public class FirestoreDatabase {
         return hashMap;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updateIndex(int index) {
         docRef.update("currentPlayerIndex", index);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updateGameStarted(boolean gameStarted) {
         docRef.update("GameStarted", gameStarted);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updateGameBoard(Gameboard gameboard) {
         docRef.update("gameboard", gameboard);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updateJoinable(boolean joinable) {
         docRef.update("Joinable", joinable);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void addPlayerToLobby(Player player) throws LobbyFullException {
         int index = getEmptySpot();
         data.setPlayer(index, player);
         docRef.update("players", data.getPlayers());
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void removeMeFromLobby(String name) {
         try {
             data.setPlayer(getIndexOfName(name), null);
@@ -113,6 +140,9 @@ public class FirestoreDatabase {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updatePlayerInServer(Player player) {
         try {
             data.setPlayer(getIndexOfName(player.getPlayerName()), player);
@@ -123,6 +153,9 @@ public class FirestoreDatabase {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public int getEmptySpot() throws LobbyFullException {
         try {
             data = docRef.get().get().toObject(DatabaseData.class);
@@ -135,6 +168,9 @@ public class FirestoreDatabase {
         return getEmptyIndex(players);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private int getEmptyIndex(List<Player> players) throws LobbyFullException {
         for (int i = 0; i < 4; i++) {
             if (players.get(i) == null) {
@@ -145,6 +181,9 @@ public class FirestoreDatabase {
         throw new LobbyFullException("Lobby is full.");
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private int getIndexOfName(String name) throws PlayerNotFoundException {
         List<Player> players = data.getPlayers();
 
@@ -157,6 +196,9 @@ public class FirestoreDatabase {
         throw new PlayerNotFoundException("Player not found:" + name);
     }
 
+    /**
+     * @author : Thimo van Velzen, Tom van Gogh
+     */
     public String generateLobbyCode() {
         StringBuilder password = new StringBuilder();
 
@@ -167,6 +209,9 @@ public class FirestoreDatabase {
         return password.toString();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public char getRandomChar() {
         return CHARSET.charAt((int) (CHARSET.length() * Math.random()));
     }
@@ -183,6 +228,10 @@ public class FirestoreDatabase {
         }
     }
 
+
+    /**
+     * @author : Thimo van Velzen
+     */
     private EventListener<DocumentSnapshot> makeEventListener(DatabaseController controller) {
         return (snapshot, e) -> {
             if (snapshot != null && snapshot.exists()) {

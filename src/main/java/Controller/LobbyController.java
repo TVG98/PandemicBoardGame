@@ -32,6 +32,9 @@ public class LobbyController {
         soundController = SoundController.getInstance();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public static LobbyController getInstance() {
         if (lobbyController == null) {
             lobbyController = new LobbyController();
@@ -40,12 +43,18 @@ public class LobbyController {
         return lobbyController;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void makeLobby(String playerName) {
         lobbyCode = databaseController.createLobbyCode();
         databaseController.makeLobby(lobbyCode);
         tryToAddPlayerToServer(playerName);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void tryToAddPlayerToServer(String playerName) {
         try {
             Thread.sleep(5000);
@@ -74,6 +83,9 @@ public class LobbyController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private boolean playerSpotIsEmpty(Player player) {
         return player == null;
     }
@@ -92,6 +104,9 @@ public class LobbyController {
         databaseController.updateJoinable(false);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void addPlayerToServer(String lobbyCode, String playerName)
             throws LobbyNotFoundException, LobbyNotJoinableException {
         this.lobbyCode = lobbyCode;
@@ -114,10 +129,16 @@ public class LobbyController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private boolean playerSlotInFirebaseIsTaken(int i) {
         return databaseController.getDatabaseData().getPlayer(i) != null;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void tryToAddPlayerToDatabase(Player player, String playerName) {
         try {
             databaseController.addPlayer(lobbyCode, player);
@@ -161,6 +182,9 @@ public class LobbyController {
         return newName;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void removePlayerFromServer(Player player) {
         databaseController.removePlayer(player.getPlayerName());
     }
@@ -173,6 +197,9 @@ public class LobbyController {
         soundController.playSound(sound);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public synchronized void update(DatabaseData data) {
         lobby.setJoinable(data.isJoinable());
         lobby.setPlayers(data.getPlayers());

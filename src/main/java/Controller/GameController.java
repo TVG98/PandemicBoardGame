@@ -41,6 +41,9 @@ public class GameController {
         game.notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public synchronized static GameController getInstance() {
         if (gameController == null) {
             gameController = new GameController();
@@ -48,12 +51,18 @@ public class GameController {
         return gameController;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private boolean localPlayerIsPlayerOne() {
         String localPlayerName = playerController.getYourPlayerName();
         String firstPlayerName = game.getPlayers().get(0).getPlayerName();
         return localPlayerName.equals(firstPlayerName);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void startGame() {
         setPlayers();
         makeGameBoard();
@@ -72,6 +81,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void makeGameBoard() {
         if (localPlayerIsPlayerOne()) {
             gameBoardController.makeWholeGameBoard();
@@ -80,6 +92,9 @@ public class GameController {
         sleep(3000);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void sleep(int milliSeconds) {
         try {
             Thread.sleep(milliSeconds);
@@ -102,6 +117,9 @@ public class GameController {
         return Role.values()[new Random().nextInt(Role.values().length)];
     }
 
+    /**
+     * @author : Thimo van Velzen, Daniel Paans
+     */
     public void turn() {
         if (itIsYourTurn()) {
             try {
@@ -121,6 +139,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private int getPlayerAmount() {
         List<Player> players = game.getPlayers();
         int size = 0;
@@ -132,12 +153,13 @@ public class GameController {
         return size;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void changeTurn() {
         System.out.println("going to change turn!");
         game.nextTurn();
-        System.out.println("i game the turn to the next player");
         int currentPlayerIndex = game.getCurrentPlayerIndex();
-        System.out.println("new player index = " + currentPlayerIndex);
         updateServer(currentPlayerIndex);
     }
 
@@ -147,6 +169,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleDrive(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
             try {
@@ -161,16 +186,25 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private boolean actionsLeft() {
         return playerController.hasActionsLeft(getCurrentPlayer());
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setDriveBehavior() {
         if (itIsYourTurn() && actionsLeft()) {
             gameBoardController.setDriveBehavior(new DriveBehaviorNormal());
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleDirectFlight(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
             try {
@@ -183,10 +217,16 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setDirectFlightBehavior() {
         gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleCharterFlight(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
             try {
@@ -200,12 +240,18 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setCharterFlightBehavior() {
         if (itIsYourTurn() && actionsLeft()) {
             gameBoardController.setCharterFlightBehavior(new CharterFlightBehaviorNormal());
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleShuttleFlight(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
             try {
@@ -219,6 +265,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setShuttleFlightBehavior(Player currentPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canShuttleFlightToAnyCity(currentPlayer)) {
@@ -229,6 +278,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleBuildResearchStation() {
         if (itIsYourTurn() && actionsLeft()) {
             Player currentPlayer = getCurrentPlayer();
@@ -240,6 +292,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setBuildResearchBehavior(Player currentPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canBuildResearchStationWithoutCard(currentPlayer)) {
@@ -272,8 +327,8 @@ public class GameController {
     }
 
     private Player getPlayerByName(String playerName) throws PlayerNotFoundException {
-        for(Player player : game.getPlayers()) {
-            if(player.getPlayerName().equals(playerName)) {
+        for (Player player : game.getPlayers()) {
+            if (player.getPlayerName().equals(playerName)) {
                 return player;
             }
         }
@@ -281,6 +336,9 @@ public class GameController {
         throw new PlayerNotFoundException("Player with name: " + playerName + " does not exist");
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setShareKnowledgeBehavior(Player givingPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canShareAnyCard(givingPlayer)) {
@@ -305,15 +363,14 @@ public class GameController {
                 chosenPlayer.removeCardFromHand(chosenCard);
                 getCurrentPlayer().addCardToHand(chosenCard);
             }
-        } catch (PlayerNotFoundException pnfe) {
-            pnfe.printStackTrace();
-        } catch (CityNotFoundException cnfe) {
-            cnfe.printStackTrace();
-        } catch (CardNotFoundException cardnfe) {
-            cardnfe.printStackTrace();
+        } catch (PlayerNotFoundException | CityNotFoundException | CardNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleTreatDisease() {
         if (itIsYourTurn() && actionsLeft()) {
             Player currentPlayer = getCurrentPlayer();
@@ -323,6 +380,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
         if (itIsYourTurn() && actionsLeft()) {
             if (gameBoardController.canRemoveAllCubesWithoutDecrementActions(currentPlayer, currentCity)) {
@@ -335,6 +395,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleFindCure() {
         if (itIsYourTurn() && actionsLeft()) {
             Player currentPlayer = getCurrentPlayer();
@@ -344,6 +407,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void setFindCureBehavior(Player currentPLayer) {
         if (itIsYourTurn() && actionsLeft()) {
             if(gameBoardController.canFindCureWithFourCards(currentPLayer)) {
@@ -373,11 +439,17 @@ public class GameController {
         return game.getCurrentPlayer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private boolean itIsYourTurn() {
         String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex()).getPlayerName();
         return playerController.getYourPlayerName().equals(currentPlayerName);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public synchronized void update(DatabaseData data) {
         game.updatePlayers(data.getPlayers());
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
@@ -399,6 +471,9 @@ public class GameController {
         game.notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updateServer(int index) {
         databaseController.updateIndexInDatabase(index);
     }

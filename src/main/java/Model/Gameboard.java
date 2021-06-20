@@ -42,6 +42,9 @@ public class Gameboard implements GameBoardObservable {
     private ArrayList<City> citiesThatHadOutbreak = new ArrayList<>();
     private final List<Integer> INFECTION_RATES = Arrays.asList(2, 2, 2, 3, 3, 4, 4);
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public Gameboard() {
         cities = Arrays.asList(new City[48]);
         initializeCities();
@@ -58,11 +61,17 @@ public class Gameboard implements GameBoardObservable {
         this.citiesThatHadOutbreak = citiesThatHadOutbreak;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void makeCompleteGameBoard() {
         initializeGameBoard();
         initializeStartingCubes();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void initializeGameBoard() {
         shuffleAllStacks();
     }
@@ -122,6 +131,9 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void initializeCities() {
         String[] cityNames = getCityNames();
         assignVirusToCities(cityNames);
@@ -133,6 +145,9 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen, Romano Biertantie
+     */
     private String[] getCityNames() {
         return new String[] {"San Francisco", "Chicago", "Atlanta",
                 "Montréal", "Washington", "New York", "Madrid", "London",
@@ -164,6 +179,9 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen, Daniel Paans
+     */
     private void assignNeighboursToCities() throws IOException {
         BufferedReader bufferedReader = makeBufferedReader();
         String line = bufferedReader.readLine();
@@ -181,6 +199,9 @@ public class Gameboard implements GameBoardObservable {
         bufferedReader.close();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void assignNeighboursToCity(String line) throws CityNotFoundException {
         City CityOne = getCity(line.split(";")[0]);
         City CityTwo = getCity(line.split(";")[1]);
@@ -189,6 +210,9 @@ public class Gameboard implements GameBoardObservable {
         CityTwo.addNeighbour(CityOne.getName());
     }
 
+    /**
+     * @author : Daniel Paans
+     */
     private BufferedReader makeBufferedReader() throws FileNotFoundException {
         File textFile = new File(PATH_TO_CONNECTED_CITIES);
         FileReader fileReader = new FileReader(textFile);
@@ -196,6 +220,9 @@ public class Gameboard implements GameBoardObservable {
         return new BufferedReader(fileReader);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
         ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
 
@@ -240,6 +267,9 @@ public class Gameboard implements GameBoardObservable {
         return epidemicCards;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void flipCurePawn(Cure cure) {
         if (cure.getCureState().equals(CureState.ACTIVE)) {
             cure.setCureState(CureState.CURED);
@@ -250,6 +280,9 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
         for(Cure cure : cures) {
             if(cure.getVirusType() == virusType) {
@@ -260,6 +293,9 @@ public class Gameboard implements GameBoardObservable {
         throw new CureNotFoundException("Cure is not found" + " : " + virusType);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public PlayerCard drawPlayerCard() throws GameLostException {
         try {
             PlayerCard playerCard = playerStack.get(0);
@@ -271,11 +307,17 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void discardPlayerCard(PlayerCard card) {
         playerDiscardStack.add(0, card);
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public InfectionCard drawInfectionCard() {
         InfectionCard infectionCard = infectionStack.get(0);
         infectionStack.remove(0);
@@ -285,6 +327,9 @@ public class Gameboard implements GameBoardObservable {
         return infectionCard;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleInfectionCardsInEpidemic() {
         for (int i = 0; i < 100; i++) {
             InfectionCard card = infectionDiscardStack.get(getRandomIndex(infectionDiscardStack));
@@ -298,6 +343,9 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void shuffleAllStacks() {
         for (int i = 0; i < 100; i++) {
             shufflePlayerCardStack();
@@ -306,22 +354,34 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void shufflePlayerCardStack() {
         PlayerCard playerCard = playerStack.get(getRandomIndex(playerStack));
         playerStack.remove(playerCard);
         playerStack.add(playerCard);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void shuffleInfectionStack() {
         InfectionCard infectionCard = infectionStack.get(getRandomIndex(infectionStack));
         infectionStack.remove(infectionCard);
         infectionStack.add(infectionCard);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private int getRandomIndex(ArrayList arrayList) {
         return (int) (Math.random() * arrayList.size());
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void increaseOutbreakCounter() throws GameLostException {
         outbreakCounter++;
 
@@ -337,6 +397,9 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void addCubes(City currentCity, int cubeAmount) throws GameLostException {
         VirusType virusType = currentCity.getVIRUS_TYPE();
 
@@ -348,6 +411,9 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void tryToIncreaseCubeAmount(VirusType virusType, int cubeAmount) {
         try {
             getVirusByType(virusType).increaseCubeAmount(cubeAmount);
@@ -356,12 +422,18 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
         currentCity.removeCube();
         tryToIncreaseCubeAmount(virusType, cubeAmount);
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private void tryToDecreaseCubeAmount(VirusType virusType, int cubeAmount) throws GameLostException {
         try {
             getVirusByType(virusType).decreaseCubeAmount(cubeAmount);
@@ -405,6 +477,9 @@ public class Gameboard implements GameBoardObservable {
         return infectionDiscardStack;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public City getCity(String cityName) throws CityNotFoundException {
         for (City city : cities) {
             if (city.getName().equals(cityName)) {
@@ -440,10 +515,16 @@ public class Gameboard implements GameBoardObservable {
         return citiesWithResearchStations;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean cityHasResearchStation(City city) {
         return citiesWithResearchStations.contains(city);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void addResearchStationToCity(City city) {
         for (City c : cities) {
             if (c.equals(city)) {
@@ -466,8 +547,13 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean cureIsFound(VirusType virus) {
-        for (Cure cure : getCuredDiseases()) {
+        ArrayList<Cure> curedDiseases = getCuredDiseases();
+
+        for (Cure cure : curedDiseases) {
             if (cure.getVirusType().equals(virus)) {
                 return true;
             }
@@ -476,6 +562,9 @@ public class Gameboard implements GameBoardObservable {
         return false;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void initializeStartingCubes() {
         try {
             for (int drawAmount = 3; drawAmount > 0; drawAmount--) {
@@ -489,11 +578,15 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+
     private void assignStartingCubeToRandomCity(int cubeAmount) throws GameLostException {
         City randomCity = drawInfectionCard().getCity();
         addCubes(randomCity, cubeAmount);
     }
 
+    /**
+     * @author : Thimo van Velzen, Daniel paans
+     */
     public void handleInfection(InfectionCard infectionCard, int cubeAmount) throws GameLostException {
         City infectedCity = infectionCard.getCity();
 
@@ -504,6 +597,9 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen, Daniel paans
+     */
     public void handleOutbreak(City infectedCity) throws GameLostException {
         increaseOutbreakCounter();
         addCityThatHadOutbreak(infectedCity);
@@ -577,6 +673,9 @@ public class Gameboard implements GameBoardObservable {
         return citiesWithResearchStations.size() < 6;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public ArrayList<City> createCitiesWithResearchStation() {
         try {
             return new ArrayList<>(Collections.singletonList(getCity("Atlanta")));
@@ -586,6 +685,9 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public ArrayList<City> createNewAtlantaCity() {
         ArrayList<City> cities = new ArrayList<>();
         cities.add(new City("Atlanta", VirusType.BLUE));

@@ -30,11 +30,17 @@ public class GameBoardController {
     private final PlayerController playerController;
     private final DatabaseController databaseController;
 
+    /**
+     * @author : Thimo van Velzen
+     */
     private GameBoardController() {
         playerController = PlayerController.getInstance();
         databaseController = DatabaseController.getInstance();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public static GameBoardController getInstance() {
         if (gameBoardController == null) {
             gameBoardController = new GameBoardController();
@@ -43,15 +49,24 @@ public class GameBoardController {
         return gameBoardController;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void makeGameBoard() {
         gameBoard = new Gameboard();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void makeWholeGameBoard() {
         gameBoard.makeCompleteGameBoard();
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void updateServer() {
         databaseController.updateGameBoardInDatabase(gameBoard);
     }
@@ -61,50 +76,83 @@ public class GameBoardController {
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setDriveBehavior(DriveBehaviorNormal driveBehavior) {
         this.driveBehavior = driveBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleDirectFlight(Player currentPlayer, City chosenCity) {
         directFlightBehavior.directFlight(currentPlayer, chosenCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setDirectFlightBehavior(DirectFlightBehaviorNormal directFlightBehavior) {
         this.directFlightBehavior = directFlightBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleCharterFlight(Player currentPlayer, City chosenCity) {
         charterFlightBehavior.charterFlight(currentPlayer, chosenCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setCharterFlightBehavior(CharterFlightBehaviorNormal charterFlightBehavior) {
         this.charterFlightBehavior = charterFlightBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleShuttleFlight(Player currentPlayer, City chosenCity) {
         shuttleFlightBehavior.shuttleFlight(currentPlayer, chosenCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean canShuttleFlightToAnyCity(Player currentPlayer) {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setShuttleFlightBehavior(ShuttleFlightBehavior shuttleFlightBehavior) {
         this.shuttleFlightBehavior = shuttleFlightBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleFindCure(Player currentPlayer, City chosenCity) {
         findCureBehavior.findCure(currentPlayer, chosenCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
         this.findCureBehavior = findCureBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleCurePawn(VirusType virusType) {
         try {
             Cure cure = gameBoard.getCureWithVirusType(virusType);
@@ -115,6 +163,9 @@ public class GameBoardController {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) throws GameLostException {
         for (int i = 0; i < 2 + (4 - playersAmount); i++) {
             playerController.addCard(gameBoard.drawPlayerCard(), currentPlayer);
@@ -123,66 +174,108 @@ public class GameBoardController {
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleEpidemicCard() {
         gameBoard.handleEpidemicCard();
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleInfectionCardDraw() throws GameLostException {
         gameBoard.handleInfectionCardDraw(1);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleInfectionCardDraw(int cubeAmount) throws GameLostException {
         gameBoard.handleInfectionCardDraw(cubeAmount);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleOutbreak(City infectedCity) throws GameLostException {
         gameBoard.handleOutbreak(infectedCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public List<City> getCities() {
         return gameBoard.getCities();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setBuildResearchStationBehavior(BuildResearchStationBehavior buildResearchStationBehavior) {
         this.buildResearchStationBehavior = buildResearchStationBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleBuildResearchStation(Player currentPlayer, City currentCity) {
         buildResearchStationBehavior.buildResearchStation(currentPlayer, currentCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean canBuildResearchStationWithoutCard(Player currentPlayer) {
         return playerController.hasRole(currentPlayer, Role.OPERATIONSEXPERT);
     }
 
+    /**
+     * @author : Daniel Paans
+     */
     public void handleShareKnowledge(Player currentPlayer, Player chosenPlayer, boolean giveCard) {
         shareKnowledgeBehavior.shareKnowledge(currentPlayer, chosenPlayer, giveCard);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setShareKnowledgeBehavior(ShareKnowledgeBehavior shareKnowledgeBehavior) {
         this.shareKnowledgeBehavior = shareKnowledgeBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void addResearchStationToCity(City city) {
         gameBoard.addResearchStationToCity(city);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setTreatDiseaseBehavior(TreatDiseaseBehavior treatDiseaseBehavior) {
         this.treatDiseaseBehavior = treatDiseaseBehavior;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
         treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
         updateServer();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean cityHasResearchStation(City city) {
         return gameBoard.cityHasResearchStation(city);
     }
@@ -191,16 +284,25 @@ public class GameBoardController {
         return playerController.hasRole(givingPlayer, Role.RESEARCHER);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean canRemoveAllCubes(Player currentPlayer, City currentCity) {
         boolean isMedic = playerController.hasRole(currentPlayer, Role.MEDIC);
         return isMedic || cureIsFound(currentCity);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean canRemoveAllCubesWithoutDecrementActions(Player currentPlayer, City currentCity) {
         boolean isMedic = playerController.hasRole(currentPlayer, Role.MEDIC);
         return isMedic && cureIsFound(currentCity);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean canAddResearchStation() {
         return gameBoard.gameboardHasResearchStationsLeft();
     }
@@ -209,6 +311,9 @@ public class GameBoardController {
         return gameBoard.cureIsFound(currentCity.getVIRUS_TYPE());
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean canFindCureWithFourCards(Player currentPlayer) {
         return playerController.hasRole(currentPlayer, Role.SCIENTIST);
     }
@@ -221,6 +326,9 @@ public class GameBoardController {
         return city.getCubes().size() > 0;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public City getCity(String cityName) throws CityNotFoundException {
         return gameBoard.getCity(cityName);
     }
@@ -233,6 +341,9 @@ public class GameBoardController {
         gameBoard.register(observer);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void update(DatabaseData data) {
         if (data.getGameboard() != null) {
             gameBoard = data.getGameboard();

@@ -24,6 +24,9 @@ public class Game implements GameObservable {
         currentPlayer = this.players.get(currentPlayerIndex);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void nextTurn() {
         currentPlayer = null;
         while (currentPlayer == null) {
@@ -32,20 +35,32 @@ public class Game implements GameObservable {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         System.out.println("updating index: " + currentPlayerIndex);
         this.currentPlayerIndex = currentPlayerIndex;
         notifyAllObservers();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setLost() {
         lost = true;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setWon() {
         won = true;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public ArrayList<Player> getPlayersInCity(City city) {
         ArrayList<Player> playersInCity = new ArrayList<>();
 

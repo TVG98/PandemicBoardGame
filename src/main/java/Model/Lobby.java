@@ -70,14 +70,23 @@ public class Lobby implements LobbyObservable {
         return password;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean checkLobbyCode(String code) {
         return password.equals(code);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public int getMaxLobbySize() {
         return MAX_LOBBY_SIZE;
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setPlayers(List<Player> players) {
         this.players = players;
         notifyAllObservers();

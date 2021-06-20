@@ -13,45 +13,15 @@ public class PlayerController {
 
     private PlayerController() {}
 
+    /**
+     * @author : Thimo van Velzen
+     */
     public static PlayerController getInstance() {
         if (playerController == null) {
             playerController = new PlayerController();
         }
 
         return playerController;
-    }
-
-    public Player createPlayerFromDocData(String playerString) {
-        String hand = playerString.split("hand=")[1];
-        hand = hand.substring(0, hand.indexOf("]"));//todo check if correct
-        String role = playerString.split("role=")[1];
-        role = role.substring(0, role.indexOf(","));
-        String readyToStart = playerString.split("readyToStart=")[1];
-        readyToStart = readyToStart.substring(0, readyToStart.indexOf(","));
-        String playerName = playerString.split("playerName=")[1];
-        playerName = playerName.substring(0, playerName.indexOf(","));
-        Player player = new Player(new ArrayList<>(), null, null, readyToStart.equals("true"), playerName);
-
-        if (!hand.equals("[")) {
-            //todo update hand
-        }
-        if (!role.equals("null")) {
-            player.setRole(Role.valueOf(role));
-        }
-        gameBoardController = GameBoardController.getInstance();
-        if (!playerString.contains("currentCity=null")) {
-            try {
-                String currentCity = playerString.split("currentCity=")[1];
-                currentCity = currentCity.substring(0, currentCity.indexOf("}"));
-                currentCity = currentCity.split("name=")[1];
-                currentCity += ",";
-                currentCity = currentCity.substring(0, currentCity.indexOf(","));
-                player.setCurrentCity(gameBoardController.getCity(currentCity));
-            } catch (CityNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return player;
     }
 
     /**
