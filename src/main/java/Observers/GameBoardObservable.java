@@ -5,6 +5,9 @@ import Model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author : Tom van Gogh
+ */
 public interface GameBoardObservable {
     List<City> getCities();
     List<Cure> getCures();

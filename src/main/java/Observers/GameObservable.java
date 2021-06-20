@@ -3,7 +3,9 @@ package Observers;
 import Model.Player;
 
 import java.util.List;
-
+/**
+ * @author : Tom van Gogh
+ */
 public interface GameObservable {
     void register(GameObserver observer);
     void notifyAllObservers();
