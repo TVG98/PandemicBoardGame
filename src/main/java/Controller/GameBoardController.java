@@ -279,8 +279,13 @@ public class GameBoardController {
      */
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
         System.out.println("handling treat disease!");
-        treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
-        updateServer();
+
+        try {
+            treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
+            updateServer();
+        } catch (CityNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
     }
 
     /**
