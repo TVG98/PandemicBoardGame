@@ -9,6 +9,7 @@ import Observers.GameBoardObserver;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : Thimo van Velzen
@@ -532,6 +533,7 @@ public class Gameboard implements GameBoardObservable {
                 break;
             }
         }
+
         notifyAllObservers();
     }
 
@@ -551,7 +553,7 @@ public class Gameboard implements GameBoardObservable {
      * @author : Thimo van Velzen
      */
     public boolean cureIsFound(VirusType virus) {
-        ArrayList<Cure> curedDiseases = getCuredDiseases();
+        List<Cure> curedDiseases = getCuredDiseases();
 
         for (Cure cure : curedDiseases) {
             if (cure.getVirusType().equals(virus)) {
@@ -638,16 +640,12 @@ public class Gameboard implements GameBoardObservable {
         return citiesThatHadOutbreak.contains(city);
     }
 
-    public ArrayList<Cure> getCuredDiseases() {
-        ArrayList<Cure> curedDiseases = new ArrayList<>();
-
-        for (Cure cure : cures) {
-            if (cure.getCureState().equals(CureState.CURED)) {
-                curedDiseases.add(cure);
-            }
-        }
-
-        return curedDiseases;
+    /**
+     * @author : Thimo van Velzen
+     */
+    public List<Cure> getCuredDiseases() {
+        return cures.stream().filter(cure -> cure.getCureState().equals(CureState.CURED))
+                .collect(Collectors.toList());
     }
 
     public void setCuredDiseases(ArrayList<Cure> curedDiseases) {
