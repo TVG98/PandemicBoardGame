@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author : Daniel Paans
+ */
 public class ResilientPopulation extends EventCard {
 
     public ResilientPopulation(String name, String effectText) {

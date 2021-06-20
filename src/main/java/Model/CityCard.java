@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author : Daniel Paans
+ */
 public class CityCard extends PlayerCard {
 
     private final City city;

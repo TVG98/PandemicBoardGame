@@ -7,7 +7,7 @@ import Model.VirusType;
 import java.util.Map;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class FindCureWithFourCardsBehavior implements FindCureBehavior {

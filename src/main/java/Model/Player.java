@@ -5,7 +5,7 @@ import Exceptions.CardNotFoundException;
 import java.util.ArrayList;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class Player {
@@ -67,6 +67,10 @@ public class Player {
         return false;
     }
 
+    /**
+     * @author : Daniel Paans
+     * @return
+     */
     public ArrayList<CityCard> createCityCardsFromPlayer() {
         ArrayList<CityCard> cityCards = new ArrayList<>();
 
@@ -131,6 +135,12 @@ public class Player {
         actions--;
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param city
+     * @return
+     * @throws CardNotFoundException
+     */
     public PlayerCard getCardFromHandByCity(City city) throws CardNotFoundException {
         for(PlayerCard card : hand) {
             if(card instanceof CityCard) {

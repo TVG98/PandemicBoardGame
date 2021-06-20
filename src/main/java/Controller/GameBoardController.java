@@ -11,7 +11,7 @@ import Observers.GameBoardObserver;
 import java.util.*;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class GameBoardController {
@@ -71,6 +71,11 @@ public class GameBoardController {
         databaseController.updateGameBoardInDatabase(gameBoard);
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param currentPlayer
+     * @param chosenCity
+     */
     public void handleDrive(Player currentPlayer, City chosenCity) {
         driveBehavior.drive(currentPlayer, chosenCity);
         updateServer();
@@ -144,14 +149,14 @@ public class GameBoardController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Daniel Paans
      */
     public void setFindCureBehavior(FindCureBehavior findCureBehavior) {
         this.findCureBehavior = findCureBehavior;
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Daniel Paans
      */
     public void handleCurePawn(VirusType virusType) {
         try {
@@ -164,7 +169,7 @@ public class GameBoardController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Daniel Paans
      */
     public void handlePlayerCardDraw(Player currentPlayer, int playersAmount) throws GameLostException {
         for (int i = 0; i < 2 + (4 - playersAmount); i++) {
@@ -280,6 +285,11 @@ public class GameBoardController {
         return gameBoard.cityHasResearchStation(city);
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param givingPlayer
+     * @return
+     */
     public boolean canShareAnyCard(Player givingPlayer) {
         return playerController.hasRole(givingPlayer, Role.RESEARCHER);
     }
@@ -318,6 +328,10 @@ public class GameBoardController {
         return playerController.hasRole(currentPlayer, Role.SCIENTIST);
     }
 
+    /**
+     * @author : Daniel Paans
+     * @return
+     */
     public boolean winByCures() {
         return gameBoard.getCuredDiseases().size() == 4;
     }

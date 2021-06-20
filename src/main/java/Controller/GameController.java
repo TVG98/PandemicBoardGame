@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class GameController {
@@ -163,6 +163,9 @@ public class GameController {
         updateServer(currentPlayerIndex);
     }
 
+    /**
+     * @author : Daniel Paans
+     */
     public void checkWin() {
         if (gameBoardController.winByCures()) {
             game.setWon();
@@ -431,6 +434,10 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param sound
+     */
     public void playSoundEffect(Sound sound) {
         soundController.playSound(sound);
     }
