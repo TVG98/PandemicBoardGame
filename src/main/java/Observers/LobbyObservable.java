@@ -2,6 +2,9 @@ package Observers;
 
 import java.util.ArrayList;
 
+/**
+ * @author : Tom van Gogh
+ */
 public interface LobbyObservable {
     void register(LobbyObserver observer);
     void unregister(LobbyObserver observer);

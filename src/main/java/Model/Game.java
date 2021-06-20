@@ -78,7 +78,6 @@ public class Game implements GameObservable {
         notifyAllObservers();
     }
 
-    @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
