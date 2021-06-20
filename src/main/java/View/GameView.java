@@ -43,6 +43,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     private final BorderPane borderPane = new BorderPane();
     Text cubeAmountText = new Text();
     Text actionsLeft = new Text();
+    Text currentPlayerText = new Text();
 
     ArrayList<Rectangle> playersCharacter = new ArrayList<>();
 
@@ -210,9 +211,9 @@ public class GameView implements GameObserver, GameBoardObserver {
             movementButton.setOpacity(0.95f);
             movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;");
             movementButton.setTextFill(Color.BLACK);
-            movementButton.setFont(new Font("Arial", 15));
+            movementButton.setFont(new Font("Arial", 10));
             movementButton.setPrefHeight(50);
-            movementButton.setPrefWidth(130);
+            movementButton.setPrefWidth(100);
             movementButton.setOnMouseEntered(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
             movementButton.setOnMouseExited(event -> movementButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
@@ -252,9 +253,9 @@ public class GameView implements GameObserver, GameBoardObserver {
             actionButton.setOpacity(0.95f);
             actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white");
             actionButton.setTextFill(Color.BLACK);
-            actionButton.setFont(new Font("Arial", 15));
+            actionButton.setFont(new Font("Arial", 10));
             actionButton.setPrefHeight(50);
-            actionButton.setPrefWidth(130);
+            actionButton.setPrefWidth(100);
             actionButton.setOnMouseEntered(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightgrey;"));
             actionButton.setOnMouseExited(event -> actionButton.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: white;"));
         }
@@ -274,9 +275,9 @@ public class GameView implements GameObserver, GameBoardObserver {
         endTurnButton.setOpacity(0.95f);
         endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white");
         endTurnButton.setTextFill(Color.BLACK);
-        endTurnButton.setFont(new Font("Arial", 20));
-        endTurnButton.setPrefHeight(100);
-        endTurnButton.setPrefWidth(120);
+        endTurnButton.setFont(new Font("Arial", 10));
+        endTurnButton.setPrefHeight(80);
+        endTurnButton.setPrefWidth(100);
         endTurnButton.setOnAction(event -> endTurnButtonHandler());
         endTurnButton.setOnMouseEntered(event -> endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: red;"));
         endTurnButton.setOnMouseExited(event -> endTurnButton.setStyle("-fx-border-color: red; -fx-border-width: 2px; -fx-background-color: white;"));
@@ -286,12 +287,19 @@ public class GameView implements GameObserver, GameBoardObserver {
         hboxBottomBottom.setAlignment(Pos.CENTER);
         hboxBottomBottom.setSpacing(25);
 
+        currentPlayerText.setFill(Color.BLACK);
+        currentPlayerText.setFont(new Font("Castellar", 30));
+
+        HBox hboxCurrentPlayerText = new HBox();
+        hboxCurrentPlayerText.getChildren().add(currentPlayerText);
+        hboxCurrentPlayerText.setAlignment(Pos.CENTER);
+
         VBox vboxBottom = new VBox();
-        vboxBottom.getChildren().addAll(hboxBottomBottom);
+        vboxBottom.getChildren().addAll(hboxCurrentPlayerText, hboxBottomBottom);
         vboxBottom.setSpacing(10);
 
-        vboxBottom.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
-        vboxBottom.setPadding(new Insets(10, 0, 0, 0));
+        hboxBottomBottom.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
+        hboxBottomBottom.setPadding(new Insets(10, 0, 0, 0));
 
         // BorderPane Layout //
         borderPane.setTop(hboxTop);
@@ -643,11 +651,14 @@ public class GameView implements GameObserver, GameBoardObserver {
         List<Player> players = gameObservable.getPlayers();
 
         actionsLeft.setText("Actions left\n\t" + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getActions() + "/4");
+        currentPlayerText.setText("It's " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getPlayerName() + "'s turn");
 
         int index = 0;
 
         for (int i = index; i < 4; i++) {
             if (players.get(i) != null) {
+
+
                 playersCharacter.get(i).setFill(Color.valueOf(playerPawns.get(i)[2]));
                 this.playerOverviews.get(i).setText(players.get(i).getPlayerName() + " - " + players.get(i).getRole());
 
