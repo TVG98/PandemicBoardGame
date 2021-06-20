@@ -225,7 +225,7 @@ public class CharterFlightView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
-        currentCityText.setText("You are currently in: " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).getCurrentCity().getName());
+        currentCityText.setText("You are currently in: " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getCurrentCity().getName());
     }
     @Override
     public void update(GameObservable gameObservable) {
