@@ -222,6 +222,7 @@ public class GameController {
             try {
                 City city = gameBoardController.getCity(cityName);
                 Player currentPlayer = getCurrentPlayer();
+                setDirectFlightBehavior();
                 gameBoardController.handleDirectFlight(currentPlayer, city);
             } catch (CityNotFoundException cnfe) {
                 cnfe.printStackTrace();
