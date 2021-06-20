@@ -642,7 +642,7 @@ public class GameView implements GameObserver, GameBoardObserver {
         makeViewIfGameEnded(gameObservable);
         List<Player> players = gameObservable.getPlayers();
 
-        actionsLeft.setText("Actions left\n\t" + gameObservable.getCurrentPlayer().getActions() + "/4");
+        actionsLeft.setText("Actions left\n\t" + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).getActions() + "/4");
 
         int index = 0;
 

@@ -11,5 +11,4 @@ public interface GameObservable {
     int getCurrentPlayerIndex();
     boolean getWon();
     boolean getLost();
-    Player getCurrentPlayer();
 }
