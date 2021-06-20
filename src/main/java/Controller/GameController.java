@@ -455,7 +455,7 @@ public class GameController {
      */
     public synchronized void update(DatabaseData data) {
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
-        game.updatePlayers(data.getPlayers());
+        game.updatePlayers(data.returnPlayers());
     }
 
     public void registerPlayerObserver(GameObserver observer) {

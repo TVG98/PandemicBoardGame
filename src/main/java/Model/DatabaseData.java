@@ -13,10 +13,50 @@ public class DatabaseData {
     private int currentPlayerIndex = 0;
     private boolean GameStarted = false;
     private boolean Joinable = true;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player player4;
     private List<Player> players = Arrays.asList(new Player[4]);
     private Gameboard gameboard;
 
     public DatabaseData() {}
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+        players.set(0, player1);
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+        players.set(1, player2);
+    }
+
+    public Player getPlayer3() {
+        return player3;
+    }
+
+    public void setPlayer3(Player player3) {
+        this.player3 = player3;
+        players.set(2, player3);
+    }
+
+    public Player getPlayer4() {
+        return player4;
+    }
+
+    public void setPlayer4(Player player4) {
+        this.player4 = player4;
+        players.set(3, player4);
+    }
 
     public boolean isGameStarted() {
         return GameStarted;
@@ -50,12 +90,8 @@ public class DatabaseData {
         players.set(index, player);
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> returnPlayers() {
         return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 
     public Gameboard getGameboard() {
