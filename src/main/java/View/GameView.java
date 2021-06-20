@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -50,13 +51,14 @@ public class GameView implements GameObserver, GameBoardObserver {
     Text infectionRate = new Text();
 
     // Contains offsetX, offsetY and color for each Player
-    ArrayList<String[]> playerPawns = initializePlayerPawns();
+    ArrayList<String[]> playerPawns;
 
     private GameController gameController;
 
     public GameView(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
+        playerPawns = initializePlayerPawns();
         this.primaryStage.setResizable(false);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
@@ -142,15 +144,14 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         makeGameBoard();
 
-        Rectangle playerOne = new Rectangle(15, 15, Color.RED);
-        Rectangle playerTwo = new Rectangle(15, 15, Color.BLUE);
-        Rectangle playerThree = new Rectangle(15, 15, Color.ORANGE);
-        Rectangle playerFour = new Rectangle(15, 15, Color.GREEN);
+        Rectangle playerOne = new Rectangle(15, 15, Color.TRANSPARENT);
+        Rectangle playerTwo = new Rectangle(15, 15, Color.TRANSPARENT);
+        Rectangle playerThree = new Rectangle(15, 15, Color.TRANSPARENT);
+        Rectangle playerFour = new Rectangle(15, 15, Color.TRANSPARENT);
 
         Collections.addAll(playersCharacter, playerOne, playerTwo, playerThree, playerFour);
 
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             this.borderPane.getChildren().addAll(playersCharacter.get(i));
             drawPlayerOnCity(
                     playersCharacter.get(i),
@@ -297,9 +298,8 @@ public class GameView implements GameObserver, GameBoardObserver {
         borderPane.setBottom(vboxBottom);
     }
 
-    private ArrayList<String[]> initializePlayerPawns()
-    {
-        ArrayList<String[]> playerPawns = new ArrayList<String[]>();
+    private ArrayList<String[]> initializePlayerPawns() {
+        ArrayList<String[]> playerPawns = new ArrayList<>();
         playerPawns.add(new String[]{"-27", "-7", "RED"});
         playerPawns.add(new String[]{"-18", "+12", "BLUE"});
         playerPawns.add(new String[]{"+4", "+12", "ORANGE"});
@@ -648,6 +648,7 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (int i = index; i < 4; i++) {
             if (players.get(i) != null) {
+                playersCharacter.get(i).setFill(Color.valueOf(playerPawns.get(i)[2]));
                 this.playerOverviews.get(i).setText(players.get(i).getPlayerName() + " - " + players.get(i).getRole());
 
                 if (players.get(i).getCurrentCity() != null) {
@@ -657,7 +658,10 @@ public class GameView implements GameObserver, GameBoardObserver {
                             Color.valueOf(playerPawns.get(i)[2]),
                             new int[]{Integer.parseInt(playerPawns.get(i)[0]), Integer.parseInt(playerPawns.get(i)[1])});
                 }
+            } else {
+                playersCharacter.get(i).setStroke(Color.TRANSPARENT);
             }
+
             index++;
         }
     }

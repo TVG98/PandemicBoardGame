@@ -50,6 +50,7 @@ public class GameController {
         if (gameController == null) {
             gameController = new GameController();
         }
+
         return gameController;
     }
 
@@ -118,7 +119,8 @@ public class GameController {
         } catch(CityNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
-            return player;
+
+        return player;
     }
 
     private Role getRandomRole() {
@@ -131,7 +133,6 @@ public class GameController {
     public void turn() {
         if (itIsYourTurn()) {
             try {
-                System.out.println(getCurrentPlayer().getActions());
                 gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
                 gameBoardController.handleInfectionCardDraw();
                 playerController.endTurn(getCurrentPlayer());
@@ -225,6 +226,7 @@ public class GameController {
             try {
                 City city = gameBoardController.getCity(cityName);
                 Player currentPlayer = getCurrentPlayer();
+                setDirectFlightBehavior();
                 gameBoardController.handleDirectFlight(currentPlayer, city);
             } catch (CityNotFoundException cnfe) {
                 cnfe.printStackTrace();
@@ -471,7 +473,8 @@ public class GameController {
      */
     public synchronized void update(DatabaseData data) {
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
-        game.updatePlayers(data.returnPlayers());
+        List<Player> players = data.returnPlayers();
+        game.updatePlayers(players);
     }
 
     public void registerPlayerObserver(GameObserver observer) {

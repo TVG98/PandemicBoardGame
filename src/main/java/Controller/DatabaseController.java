@@ -81,7 +81,8 @@ public class DatabaseController {
         if (!data.isGameStarted()) {
             LobbyController.getInstance().update(data);
         } else {
-            GameController.getInstance().update(data);
+            GameController gameController = GameController.getInstance();
+            gameController.update(data);
         }
 
         GameBoardController.getInstance().update(data);

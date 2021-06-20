@@ -233,7 +233,6 @@ public class FirestoreDatabase {
         }
     }
 
-
     /**
      * @author : Thimo van Velzen
      */
