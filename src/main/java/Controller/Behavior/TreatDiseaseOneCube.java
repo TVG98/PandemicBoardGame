@@ -1,6 +1,8 @@
 package Controller.Behavior;
 
+import Controller.GameBoardController;
 import Controller.PlayerController;
+import Exceptions.CityNotFoundException;
 import Model.City;
 import Model.Player;
 
@@ -10,11 +12,9 @@ import Model.Player;
 
 public class TreatDiseaseOneCube implements TreatDiseaseBehavior {
 
-    PlayerController playerController = PlayerController.getInstance();
-
     @Override
-    public void treatDisease(Player currentPlayer, City currentCity) {
-        currentCity.removeCube();
+    public void treatDisease(Player currentPlayer, City currentCity) throws CityNotFoundException {
+        gameBoardController.getCity(currentCity.getName()).removeCube();
         playerController.decrementActions(currentPlayer);
     }
 }

@@ -6,15 +6,13 @@ import Observers.GameObserver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author : Thimo van Velzen, Tom van Gogh
  */
-
 public class Game implements GameObservable {
     private final ArrayList<GameObserver> observers = new ArrayList<>();
-    private ArrayList<Role> availableRoles = new ArrayList<>();
+    private final ArrayList<Role> availableRoles = new ArrayList<>();
 
     private List<Player> players;
     private int currentPlayerIndex = 0;

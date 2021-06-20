@@ -278,6 +278,7 @@ public class GameBoardController {
      * @author : Thimo van Velzen
      */
     public void handleTreatDisease(Player currentPlayer, City currentCity) {
+        System.out.println("handling treat disease!");
         treatDiseaseBehavior.treatDisease(currentPlayer, currentCity);
         updateServer();
     }

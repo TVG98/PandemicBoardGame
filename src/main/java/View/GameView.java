@@ -356,6 +356,7 @@ public class GameView implements GameObserver, GameBoardObserver {
 
     private void treatButtonHandler() {
         gameController.playSoundEffect(Sound.TREATDISEASE);
+        System.out.println("treating disease");
         gameController.handleTreatDisease();
     }
 
