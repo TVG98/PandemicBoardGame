@@ -4,6 +4,9 @@ import Model.InfectionCard;
 
 import java.util.ArrayList;
 
+/**
+ * @author : Daniel Paans
+ */
 public class ForecastBehavior implements EventBehavior {
 
     public void play() {

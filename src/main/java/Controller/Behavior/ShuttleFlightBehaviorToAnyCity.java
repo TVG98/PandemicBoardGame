@@ -4,7 +4,7 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class ShuttleFlightBehaviorToAnyCity implements ShuttleFlightBehavior {

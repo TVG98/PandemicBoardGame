@@ -3,6 +3,9 @@ package Controller.Behavior.EventCards;
 import Model.City;
 import Model.VirusType;
 
+/**
+ * @author : Daniel Paans
+ */
 public class GovernmentGrantBehavior implements  EventBehavior {
 
     public void play() {

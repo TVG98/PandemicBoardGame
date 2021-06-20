@@ -1,32 +1,17 @@
 package Model;
 
-import Exceptions.SoundNotFoundException;
-
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import java.io.File;
-import java.util.Locale;
+import java.io.IOException;
 
+/**
+ * @author : Daniel Paans
+ */
 public class SoundEffects implements GameSounds {
     private float volume;
 
     public SoundEffects(float volume) {
         this.volume = volume;
-    }
-
-
-    private String getSoundEffectPath(Sound soundEffect) throws SoundNotFoundException {
-        String soundPath = "src/main/media/GameMusic/";
-
-        try {
-            soundPath += soundEffect.name().toLowerCase();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new SoundNotFoundException("SoundEffect number does not exist");
-        }
-
-        return soundPath + ".wav";
     }
 
     @Override
@@ -39,9 +24,7 @@ public class SoundEffects implements GameSounds {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(volume);
             clip.start();
-        } catch (SoundNotFoundException snfe) {
-            snfe.printStackTrace();
-        } catch (Exception e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }

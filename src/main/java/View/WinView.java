@@ -77,6 +77,7 @@ public class WinView {
             Scene scene = new Scene(bp, width, height);
             primaryStage.show();
             primaryStage.setScene(scene);
+            soundController.playSound(Sound.VICTORY);
         } catch (Exception e) {
             e.printStackTrace();
         }

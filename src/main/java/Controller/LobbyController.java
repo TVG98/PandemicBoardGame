@@ -148,6 +148,11 @@ public class LobbyController {
         }
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param playerName
+     * @return
+     */
     private String getPlayerName(String playerName) {
         for (int i = 0; i < 4; i++) {
             if (playerSlotInFirebaseIsTaken(i)) {
@@ -194,6 +199,10 @@ public class LobbyController {
         return lobby;
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param sound
+     */
     public void playSoundEffect(Sound sound) {
         soundController.playSound(sound);
     }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class GameController {
@@ -47,7 +47,6 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     public synchronized static GameController getInstance() {
-
         if (gameController == null) {
             gameController = new GameController();
         }
@@ -172,10 +171,14 @@ public class GameController {
     public void changeTurn() {
         System.out.println("going to change turn!");
         game.nextTurn();
+        playerController.resetActions(game.getCurrentPlayer());
         int currentPlayerIndex = game.getCurrentPlayerIndex();
         updateServer(currentPlayerIndex);
     }
 
+    /**
+     * @author : Daniel Paans
+     */
     public void checkWin() {
         if (gameBoardController.winByCures()) {
             game.setWon();
@@ -444,6 +447,10 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Daniel Paans
+     * @param sound
+     */
     public void playSoundEffect(Sound sound) {
         soundController.playSound(sound);
     }

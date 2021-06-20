@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author : Daniel Paans
+ */
 public class GovernmentGrant extends EventCard {
 
     public GovernmentGrant(String name, String effectText) {

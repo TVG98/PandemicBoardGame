@@ -5,6 +5,9 @@ import Model.GameSounds;
 import Model.Sound;
 import Model.SoundEffects;
 
+/**
+ * @author : Daniel Paans
+ */
 public class SoundController {
 
     static SoundController soundController;
@@ -12,7 +15,7 @@ public class SoundController {
     private final int MAXVOLUME = 100;
     private final float TRANSLATION = 2f;
 
-    private float masterVolume = translateVolume(30);
+    private float masterVolume = translateVolume(30);  // Todo: Moet naar MAXVOLUME
     private float sfxVolume = masterVolume;
     private float musicVolume = masterVolume;
     private float[] volumes = new float[] {100, 100, 100};
