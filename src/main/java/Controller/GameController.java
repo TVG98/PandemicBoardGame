@@ -9,6 +9,8 @@ import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -70,14 +72,20 @@ public class GameController {
 
     private void setPlayers() {
         if (localPlayerIsPlayerOne()) {
+
+            ArrayList<Player> players = new ArrayList<>();
             if (!playersUpdated) {
                 playersUpdated = true;
-                for (Player p : game.getPlayers()) {
+
+                List<Player> playersFromGame = game.getPlayers();
+                for (Player p : playersFromGame) {
                     if (p != null) {
-                        setPlayer(p);
+                        players.add(setPlayer(p));
                     }
                 }
             }
+
+            players.forEach(databaseController::updatePlayerInServer);
         }
     }
 
@@ -103,11 +111,11 @@ public class GameController {
         }
     }
 
-    private void setPlayer(Player player) {
+    private Player setPlayer(Player player) {
         try {
             player.setRole(getRandomRole());
             player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-            databaseController.updatePlayerInServer(player);
+            return player;
         } catch(CityNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
