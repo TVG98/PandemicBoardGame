@@ -9,10 +9,8 @@ import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : Thimo van Velzen, Daniel Paans
@@ -157,14 +155,7 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     private int getPlayerAmount() {
-        List<Player> players = game.getPlayers();
-        int size = 0;
-
-        for (Player player : players) {
-            size += (player == null) ? 0 : 1;
-        }
-
-        return size;
+        return (int) game.getPlayers().stream().filter(Objects::nonNull).count();
     }
 
     /**
