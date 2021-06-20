@@ -39,7 +39,7 @@ public class Virus {
     }
 
     public void decreaseCubeAmount(int amount) throws GameLostException {
-        System.out.println("decreasing cube amount by:" + amount + ", cubes left of virus: " + cubeAmount);
+        System.out.println("VirusType: " + virusType + ", decreasing cube amount by:" + amount + ", cubes left of virus: " + cubeAmount);
         cubeAmount -= amount;
 
         if (cubeAmount < 0) {

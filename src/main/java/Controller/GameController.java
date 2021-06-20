@@ -47,9 +47,11 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     public synchronized static GameController getInstance() {
+
         if (gameController == null) {
             gameController = new GameController();
         }
+
         return gameController;
     }
 
@@ -115,10 +117,11 @@ public class GameController {
         try {
             player.setRole(getRandomRole());
             player.setCurrentCity(gameBoardController.getCity("Atlanta"));
-            return player;
         } catch(CityNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
+
+        return player;
     }
 
     private Role getRandomRole() {
@@ -131,7 +134,6 @@ public class GameController {
     public void turn() {
         if (itIsYourTurn()) {
             try {
-                System.out.println(getCurrentPlayer().getActions());
                 gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
                 gameBoardController.handleInfectionCardDraw();
                 playerController.endTurn(getCurrentPlayer());
@@ -463,7 +465,8 @@ public class GameController {
      */
     public synchronized void update(DatabaseData data) {
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
-        game.updatePlayers(data.returnPlayers());
+        List<Player> players = data.returnPlayers();
+        game.updatePlayers(players);
     }
 
     public void registerPlayerObserver(GameObserver observer) {

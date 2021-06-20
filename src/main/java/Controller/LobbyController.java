@@ -179,6 +179,7 @@ public class LobbyController {
                 newName = playerName += Integer.toString(i + 1);
             }
         }
+
         return newName;
     }
 
