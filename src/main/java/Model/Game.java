@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Game implements GameObservable {
     private final ArrayList<GameObserver> observers = new ArrayList<>();
-    private ArrayList<Role> availableRoles = (ArrayList<Role>) Arrays.asList(Role.values());
+    private ArrayList<Role> availableRoles = new ArrayList<>();
 
     private List<Player> players;
     private int currentPlayerIndex = 0;
@@ -25,6 +25,7 @@ public class Game implements GameObservable {
     public Game(List<Player> players) {
         this.players = players;
         currentPlayer = this.players.get(currentPlayerIndex);
+        availableRoles.addAll(Arrays.asList(Role.values()));
     }
 
     /**
