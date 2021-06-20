@@ -165,9 +165,13 @@ public class GameView implements GameObserver, GameBoardObserver {
         // Player overview //
 
         Text playerOneOverview = new Text();
+        playerOneOverview.setFill(Color.RED);
         Text playerTwoOverview = new Text();
+        playerTwoOverview.setFill(Color.BLUE);
         Text playerThreeOverview = new Text();
+        playerThreeOverview.setFill(Color.ORANGE);
         Text playerFourOverview = new Text();
+        playerFourOverview.setFill(Color.GREEN);
 
         Collections.addAll(this.playerOverviews, playerOneOverview, playerTwoOverview, playerThreeOverview, playerFourOverview);
 
