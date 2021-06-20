@@ -84,6 +84,8 @@ public class FirestoreDatabase {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("currentPlayerIndex", data.getCurrentPlayerIndex());
         hashMap.put("GameStarted", data.isGameStarted());
+        hashMap.put("gameWon", data.isGameWon());
+        hashMap.put("gameLost", data.isGameLost());
         hashMap.put("Joinable", data.isJoinable());
         hashMap.put("player1", data.getPlayer1());
         hashMap.put("player2", data.getPlayer2());
