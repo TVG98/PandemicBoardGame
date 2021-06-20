@@ -1,10 +1,7 @@
 package View;
 
 import Controller.GameController;
-import Model.City;
-import Model.Connection;
-import Model.Player;
-import Model.Sound;
+import Model.*;
 import Observers.GameBoardObservable;
 import Observers.GameObservable;
 import Observers.GameObserver;
@@ -24,6 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.smartcardio.Card;
 import java.io.*;
 import java.util.*;
 
@@ -46,7 +44,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     Text currentPlayerText = new Text();
 
     ArrayList<Rectangle> playersCharacter = new ArrayList<>();
-
+    ArrayList<Button> playerHand;
     ArrayList<Text> playerOverviews = new ArrayList<>();
     Text outbreakCounter = new Text();
     Text infectionRate = new Text();
@@ -60,6 +58,7 @@ public class GameView implements GameObserver, GameBoardObserver {
         this.primaryStage = primaryStage;
         this.gameController = GameController.getInstance();
         playerPawns = initializePlayerPawns();
+        playerHand = makeInitialPlayerHand();
         this.primaryStage.setResizable(false);
         createGameViewBorderPane();
         loadStageWithBorderPane(borderPane);
@@ -294,9 +293,14 @@ public class GameView implements GameObserver, GameBoardObserver {
         hboxCurrentPlayerText.getChildren().add(currentPlayerText);
         hboxCurrentPlayerText.setAlignment(Pos.CENTER);
 
+
+        HBox hboxCurrentPlayerHand = new HBox();
+        hboxCurrentPlayerHand.getChildren().addAll(this.playerHand);
+        hboxCurrentPlayerHand.setSpacing(20);
+
         VBox vboxBottom = new VBox();
-        vboxBottom.getChildren().addAll(hboxCurrentPlayerText, hboxBottomBottom);
-        vboxBottom.setSpacing(10);
+        vboxBottom.getChildren().addAll(hboxCurrentPlayerText, hboxCurrentPlayerHand, hboxBottomBottom);
+        vboxBottom.setSpacing(5);
 
         hboxBottomBottom.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
         hboxBottomBottom.setPadding(new Insets(10, 0, 0, 0));
@@ -382,6 +386,25 @@ public class GameView implements GameObserver, GameBoardObserver {
         placeCitiesWithColorOnBp(makeRedCityCoordinates(), Color.RED, borderPane);
         placeCitiesWithColorOnBp(makeYellowCityCoordinates(), Color.YELLOW, borderPane);
         makeCityCubes();
+    }
+
+    private ArrayList<Button> makeInitialPlayerHand()
+    {
+        ArrayList<Button> buttons = new ArrayList<>();
+
+        for (int i = 0; i < 9; i++)
+        {
+            Button button = new Button();
+            button.setOpacity(0.95f);
+            button.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+            button.setTextFill(Color.BLACK);
+            button.setFont(new Font("Arial", 15));
+            button.setPrefHeight(50);
+            button.setPrefWidth(200);
+            buttons.add(button);
+        }
+
+        return buttons;
     }
 
     private void makeCityCubes() {
@@ -639,6 +662,7 @@ public class GameView implements GameObserver, GameBoardObserver {
         infectionRate.setText("Infection Rate: " + gameBoardObservable.getInfectionRate());
         List<City> cityList = gameBoardObservable.getCities();
         List<City> citiesWithResearchStation = gameBoardObservable.getCitiesWithResearchStations();
+        List<PlayerCard> playerStack = gameBoardObservable.getPlayerStack();
 
         for (City city : citiesWithResearchStation)
         {
@@ -658,9 +682,23 @@ public class GameView implements GameObserver, GameBoardObserver {
 
         for (City city : cityList) {
             //Text cubeAmountText = new Text(Integer.toString(city.getCubeAmount()));
-
             this.citiesWithAmountCubes.get(city.getName()).setText(Integer.toString(city.getCubes().size()));
         }
+
+        int indexPlayerCards = 0;
+        for (PlayerCard playerCard : playerStack)
+        {
+            this.playerHand.get(indexPlayerCards).setText(playerCard.getName());
+            indexPlayerCards++;
+        }
+
+        for (int i = indexPlayerCards; i < 9; i++)
+        {
+            this.playerHand.get(i).setPrefHeight(0);
+            this.playerHand.get(i).setPrefWidth(0);
+            this.playerHand.get(i).setStyle("-fx-background-color:transparent");
+        }
+
     }
 
     private void createUpdatedGameViewBorderPane(GameObservable gameObservable) {

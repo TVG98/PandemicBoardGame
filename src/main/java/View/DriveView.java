@@ -185,33 +185,7 @@ public class DriveView implements GameObserver {
             cityButtons.get(i).setPrefHeight(0);
             cityButtons.get(i).setPrefWidth(0);
             cityButtons.get(i).setStyle("-fx-background-color:transparent");
-
         }
-        //return buttons;
-
-
-
-
-        /*Button b1 = new Button(cityNames.get(0));
-        b1.setOnAction(e -> getCitiesButtonHandler(b1));
-
-        Button b2 = new Button(cityNames.get(1));
-        b2.setOnAction(e -> getCitiesButtonHandler(b2));
-
-        Button b3 = new Button(cityNames.get(1));
-        b3.setOnAction(e -> getCitiesButtonHandler(b3));
-
-        Button b4 = new Button("temp");
-        b4.setOnAction(e -> getCitiesButtonHandler(b4));
-
-        Button b5 = new Button("temp");
-        b5.setOnAction(e -> getCitiesButtonHandler(b5));
-
-        Button b6 = new Button("temp");
-        b6.setOnAction(e -> getCitiesButtonHandler(b6));*/
-
-        //Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-       // return buttons;
     }
 
     private void backButtonHandler() {
