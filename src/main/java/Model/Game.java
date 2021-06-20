@@ -4,7 +4,9 @@ import Observers.GameObservable;
 import Observers.GameObserver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : Thimo van Velzen, Tom van Gogh
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class Game implements GameObservable {
     private final ArrayList<GameObserver> observers = new ArrayList<>();
+    private ArrayList<Role> availableRoles = (ArrayList<Role>) Arrays.asList(Role.values());
 
     private List<Player> players;
     private int currentPlayerIndex = 0;
@@ -38,6 +41,17 @@ public class Game implements GameObservable {
     /**
      * @author : Thimo van Velzen
      */
+    public Role getRandomRole() {
+        int randomIndex = (int) (availableRoles.size() * Math.random());
+        Role role = availableRoles.get(randomIndex);
+        availableRoles.remove(randomIndex);
+
+        return role;
+    }
+
+    /**
+     * @author : Thimo van Velzen
+     */
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex;
         notifyAllObservers();
@@ -48,6 +62,7 @@ public class Game implements GameObservable {
      */
     public void setLost() {
         lost = true;
+        notifyAllObservers();
     }
 
     /**
@@ -55,6 +70,7 @@ public class Game implements GameObservable {
      */
     public void setWon() {
         won = true;
+        notifyAllObservers();
     }
 
     /**

@@ -128,7 +128,7 @@ public class GameController {
     }
 
     private Role getRandomRole() {
-        return Role.values()[new Random().nextInt(Role.values().length)];
+        return game.getRandomRole();
     }
 
     /**
@@ -137,12 +137,7 @@ public class GameController {
     public void turn() {
         if (itIsYourTurn()) {
             try {
-                gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
-                gameBoardController.handleInfectionCardDraw();
-                playerController.endTurn(getCurrentPlayer());
-                databaseController.updatePlayerInServer(getCurrentPlayer());
-                checkWin();
-                changeTurn();
+                handleTurnActions();
             } catch (GameLostException gle) {
                 game.setLost();
                 databaseController.updateGameLost(true);
@@ -154,6 +149,18 @@ public class GameController {
         } else {
             System.out.println("it is not your turn!");
         }
+    }
+
+    /**
+     * @author : Thimo van Velzen, Daniel Paans
+     */
+    private void handleTurnActions() throws GameLostException {
+        gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
+        gameBoardController.handleInfectionCardDraw();
+        playerController.endTurn(getCurrentPlayer());
+        databaseController.updatePlayerInServer(getCurrentPlayer());
+        checkWin();
+        changeTurn();
     }
 
     /**
@@ -474,6 +481,14 @@ public class GameController {
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
         List<Player> players = data.returnPlayers();
         game.updatePlayers(players);
+
+        if (data.isGameLost()) {
+            game.setLost();
+        }
+
+        if (data.isGameWon()) {
+            game.setWon();
+        }
     }
 
     /**
