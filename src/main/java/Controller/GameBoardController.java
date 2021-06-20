@@ -291,6 +291,13 @@ public class GameBoardController {
     /**
      * @author : Thimo van Velzen
      */
+    public void removeCube(City currentCity, int cubeAmount) {
+        gameBoard.removeCubes(currentCity, cubeAmount);
+    }
+
+    /**
+     * @author : Thimo van Velzen
+     */
     public boolean cityHasResearchStation(City city) {
         return gameBoard.cityHasResearchStation(city);
     }

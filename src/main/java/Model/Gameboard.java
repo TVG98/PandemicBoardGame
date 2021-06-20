@@ -449,9 +449,9 @@ public class Gameboard implements GameBoardObservable {
     /**
      * @author : Thimo van Velzen
      */
-    public void removeCubes(City currentCity, VirusType virusType, int cubeAmount) {
+    public void removeCubes(City currentCity, int cubeAmount) {
         currentCity.removeCube();
-        tryToIncreaseCubeAmount(virusType, cubeAmount);
+        tryToIncreaseCubeAmount(currentCity.getVIRUS_TYPE(), cubeAmount);
         notifyAllObservers();
     }
 

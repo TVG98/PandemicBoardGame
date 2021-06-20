@@ -14,8 +14,8 @@ public class TreatDiseaseThreeCubes implements TreatDiseaseBehavior {
     PlayerController playerController = PlayerController.getInstance();
 
     @Override
-    public void treatDisease(Player currentPlayer, City currentCity) throws CityNotFoundException {
-        gameBoardController.getCity(currentCity.getName()).removeAllCubes();
+    public void treatDisease(Player currentPlayer, City currentCity) {
+        gameBoardController.removeCube(currentCity,3);
         playerController.decrementActions(currentPlayer);
     }
 }
