@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Model.CityCard;
+import Model.Sound;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import javafx.geometry.Pos;
@@ -227,23 +228,26 @@ public class DirectFlightView implements GameObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
+        gameController.playSoundEffect(Sound.AIRPLANE);
         gameController.handleDirectFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 
     private void getCityButtonHandler(Button button) {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }
 
-    private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
+    private void createUpdatedBorderPane(GameObservable gameObservable) {
+        statusText.setText("You are currently in: " + gameObservable.getCurrentPlayer().getCurrentCity().getName());
 
-        ArrayList<CityCard> cityCardsInHand = observable.getPlayers().get(observable.getCurrentPlayerIndex()).createCityCardsFromPlayer();
+        ArrayList<CityCard> cityCardsInHand = gameObservable.getCurrentPlayer().createCityCardsFromPlayer();
         ArrayList<String> cityCardsInHandNames = new ArrayList<>();
         for (CityCard cityCard : cityCardsInHand) {
             cityCardsInHandNames.add(cityCard.getName());

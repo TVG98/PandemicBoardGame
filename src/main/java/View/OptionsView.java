@@ -1,6 +1,7 @@
 package View;
 
 import Controller.SoundController;
+import Model.Sound;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class OptionsView {
@@ -46,19 +48,16 @@ public class OptionsView {
 
         // Setup Backgound Shapes (textBoxes) //
         Rectangle masterVolumeTextBox = new Rectangle(400, 100);
-        masterVolumeTextBox.setY(100);
+        masterVolumeTextBox.setY(190);
         masterVolumeTextBox.setX(140);
         Rectangle SFXVolumeTextBox = new Rectangle(400, 100);
-        SFXVolumeTextBox.setY(285);
+        SFXVolumeTextBox.setY(375);
         SFXVolumeTextBox.setX(140);
         Rectangle musicVolumeTextBox = new Rectangle(400, 100);
-        musicVolumeTextBox.setY(470);
+        musicVolumeTextBox.setY(560);
         musicVolumeTextBox.setX(140);
-        Rectangle UIVolumeTextBox = new Rectangle(400, 100);
-        UIVolumeTextBox.setY(655);
-        UIVolumeTextBox.setX(140);
         ArrayList<Rectangle> textBoxes = new ArrayList<Rectangle>();
-        Collections.addAll(textBoxes, masterVolumeTextBox, SFXVolumeTextBox, musicVolumeTextBox, UIVolumeTextBox);
+        Collections.addAll(textBoxes, masterVolumeTextBox, SFXVolumeTextBox, musicVolumeTextBox);
 
         for (Rectangle textBox : textBoxes) {
             textBox.setArcHeight(30d);
@@ -70,21 +69,23 @@ public class OptionsView {
 
         // Setup Center BorderPane (hboxCenter) //
         Slider masterVolumeSlider = new Slider();
+        masterSliderHandler(masterVolumeSlider);
         Slider SFXVolumeSlider = new Slider();
+        SFXSliderHandler(SFXVolumeSlider);
         Slider musicVolumeSlider = new Slider();
         musicSliderHandler(musicVolumeSlider);
-        Slider UIVolumeSlider = new Slider();
         ArrayList<Slider> volumeSliders = new ArrayList<Slider>();
-        Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider, UIVolumeSlider);
+        Collections.addAll(volumeSliders, masterVolumeSlider, SFXVolumeSlider, musicVolumeSlider);
+        System.out.println(Arrays.toString(soundController.getVolumes()));
 
-        for (Slider slider : volumeSliders) {
-            slider.setMin(0);
-            slider.setMax(100);
-            slider.setValue(100);  // Moet nog geupdate worden met de SoundController
-            slider.setShowTickLabels(true);
-            slider.setShowTickMarks(true);
-            slider.setMajorTickUnit(25);
-            slider.setMinorTickCount(5);
+        for (int i = 0; i < volumeSliders.size(); i++) {
+            volumeSliders.get(i).setMin(0);
+            volumeSliders.get(i).setMax(100);
+            volumeSliders.get(i).setValue(soundController.getVolumes()[i]);
+            volumeSliders.get(i).setShowTickLabels(true);
+            volumeSliders.get(i).setShowTickMarks(true);
+            volumeSliders.get(i).setMajorTickUnit(25);
+            volumeSliders.get(i).setMinorTickCount(5);
         }
 
         VBox vboxSliders = new VBox();
@@ -96,9 +97,8 @@ public class OptionsView {
         Text masterVolumeText = new Text("Master volume");
         Text SFXVolumeText = new Text("SFX volume");
         Text musicVolumeText = new Text("Music volume");
-        Text UIVolumeText = new Text("UI volume");
         ArrayList<Text> volumeText = new ArrayList<Text>();
-        Collections.addAll(volumeText, masterVolumeText, SFXVolumeText, musicVolumeText, UIVolumeText);
+        Collections.addAll(volumeText, masterVolumeText, SFXVolumeText, musicVolumeText);
 
         for (Text text : volumeText) {
             text.setFont(new Font("Arial", 50));
@@ -152,7 +152,28 @@ public class OptionsView {
     }
 
     private void backToMainMenuButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         MenuView view = new MenuView(primaryStage);
+    }
+
+    private void masterSliderHandler(Slider musicSlider) {
+        musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                soundController.setMasterVolume(newValue.floatValue());
+                soundController.playSound(Sound.SLIDER);
+            }
+        });
+    }
+
+    private void SFXSliderHandler(Slider musicSlider) {
+        musicSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                soundController.setSfxVolume(newValue.floatValue());
+                soundController.playSound(Sound.SLIDER);
+            }
+        });
     }
 
     private void musicSliderHandler(Slider musicSlider) {
@@ -160,8 +181,8 @@ public class OptionsView {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 soundController.setMusicVolume(newValue.floatValue());
+                soundController.playSound(Sound.SLIDER);
             }
         });
     }
-
 }

@@ -3,6 +3,7 @@ package View;
 import Controller.LobbyController;
 import Exceptions.LobbyNotFoundException;
 import Exceptions.LobbyNotJoinableException;
+import Model.Sound;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -162,6 +163,7 @@ public class StartLobbyView {
 
         Button backToMainMenuButton = new Button("Back to main menu");
         backToMainMenuButton.setOnAction(event -> {
+            lobbyController.playSoundEffect(Sound.BUTTON);
             //lobbyController.makeLobby(inputName.getText());
             MenuView view = new MenuView(primaryStage);
         });
@@ -202,6 +204,7 @@ public class StartLobbyView {
     private void joinButtonHandler()
     {
         try {
+            lobbyController.playSoundEffect(Sound.BUTTON);
             lobbyController.addPlayerToServer(inputCode.getText(), inputName.getText());
             InLobbyView view = new InLobbyView(primaryStage);
         } catch (LobbyNotFoundException | LobbyNotJoinableException e) {
@@ -210,8 +213,8 @@ public class StartLobbyView {
         }
     }
 
-    private void createButtonHandler()
-    {
+    private void createButtonHandler() {
+        lobbyController.playSoundEffect(Sound.BUTTON);
         lobbyController.makeLobby(inputName.getText());
         InLobbyView view = new InLobbyView(primaryStage);
     }

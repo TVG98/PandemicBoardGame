@@ -1,5 +1,7 @@
 package View;
 
+import Controller.SoundController;
+import Model.Sound;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -21,6 +23,7 @@ public class WinView {
     final String pathToImage = "src/main/media/SituationBackground.jpg";
     final double width = 1280;
     final double height = 960;
+    SoundController soundController = SoundController.getInstance();
 
     public WinView(Stage primaryStage){
         this.primaryStage = primaryStage;
@@ -80,6 +83,7 @@ public class WinView {
     }
 
     private void backToMainMenuButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         MenuView view = new MenuView(primaryStage);
     }
 }

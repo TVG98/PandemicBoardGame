@@ -1,6 +1,7 @@
 package View;
 
 import Controller.GameController;
+import Model.Sound;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import javafx.geometry.Pos;
@@ -211,10 +212,12 @@ public class CharterFlightView implements GameObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
+        gameController.playSoundEffect(Sound.AIRPLANE);
         gameController.handleCharterFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
@@ -224,7 +227,7 @@ public class CharterFlightView implements GameObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
-        currentCityText.setText("You are currently in: " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).getCurrentCity().getName());
+        currentCityText.setText("You are currently in: " + gameObservable.getCurrentPlayer().getCurrentCity().getName());
     }
     @Override
     public void update(GameObservable gameObservable) {

@@ -2,6 +2,8 @@ package View;
 
 import Controller.GameController;
 import Model.City;
+import Model.GameSounds;
+import Model.Sound;
 import Observers.GameObservable;
 import Observers.GameObserver;
 import javafx.geometry.Pos;
@@ -223,22 +225,25 @@ public class DriveView implements GameObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
+        gameController.playSoundEffect(Sound.CARDRIVING);
         gameController.handleDrive(selectedCity);
         GameView view = new GameView(primaryStage);
     }
 
     private void getCitiesButtonHandler(Button button) {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }
 
     private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
-        ArrayList<String> nearCities = observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getNearCities();
+        statusText.setText("You are currently in: " + observable.getCurrentPlayer().getCurrentCity().getName());
+        ArrayList<String> nearCities = observable.getCurrentPlayer().getCurrentCity().getNearCities();
         getCitiesButtons(nearCities);
     }
 

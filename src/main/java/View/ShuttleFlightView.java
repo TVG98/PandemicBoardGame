@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Model.City;
+import Model.Sound;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObservable;
@@ -27,11 +28,14 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
     final double width = 1600;
     final double height = 900;
-    Text cityHasResearchStationText = new Text("Your current city has a research station");
+    Text cityHasResearchStationText = new Text("TEMP!");
+    boolean cityHasResearchStation;
+    City currentCity;
     Text selectedCityText = new Text("You currently have no city selected");
     String selectedCity = "None";
     ArrayList<Button> cityButtons;
     Text statusText = new Text ("temp");
+
 
     GameController gameController = GameController.getInstance();
 
@@ -214,10 +218,12 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void moveButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         gameController.handleShuttleFlight(selectedCity);
         GameView view = new GameView(primaryStage);
     }
@@ -228,8 +234,9 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
 
     }
 
-    private void createUpdatedBorderPane(GameObservable observable) {
-        statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex()).getCurrentCity().getName());
+    private void createUpdatedBorderPane(GameObservable gameObservable) {
+        currentCity = gameObservable.getCurrentPlayer().getCurrentCity();
+        statusText.setText("You are currently in: " + currentCity.getName());
     }
 
     private void createUpdatedBorderPane(GameBoardObservable gameBoardObservable) {
@@ -239,6 +246,12 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
             citiesWithResearchStationsNames.add(city.getName());
         }
         getCitiesWithResearchStationButtons(citiesWithResearchStationsNames);
+        cityHasResearchStation = citiesWithResearchStations.contains(currentCity);
+        if (cityHasResearchStation) {
+            cityHasResearchStationText.setText("The city you are in has a research station.");
+        } else {
+            cityHasResearchStationText.setText("The city you are in does not have a research station!");
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package View;
 
 import Controller.LobbyController;
 import Exceptions.PlayerNotFoundException;
+import Model.Sound;
 import Observers.*;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -110,6 +111,7 @@ public class InLobbyView implements LobbyObserver {
         Button backToMainMenuButton = new Button("Back to main menu");
         backToMainMenuButton.setOnAction(event -> {
             try {
+                lobbyController.playSoundEffect(Sound.BUTTON);
                 lobbyController.removePlayerFromServer(lobbyController.getCurrentPlayer());
                 MenuView view = new MenuView(primaryStage);
             } catch (PlayerNotFoundException e) {

@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Model.Player;
+import Model.Sound;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObservable;
@@ -165,10 +166,12 @@ public class TakeSharePlayerView implements GameObserver{
 
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 
     private void takeCardButtonHandler() {
+        gameController.playSoundEffect(Sound.CARDDRAW);
         if (!selectedPlayer.equals("None")) {
             TakeShareCardsView view = new TakeShareCardsView(primaryStage, selectedPlayer);
         }
@@ -176,6 +179,7 @@ public class TakeSharePlayerView implements GameObserver{
 
     private void getPlayerButtonHandler(Button button)
     {
+        gameController.playSoundEffect(Sound.BUTTON);
         selectedPlayerText.setText("You selected " + button.getText() + " to take a card from");
         selectedPlayer = button.getText();
         gameController.handleShareKnowledge(selectedPlayer, false);

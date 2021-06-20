@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Model.Player;
 import Model.PlayerCard;
+import Model.Sound;
 import Observers.GameBoardObservable;
 import Observers.GameBoardObserver;
 import Observers.GameObservable;
@@ -188,6 +189,7 @@ public class TakeShareCardsView implements GameObserver {
     }
 
     private void backButtonHandler() {
+        gameController.playSoundEffect(Sound.BUTTON);
         GameView view = new GameView(primaryStage);
     }
 

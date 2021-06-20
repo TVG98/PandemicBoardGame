@@ -1,5 +1,7 @@
 package View;
 
+import Controller.SoundController;
+import Model.Sound;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,6 +24,7 @@ public class JoinFailedView {
     final double width = 1280;
     final double height = 960;
     String reasonForFailure;
+    SoundController soundController = SoundController.getInstance();
 
     public JoinFailedView(Stage primaryStage, String reasonForFailure) {
         this.primaryStage = primaryStage;
@@ -96,6 +99,7 @@ public class JoinFailedView {
     }
 
     private void backButtonHandler() {
+        soundController.playSound(Sound.BUTTON);
         StartLobbyView view = new StartLobbyView(primaryStage);
     }
 }

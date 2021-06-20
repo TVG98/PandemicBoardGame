@@ -15,26 +15,22 @@ public class GameMusic implements GameSounds {
         this.volume = volume;
     }
 
-    @Override
-    public String getSoundEffectPath(int soundNumber) throws SoundNotFoundException {
-        String soundPath = "src/main/media/";
 
-        switch (soundNumber) {
-            case 0:
-                soundPath += "big-boi-pants.wav";
-                break;
-            case 1:
-                soundPath += "etc.";
-                break;
-            default:
-                throw new SoundNotFoundException("SoundEffect number does not exist");
+    private String getSoundEffectPath(Sound musicNumber) throws SoundNotFoundException {
+        String soundPath = "src/main/media/GameMusic/";
+
+        try {
+            soundPath += musicNumber.name().toLowerCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SoundNotFoundException("SoundEffect number does not exist");
         }
 
-        return soundPath;
+        return soundPath + ".wav";
     }
 
     @Override
-    public void playSound(int musicNumber) {
+    public void playSound(Sound musicNumber) {
         try {
             String soundPath = getSoundEffectPath(musicNumber);
             Clip clip = AudioSystem.getClip();
@@ -52,7 +48,7 @@ public class GameMusic implements GameSounds {
 
     @Override
     public void setVolume(float volume) {
-        this.volume = volume * 0.8f;
+        this.volume = volume;
         gainControl.setValue(this.volume);
     }
 }
