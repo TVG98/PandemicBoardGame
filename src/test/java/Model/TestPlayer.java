@@ -3,6 +3,8 @@ package Model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -110,5 +112,20 @@ public class TestPlayer {
         int actionsLeft = player.getActions();
 
         assertThat(actionsLeft, is(expectedActionsLeft));
+    }
+
+    /**
+     * @author : Daniel Paans
+     */
+    @Test
+    public void Should_ReturnAllCityCardsFromHand() {
+        ArrayList<PlayerCard> hand = new ArrayList<>();
+        hand.add(new CityCard(new City("Tokyo", VirusType.RED)));
+        hand.add(new Airlift("Airlift", "Effect"));
+        hand.add(new CityCard(new City("Tokyo", VirusType.RED)));
+        hand.add(new CityCard(new City("Tokyo", VirusType.RED)));
+        player.setHand(hand);
+        System.out.println(player.getHand());
+        System.out.println(player.createCityCardsFromPlayer());
     }
 }

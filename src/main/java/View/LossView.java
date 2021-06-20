@@ -34,7 +34,6 @@ public class LossView {
         this.primaryStage = primaryStage;
         this.primaryStage.setResizable(false);
         loadStageWithBorderPane(createLossBorderPane());
-        soundController.playSound(Sound.LOSING);
     }
 
     private BorderPane createLossBorderPane() {
@@ -86,6 +85,7 @@ public class LossView {
             Scene scene = new Scene(bp, width, height);
             primaryStage.show();
             primaryStage.setScene(scene);
+            soundController.playSound(Sound.LOSING);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,6 +93,6 @@ public class LossView {
 
     private void backToMainMenuButtonHandler(){
         soundController.playSound(Sound.BUTTON);
-            MenuView view = new MenuView(primaryStage);
+        MenuView view = new MenuView(primaryStage);
     }
 }

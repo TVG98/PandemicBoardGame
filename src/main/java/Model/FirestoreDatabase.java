@@ -5,11 +5,16 @@ import Exceptions.LobbyFullException;
 import Exceptions.PlayerNotFoundException;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.v1.FirestoreSettings;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.varia.NullAppender;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -34,7 +39,8 @@ public class FirestoreDatabase {
     static FirestoreDatabase firestoreDatabase;
 
     private FirestoreDatabase() {
-            initialize();
+        org.apache.log4j.BasicConfigurator.configure(new NullAppender());
+        initialize();
     }
 
     /**

@@ -192,10 +192,11 @@ public class GameBoardController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Daniel Paans
      */
     public void handleInfectionCardDraw() throws GameLostException {
         gameBoard.handleInfectionCardDraw(1);
+
         updateServer();
     }
 
