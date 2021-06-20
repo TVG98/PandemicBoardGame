@@ -81,10 +81,14 @@ public class PlayerController {
     public boolean checkCardInHandBasedOnCity(City city, Player player) {
         return player.checkCardInHandBasedOnCity(city);
     }
+
     public boolean checkCardInHand(PlayerCard card, Player player) {
         return player.checkCardInHand(card);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public String getName(Player player) {
         return player.getPlayerName();
     }
@@ -101,16 +105,25 @@ public class PlayerController {
         return player.getRole().equals(role);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void resetActions(Player player) {
         player.resetActions();
         notifyGameObserver();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void setCurrentCity(Player player, City city) {
         player.setCurrentCity(city);
         notifyGameObserver();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void decrementActions(Player player) {
         player.decrementActions();
         notifyGameObserver();

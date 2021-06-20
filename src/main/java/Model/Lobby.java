@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Tom van Gogh
  */
 
 public class Lobby implements LobbyObservable {
@@ -61,11 +61,17 @@ public class Lobby implements LobbyObservable {
         return playerReadyToStart;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void setJoinable(boolean joinable) {
         this.joinable = joinable;
         notifyAllObservers();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public String getPassword() {
         return password;
     }
@@ -92,20 +98,25 @@ public class Lobby implements LobbyObservable {
         notifyAllObservers();
     }
 
-    public void unregister() {
-        observers = new ArrayList<>();
-    }
-
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void register(LobbyObserver observer) {
         observers.add(observer);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void unregister(LobbyObserver observer) {
         observers.remove(observer);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void notifyAllObservers() {
         for (LobbyObserver observer : observers) {

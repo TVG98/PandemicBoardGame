@@ -748,11 +748,17 @@ public class GameView implements GameObserver, GameBoardObserver {
         }
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void update(GameObservable gameObservable) {
         Platform.runLater(() -> createUpdatedGameViewBorderPane(gameObservable));
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
         Platform.runLater(() -> createUpdatedGameViewBorderPane(gameBoardObservable));

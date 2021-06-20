@@ -102,6 +102,22 @@ public class DatabaseData {
         return gameboard;
     }
 
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public void setGameWon(boolean gameWon) {
+        this.gameWon = gameWon;
+    }
+
+    public boolean isGameLost() {
+        return gameLost;
+    }
+
+    public void setGameLost(boolean gameLost) {
+        this.gameLost = gameLost;
+    }
+
     public void setGameboard(Gameboard gameboard) {
         this.gameboard = gameboard;
     }
