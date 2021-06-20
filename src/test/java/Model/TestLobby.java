@@ -34,7 +34,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Romano Biertantie
      */
     @Test
     public void Should_ReturnTrueIfGivenLobbyCodeWas1234() {
@@ -44,7 +44,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Romano Biertantie
      */
     @Test
     public void Should_ReturnTrueIfGivenLobbyCodeWas123() {
