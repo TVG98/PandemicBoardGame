@@ -5,11 +5,9 @@ import Observers.GameObserver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Tom van Gogh
  */
 
 public class Game implements GameObservable {
@@ -104,12 +102,18 @@ public class Game implements GameObservable {
         return won;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void register(GameObserver observer) {
         observers.add(observer);
         notifyAllObservers();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void notifyAllObservers() {
         for (GameObserver observer : observers) {

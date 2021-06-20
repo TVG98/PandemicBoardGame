@@ -13,7 +13,7 @@ import Observers.LobbyObserver;
 import java.util.List;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Tom van Gogh
  */
 
 public class LobbyController {
@@ -44,7 +44,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     public void makeLobby(String playerName) {
         lobbyCode = databaseController.createLobbyCode();
@@ -53,7 +53,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     private void tryToAddPlayerToServer(String playerName) {
         try {
@@ -95,17 +95,23 @@ public class LobbyController {
         return currentPlayerName.equals(player.getPlayerName());
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     private void setPlayerReady(Player player) {
         player.setReadyToStart(true);
         databaseController.updatePlayerInServer(player);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void setServerLobbyNotJoinable() {
         databaseController.updateJoinable(false);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     public void addPlayerToServer(String lobbyCode, String playerName)
             throws LobbyNotFoundException, LobbyNotJoinableException {
@@ -137,7 +143,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     private void tryToAddPlayerToDatabase(Player player, String playerName) {
         try {
@@ -164,6 +170,9 @@ public class LobbyController {
         return playerName;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public Player getCurrentPlayer() throws PlayerNotFoundException {
         List<Player> players = lobby.getPlayers();
 
@@ -176,6 +185,9 @@ public class LobbyController {
         throw new PlayerNotFoundException("Player not found.");
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public String checkPlayerName(String playersString, String playerName) {
         String newName = playerName;
 
@@ -195,6 +207,9 @@ public class LobbyController {
         databaseController.removePlayer(player.getPlayerName());
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public Lobby getLobby() {
         return lobby;
     }
@@ -208,18 +223,17 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     public synchronized void update(DatabaseData data) {
         lobby.setJoinable(data.isJoinable());
         lobby.setPlayers(data.returnPlayers());
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {
         lobby.register(lobbyObserver);
-    }
-
-    public void unregisterLobbyObserver() {
-        lobby.unregister();
     }
 }

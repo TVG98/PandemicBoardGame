@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
  */
 
 public class Gameboard implements GameBoardObservable {
@@ -480,26 +480,41 @@ public class Gameboard implements GameBoardObservable {
         throw new VirusNotFoundException("Virus not Found");
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public List<City> getCities() {
         return cities;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public List<Cure> getCures() {
         return cures;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public List<Virus> getViruses() {
         return viruses;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public ArrayList<InfectionCard> getInfectionStack() {
         return infectionStack;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public ArrayList<InfectionCard> getInfectionDiscardStack() {
         return infectionDiscardStack;
@@ -518,26 +533,41 @@ public class Gameboard implements GameBoardObservable {
         throw new CityNotFoundException("City not found" + " : " + cityName);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public int getOutbreakCounter() {
         return outbreakCounter;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public int getInfectionRate() {
         return INFECTION_RATES.get(infectionRate);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public ArrayList<PlayerCard> getPlayerStack() {
         return playerStack;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public ArrayList<PlayerCard> getPlayerDiscardStack() {
         return playerDiscardStack;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public ArrayList<City> getCitiesWithResearchStations() {
         return citiesWithResearchStations;
@@ -698,10 +728,16 @@ public class Gameboard implements GameBoardObservable {
         }
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public int getDrawnEpidemicCards() {
         return drawnEpidemicCards;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void addDrawnEpidemicCard() {
         drawnEpidemicCards++;
         notifyAllObservers();
@@ -737,6 +773,9 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void register(GameBoardObserver gameBoardObserver) {
         unregisterAllObservers();
@@ -744,11 +783,17 @@ public class Gameboard implements GameBoardObservable {
         notifyAllObservers();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void unregisterAllObservers() {
         observers = new ArrayList<>();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     @Override
     public void notifyAllObservers() {
         for (GameBoardObserver observer : observers) {

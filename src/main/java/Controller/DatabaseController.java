@@ -4,7 +4,7 @@ import Exceptions.LobbyFullException;
 import Model.*;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Tom van Gogh
  */
 
 public class DatabaseController {
@@ -29,6 +29,9 @@ public class DatabaseController {
         return databaseController;
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void updatePlayerInServer(Player player) {
         database.updatePlayerInServer(player);
     }
@@ -41,26 +44,29 @@ public class DatabaseController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Tom van Gogh
      */
     public String createLobbyCode() {
         return database.generateLobbyCode();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void addPlayer(String lobbyCode, Player player) throws LobbyFullException {
         database.listen(this, lobbyCode);
         database.addPlayerToLobby(player);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Tom van Gogh
      */
     public void updateJoinable(boolean joinable) {
         database.updateJoinable(joinable);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Tom van Gogh
      */
     public void updateGameStarted(boolean gameStarted) {
         database.updateGameStarted(gameStarted);
@@ -75,7 +81,7 @@ public class DatabaseController {
 
 
     /**
-     * @author : Thimo van Velzen
+     * @author : Thimo van Velzen, Tom van Gogh
      */
     public void update(DatabaseData data) {
         if (!data.isGameStarted()) {

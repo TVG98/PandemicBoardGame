@@ -351,10 +351,9 @@ public class GameBoardController {
         return gameBoard.getCity(cityName);
     }
 
-    public void notifyGameBoardObserver() {
-        gameBoard.notifyAllObservers();
-    }
-
+    /**
+     * @author : Tom van Gogh
+     */
     public void registerObserver(GameBoardObserver observer) {
         gameBoard.register(observer);
     }

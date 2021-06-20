@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
  */
 
 public class GameController {
@@ -29,6 +29,9 @@ public class GameController {
     private final SoundController soundController;
     private boolean playersUpdated = false;
 
+    /**
+     * @author : Tom van Gogh, Daniel Paans
+     */
     private GameController() {
         soundController = SoundController.getInstance();
         lobbyController = LobbyController.getInstance();
@@ -85,7 +88,6 @@ public class GameController {
                     }
                 }
             }
-
             players.forEach(databaseController::updatePlayerInServer);
         }
     }
@@ -112,6 +114,9 @@ public class GameController {
         }
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     private Player setPlayer(Player player) {
         try {
             player.setRole(getRandomRole());
@@ -479,18 +484,23 @@ public class GameController {
         game.updatePlayers(players);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void registerPlayerObserver(GameObserver observer) {
         game.register(observer);
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     public void registerGameBoardObserver(GameBoardObserver observer) {
         gameBoardController.registerObserver(observer);
     }
 
-    public void notifyGameBoardObserver() {
-        gameBoardController.notifyGameBoardObserver();
-    }
-
+    /**
+     * @author : Tom van Gogh
+     */
     public void notifyGameObserver() {
         game.notifyAllObservers();
     }
