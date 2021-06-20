@@ -235,7 +235,7 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
-        currentCity = gameObservable.getCurrentPlayer().getCurrentCity();
+        currentCity = gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).getCurrentCity();
         statusText.setText("You are currently in: " + currentCity.getName());
     }
 

@@ -111,6 +111,9 @@ public class PlayerController {
         notifyGameObserver();
     }
 
+    /**
+     * @author : Tom van Gogh
+     */
     private void notifyGameObserver() {
         GameController.getInstance().notifyGameObserver();
         System.out.println(GameController.getInstance());

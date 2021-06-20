@@ -321,10 +321,10 @@ public class CureView implements GameObserver, GameBoardObserver {
     }
 
     private void createUpdatedBorderPane(GameObservable gameObservable) {
-        currentCity = gameObservable.getCurrentPlayer().getCurrentCity();
+        currentCity = gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).getCurrentCity();
         statusText.setText("You are currently in: " + currentCity.getName());
 
-        ArrayList<CityCard> cityCardsInHand = gameObservable.getCurrentPlayer().createCityCardsFromPlayer();
+        ArrayList<CityCard> cityCardsInHand = gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex()).createCityCardsFromPlayer();
         ArrayList<String> cityCardsInHandNames = new ArrayList<>();
         for (CityCard cityCard : cityCardsInHand) {
             cityCardsInHandNames.add(cityCard.getName());
