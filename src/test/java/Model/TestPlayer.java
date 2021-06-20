@@ -6,6 +6,9 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
+/**
+ * @author : Thimo van Velzen
+ */
 public class TestPlayer {
 
     private Player player;
@@ -17,6 +20,9 @@ public class TestPlayer {
         playerCard = new CityCard(new City("Atlanta", VirusType.BLUE));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnThatPlayerCardIsInHandOfPlayer() {
         player.addCardToHand(playerCard);
@@ -25,6 +31,9 @@ public class TestPlayer {
         assertThat(playerHasCard,  is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentObject() {
         PlayerCard differentPlayerCard = new CityCard(new City("Atlanta", VirusType.BLUE));
@@ -35,6 +44,9 @@ public class TestPlayer {
         assertThat(playerHasCard,  is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentCityName() {
         PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE));
@@ -45,6 +57,9 @@ public class TestPlayer {
         assertThat(playerHasCard,  is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_RemoveCardFromHandFromPlayer() {
         player.addCardToHand(playerCard);
@@ -55,6 +70,9 @@ public class TestPlayer {
         assertThat(playerHasCard, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_KeepCardFromHandFromPlayer() {
         PlayerCard differentPlayerCard = new CityCard(new City("New York", VirusType.BLUE));
@@ -67,6 +85,9 @@ public class TestPlayer {
         assertThat(playerHasCard, is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_DecrementActionsByOne() {
         player.decrementActions();
@@ -77,6 +98,9 @@ public class TestPlayer {
         assertThat(actionsLeft, is(expectedActionsLeft));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ResetActionsToFourActionsLeft() {
         player.decrementActions();

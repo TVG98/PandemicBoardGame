@@ -16,6 +16,9 @@ public class TestVirus {
         virus = new Virus(VirusType.BLUE);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_Return24CubesWhenInitialized() {
         int expectedCubeAmount = 24;
@@ -24,6 +27,9 @@ public class TestVirus {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_Return22CubesWhenDecreaseCubesIsCalledTwice() throws GameLostException {
         virus.decreaseCubeAmount(1);
@@ -35,6 +41,9 @@ public class TestVirus {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_Return23CubesWhenDecreaseCubesIsCalledTwiceAndIncreaseCubeIsCalledOnce() throws GameLostException {
         virus.decreaseCubeAmount(1);
@@ -47,6 +56,9 @@ public class TestVirus {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_Return24CubesWhenCalledIncreaseCubesWhenAlready24CubesAreExisting() {
         virus.increaseCubeAmount(1);

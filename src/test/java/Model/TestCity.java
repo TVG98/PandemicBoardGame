@@ -6,6 +6,10 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
+/**
+ * @author : Thimo van Velzen
+ */
+
 public class TestCity {
 
     private final City atlanta = new City("Atlanta", VirusType.BLUE);
@@ -23,6 +27,9 @@ public class TestCity {
         atlanta.addNeighbour(miami.getName());
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayCubeSizeIsEqualToTwo() {
         atlanta.addCube(VirusType.BLUE);
@@ -34,6 +41,9 @@ public class TestCity {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayCubeAmountIsEqualToZeroOnStart() {
         int expectedCubeAmount = 0;
@@ -42,6 +52,9 @@ public class TestCity {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayNewYorkIsANeighbourOfAtlanta() {
         boolean newYorkIsNeighbour = atlanta.checkCityForAdjacency(newYork);
@@ -49,6 +62,9 @@ public class TestCity {
         assertThat(newYorkIsNeighbour, is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayChicagoIsNotANeighbourOfAtlanta() {
         boolean chicagoIsNeighbour = atlanta.checkCityForAdjacency(chicago);
@@ -56,6 +72,9 @@ public class TestCity {
         assertThat(chicagoIsNeighbour, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_returnFalseWhenVirusTypeIsNotBlueForAtlanta() {
         VirusType red = VirusType.RED;
@@ -64,6 +83,9 @@ public class TestCity {
         assertThat(atlantaHasRedVirus, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_haveOneCubeWhenAddedThreeCubesAndRemovedTwoCubes() {
         atlanta.addCube(VirusType.BLUE);
@@ -78,6 +100,9 @@ public class TestCity {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_haveNoCubesWhenAddedThreeCubesAndRemovedAllCubes() {
         atlanta.addCube(VirusType.BLUE);
@@ -91,6 +116,9 @@ public class TestCity {
         assertThat(cubeAmount, is(expectedCubeAmount));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_NotThrowAnIndexOutOfBoundsErrorWhenRemovingCubeWhenNoCubesAreOnCity() {
         boolean exceptionsThrown = false;
@@ -104,6 +132,9 @@ public class TestCity {
         assertThat(exceptionsThrown, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_NotThrowAnIndexOutOfBoundsErrorWhenRemovingAllCubesWhenNoCubesAreOnCity() {
         boolean exceptionsThrown = false;

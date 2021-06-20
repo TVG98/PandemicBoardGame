@@ -9,6 +9,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
+/**
+ * @author : Thimo van Velzen
+ */
 public class TestGame {
 
     private Game game;
@@ -44,6 +47,9 @@ public class TestGame {
         playerFour.setCurrentCity(atlanta);
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayCurrentPlayerTurnIsPlayerOne() {
         String playerNameOne = "Thimo";
@@ -53,6 +59,9 @@ public class TestGame {
         assertThat(currentPlayerName, is(playerNameOne));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayCurrentPlayerTurnIsPlayerThree() {
         String playerNameThree = "Tom";
@@ -64,6 +73,9 @@ public class TestGame {
         assertThat(currentPlayerName, is(playerNameThree));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayCurrentPlayerTurnIsPlayerTwoAfterFiveTurns() {
         String playerNameTwo = "Romano";
@@ -76,6 +88,9 @@ public class TestGame {
         assertThat(currentPlayerName, is(playerNameTwo));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayWonIsFalseAfterLostIsSetTrue() {
         game.setLost();
@@ -85,6 +100,9 @@ public class TestGame {
         assertThat(gameWon, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayLostIsFalseAfterWonIsSetTrue() {
         game.setWon();
@@ -94,6 +112,9 @@ public class TestGame {
         assertThat(gameLost, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayAllPlayersStartInAtlanta() {
         ArrayList<Player> players = game.getPlayersInCity(atlanta);
@@ -104,6 +125,9 @@ public class TestGame {
         assertThat(playerSize, is(expectedPlayerSize));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayTwoPlayersAreInNewYork() {
         List<Player> allPlayers = game.getPlayers();

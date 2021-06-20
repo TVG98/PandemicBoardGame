@@ -10,6 +10,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
+/**
+ * @author : Thimo van Velzen
+ */
 public class TestLobby {
 
     private Lobby lobby;
@@ -19,6 +22,9 @@ public class TestLobby {
         lobby = new Lobby("1234");
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnFourWhenAskedMaxLobbySize() {
         int expectedMaxLobbySize = 4;
@@ -27,6 +33,9 @@ public class TestLobby {
         assertThat(maxLobbySize, is(expectedMaxLobbySize));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnTrueIfGivenLobbyCodeWas1234() {
         boolean matchingCode = lobby.checkLobbyCode("1234");
@@ -34,6 +43,9 @@ public class TestLobby {
         assertThat(matchingCode, is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnTrueIfGivenLobbyCodeWas123() {
         boolean matchingCode = lobby.checkLobbyCode("123");
@@ -41,6 +53,9 @@ public class TestLobby {
         assertThat(matchingCode, is(false));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnCorrectNamesWhenAskedAllNamesFromLobby() {
         ArrayList<String> expectedPlayerNames = new ArrayList<>(Arrays.asList("Thimo", "Tom"));
@@ -57,6 +72,9 @@ public class TestLobby {
         assertThat(playerNames, is(expectedPlayerNames));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ReturnCorrectNamesWhenAskedAllPlayersThatAreReadyToStart() {
         ArrayList<Boolean> expectedBooleans = new ArrayList<>(Arrays.asList(true, false, false, true));

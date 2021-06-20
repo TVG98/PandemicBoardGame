@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
+/**
+ * @author : Thimo van Velzen
+ */
 public class TestGameBoard {
 
     private Gameboard gameboard;
@@ -19,6 +22,9 @@ public class TestGameBoard {
         gameboard = new Gameboard();
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayThatPlayerStackSizeIs59WhenInitialized() {
         int expectedPlayerStackSize = 59;
@@ -27,6 +33,9 @@ public class TestGameBoard {
         assertThat(playerStackSize, is(expectedPlayerStackSize));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_DecreasePlayerStackSizeByTwoIfTwoPlayerCardsAreTakenFromDeck() throws GameLostException {
         gameboard.drawPlayerCard();
@@ -38,6 +47,9 @@ public class TestGameBoard {
         assertThat(playerStackSize, is(expectedPlayerStackSize));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_ThrowCityNotFoundExceptionWhenForgettingCapitalFirstLetter() {
         boolean cityNotFoundExceptionThrown = false;
@@ -51,6 +63,9 @@ public class TestGameBoard {
         assertThat(cityNotFoundExceptionThrown, is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayThatAlgiersAndChennaiHaveBlackVirusType() {
         boolean cityNotFoundExceptionThrown = false;
@@ -76,6 +91,9 @@ public class TestGameBoard {
         assertThat(citiesHaveBlackVirusType, is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_IncreasePlayerDiscardPileByOneWhenDiscardingPlayerCard() {
         PlayerCard playerCard = new CityCard(new City("Atlanta", VirusType.BLUE));
@@ -87,6 +105,9 @@ public class TestGameBoard {
         assertThat(playerDiscardStackSize, is(expectedPlayerDiscardStackSize));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayThatAtlantaIsOnlyCityWithResearchStationWhenGameStarts() {
         ArrayList<City> citiesWithResearchStation = gameboard.getCitiesWithResearchStations();
@@ -98,6 +119,9 @@ public class TestGameBoard {
         assertThat(atlantaIsOnlyCityWithResearchStation, is(true));
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_IncreaseSizeOfCitiesWithResearchStationWhenAddingResearchStationToCity() {
         try {
@@ -114,6 +138,9 @@ public class TestGameBoard {
         }
     }
 
+    /**
+     * @author : Thimo van Velzen
+     */
     @Test
     public void Should_SayThatWashingTonIsConnectedToAtlanta() {
         boolean isConnected = false;
