@@ -130,6 +130,7 @@ public class GameController {
                 changeTurn();
             } catch (GameLostException gle) {
                 game.setLost();
+                gle.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
                 e.getCause().printStackTrace();
@@ -443,7 +444,7 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     private boolean itIsYourTurn() {
-        String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex()).getPlayerName();
+        String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex() % 4).getPlayerName();
         return playerController.getYourPlayerName().equals(currentPlayerName);
     }
 
