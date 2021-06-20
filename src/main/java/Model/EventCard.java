@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author : Daniel Paans
+ */
 public class EventCard extends PlayerCard {
     private String effectText;
     private boolean played;

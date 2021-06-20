@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author : Daniel Paans
+ */
 public class OneQuietNight extends EventCard{
 
     public OneQuietNight(String name, String effectText) {

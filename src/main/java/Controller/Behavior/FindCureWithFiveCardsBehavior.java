@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author : Thimo van Velzen
+ * @author : Thimo van Velzen, Daniel Paans
  */
 
 public class FindCureWithFiveCardsBehavior implements FindCureBehavior {

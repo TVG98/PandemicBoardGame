@@ -17,7 +17,7 @@ public class DatabaseData {
     private Player player2;
     private Player player3;
     private Player player4;
-    private List<Player> players = Arrays.asList(new Player[4]);
+    private final List<Player> players = Arrays.asList(new Player[4]);
     private Gameboard gameboard;
 
     public DatabaseData() {}

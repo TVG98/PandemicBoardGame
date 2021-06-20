@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author : Daniel Paans
+ */
 public class Airlift extends EventCard {
 
     public Airlift(String name, String effectText) {

@@ -2,6 +2,9 @@ package Controller.Behavior.EventCards;
 
 import Controller.GameBoardController;
 
+/**
+ * @author : Daniel Paans
+ */
 public class AirLiftBehavior implements EventBehavior {
 
     public void play() {

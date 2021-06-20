@@ -6,6 +6,10 @@ import Model.PlayerCard;
 
 import java.util.ArrayList;
 
+/**
+ * @author : Daniel Paans
+ */
+
 public class ShareKnowledgeOnSameCityBehavior implements ShareKnowledgeBehavior {
 
     @Override
