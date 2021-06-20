@@ -9,10 +9,7 @@ import Model.*;
 import Observers.GameBoardObserver;
 import Observers.GameObserver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
@@ -148,6 +145,7 @@ public class GameController {
                 changeTurn();
             } catch (GameLostException gle) {
                 game.setLost();
+                databaseController.updateGameLost(true);
                 gle.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -162,14 +160,7 @@ public class GameController {
      * @author : Thimo van Velzen
      */
     private int getPlayerAmount() {
-        List<Player> players = game.getPlayers();
-        int size = 0;
-
-        for (Player player : players) {
-            size += (player == null) ? 0 : 1;
-        }
-
-        return size;
+        return (int) game.getPlayers().stream().filter(Objects::nonNull).count();
     }
 
     /**
@@ -189,6 +180,7 @@ public class GameController {
     public void checkWin() {
         if (gameBoardController.winByCures()) {
             game.setWon();
+            databaseController.updateGameWon(true);
         }
     }
 

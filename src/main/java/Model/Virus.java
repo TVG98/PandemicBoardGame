@@ -10,7 +10,7 @@ public class Virus {
     private VirusType virusType;
     private final int MAX_CUBE_AMOUNT = 24;
 
-    private int cubeAmount = 24;
+    private int cubeAmount = MAX_CUBE_AMOUNT;
 
     public Virus() {}
 
@@ -39,8 +39,8 @@ public class Virus {
     }
 
     public void decreaseCubeAmount(int amount) throws GameLostException {
-        System.out.println("VirusType: " + virusType + ", decreasing cube amount by:" + amount + ", cubes left of virus: " + cubeAmount);
         cubeAmount -= amount;
+        System.out.println("VirusType: " + virusType + ", decreasing cube amount by:" + amount + ", cubes left of virus: " + cubeAmount);
 
         if (cubeAmount < 0) {
             throw new GameLostException("U lost: All the cubes are on the board!");
