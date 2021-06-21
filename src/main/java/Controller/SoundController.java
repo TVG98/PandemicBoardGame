@@ -45,6 +45,12 @@ public class SoundController {
         music.playSound(sound);
     }
 
+    /**
+     * Changes a volume percentage into a volume decreasing value.
+     * @author Daniel Paans
+     * @param volumePercentage
+     * @return
+     */
     private float translateVolume(float volumePercentage) {
         return ((MAXVOLUME - volumePercentage) * -1)/TRANSLATION;
     }

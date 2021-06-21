@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Plays the game music.
+ * Handles the game music and sound effects.
  * @author Daniel Paans
  */
 
@@ -17,6 +17,12 @@ public class GameMusic implements GameSounds {
         this.volume = volume;
     }
 
+    /**
+     * Plays music continuously.
+     *
+     * @author Daniel Paans
+     * @param music
+     */
     @Override
     public void playSound(Sound music) {
         try {
