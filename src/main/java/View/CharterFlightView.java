@@ -223,9 +223,19 @@ public class CharterFlightView implements GameObserver {
         selectedCity = (String) comboBox.getValue();
     }
 
+    /**
+     * creates updated border pane with current city text.
+     *
+     * @author Willem Bakker
+     */
     private void createUpdatedBorderPane(GameObservable gameObservable) {
         currentCityText.setText("You are currently in: " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getCurrentCity().getName());
     }
+
+    /**
+     *
+     * @author Willem Bakker
+     */
     @Override
     public void update(GameObservable gameObservable) {
         createUpdatedBorderPane(gameObservable);

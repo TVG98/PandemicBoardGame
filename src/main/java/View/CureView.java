@@ -230,7 +230,11 @@ public class CureView implements GameObserver, GameBoardObserver {
         return buttons;
     }
 
-
+    /**
+     * sets all City buttons, amount of buttons depends on amount of city cards in hand.
+     *
+     * @author Willem Bakker
+     */
     private void getPlayerCityCards(ArrayList<String> cityCardsInHandNames) {
         //ArrayList<Button> cityButtons = new ArrayList<>();
 
@@ -247,29 +251,6 @@ public class CureView implements GameObserver, GameBoardObserver {
             cityButtons.get(i).setPrefWidth(0);
             cityButtons.get(i).setStyle("-fx-background-color:transparent");
         }
-
-        // TODO: Moet alle city cards van een speler ophalen
-        /*ArrayList<Button> buttons = new ArrayList<Button>();
-
-        Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> getPlayerCityCardsButtonHandler(b1));
-
-        Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> getPlayerCityCardsButtonHandler(b2));
-
-        Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> getPlayerCityCardsButtonHandler(b3));
-
-        Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> getPlayerCityCardsButtonHandler(b4));
-
-        Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> getPlayerCityCardsButtonHandler(b5));
-
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getPlayerCityCardsButtonHandler(b6));
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;*/
     }
 
 
@@ -323,6 +304,11 @@ public class CureView implements GameObserver, GameBoardObserver {
         getPlayerCityCards(cityCardsInHandNames);
     }
 
+    /**
+     * creates updated border pane, with appropriate text depending on whether the current city has a research station.
+     *
+     * @author Willem Bakker
+     */
     private void createUpdatedBorderPane(GameBoardObservable gameBoardObservable) {
         ArrayList<City> citiesWithResearchStations = gameBoardObservable.getCitiesWithResearchStations();
         if (citiesWithResearchStations.contains(currentCity)) {
@@ -332,11 +318,19 @@ public class CureView implements GameObserver, GameBoardObserver {
         }
     }
 
+    /**
+     *
+     * @author Willem Bakker
+     */
     @Override
     public void update(GameObservable gameObservable) {
         createUpdatedBorderPane(gameObservable);
     }
 
+    /**
+     *
+     * @author Willem Bakker
+     */
     @Override
     public void update(GameBoardObservable gameBoardObservable) {
         createUpdatedBorderPane(gameBoardObservable);

@@ -165,7 +165,11 @@ public class DriveView implements GameObserver {
 
         return bp;
     }
-
+    /**
+     * sets all City buttons, amount of buttons depends on amount of near cities.
+     *
+     * @author Willem Bakker
+     */
     private void getCitiesButtons(ArrayList<String> nearCities)
     {
         int index = 0;
@@ -188,6 +192,7 @@ public class DriveView implements GameObserver {
         }
     }
 
+
     private void backButtonHandler() {
         gameController.playSoundEffect(Sound.BUTTON);
         new GameView(primaryStage);
@@ -198,19 +203,31 @@ public class DriveView implements GameObserver {
         gameController.handleDrive(selectedCity);
         new GameView(primaryStage);
     }
-
+    /**
+     *
+     * @author Willem Bakker
+     */
     private void getCitiesButtonHandler(Button button) {
         gameController.playSoundEffect(Sound.BUTTON);
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }
 
+    /**
+     * Creates a new border pane with appropriate text and buttons with the near Cities.
+     *
+     * @author Willem Bakker
+     */
     private void createUpdatedBorderPane(GameObservable observable) {
         statusText.setText("You are currently in: " + observable.getPlayers().get(observable.getCurrentPlayerIndex() % 4).getCurrentCity().getName());
         ArrayList<String> nearCities = observable.getPlayers().get(observable.getCurrentPlayerIndex() % 4).getCurrentCity().getNearCities();
         getCitiesButtons(nearCities);
     }
 
+    /**
+     *
+     * @author Willem Bakker
+     */
     @Override
     public void update(GameObservable observable) {
         createUpdatedBorderPane(observable);

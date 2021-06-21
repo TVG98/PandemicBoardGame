@@ -184,6 +184,11 @@ public class DirectFlightView implements GameObserver {
         return bp;
     }
 
+    /**
+     * sets all City buttons, amount of buttons depends on amount of city cards in hand.
+     *
+     * @author Willem Bakker
+     */
     private void getCitiesButtons(ArrayList<String> cityCardsInHandNames)
     {
 
@@ -201,30 +206,6 @@ public class DirectFlightView implements GameObserver {
             cityButtons.get(i).setStyle("-fx-background-color:transparent");
         }
 
-
-        // : Moet alle kaarten van een speler ophalen om zo te bepalen waar de speler naartoe kan bewegen
-        /*ArrayList<Button> buttons = new ArrayList<Button>();
-
-        Button b1 = new Button("Ho Chi Minh");
-        b1.setOnAction(e -> getCityButtonHandler(b1));
-
-        Button b2 = new Button("Jakarta");
-        b2.setOnAction(e -> getCityButtonHandler(b2)
-        );
-        Button b3 = new Button("St. Petersburg");
-        b3.setOnAction(e -> getCityButtonHandler(b3));
-
-        Button b4 = new Button("Chennai");
-        b4.setOnAction(e -> getCityButtonHandler(b4));
-
-        Button b5 = new Button("Istanbul");
-        b5.setOnAction(e -> getCityButtonHandler(b5));
-
-        Button b6 = new Button("Johannesburg");
-        b6.setOnAction(e -> getCityButtonHandler(b6));
-
-        Collections.addAll(buttons, b1, b2, b3, b4, b5, b6);
-        return buttons;*/
     }
 
     private void backButtonHandler() {
@@ -243,7 +224,11 @@ public class DirectFlightView implements GameObserver {
         selectedCityText.setText("You selected: " + button.getText());
         selectedCity = button.getText();
     }
-
+    /**
+     * creates updated border pane with appropriate text and city buttons.
+     *
+     * @author Willem Bakker
+     */
     private void createUpdatedBorderPane(GameObservable gameObservable) {
         statusText.setText("You are currently in: " + gameObservable.getPlayers().get(gameObservable.getCurrentPlayerIndex() % 4).getCurrentCity().getName());
 
@@ -253,6 +238,10 @@ public class DirectFlightView implements GameObserver {
         getCitiesButtons(cityCardNames);
     }
 
+    /**
+     *
+     * @author Willem Bakker
+     */
     @Override
     public void update(GameObservable observable) {
         createUpdatedBorderPane(observable);
