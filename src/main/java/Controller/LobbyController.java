@@ -13,7 +13,8 @@ import Observers.LobbyObserver;
 import java.util.List;
 
 /**
- * @author : Thimo van Velzen, Tom van Gogh
+ * Handles all the lobby functionalities.
+ * @author Thimo van Velzen, Tom van Gogh, Daniel Paans
  */
 
 public class LobbyController {
@@ -33,7 +34,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public static LobbyController getInstance() {
         if (lobbyController == null) {
@@ -44,7 +45,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     public void makeLobby(String playerName) {
         lobbyCode = databaseController.createLobbyCode();
@@ -53,7 +54,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     private void tryToAddPlayerToServer(String playerName) {
         try {
@@ -84,7 +85,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private boolean playerSpotIsEmpty(Player player) {
         return player == null;
@@ -96,7 +97,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     private void setPlayerReady(Player player) {
         player.setReadyToStart(true);
@@ -104,14 +105,14 @@ public class LobbyController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void setServerLobbyNotJoinable() {
         databaseController.updateJoinable(false);
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     public void addPlayerToServer(String lobbyCode, String playerName)
             throws LobbyNotFoundException, LobbyNotJoinableException {
@@ -136,14 +137,14 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private boolean playerSlotInFirebaseIsTaken(int i) {
         return databaseController.getDatabaseData().getPlayer(i) != null;
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     private void tryToAddPlayerToDatabase(Player player, String playerName) {
         try {
@@ -155,7 +156,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param playerName
      * @return
      */
@@ -171,7 +172,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public Player getCurrentPlayer() throws PlayerNotFoundException {
         List<Player> players = lobby.getPlayers();
@@ -186,7 +187,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public String checkPlayerName(String playersString, String playerName) {
         String newName = playerName;
@@ -201,21 +202,21 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void removePlayerFromServer(Player player) {
         databaseController.removePlayer(player.getPlayerName());
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public Lobby getLobby() {
         return lobby;
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param sound
      */
     public void playSoundEffect(Sound sound) {
@@ -223,7 +224,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     public synchronized void update(DatabaseData data) {
         lobby.setJoinable(data.isJoinable());
@@ -231,7 +232,7 @@ public class LobbyController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void registerLobbyObserver(LobbyObserver lobbyObserver) {
         lobby.register(lobbyObserver);

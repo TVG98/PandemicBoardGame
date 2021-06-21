@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * An eventCard in the game.
+ * @author Daniel Paans
  */
 public class EventCard extends PlayerCard {
     private String effectText;

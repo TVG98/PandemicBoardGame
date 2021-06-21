@@ -28,7 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author : Romano Biertantie
+ * The view when you want to join or create a lobby.
+ * @author Romano Biertantie
  */
 
 public class StartLobbyView {

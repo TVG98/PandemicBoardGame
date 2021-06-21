@@ -3,7 +3,8 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * @author : Thimo van Velzen
+ * A city in the gameboard.
+ * @author Thimo van Velzen
  */
 
 public class City {

@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * All the sounds that can be played.
+ * @author Daniel Paans
  */
 public enum Sound {
     MAINMUSIC, AIRPLANE, BUTTON,

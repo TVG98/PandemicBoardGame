@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
+ * The view of the direct flight action.
+ * @author Romano Biertantie, Willem Bakker
  * @created June 11 2021 - 1:34 PM
  * @project testGame
  */

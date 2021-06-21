@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Thimo van Velzen
+ * An infection card object in the game.
+ * @author Thimo van Velzen, Daniel Paans
  */
 
 public class InfectionCard {

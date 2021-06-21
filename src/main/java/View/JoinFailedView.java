@@ -19,7 +19,8 @@ import javafx.stage.Stage;
 import java.io.File;
 
 /**
- * @author : Romano Biertantie
+ * The view when you failed to join the lobby.
+ * @author Romano Biertantie
  */
 
 public class JoinFailedView {

@@ -20,7 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author : Romano Biertantie
+ * The view of the main menu.
+ * @author Romano Biertantie
  */
 
 public class MenuView {

@@ -1,7 +1,7 @@
 package Exceptions;
 
 /**
- * @author : Tom van Gogh
+ * @author Tom van Gogh
  */
 public class LobbyNotFoundException extends Exception {
 

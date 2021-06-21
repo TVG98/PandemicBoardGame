@@ -25,6 +25,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The first view of the share knowledge tak action.
+ * @author Romano Biertantie
+ */
 public class TakeSharePlayerView implements GameObserver{
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";

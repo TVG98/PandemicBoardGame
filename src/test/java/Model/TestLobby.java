@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @author : Thimo van Velzen
+ * @author Thimo van Velzen
  */
 public class TestLobby {
 
@@ -23,7 +23,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ReturnFourWhenAskedMaxLobbySize() {
@@ -34,7 +34,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Romano Biertantie
+     * @author Romano Biertantie
      */
     @Test
     public void Should_ReturnTrueIfGivenLobbyCodeWas1234() {
@@ -44,7 +44,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Romano Biertantie
+     * @author Romano Biertantie
      */
     @Test
     public void Should_ReturnTrueIfGivenLobbyCodeWas123() {
@@ -54,7 +54,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ReturnCorrectNamesWhenAskedAllNamesFromLobby() {
@@ -73,7 +73,7 @@ public class TestLobby {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ReturnCorrectNamesWhenAskedAllPlayersThatAreReadyToStart() {

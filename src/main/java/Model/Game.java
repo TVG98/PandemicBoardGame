@@ -8,7 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author : Thimo van Velzen, Tom van Gogh
+ * Describes standard game functionalities.
+ * @author Thimo van Velzen, Tom van Gogh
  */
 public class Game implements GameObservable {
     private final ArrayList<GameObserver> observers = new ArrayList<>();
@@ -27,7 +28,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void nextTurn() {
         currentPlayer = null;
@@ -38,7 +39,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public Role getRandomRole() {
         int randomIndex = (int) (availableRoles.size() * Math.random());
@@ -49,7 +50,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex;
@@ -57,7 +58,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void setLost() {
         lost = true;
@@ -65,7 +66,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void setWon() {
         won = true;
@@ -73,7 +74,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public ArrayList<Player> getPlayersInCity(City city) {
         ArrayList<Player> playersInCity = new ArrayList<>();
@@ -118,7 +119,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void register(GameObserver observer) {
@@ -127,7 +128,7 @@ public class Game implements GameObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void notifyAllObservers() {

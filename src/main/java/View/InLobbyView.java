@@ -21,6 +21,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The view when you are inside the lobby.
+ * @author Romano Biertantie
+ */
 public class InLobbyView implements LobbyObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/LobbyBackground.jpg";

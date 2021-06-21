@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author : Daniel Paans
+ * Plays the sound effects.
+ * @author Daniel Paans
  */
 public class SoundEffects implements GameSounds {
     private float volume;

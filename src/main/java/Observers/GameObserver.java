@@ -1,7 +1,8 @@
 package Observers;
 
 /**
- * @author : Tom van Gogh
+ * Lets you update the GameView.
+ * @author Tom van Gogh
  */
 public interface GameObserver {
     void update(GameObservable observable);

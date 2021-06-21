@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * The government grant Eventcard.
+ * @author Daniel Paans
  */
 public class GovernmentGrant extends EventCard {
 

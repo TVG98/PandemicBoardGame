@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Thimo van Velzen
+ * A cube object in the game.
+ * @author Thimo van Velzen
  */
 
 public class Cube {

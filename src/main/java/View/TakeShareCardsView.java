@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * The second view of the share knowledge take action.
+ * @author Romano Biertantie
  * @created June 18 2021 - 11:00 AM
  * @project PandemicBoardGame
  */

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author : Tom van Gogh
+ * Lets you retrieve all the relevant information for the view from the GameBoard.
+ * @author Tom van Gogh
  */
 public interface GameBoardObservable {
     List<City> getCities();

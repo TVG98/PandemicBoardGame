@@ -5,7 +5,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * Is implemented by DriveBehaviors.
+ * @author Thimo van Velzen
  */
 
 public interface DriveBehavior {

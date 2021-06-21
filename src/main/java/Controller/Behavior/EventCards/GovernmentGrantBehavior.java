@@ -4,7 +4,8 @@ import Model.City;
 import Model.VirusType;
 
 /**
- * @author : Daniel Paans
+ * Implements the government grant functionality in to the game.
+ * @author Daniel Paans
  */
 public class GovernmentGrantBehavior implements  EventBehavior {
 

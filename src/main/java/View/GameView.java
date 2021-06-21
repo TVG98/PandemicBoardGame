@@ -26,7 +26,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * @author : Thimo van Velzen, Romano Biertantie
+ * The view of the main game.
+ * @author Thimo van Velzen, Romano Biertantie
  */
 
 public class GameView implements GameObserver, GameBoardObserver {
@@ -755,7 +756,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void update(GameObservable gameObservable) {
@@ -763,7 +764,7 @@ public class GameView implements GameObserver, GameBoardObserver {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void update(GameBoardObservable gameBoardObservable) {

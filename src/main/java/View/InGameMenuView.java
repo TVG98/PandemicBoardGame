@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author : Romano Biertantie
+ * This is the MenuView but than in game.
+ * @author Romano Biertantie
  */
 
 public class InGameMenuView {

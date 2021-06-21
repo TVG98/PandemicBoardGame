@@ -4,7 +4,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * Implements the normal build research station functionality.
+ * @author Thimo van Velzen
  */
 
 public class BuildResearchStationNormal implements BuildResearchStationBehavior {

@@ -3,7 +3,8 @@ package Model;
 import javafx.scene.shape.Line;
 
 /**
- * @author : Thimo van Velzen
+ * The connection between cities.
+ * @author Thimo van Velzen
  */
 
 public class Connection {

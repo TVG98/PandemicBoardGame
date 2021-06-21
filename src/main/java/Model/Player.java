@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
+ * Describes a player.
+ * @author Thimo van Velzen, Daniel Paans, Tom van Gogh
  */
 
 public class Player {
@@ -29,7 +30,7 @@ public class Player {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public Player(ArrayList<PlayerCard> hand, Role role, City currentCity, boolean readyToStart, String playerName) {
         this.hand = hand;
@@ -40,7 +41,7 @@ public class Player {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void endTurn() {
         resetActions();
@@ -82,7 +83,7 @@ public class Player {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @return
      */
     public ArrayList<CityCard> createCityCardsFromPlayer() {
@@ -118,49 +119,49 @@ public class Player {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public Role getRole() {
         return role;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void setRole(Role role) {
         this.role = role;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public City getCurrentCity() {
         return currentCity;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void setCurrentCity(City city) {
         currentCity = city;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public boolean getReadyToStart() {
         return readyToStart;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void setReadyToStart(boolean readyToStart) {
         this.readyToStart = readyToStart;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public String getPlayerName() {
         return playerName;
@@ -179,7 +180,7 @@ public class Player {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void resetActions() {
         actions = 4;
@@ -190,14 +191,14 @@ public class Player {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void decrementActions() {
         actions--;
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param city
      * @return
      * @throws CardNotFoundException

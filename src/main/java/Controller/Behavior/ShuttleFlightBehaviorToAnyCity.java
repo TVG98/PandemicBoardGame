@@ -4,7 +4,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * Implements the shuttle flight functionality when the player has the Operations Expert role.
+ * @author Thimo van Velzen, Daniel Paans
  */
 
 public class ShuttleFlightBehaviorToAnyCity implements ShuttleFlightBehavior {

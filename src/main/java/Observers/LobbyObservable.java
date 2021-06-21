@@ -3,7 +3,8 @@ package Observers;
 import java.util.ArrayList;
 
 /**
- * @author : Tom van Gogh
+ * Lets you retrieve all the relevant information for the view from the Lobby.
+ * @author Tom van Gogh
  */
 public interface LobbyObservable {
     void register(LobbyObserver observer);

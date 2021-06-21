@@ -1,7 +1,7 @@
 package Exceptions;
 
 /**
- * @author : Daniel Paans
+ * @author Daniel Paans
  */
 
 public class CureNotFoundException extends Exception {

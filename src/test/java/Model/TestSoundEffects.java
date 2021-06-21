@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @author : Daniel Paans
+ * @author Daniel Paans
  */
 public class TestSoundEffects {
 

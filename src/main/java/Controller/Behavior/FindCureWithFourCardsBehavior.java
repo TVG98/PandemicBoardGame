@@ -7,7 +7,8 @@ import Model.VirusType;
 import java.util.Map;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * Implements the find cure functionality when the player has the Scientist role.
+ * @author Thimo van Velzen, Daniel Paans
  */
 
 public class FindCureWithFourCardsBehavior implements FindCureBehavior {

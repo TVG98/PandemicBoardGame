@@ -6,7 +6,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * Is implemented by BuildResearchStationBehaviors.
+ * @author Thimo van Velzen
  */
 
 public interface BuildResearchStationBehavior {

@@ -9,7 +9,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
+ * Describes the complete gameboard.
+ * @author Thimo van Velzen, Daniel Paans, Tom van Gogh
  */
 
 public class Gameboard implements GameBoardObservable {
@@ -41,7 +42,7 @@ public class Gameboard implements GameBoardObservable {
     private final List<Integer> INFECTION_RATES = Arrays.asList(2, 2, 2, 3, 3, 4, 4);
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public Gameboard() {
         cities = Arrays.asList(new City[48]);
@@ -60,7 +61,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void makeCompleteGameBoard() {
         try {
@@ -72,7 +73,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void initializeGameBoard() {
         shuffleAllStacks();
@@ -134,7 +135,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void initializeCities() {
         String[] cityNames = getCityNames();
@@ -148,7 +149,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen, Romano Biertantie, Daniel Paans
+     * @author Thimo van Velzen, Romano Biertantie, Daniel Paans
      */
     private String[] getCityNames() {
         return new String[] {"San Francisco", "Chicago", "Atlanta",
@@ -169,7 +170,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param cityNames
      */
     private void assignVirusToCities(String[] cityNames) {
@@ -186,7 +187,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel Paans
+     * @author Thimo van Velzen, Daniel Paans
      */
     private void assignNeighboursToCities() throws IOException {
         BufferedReader bufferedReader = makeBufferedReader();
@@ -206,7 +207,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void assignNeighboursToCity(String line) throws CityNotFoundException {
         City CityOne = getCity(line.split(";")[0]);
@@ -217,7 +218,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     private BufferedReader makeBufferedReader() throws FileNotFoundException {
         File textFile = new File(PATH_TO_CONNECTED_CITIES);
@@ -227,7 +228,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private ArrayList<InfectionCard> initializeInfectionCardStack() {
         ArrayList<InfectionCard> infectionCardStack = new ArrayList<>();
@@ -240,7 +241,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @return
      */
     private ArrayList<PlayerCard> initializePlayerCardStack() {
@@ -257,7 +258,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @return
      */
     private EventCard[] initializeEventCards() {
@@ -272,7 +273,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param epidemicCardAmount
      * @return
      */
@@ -287,7 +288,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void flipCurePawn(Cure cure) {
         if (cure.getCureState().equals(CureState.ACTIVE)) {
@@ -300,7 +301,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     public Cure getCureWithVirusType(VirusType virusType) throws CureNotFoundException {
         for(Cure cure : cures) {
@@ -313,7 +314,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public PlayerCard drawPlayerCard() throws GameLostException {
         try {
@@ -327,7 +328,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void discardPlayerCard(PlayerCard card) {
         playerDiscardStack.add(0, card);
@@ -335,7 +336,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     public InfectionCard drawInfectionCard() {
         InfectionCard infectionCard = infectionStack.get(0);
@@ -347,7 +348,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     public void handleInfectionCardsInEpidemic() {
         for (int i = 0; i < 100; i++) {
@@ -363,7 +364,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void shuffleAllStacks() {
         for (int i = 0; i < 100; i++) {
@@ -374,7 +375,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void shufflePlayerCardStack() {
         PlayerCard playerCard = playerStack.get(getRandomIndex(playerStack));
@@ -383,7 +384,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void shuffleInfectionStack() {
         InfectionCard infectionCard = infectionStack.get(getRandomIndex(infectionStack));
@@ -392,14 +393,14 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private int getRandomIndex(ArrayList arrayList) {
         return (int) (Math.random() * arrayList.size());
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void increaseOutbreakCounter() throws GameLostException {
         outbreakCounter++;
@@ -412,7 +413,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param infectionRate
      */
     public void increaseInfectionRate(int infectionRate) {
@@ -421,7 +422,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel Paans
+     * @author Thimo van Velzen, Daniel Paans
      */
     public void addCubes(City currentCity, int cubeAmount) throws GameLostException {
         VirusType virusType = currentCity.getVIRUS_TYPE();
@@ -436,7 +437,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void tryToIncreaseCubeAmount(VirusType virusType, int cubeAmount) {
         try {
@@ -447,7 +448,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void removeCubes(City currentCity, int cubeAmount) {
         currentCity.removeCube();
@@ -456,7 +457,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void tryToDecreaseCubeAmount(VirusType virusType, int cubeAmount) throws GameLostException {
         try {
@@ -467,7 +468,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param type
      * @return
      * @throws VirusNotFoundException
@@ -483,7 +484,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public List<City> getCities() {
@@ -491,7 +492,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public List<Cure> getCures() {
@@ -499,7 +500,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public List<Virus> getViruses() {
@@ -507,7 +508,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public ArrayList<InfectionCard> getInfectionStack() {
@@ -515,7 +516,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public ArrayList<InfectionCard> getInfectionDiscardStack() {
@@ -523,7 +524,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     public City getCity(String cityName) throws CityNotFoundException {
         for (City city : cities) {
@@ -536,7 +537,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public int getOutbreakCounter() {
@@ -544,7 +545,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public int getInfectionRate() {
@@ -552,7 +553,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public ArrayList<PlayerCard> getPlayerStack() {
@@ -560,7 +561,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public ArrayList<PlayerCard> getPlayerDiscardStack() {
@@ -568,7 +569,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public ArrayList<City> getCitiesWithResearchStations() {
@@ -576,14 +577,14 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public boolean cityHasResearchStation(City city) {
         return citiesWithResearchStations.contains(city);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void addResearchStationToCity(City city) {
         for (City c : cities) {
@@ -597,7 +598,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     public void handleEpidemicCard() {
         addDrawnEpidemicCard();
@@ -606,7 +607,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param cubeAmount
      * @throws GameLostException
      */
@@ -617,7 +618,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public boolean cureIsFound(VirusType virus) {
         List<Cure> curedDiseases = getCuredDiseases();
@@ -632,7 +633,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel Paans
+     * @author Thimo van Velzen, Daniel Paans
      */
     public void initializeStartingCubes() throws WrongInitializationException {
         try {
@@ -654,7 +655,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel paans
+     * @author Thimo van Velzen, Daniel paans
      */
     public void handleInfection(InfectionCard infectionCard, int cubeAmount) throws GameLostException {
         City infectedCity = infectionCard.getCity();
@@ -667,7 +668,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel paans
+     * @author Thimo van Velzen, Daniel paans
      */
     public void handleOutbreak(City infectedCity) throws GameLostException {
         increaseOutbreakCounter();
@@ -685,7 +686,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param city
      * @return
      */
@@ -713,7 +714,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public List<Cure> getCuredDiseases() {
         return cures.stream().filter(cure -> cure.getCureState().equals(CureState.CURED))
@@ -731,14 +732,14 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public int getDrawnEpidemicCards() {
         return drawnEpidemicCards;
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void addDrawnEpidemicCard() {
         drawnEpidemicCards++;
@@ -750,7 +751,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public ArrayList<City> createCitiesWithResearchStation() {
         try {
@@ -762,7 +763,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public ArrayList<City> createNewAtlantaCity() {
         ArrayList<City> cities = new ArrayList<>();
@@ -776,7 +777,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void register(GameBoardObserver gameBoardObserver) {
@@ -786,7 +787,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void unregisterAllObservers() {
@@ -794,7 +795,7 @@ public class Gameboard implements GameBoardObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void notifyAllObservers() {

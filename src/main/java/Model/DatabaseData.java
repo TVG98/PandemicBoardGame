@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author : Thimo van Velzen
+ * The data from the firestore database.
+ * @author Thimo van Velzen
  */
 
 public class DatabaseData {

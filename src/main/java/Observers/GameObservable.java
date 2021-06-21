@@ -4,7 +4,8 @@ import Model.Player;
 
 import java.util.List;
 /**
- * @author : Tom van Gogh
+ * Lets you retrieve all the relevant information for the view from the Game.
+ * @author Tom van Gogh
  */
 public interface GameObservable {
     void register(GameObserver observer);

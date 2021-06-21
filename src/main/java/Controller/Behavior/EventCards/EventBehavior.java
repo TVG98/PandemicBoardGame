@@ -3,7 +3,8 @@ package Controller.Behavior.EventCards;
 import Controller.GameBoardController;
 
 /**
- * @author : Daniel Paans
+ * Is implemented by the eventCardBehaviors.
+ * @author Daniel Paans
  */
 public interface EventBehavior {
 

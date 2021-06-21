@@ -4,7 +4,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * Implements the normal drive functionality.
+ * @author Thimo van Velzen, Daniel Paans
  */
 
 public class DriveBehaviorNormal implements DriveBehavior {

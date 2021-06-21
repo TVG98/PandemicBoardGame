@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * The one quiet night Eventcard.
+ * @author Daniel Paans
  */
 public class OneQuietNight extends EventCard{
 

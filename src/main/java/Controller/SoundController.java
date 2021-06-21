@@ -6,7 +6,8 @@ import Model.Sound;
 import Model.SoundEffects;
 
 /**
- * @author : Daniel Paans
+ * Handles all the sound functionalities.
+ * @author Daniel Paans
  */
 public class SoundController {
 

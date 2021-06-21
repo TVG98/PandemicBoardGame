@@ -7,7 +7,8 @@ import Model.PlayerCard;
 import java.util.ArrayList;
 
 /**
- * @author : Daniel Paans
+ * Implements the normal share knowledge functionality.
+ * @author Daniel Paans
  */
 
 public class ShareKnowledgeOnSameCityBehavior implements ShareKnowledgeBehavior {

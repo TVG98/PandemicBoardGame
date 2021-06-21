@@ -26,7 +26,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * @author : Romano Biertantie
+ * The view of the sound options.
+ * @author Romano Biertantie
  */
 
 public class OptionsView {

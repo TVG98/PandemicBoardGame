@@ -23,6 +23,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The view of the shuttle flight action.
+ * @author Romano Biertantie, Willem Bakker
+ */
 public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";
@@ -176,7 +180,7 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     /**
-     * sets all City buttons, how many depending on research station cities.
+     * Sets all City buttons, how many depending on research station cities.
      *
      * @author Willem Bakker
      */
@@ -247,7 +251,6 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     /**
-     *
      * @author Willem Bakker
      */
     @Override
@@ -256,7 +259,6 @@ public class ShuttleFlightView implements GameObserver, GameBoardObserver {
     }
 
     /**
-     *
      * @author Willem Bakker
      */
     @Override

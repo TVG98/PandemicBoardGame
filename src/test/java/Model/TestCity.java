@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @author : Thimo van Velzen
+ * @author Thimo van Velzen
  */
 
 public class TestCity {
@@ -28,7 +28,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayCubeSizeIsEqualToTwo() {
@@ -42,7 +42,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayCubeAmountIsEqualToZeroOnStart() {
@@ -53,7 +53,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayNewYorkIsANeighbourOfAtlanta() {
@@ -63,7 +63,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayChicagoIsNotANeighbourOfAtlanta() {
@@ -73,7 +73,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_returnFalseWhenVirusTypeIsNotBlueForAtlanta() {
@@ -84,7 +84,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_haveOneCubeWhenAddedThreeCubesAndRemovedTwoCubes() {
@@ -101,7 +101,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_haveNoCubesWhenAddedThreeCubesAndRemovedAllCubes() {
@@ -117,7 +117,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_NotThrowAnIndexOutOfBoundsErrorWhenRemovingCubeWhenNoCubesAreOnCity() {
@@ -133,7 +133,7 @@ public class TestCity {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_NotThrowAnIndexOutOfBoundsErrorWhenRemovingAllCubesWhenNoCubesAreOnCity() {

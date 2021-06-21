@@ -22,6 +22,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The view of the drive action.
+ * @author Romano Biertantie, Willem Bakker
+ */
 public class DriveView implements GameObserver {
     Stage primaryStage;
     final String pathToImage = "src/main/media/GameBoardResized.jpg";

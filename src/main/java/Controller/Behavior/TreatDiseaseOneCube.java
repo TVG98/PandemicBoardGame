@@ -5,7 +5,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * Implements the normal treat disease functionality.
+ * @author Thimo van Velzen
  */
 
 public class TreatDiseaseOneCube implements TreatDiseaseBehavior {

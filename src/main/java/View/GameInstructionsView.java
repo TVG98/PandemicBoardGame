@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author : Romano Biertantie
+ * The view where you can see the game instructions.
+ * @author Romano Biertantie
  */
 
 public class GameInstructionsView {

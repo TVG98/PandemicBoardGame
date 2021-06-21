@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * @author : Romano Biertantie
+ * @author Romano Biertantie
  */
 
 public class LobbyServersView

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
+ * The view of the find cure action.
+ * @author Romano Biertantie, Willem Bakker
  * @created June 13 2021 - 8:19 PM
  * @project testGame
  */

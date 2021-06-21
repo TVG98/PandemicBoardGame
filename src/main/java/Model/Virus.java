@@ -3,7 +3,8 @@ package Model;
 import Exceptions.GameLostException;
 
 /**
- * @author : Thimo van Velzen
+ * A virus in the game.
+ * @author Thimo van Velzen
  */
 
 public class Virus {

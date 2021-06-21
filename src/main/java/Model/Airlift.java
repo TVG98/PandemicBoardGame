@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * The airlift EventCard.
+ * @author Daniel Paans
  */
 public class Airlift extends EventCard {
 

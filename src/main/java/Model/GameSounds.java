@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * Is implemented by the sound models.
+ * @author Daniel Paans
  */
 
 public interface GameSounds {

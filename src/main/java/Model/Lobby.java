@@ -8,7 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author : Thimo van Velzen, Tom van Gogh
+ * Describes a lobby in the application.
+ * @author Thimo van Velzen, Tom van Gogh
  */
 
 public class Lobby implements LobbyObservable {
@@ -62,7 +63,7 @@ public class Lobby implements LobbyObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void setJoinable(boolean joinable) {
         this.joinable = joinable;
@@ -70,28 +71,28 @@ public class Lobby implements LobbyObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public boolean checkLobbyCode(String code) {
         return password.equals(code);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public int getMaxLobbySize() {
         return MAX_LOBBY_SIZE;
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void setPlayers(List<Player> players) {
         this.players = players;
@@ -99,7 +100,7 @@ public class Lobby implements LobbyObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void register(LobbyObserver observer) {
@@ -107,7 +108,7 @@ public class Lobby implements LobbyObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void unregister(LobbyObserver observer) {
@@ -115,7 +116,7 @@ public class Lobby implements LobbyObservable {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     @Override
     public void notifyAllObservers() {

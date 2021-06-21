@@ -6,6 +6,10 @@ import Model.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Handles all player functionalities.
+ * @author Thimo van Velzen, Tom van Gogh
+ */
 public class PlayerController {
     static PlayerController playerController;
     private GameBoardController gameBoardController;
@@ -14,7 +18,7 @@ public class PlayerController {
     private PlayerController() {}
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public static PlayerController getInstance() {
         if (playerController == null) {
@@ -25,7 +29,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public HashMap<VirusType, Integer> getCardAmountOfEachVirusTypeInHand(Player player) {
 
@@ -41,7 +45,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private HashMap<VirusType, Integer> getCountedVirusTypeInHand(
             ArrayList<CityCard> cityCards,
@@ -87,7 +91,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public String getName(Player player) {
         return player.getPlayerName();
@@ -106,7 +110,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void resetActions(Player player) {
         player.resetActions();
@@ -114,7 +118,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void setCurrentCity(Player player, City city) {
         player.setCurrentCity(city);
@@ -122,7 +126,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void decrementActions(Player player) {
         player.decrementActions();
@@ -130,7 +134,7 @@ public class PlayerController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     private void notifyGameObserver() {
         GameController.getInstance().notifyGameObserver();

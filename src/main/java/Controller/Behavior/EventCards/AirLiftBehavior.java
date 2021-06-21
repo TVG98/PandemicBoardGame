@@ -3,7 +3,8 @@ package Controller.Behavior.EventCards;
 import Controller.GameBoardController;
 
 /**
- * @author : Daniel Paans
+ * Implements the airlift functionality in to the game.
+ * @author Daniel Paans
  */
 public class AirLiftBehavior implements EventBehavior {
 

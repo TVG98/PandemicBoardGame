@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @author : Thimo van Velzen
+ * @author Thimo van Velzen
  */
 public class TestGame {
 
@@ -48,7 +48,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayCurrentPlayerTurnIsPlayerOne() {
@@ -60,7 +60,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayCurrentPlayerTurnIsPlayerThree() {
@@ -74,7 +74,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayCurrentPlayerTurnIsPlayerTwoAfterFiveTurns() {
@@ -89,7 +89,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayWonIsFalseAfterLostIsSetTrue() {
@@ -101,7 +101,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayLostIsFalseAfterWonIsSetTrue() {
@@ -113,7 +113,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayAllPlayersStartInAtlanta() {
@@ -126,7 +126,7 @@ public class TestGame {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayTwoPlayersAreInNewYork() {

@@ -20,7 +20,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * @author : Thimo van Velzen, Tom van Gogh
+ * The update functionalities to update the firestore database.
+ * @author Thimo van Velzen, Tom van Gogh
  */
 
 public class FirestoreDatabase {
@@ -44,7 +45,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public static FirestoreDatabase getInstance() {
         if (firestoreDatabase == null) {
@@ -75,7 +76,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     public void makeLobby(String lobbyCode) {
         HashMap<String, Object> serverData = getServerData();
@@ -84,7 +85,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     public HashMap<String, Object> getServerData() {
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -103,49 +104,49 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updateIndex(int index) {
         docRef.update("currentPlayerIndex", index);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updateGameStarted(boolean gameStarted) {
         docRef.update("GameStarted", gameStarted);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updateGameBoard(Gameboard gameboard) {
         docRef.update("gameboard", gameboard);
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void updateJoinable(boolean joinable) {
         docRef.update("Joinable", joinable);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updateGameWon(boolean gameWon) {
         docRef.update("gameWon", gameWon);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updateGameLost(boolean gameLost) {
         docRef.update("gameLost", gameLost);
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void addPlayerToLobby(Player player) throws LobbyFullException {
         int index = getEmptySpot();
@@ -154,7 +155,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void removeMeFromLobby(String name) {
         try {
@@ -167,7 +168,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updatePlayerInServer(Player player) {
         try {
@@ -181,7 +182,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public int getEmptySpot() throws LobbyFullException {
         try {
@@ -196,7 +197,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private int getEmptyIndex(List<Player> players) throws LobbyFullException {
         for (int i = 0; i < 4; i++) {
@@ -209,7 +210,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private int getIndexOfName(String name) throws PlayerNotFoundException {
         List<Player> players = data.returnPlayers();
@@ -224,7 +225,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     public String generateLobbyCode() {
         StringBuilder password = new StringBuilder();
@@ -237,14 +238,14 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public char getRandomChar() {
         return CHARSET.charAt((int) (CHARSET.length() * Math.random()));
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void listen(DatabaseController controller, String lobbyCode) {
         if (listenerRegistration == null) {
@@ -259,7 +260,7 @@ public class FirestoreDatabase {
     }
 
     /**
-     * @author : Thimo van Velzen, Tom van Gogh
+     * @author Thimo van Velzen, Tom van Gogh
      */
     private EventListener<DocumentSnapshot> makeEventListener(DatabaseController controller) {
         return (snapshot, e) -> {

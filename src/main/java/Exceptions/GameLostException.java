@@ -1,7 +1,7 @@
 package Exceptions;
 
 /**
- * @author : Thimo van Velzen
+ * @author Thimo van Velzen
  */
 
 public class GameLostException extends Exception {

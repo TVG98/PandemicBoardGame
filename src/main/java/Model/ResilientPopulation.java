@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Daniel Paans
+ * The resilient population Eventcard.
+ * @author Daniel Paans
  */
 public class ResilientPopulation extends EventCard {
 

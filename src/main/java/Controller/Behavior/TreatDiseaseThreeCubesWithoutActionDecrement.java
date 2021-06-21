@@ -4,7 +4,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * Implements the treat disease functionality when the player has the Medic role and the cure is found.
+ * @author Thimo van Velzen
  */
 
 public class TreatDiseaseThreeCubesWithoutActionDecrement implements TreatDiseaseBehavior {

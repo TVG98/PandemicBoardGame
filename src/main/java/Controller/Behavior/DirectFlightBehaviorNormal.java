@@ -8,7 +8,8 @@ import Model.Player;
 import Model.PlayerCard;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * Implements the normal direct flight functionality.
+ * @author Thimo van Velzen, Daniel Paans
  */
 
 public class DirectFlightBehaviorNormal implements DirectFlightBehavior {

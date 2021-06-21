@@ -4,7 +4,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen
+ * Implements the build research station functionality if you have the Operations Expert role.
+ * @author Thimo van Velzen
  */
 
 public class BuildResearchStationWithoutCard implements BuildResearchStationBehavior {

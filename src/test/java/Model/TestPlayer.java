@@ -9,7 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @author : Thimo van Velzen
+ * @author Thimo van Velzen
  */
 public class TestPlayer {
 
@@ -23,7 +23,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ReturnThatPlayerCardIsInHandOfPlayer() {
@@ -34,7 +34,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentObject() {
@@ -47,7 +47,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ReturnThatPlayerCardIsNotInTheHandOfPlayerBecauseDifferentCityName() {
@@ -60,7 +60,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_RemoveCardFromHandFromPlayer() {
@@ -73,7 +73,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_KeepCardFromHandFromPlayer() {
@@ -88,7 +88,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_DecrementActionsByOne() {
@@ -101,7 +101,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ResetActionsToFourActionsLeft() {
@@ -115,7 +115,7 @@ public class TestPlayer {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     @Test
     public void Should_ReturnAllCityCardsFromHand() {

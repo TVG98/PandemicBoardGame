@@ -12,7 +12,8 @@ import Observers.GameObserver;
 import java.util.*;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans, Tom van Gogh
+ * Handles all the game functionalities.
+ * @author Thimo van Velzen, Daniel Paans, Tom van Gogh
  */
 
 public class GameController {
@@ -27,7 +28,7 @@ public class GameController {
     private boolean playersUpdated = false;
 
     /**
-     * @author : Tom van Gogh, Daniel Paans
+     * @author Tom van Gogh, Daniel Paans
      */
     private GameController() {
         soundController = SoundController.getInstance();
@@ -44,7 +45,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public synchronized static GameController getInstance() {
         if (gameController == null) {
@@ -55,7 +56,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private boolean localPlayerIsPlayerOne() {
         String localPlayerName = playerController.getYourPlayerName();
@@ -64,7 +65,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void startGame() {
         setPlayers();
@@ -90,7 +91,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void makeGameBoard() {
         if (localPlayerIsPlayerOne()) {
@@ -101,7 +102,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void sleep(int milliSeconds) {
         try {
@@ -112,7 +113,7 @@ public class GameController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     private Player setPlayer(Player player) {
         try {
@@ -132,7 +133,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel Paans
+     * @author Thimo van Velzen, Daniel Paans
      */
     public void turn() {
         if (itIsYourTurn()) {
@@ -152,7 +153,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen, Daniel Paans
+     * @author Thimo van Velzen, Daniel Paans
      */
     private void handleTurnActions() throws GameLostException {
         gameBoardController.handlePlayerCardDraw(getCurrentPlayer(), getPlayerAmount());
@@ -164,14 +165,14 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private int getPlayerAmount() {
         return (int) game.getPlayers().stream().filter(Objects::nonNull).count();
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void changeTurn() {
         System.out.println("going to change turn!");
@@ -182,7 +183,7 @@ public class GameController {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      */
     public void checkWin() {
         if (gameBoardController.winByCures()) {
@@ -192,7 +193,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleDrive(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -209,14 +210,14 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private boolean actionsLeft() {
         return playerController.hasActionsLeft(getCurrentPlayer());
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setDriveBehavior() {
         if (itIsYourTurn() && actionsLeft()) {
@@ -225,7 +226,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleDirectFlight(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -241,14 +242,14 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setDirectFlightBehavior() {
         gameBoardController.setDirectFlightBehavior(new DirectFlightBehaviorNormal());
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleCharterFlight(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -264,7 +265,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setCharterFlightBehavior() {
         if (itIsYourTurn() && actionsLeft()) {
@@ -273,7 +274,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleShuttleFlight(String cityName) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -289,7 +290,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setShuttleFlightBehavior(Player currentPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -302,7 +303,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleBuildResearchStation() {
         if (itIsYourTurn() && actionsLeft()) {
@@ -316,7 +317,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setBuildResearchBehavior(Player currentPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -360,7 +361,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setShareKnowledgeBehavior(Player givingPlayer) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -392,7 +393,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleTreatDisease() {
         if (itIsYourTurn() && actionsLeft()) {
@@ -404,7 +405,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setTreatDiseaseBehavior(Player currentPlayer, City currentCity) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -419,7 +420,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void handleFindCure() {
         if (itIsYourTurn() && actionsLeft()) {
@@ -431,7 +432,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private void setFindCureBehavior(Player currentPLayer) {
         if (itIsYourTurn() && actionsLeft()) {
@@ -455,7 +456,7 @@ public class GameController {
     }
 
     /**
-     * @author : Daniel Paans
+     * @author Daniel Paans
      * @param sound
      */
     public void playSoundEffect(Sound sound) {
@@ -467,7 +468,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     private boolean itIsYourTurn() {
         String currentPlayerName = game.getPlayers().get(game.getCurrentPlayerIndex() % 4).getPlayerName();
@@ -475,7 +476,7 @@ public class GameController {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public synchronized void update(DatabaseData data) {
         game.setCurrentPlayerIndex(data.getCurrentPlayerIndex());
@@ -492,28 +493,28 @@ public class GameController {
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void registerPlayerObserver(GameObserver observer) {
         game.register(observer);
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void registerGameBoardObserver(GameBoardObserver observer) {
         gameBoardController.registerObserver(observer);
     }
 
     /**
-     * @author : Tom van Gogh
+     * @author Tom van Gogh
      */
     public void notifyGameObserver() {
         game.notifyAllObservers();
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     public void updateServer(int index) {
         databaseController.updateIndexInDatabase(index);

@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author : Daniel Paans
+ * Plays the game music.
+ * @author Daniel Paans
  */
 
 public class GameMusic implements GameSounds {

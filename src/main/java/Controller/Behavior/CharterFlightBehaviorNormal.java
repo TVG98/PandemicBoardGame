@@ -4,7 +4,8 @@ import Model.City;
 import Model.Player;
 
 /**
- * @author : Thimo van Velzen, Daniel Paans
+ * Implements the normal charterflight functionality.
+ * @author Thimo van Velzen, Daniel Paans
  */
 
 public class CharterFlightBehaviorNormal implements CharterFlightBehavior {

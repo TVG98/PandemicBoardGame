@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
- * @author : Thimo van Velzen
+ * @author Thimo van Velzen
  */
 public class TestGameBoard {
 
@@ -23,7 +23,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayThatPlayerStackSizeIs59WhenInitialized() {
@@ -34,7 +34,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_DecreasePlayerStackSizeByTwoIfTwoPlayerCardsAreTakenFromDeck() throws GameLostException {
@@ -48,7 +48,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_ThrowCityNotFoundExceptionWhenForgettingCapitalFirstLetter() {
@@ -64,7 +64,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayThatAlgiersAndChennaiHaveBlackVirusType() {
@@ -92,7 +92,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_IncreasePlayerDiscardPileByOneWhenDiscardingPlayerCard() {
@@ -106,7 +106,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayThatAtlantaIsOnlyCityWithResearchStationWhenGameStarts() {
@@ -120,7 +120,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_IncreaseSizeOfCitiesWithResearchStationWhenAddingResearchStationToCity() {
@@ -139,7 +139,7 @@ public class TestGameBoard {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_SayThatWashingTonIsConnectedToAtlanta() {

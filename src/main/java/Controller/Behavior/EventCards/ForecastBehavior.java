@@ -5,7 +5,8 @@ import Model.InfectionCard;
 import java.util.ArrayList;
 
 /**
- * @author : Daniel Paans
+ * Implements the forecast functionality in to the game.
+ * @author Daniel Paans
  */
 public class ForecastBehavior implements EventBehavior {
 

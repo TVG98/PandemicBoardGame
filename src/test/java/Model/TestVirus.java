@@ -17,7 +17,7 @@ public class TestVirus {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_Return24CubesWhenInitialized() {
@@ -28,7 +28,7 @@ public class TestVirus {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_Return22CubesWhenDecreaseCubesIsCalledTwice() throws GameLostException {
@@ -42,7 +42,7 @@ public class TestVirus {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_Return23CubesWhenDecreaseCubesIsCalledTwiceAndIncreaseCubeIsCalledOnce() throws GameLostException {
@@ -57,7 +57,7 @@ public class TestVirus {
     }
 
     /**
-     * @author : Thimo van Velzen
+     * @author Thimo van Velzen
      */
     @Test
     public void Should_Return24CubesWhenCalledIncreaseCubesWhenAlready24CubesAreExisting() {

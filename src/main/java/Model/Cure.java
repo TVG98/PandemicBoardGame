@@ -1,7 +1,8 @@
 package Model;
 
 /**
- * @author : Thimo van Velzen
+ * A cure object in the game.
+ * @author Daniel Paans, Thimo van Velzen
  */
 
 public class Cure {
